@@ -2,6 +2,7 @@
 
 A new Flutter project.
 
+![screenshot](./misc/app.jpg)
 ## Getting Started
 
 This project is a starting point for a Flutter application.
