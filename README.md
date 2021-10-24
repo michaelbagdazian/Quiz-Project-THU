@@ -1,8 +1,8 @@
 # test_pro
 
 A new Flutter project.
+<img src="./misc/app.jpg" width=50% height=50%>
 
-![screenshot](./misc/app.jpg)
 ## Getting Started
 
 This project is a starting point for a Flutter application.
