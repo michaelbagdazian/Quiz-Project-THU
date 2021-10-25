@@ -1,6 +1,5 @@
 // ignore_for_file: unused_local_variable, file_names, prefer_const_constructors, duplicate_ignore
 
-import 'dart:js';
 import 'dart:ui';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
