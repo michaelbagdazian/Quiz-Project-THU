@@ -1,11 +1,13 @@
 // ignore_for_file: unused_local_variable, file_names, prefer_const_constructors, duplicate_ignore
 
+import 'dart:js';
 import 'dart:ui';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:test_pro/login_interface.dart';
 //import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
-//import 'login_signup.dart';
+import 'login_signup.dart';
 
 class Background extends StatelessWidget {
   final Widget child;
@@ -92,7 +94,7 @@ class Background extends StatelessWidget {
               ),
             ),
             SizedBox(height: size.height * 0.02),
-            joinButton(),
+            joinButton(context),
             SizedBox(height: size.height * 0.05),
             signInOrUp(),
           ],
@@ -130,12 +132,16 @@ class Background extends StatelessWidget {
     ]);
   }
 
-  Widget joinButton() {
+  Widget joinButton(BuildContext cntxt) {
     return FloatingActionButton.extended(
       extendedPadding: EdgeInsets.fromLTRB(15, 40, 40, 40),
       extendedIconLabelSpacing: 20,
       onPressed: () {
         //TODO
+        Navigator.push(
+          cntxt,
+          new MaterialPageRoute(builder: (cntxt) => new RegisterScreen()),
+        );
       },
       label: const Text(
         'Join',
