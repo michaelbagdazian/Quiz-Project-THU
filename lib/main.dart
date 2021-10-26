@@ -6,7 +6,7 @@ void main() {
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(fontFamily: 'Lobster'),
+      //theme: ThemeData(fontFamily: 'Lobster'),
       home: const login_interface(),
     ),
   );

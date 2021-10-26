@@ -3,8 +3,6 @@
 import 'dart:ui';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:test_pro/login_interface.dart';
-//import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'login_signup.dart';
 
@@ -61,6 +59,7 @@ class Background extends StatelessWidget {
                     contentPadding: EdgeInsets.all(15),
                     labelText: 'Display Name',
                     labelStyle: TextStyle(
+                      fontFamily: 'Lobster',
                       color: Colors.white,
                       fontSize: 15.0,
                     ),
@@ -86,6 +85,7 @@ class Background extends StatelessWidget {
                   contentPadding: EdgeInsets.all(15),
                   labelText: 'Pin',
                   labelStyle: TextStyle(
+                    fontFamily: 'Lobster',
                     color: Colors.white,
                     fontSize: 15.0,
                   ),
@@ -93,9 +93,9 @@ class Background extends StatelessWidget {
               ),
             ),
             SizedBox(height: size.height * 0.02),
-            joinButton(context),
+            joinButton(),
             SizedBox(height: size.height * 0.05),
-            signInOrUp(),
+            signInOrUp(context),
           ],
         ),
       ]),
@@ -131,16 +131,12 @@ class Background extends StatelessWidget {
     ]);
   }
 
-  Widget joinButton(BuildContext cntxt) {
+  Widget joinButton() {
     return FloatingActionButton.extended(
       extendedPadding: EdgeInsets.fromLTRB(15, 40, 40, 40),
       extendedIconLabelSpacing: 20,
       onPressed: () {
         //TODO
-        Navigator.push(
-          cntxt,
-          new MaterialPageRoute(builder: (cntxt) => new RegisterScreen()),
-        );
       },
       label: const Text(
         'Join',
@@ -161,7 +157,7 @@ class Background extends StatelessWidget {
     );
   }
 
-  Widget signInOrUp() {
+  Widget signInOrUp(BuildContext cntxt) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       mainAxisSize: MainAxisSize.min,
@@ -197,6 +193,10 @@ class Background extends StatelessWidget {
         FloatingActionButton.extended(
           extendedPadding: EdgeInsets.all(50),
           onPressed: () {
+            Navigator.push(
+              cntxt,
+              new MaterialPageRoute(builder: (cntxt) => new LogInScreen()),
+            );
             //TODO
           },
           label: const Text(
@@ -218,6 +218,10 @@ class Background extends StatelessWidget {
         FloatingActionButton.extended(
           extendedPadding: EdgeInsets.all(40),
           onPressed: () {
+            Navigator.push(
+              cntxt,
+              new MaterialPageRoute(builder: (cntxt) => new RegisterScreen()),
+            );
             //TODO
           },
           label: const Text(
