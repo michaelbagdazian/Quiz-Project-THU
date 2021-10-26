@@ -42,9 +42,11 @@ class customWidgets {
   }
 
   //*this is A button with the label 'register on it'
-  Widget customButton(String _label, Color _backgroundcolor) {
+  Widget customButton(String _label, Color _backgroundcolor, void _function) {
     return FloatingActionButton.extended(
-      onPressed: () {},
+      onPressed: () {
+        _function;
+      },
       label: Text(
         _label,
         style: const TextStyle(

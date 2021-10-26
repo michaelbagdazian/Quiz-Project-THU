@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:test_pro/Authentication.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'CustomWidgets.dart';
 
@@ -9,6 +10,7 @@ class RegisterScreen extends StatelessWidget {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
+
   RegisterScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -128,7 +130,7 @@ class RegisterScreen extends StatelessWidget {
                 ),
               ],
             ),
-            customWidgets().customButton('Register', Colors.orange),
+            RegButton('Register', Colors.orange, context)
           ],
         )
       ]),
@@ -143,13 +145,47 @@ class RegisterScreen extends StatelessWidget {
       throw 'Could not launch $url';
     }
   }
+
+  Widget RegButton(
+      String _label, Color _backgroundcolor, BuildContext _context) {
+    return FloatingActionButton.extended(
+      onPressed: () {
+        Authentication()
+            .register(_emailController, _passwordController, _context);
+      },
+      label: Text(
+        _label,
+        style: const TextStyle(
+          fontSize: 30,
+          fontFamily: 'Lobster',
+        ),
+      ),
+      backgroundColor: _backgroundcolor,
+      extendedPadding: const EdgeInsets.all(40),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          bottomRight: Radius.circular(20),
+        ),
+      ),
+    );
+  }
 }
 
 class LogInScreen extends StatelessWidget {
   //final TextEditingController _usernameController = TextEditingController();
+
   final TextEditingController _emailController = TextEditingController();
+
   final TextEditingController _passwordController = TextEditingController();
-  LogInScreen({Key? key}) : super(key: key);
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    _emailController.dispose();
+    _passwordController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -200,10 +236,34 @@ class LogInScreen extends StatelessWidget {
             SizedBox(
               height: size.height * 0.02,
             ),
-            customWidgets().customButton('Log in', Colors.orange),
+            LoginButton('Log in', Colors.orange, context),
           ],
         )
       ]),
+    );
+  }
+
+  Widget LoginButton(
+      String _label, Color _backgroundcolor, BuildContext _context) {
+    return FloatingActionButton.extended(
+      onPressed: () {
+        Authentication().login(_emailController, _passwordController, _context);
+      },
+      label: Text(
+        _label,
+        style: const TextStyle(
+          fontSize: 30,
+          fontFamily: 'Lobster',
+        ),
+      ),
+      backgroundColor: _backgroundcolor,
+      extendedPadding: const EdgeInsets.all(40),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          bottomRight: Radius.circular(20),
+        ),
+      ),
     );
   }
 }

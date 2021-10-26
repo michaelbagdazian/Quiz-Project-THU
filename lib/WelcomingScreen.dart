@@ -1,4 +1,4 @@
-// ignore_for_file: unused_local_variable, file_names, prefer_const_constructors, duplicate_ignore
+// ignore_for_file: unused_local_variable, file_names, prefer_const_constructors, duplicate_ignore, unnecessary_new
 
 import 'dart:ui';
 import 'package:flutter/gestures.dart';
@@ -146,7 +146,7 @@ class WelcominScreen extends StatelessWidget {
         Icons.keyboard_arrow_right_rounded,
         size: 36.0,
       ),
-      backgroundColor: Colors.teal[400],
+      backgroundColor: Colors.orange,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
             topLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
@@ -194,7 +194,6 @@ class WelcominScreen extends StatelessWidget {
               cntxt,
               new MaterialPageRoute(builder: (cntxt) => new LogInScreen()),
             );
-            //TODO
           },
           label: const Text(
             'Log In',
@@ -203,7 +202,7 @@ class WelcominScreen extends StatelessWidget {
               fontFamily: 'Lobster',
             ),
           ),
-          backgroundColor: Colors.teal[400],
+          backgroundColor: Colors.orange,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
@@ -219,7 +218,6 @@ class WelcominScreen extends StatelessWidget {
               cntxt,
               new MaterialPageRoute(builder: (cntxt) => new RegisterScreen()),
             );
-            //TODO
           },
           label: const Text(
             'Register',
@@ -228,7 +226,7 @@ class WelcominScreen extends StatelessWidget {
               fontFamily: 'Lobster',
             ),
           ),
-          backgroundColor: Colors.teal[400],
+          backgroundColor: Colors.orange,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20), bottomRight: Radius.circular(20)),

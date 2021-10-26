@@ -2,15 +2,17 @@
 <img src="./misc/WelcomePage.jpg" width=50% height=50%>
 <img src="./misc/Log_in.jpg" width=50% height=50%>
 <img src="./misc/Sign_up.jpg" width=50% height=50%>
-## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Implementd
+-welcoming screen, login screen, register screen (functional)
+-"register" and "login" buttons and their functionality are implemented
+-firebase authentication and registeration are implementd (problem: only with email and password)
+-custom reusable Widgets 
+# TODOs
+-implement or integrate a home screen in the "HomeScreen.dart"(medium)
+-implement functionality to the button "Join" (easy)
+-implement a class "TemporarySession.dart" to make player able to join a live game (hard)
+-implement "quizzes.dart" (hard)
+...
+..
+.
