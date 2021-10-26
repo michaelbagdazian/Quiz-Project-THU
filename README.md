@@ -1,6 +1,4 @@
-# test_pro
-
-A new Flutter project.
+# ScreenShots
 <img src="./misc/WelcomePage.jpg" width=50% height=50%>
 <img src="./misc/Log_in.jpg" width=50% height=50%>
 <img src="./misc/Sign_up.jpg" width=50% height=50%>
