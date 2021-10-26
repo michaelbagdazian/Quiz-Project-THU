@@ -6,12 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'login_signup.dart';
 
-class Background extends StatelessWidget {
-  final Widget child;
-
-  const Background({
+class WelcominScreen extends StatelessWidget {
+  const WelcominScreen({
     Key? key,
-    required this.child,
   }) : super(key: key);
 
   @override
