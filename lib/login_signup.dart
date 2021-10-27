@@ -5,6 +5,9 @@ import 'package:url_launcher/url_launcher.dart';
 import 'CustomWidgets.dart';
 
 class RegisterScreen extends StatelessWidget {
+  final _customWidget = customWidgets();
+  final _authentication = Authentication();
+
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -28,11 +31,13 @@ class RegisterScreen extends StatelessWidget {
         backgroundColor: Colors.teal,
       ),
       body: Stack(fit: StackFit.expand, children: [
-        Expanded(
-          flex: 1,
-          child: Image.asset(
-            'assets/images/bgtop.png',
-            fit: BoxFit.cover,
+        SizedBox(
+          child: Expanded(
+            flex: 1,
+            child: Image.asset(
+              'assets/images/bgtop.png',
+              fit: BoxFit.cover,
+            ),
           ),
         ),
         Column(
@@ -43,23 +48,23 @@ class RegisterScreen extends StatelessWidget {
               height: size.height * 0.05,
             ),
             //*Add the welcoming text first
-            customWidgets().customText('Creat New\n Account'),
+            _customWidget.customText('Creat New\n Account'),
             SizedBox(
               height: size.height * 0.05,
             ),
             //*this one is a the usernameField
-            customWidgets().customTextField(
+            _customWidget.customTextField(
                 _usernameController, 'Username', size, TextInputType.name),
             //*add a space between text fields
             SizedBox(
               height: size.height * 0.02,
             ),
-            customWidgets().customTextField(
+            _customWidget.customTextField(
                 _emailController, 'E-mail', size, TextInputType.emailAddress),
             SizedBox(
               height: size.height * 0.02,
             ),
-            customWidgets().customTextField(
+            _customWidget.customTextField(
               _passwordController,
               'Password',
               size,
@@ -69,7 +74,7 @@ class RegisterScreen extends StatelessWidget {
             SizedBox(
               height: size.height * 0.02,
             ),
-            customWidgets().customTextField(
+            _customWidget.customTextField(
               _confirmPasswordController,
               'Confirm Password',
               size,
@@ -150,8 +155,8 @@ class RegisterScreen extends StatelessWidget {
       String _label, Color _backgroundcolor, BuildContext _context) {
     return FloatingActionButton.extended(
       onPressed: () {
-        Authentication()
-            .register(_emailController, _passwordController, _context);
+        _authentication.register(
+            _emailController, _passwordController, _context);
       },
       label: Text(
         _label,
@@ -173,6 +178,9 @@ class RegisterScreen extends StatelessWidget {
 }
 
 class LogInScreen extends StatelessWidget {
+  final _customWidget = customWidgets();
+  final _authentication = Authentication();
+
   //final TextEditingController _usernameController = TextEditingController();
 
   final TextEditingController _emailController = TextEditingController();
@@ -217,16 +225,16 @@ class LogInScreen extends StatelessWidget {
               height: size.height * 0.05,
             ),
             //*Add the welcoming text first
-            customWidgets().customText('Log In to Your\n Account'),
+            _customWidget.customText('Log In to Your\n Account'),
             SizedBox(
               height: size.height * 0.05,
             ),
-            customWidgets().customTextField(_emailController,
+            _customWidget.customTextField(_emailController,
                 'E-mail or Username', size, TextInputType.emailAddress),
             SizedBox(
               height: size.height * 0.02,
             ),
-            customWidgets().customTextField(
+            _customWidget.customTextField(
               _passwordController,
               'Password',
               size,
@@ -247,7 +255,7 @@ class LogInScreen extends StatelessWidget {
       String _label, Color _backgroundcolor, BuildContext _context) {
     return FloatingActionButton.extended(
       onPressed: () {
-        Authentication().login(_emailController, _passwordController, _context);
+        _authentication.login(_emailController, _passwordController, _context);
       },
       label: Text(
         _label,

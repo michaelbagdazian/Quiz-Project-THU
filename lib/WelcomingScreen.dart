@@ -3,6 +3,7 @@
 import 'dart:ui';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:test_pro/CustomWidgets.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'login_signup.dart';
 
@@ -13,6 +14,8 @@ class WelcominScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _customWidget = new customWidgets();
+
     final TextEditingController _pinController = TextEditingController();
     final TextEditingController _displayNameController =
         TextEditingController();
@@ -130,6 +133,7 @@ class WelcominScreen extends StatelessWidget {
 
   Widget joinButton() {
     return FloatingActionButton.extended(
+      heroTag: "joinButton",
       extendedPadding: EdgeInsets.fromLTRB(15, 40, 40, 40),
       extendedIconLabelSpacing: 20,
       onPressed: () {
@@ -189,6 +193,7 @@ class WelcominScreen extends StatelessWidget {
         ),
         FloatingActionButton.extended(
           extendedPadding: EdgeInsets.all(50),
+          heroTag: "LoginButtonOnHomeScreen",
           onPressed: () {
             Navigator.push(
               cntxt,
@@ -212,6 +217,7 @@ class WelcominScreen extends StatelessWidget {
           height: 10,
         ),
         FloatingActionButton.extended(
+          heroTag: "RegButtonOnHomeScreen",
           extendedPadding: EdgeInsets.all(40),
           onPressed: () {
             Navigator.push(

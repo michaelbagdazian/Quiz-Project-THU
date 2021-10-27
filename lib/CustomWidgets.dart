@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 
 class customWidgets {
+  customWidgets({Key? key});
+
   /*
   The following widget is to create a custom Text field
   parameteres:
