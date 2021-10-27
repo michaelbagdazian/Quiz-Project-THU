@@ -40,6 +40,7 @@ class WelcominScreen extends StatelessWidget {
             //*Text
             _customWidget.customText("Welcoem to\n The Quizzler !!!",
                 backgroundColor: Colors.teal[400]),
+            //*Logo/pic on welcoming screen
             eduLogo(),
             SizedBox(
               height: size.height * 0.01,
@@ -106,34 +107,34 @@ class WelcominScreen extends StatelessWidget {
     );
   }
 
-  Widget helloMessage() {
-    // ignore: prefer_const_literals_to_create_immutables
-    return Stack(children: [
-      Text(
-        'The Quizzler Welcomes You !!!',
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          foreground: Paint()
-            ..style = PaintingStyle.stroke
-            ..strokeWidth = 3
-            ..color = Colors.white,
-          fontWeight: FontWeight.bold,
-          fontFamily: 'Lobster',
-          fontSize: 50,
-        ),
-      ),
-      Text(
-        'The Quizzler Welcomes You !!!',
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontFamily: 'Lobster',
-          fontSize: 50,
-          color: Colors.teal[400],
-        ),
-      )
-    ]);
-  }
+  // Widget helloMessage() {
+  //   // ignore: prefer_const_literals_to_create_immutables
+  //   return Stack(children: [
+  //     Text(
+  //       'The Quizzler Welcomes You !!!',
+  //       textAlign: TextAlign.center,
+  //       style: TextStyle(
+  //         foreground: Paint()
+  //           ..style = PaintingStyle.stroke
+  //           ..strokeWidth = 3
+  //           ..color = Colors.white,
+  //         fontWeight: FontWeight.bold,
+  //         fontFamily: 'Lobster',
+  //         fontSize: 50,
+  //       ),
+  //     ),
+  //     Text(
+  //       'The Quizzler Welcomes You !!!',
+  //       textAlign: TextAlign.center,
+  //       style: TextStyle(
+  //         fontWeight: FontWeight.bold,
+  //         fontFamily: 'Lobster',
+  //         fontSize: 50,
+  //         color: Colors.teal[400],
+  //       ),
+  //     )
+  //   ]);
+  // }
 
   Widget joinButton() {
     return FloatingActionButton.extended(
