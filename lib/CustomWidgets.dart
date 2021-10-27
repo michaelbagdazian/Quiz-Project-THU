@@ -15,10 +15,10 @@ class customWidgets {
   bool obsecured: default parameter to set user input to obsecured or not obsecured (default: not obsecured)
   */
   Widget customTextField(TextEditingController _textEditingController,
-      String _label, Size _size, TextInputType _textInputType,
+      String _label, double _width, TextInputType _textInputType,
       {bool obsecured = false}) {
     return SizedBox(
-      width: _size.width * 0.7,
+      width: _width,
       child: TextField(
         obscureText: obsecured,
         keyboardType: _textInputType,
@@ -68,29 +68,35 @@ class customWidgets {
   }
 
   //*this Widet is to print Text on the Page
-  Widget customText(String text) {
+  Widget customText(String text,
+      {String fontFam = 'Lobster',
+      double fontsize = 50,
+      Color forgroundColor = Colors.white,
+      Color? backgroundColor = Colors.teal,
+      FontWeight fontweight = FontWeight.bold,
+      TextAlign textalign = TextAlign.center}) {
     return Stack(children: [
       Text(
         text,
-        textAlign: TextAlign.center,
+        textAlign: textalign,
         style: TextStyle(
           foreground: Paint()
             ..style = PaintingStyle.stroke
             ..strokeWidth = 3
-            ..color = Colors.white,
-          fontWeight: FontWeight.bold,
-          fontFamily: 'Lobster',
-          fontSize: 50,
+            ..color = forgroundColor,
+          fontWeight: fontweight,
+          fontFamily: fontFam,
+          fontSize: fontsize,
         ),
       ),
       Text(
         text,
-        textAlign: TextAlign.center,
-        style: const TextStyle(
-          fontWeight: FontWeight.bold,
-          fontFamily: 'Lobster',
-          fontSize: 50,
-          color: Colors.teal,
+        textAlign: textalign,
+        style: TextStyle(
+          fontWeight: fontweight,
+          fontFamily: fontFam,
+          fontSize: fontsize,
+          color: backgroundColor,
         ),
       )
     ]);

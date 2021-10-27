@@ -53,21 +53,21 @@ class RegisterScreen extends StatelessWidget {
               height: size.height * 0.05,
             ),
             //*this one is a the usernameField
-            _customWidget.customTextField(
-                _usernameController, 'Username', size, TextInputType.name),
+            _customWidget.customTextField(_usernameController, 'Username',
+                size.width * 0.7, TextInputType.name),
             //*add a space between text fields
             SizedBox(
               height: size.height * 0.02,
             ),
-            _customWidget.customTextField(
-                _emailController, 'E-mail', size, TextInputType.emailAddress),
+            _customWidget.customTextField(_emailController, 'E-mail',
+                size.width * 0.7, TextInputType.emailAddress),
             SizedBox(
               height: size.height * 0.02,
             ),
             _customWidget.customTextField(
               _passwordController,
               'Password',
-              size,
+              size.width * 0.7,
               TextInputType.visiblePassword,
               obsecured: true,
             ),
@@ -77,7 +77,7 @@ class RegisterScreen extends StatelessWidget {
             _customWidget.customTextField(
               _confirmPasswordController,
               'Confirm Password',
-              size,
+              size.width * 0.7,
               TextInputType.visiblePassword,
               obsecured: true,
             ),
@@ -229,15 +229,18 @@ class LogInScreen extends StatelessWidget {
             SizedBox(
               height: size.height * 0.05,
             ),
-            _customWidget.customTextField(_emailController,
-                'E-mail or Username', size, TextInputType.emailAddress),
+            _customWidget.customTextField(
+                _emailController,
+                'E-mail or Username',
+                size.width * 0.7,
+                TextInputType.emailAddress),
             SizedBox(
               height: size.height * 0.02,
             ),
             _customWidget.customTextField(
               _passwordController,
               'Password',
-              size,
+              size.width * 0.7,
               TextInputType.visiblePassword,
               obsecured: true,
             ),

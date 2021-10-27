@@ -25,6 +25,7 @@ class WelcominScreen extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(fit: StackFit.expand, children: [
+        //*background pic
         Expanded(
           flex: 1,
           child: Image.asset(
@@ -32,10 +33,13 @@ class WelcominScreen extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
+        //*children inside screen
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            helloMessage(),
+            //*Text
+            _customWidget.customText("Welcoem to\n The Quizzler !!!",
+                backgroundColor: Colors.teal[400]),
             eduLogo(),
             SizedBox(
               height: size.height * 0.01,

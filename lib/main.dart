@@ -6,10 +6,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(
-    MaterialApp(
+    const MaterialApp(
       debugShowCheckedModeBanner: false,
       //theme: ThemeData(fontFamily: 'Lobster'),
-      home: const WelcominScreen(),
+      home: WelcominScreen(),
     ),
   );
 }
