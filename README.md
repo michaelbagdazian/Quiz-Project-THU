@@ -1,7 +1,5 @@
 # ScreenShots
-<img src="./misc/WelcomePage.jpg" width=30% height=30%>
-<img src="./misc/Log_in.jpg" width=30% height=30%>
-<img src="./misc/Sign_up.jpg" width=30% height=30%>
+<img src="./misc/WelcomePage.jpg" width=30% height=30%> <img src="./misc/Log_in.jpg" width=30% height=30%> <img src="./misc/Sign_up.jpg" width=30% height=30%>
 
 # Implementd
 -welcoming screen, login screen, register screen (functional)\
