@@ -2,10 +2,12 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:test_pro/services/Authentication.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'CustomWidgets.dart';
+import 'package:test_pro/customWidgets/customText.dart';
+import 'package:test_pro/customWidgets/customTextField.dart';
 
 class SignUp extends StatelessWidget {
-  final _customWidget = customWidgets();
+  final CustomTextField _customTextField = new CustomTextField();
+  final CustomText _customText = CustomText();
   final _authentication = Authentication();
 
   final TextEditingController _usernameController = TextEditingController();
@@ -50,23 +52,23 @@ class SignUp extends StatelessWidget {
               height: size.height * 0.05,
             ),
             //*Add the welcoming text first
-            _customWidget.customText('Creat New\n Account'),
+            _customText.customText('Creat New\n Account'),
             SizedBox(
               height: size.height * 0.05,
             ),
             //*this one is a the usernameField
-            _customWidget.customTextField(_usernameController, 'Username',
+            _customTextField.customTextField(_usernameController, 'Username',
                 size.width * 0.7, TextInputType.name),
             //*add a space between text fields
             SizedBox(
               height: size.height * 0.02,
             ),
-            _customWidget.customTextField(_emailController, 'E-mail',
+            _customTextField.customTextField(_emailController, 'E-mail',
                 size.width * 0.7, TextInputType.emailAddress),
             SizedBox(
               height: size.height * 0.02,
             ),
-            _customWidget.customTextField(
+            _customTextField.customTextField(
               _passwordController,
               'Password',
               size.width * 0.7,
@@ -76,7 +78,7 @@ class SignUp extends StatelessWidget {
             SizedBox(
               height: size.height * 0.02,
             ),
-            _customWidget.customTextField(
+            _customTextField.customTextField(
               _confirmPasswordController,
               'Confirm Password',
               size.width * 0.7,

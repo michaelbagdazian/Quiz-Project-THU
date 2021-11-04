@@ -3,7 +3,8 @@
 import 'dart:ui';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:test_pro/pages/CustomWidgets.dart';
+import 'package:test_pro/customWidgets/customText.dart';
+import 'package:test_pro/customWidgets/customTextField.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'signup.dart';
 import 'login.dart';
@@ -15,7 +16,8 @@ class WelcominScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _customWidget = new customWidgets();
+    final CustomTextField _customTextField = new CustomTextField();
+    final CustomText _customText = CustomText();
 
     final TextEditingController _pinController = TextEditingController();
     final TextEditingController _displayNameController =
@@ -39,7 +41,7 @@ class WelcominScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             //*Text
-            _customWidget.customText("Welcoem to\n The Quizzler !!!",
+            _customText.customText("Welcoem to\n The Quizzler !!!",
                 backgroundColor: Colors.teal[400]),
             //*Logo/pic on welcoming screen
             eduLogo(),

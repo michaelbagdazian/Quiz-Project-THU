@@ -1,11 +1,16 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:test_pro/customWidgets/customButton.dart';
+import 'package:test_pro/customWidgets/customText.dart';
+import 'package:test_pro/customWidgets/customTextField.dart';
 import 'package:test_pro/services/Authentication.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'CustomWidgets.dart';
 
 class LogInScreen extends StatelessWidget {
-  final _customWidget = customWidgets();
+  final _customTextField = CustomTextField();
+  final _customText = CustomText();
+  final _customButton = CustomButton();
   final _authentication = Authentication();
 
   //final TextEditingController _usernameController = TextEditingController();
@@ -52,11 +57,11 @@ class LogInScreen extends StatelessWidget {
               height: size.height * 0.05,
             ),
             //*Add the welcoming text first
-            _customWidget.customText('Log In to Your\n Account'),
+            _customText.customText('Log In to Your\n Account'),
             SizedBox(
               height: size.height * 0.05,
             ),
-            _customWidget.customTextField(
+            _customTextField.customTextField(
                 _emailController,
                 'E-mail or Username',
                 size.width * 0.7,
@@ -64,7 +69,7 @@ class LogInScreen extends StatelessWidget {
             SizedBox(
               height: size.height * 0.02,
             ),
-            _customWidget.customTextField(
+            _customTextField.customTextField(
               _passwordController,
               'Password',
               size.width * 0.7,
