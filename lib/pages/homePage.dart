@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, camel_case_types
+
 import 'package:flutter/material.dart';
 import 'package:test_pro/nagivation/NavBar.dart';
 
@@ -31,11 +33,11 @@ class _homeState extends State<home> {
       ),
       backgroundColor: Colors.grey[900],
       appBar: AppBar(
-        title: Text('Home page'),
+        title: const Text('Home page'),
         centerTitle: true,
         backgroundColor: Colors.grey[850],
       ),
-      body: Center(),
+      body: const Center(),
     );
   }
 }

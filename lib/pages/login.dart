@@ -5,12 +5,10 @@ import 'package:test_pro/customWidgets/customText.dart';
 import 'package:test_pro/customWidgets/customTextField.dart';
 import 'package:test_pro/services/Authentication.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'CustomWidgets.dart';
 
 class LogInScreen extends StatelessWidget {
   final _customTextField = CustomTextField();
   final _customText = CustomText();
-  final _customButton = CustomButton();
   final _authentication = Authentication();
 
   //final TextEditingController _usernameController = TextEditingController();
