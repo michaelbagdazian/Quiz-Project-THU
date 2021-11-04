@@ -14,6 +14,8 @@ class SignUp extends StatelessWidget {
   final TextEditingController _confirmPasswordController =
       TextEditingController();
 
+  static bool _isChecked = false;
+
   SignUp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -156,7 +158,12 @@ class SignUp extends StatelessWidget {
     return FloatingActionButton.extended(
       onPressed: () {
         _authentication.register(
-            _emailController, _passwordController, _context);
+            _usernameController,
+            _emailController,
+            _passwordController,
+            _confirmPasswordController,
+            _isChecked,
+            _context);
       },
       label: Text(
         _label,
@@ -214,6 +221,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           setState(() {
             isChecked = value!;
           });
+          SignUp._isChecked = isChecked;
         },
       ),
     );

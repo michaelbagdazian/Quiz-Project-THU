@@ -40,13 +40,11 @@ class NavBar extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.account_circle_sharp),
             title: Text('My profile'),
-            // TODO Redirect to my profile page
             onTap: () => selectedItem(context, 'userProfile'),
           ),
           ListTile(
             leading: Icon(Icons.archive),
             title: Text('My quizzes'),
-            // TODO Redirect to my quizzes page
             onTap: () => selectedItem(context, 'myQuizes'),
           ),
           ListTile(
@@ -76,7 +74,6 @@ class NavBar extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.exit_to_app),
             title: Text('Logout'),
-            // TODO Redirect to login page
             onTap: () => selectedItem(context, ''),
           ),
         ],

@@ -8,33 +8,55 @@ import 'package:test_pro/pages/homePage.dart';
 class Authentication {
   final _auth = FirebaseAuth.instance;
 
-//TODO: Add the other controllers to this method
-  void register(TextEditingController _email, TextEditingController _passwd,
+  void register(
+      TextEditingController _username,
+      TextEditingController _email,
+      TextEditingController _passwd,
+      TextEditingController _passconfirm,
+      bool _checked,
       _context) async {
-    try {
-      //TODO: compare password with confirm password with if and else
-      //TODO: find a way to hook the username to a user
-      await _auth.createUserWithEmailAndPassword(
-        email: _email.text,
-        password: _passwd.text,
-      );
-      ScaffoldMessenger.of(_context).showSnackBar(const SnackBar(
-        content: Text('Registration Complete'),
-        duration: Duration(seconds: 5),
-      ));
-      Navigator.of(_context).pop();
-    } on FirebaseAuthException catch (e) {
+    if (_passwd.text == _passconfirm.text && _checked == true) {
+      try {
+        //TODO: find a way to hook the username to a user
+        await _auth.createUserWithEmailAndPassword(
+          email: _email.text,
+          password: _passwd.text,
+        );
+        ScaffoldMessenger.of(_context).showSnackBar(const SnackBar(
+          content: Text('Registration Complete'),
+          duration: Duration(seconds: 5),
+        ));
+        Navigator.of(_context).pop();
+      } on FirebaseAuthException catch (e) {
+        showDialog(
+          context: _context,
+          builder: (ctx) => AlertDialog(
+            title: const Text(
+              "Ops! An Error Happend",
+              style: TextStyle(
+                fontFamily: 'Lobster',
+                fontSize: 40,
+              ),
+            ),
+            content: Text('${e.message}'),
+          ),
+        );
+      }
+    } else {
+      String msg = (_checked == false)
+          ? "Agree to terms of use first"
+          : "Password and Password's Confirmation are different";
       showDialog(
         context: _context,
         builder: (ctx) => AlertDialog(
           title: const Text(
-            "Ops! An Error Happend",
+            "Validation",
             style: TextStyle(
               fontFamily: 'Lobster',
               fontSize: 40,
             ),
           ),
-          content: Text('${e.message}'),
+          content: Text(msg),
         ),
       );
     }
