@@ -1,4 +1,5 @@
 import 'package:crew_brew/services/auth.dart';
+import 'package:crew_brew/shared/constants.dart';
 import 'package:flutter/material.dart';
 
 // ! This is a sign-in screen
@@ -57,6 +58,8 @@ class _SignInState extends State<SignIn> {
               SizedBox(height: 20.0),
               // ~ TextFormField for the e-mail
               TextFormField(
+                // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
+                decoration: textInputDecoration.copyWith(hintText: 'Email'),
                 // ~ we return null value is this formField is valid or a string
                 // ~ if it's not valid
                 validator: (val) => val!.isEmpty ? 'Enter an email' : null,
@@ -68,6 +71,8 @@ class _SignInState extends State<SignIn> {
               SizedBox(height: 20.0),
               // ~ TextForField the the password
               TextFormField(
+                // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
+                decoration: textInputDecoration.copyWith(hintText: 'Password'),
                 // ~ This hides the password when entering it
                 obscureText: true,
                 // ~ we return null value is this formField is valid or a string
