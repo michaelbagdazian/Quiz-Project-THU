@@ -20,7 +20,7 @@ class AuthService{
   Stream<AppUser?> get user {
     // ~ authStateChanges notifies about changes to the user's sign-in state (such as sign-in or sign-out)
     return _auth.authStateChanges()
-        // ~ This is the same as thing below, just shorter
+        // ~ This is the same as thing above, just shorter
         .map(_userFromFirebaseUser);
         // ~ every time we get Firebase User inside the stream, it will map it to our AppUser that we created
         // .map((User? user) => _userFromFirebaseUser(user));
