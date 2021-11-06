@@ -11,8 +11,19 @@ class AuthService{
 
   // ~ this function creates user object based on Firebase User
   // ~ this is a private function ( _ means it's private )
+  // ! the question mark means that this <type>? can possibly be null and flutter will allow you to assign null to it
   AppUser? _userFromFirebaseUser(User? user){
     return user != null ? AppUser(uid: user.uid) : null;
+  }
+
+  // ~ auth change user stream
+  Stream<AppUser?> get user {
+    // ~ authStateChanges notifies about changes to the user's sign-in state (such as sign-in or sign-out)
+    return _auth.authStateChanges()
+        // ~ This is the same as thing below, just shorter
+        .map(_userFromFirebaseUser);
+        // ~ every time we get Firebase User inside the stream, it will map it to our AppUser that we created
+        // .map((User? user) => _userFromFirebaseUser(user));
   }
 
   // * sign in anonymosly
