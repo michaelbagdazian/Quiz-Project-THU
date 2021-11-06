@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 
 // ! This is a sign-in screen
 class SignIn extends StatefulWidget {
-  const SignIn({Key? key}) : super(key: key);
+  const SignIn({Key? key, required this.toggleView}) : super(key: key);
+
+  final Function toggleView;
 
   @override
   _SignInState createState() => _SignInState();
@@ -25,6 +27,16 @@ class _SignInState extends State<SignIn> {
         backgroundColor: Colors.brown[400],
         elevation: 0.0,
         title: Text('Sign in to Brew Crew'),
+        actions: <Widget>[
+          FlatButton.icon(
+            icon: Icon(Icons.person),
+            label: Text('Register'),
+            onPressed:(){
+              // ~ This calls toggleView function from authenticate.dart
+              widget.toggleView();
+            }
+          ),
+        ],
       ),
       body: Container(
         // ~ Symmetric means left and right have the same padding

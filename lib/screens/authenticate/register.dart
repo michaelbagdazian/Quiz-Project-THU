@@ -2,7 +2,9 @@ import 'package:crew_brew/services/auth.dart';
 import 'package:flutter/material.dart';
 
 class Register extends StatefulWidget {
-  const Register({Key? key}) : super(key: key);
+  const Register({Key? key, required this.toggleView}) : super(key: key);
+
+  final Function toggleView;
 
   @override
   _RegisterState createState() => _RegisterState();
@@ -24,6 +26,16 @@ class _RegisterState extends State<Register> {
         backgroundColor: Colors.brown[400],
         elevation: 0.0,
         title: Text('Sign up to Brew Crew'),
+        actions: <Widget>[
+          FlatButton.icon(
+              icon: Icon(Icons.person),
+              label: Text('Sign In'),
+              onPressed:(){
+                // ~ This calss toggleView function from authenticate.dart
+                widget.toggleView();
+              }
+          ),
+        ],
       ),
       body: Container(
         // ~ Symmetric means left and right have the same padding
