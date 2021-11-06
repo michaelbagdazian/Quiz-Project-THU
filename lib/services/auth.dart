@@ -47,6 +47,18 @@ class AuthService{
   // * sign in with e-mail and password
 
   // * register with e-mail and password
+  Future registerWithEmailAndPassword(String email, String password) async {
+    try{
+      // ~ First we do request to FireBase and it awaits for the response
+      UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      // ~ we want to turn this into our own custome user based on user class we have created
+      User? user = result.user;
+      return _userFromFirebaseUser(user);
+    }catch(e){
+      print(e.toString());
+      return null;
+    }
+  }
 
   // * sign out
   Future signOut() async {
