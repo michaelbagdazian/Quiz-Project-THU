@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 // ! This is a sign in screen
 class SignIn extends StatefulWidget {
+  const SignIn({Key? key}) : super(key: key);
+
   @override
   _SignInState createState() => _SignInState();
 }
