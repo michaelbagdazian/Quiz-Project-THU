@@ -1,7 +1,7 @@
 import 'package:crew_brew/services/auth.dart';
 import 'package:flutter/material.dart';
 
-// ! This is a sign in screen
+// ! This is a sign-in screen
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
 
@@ -12,6 +12,10 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
 
   final AuthService _auth = AuthService();
+
+  // ~ text field states
+  String email ='';
+  String password = '';
 
   @override
   Widget build(BuildContext context) {
@@ -26,21 +30,43 @@ class _SignInState extends State<SignIn> {
         // ~ Symmetric means left and right have the same padding
         // ~ and bottom and right have the same padding
         padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
-        child: RaisedButton(
-            child: Text('Sign in anon'),
-            // ~ It's async, because in her we are going to perform async task to login
-            onPressed: () async {
-              // ~ Now we want to access signInAnon function in AuthService class in file services/auth.dart
-              // ~ if login was succesful, this function will return us the user, or null if it wasn't succesful
-              // ~ we define dynamic variable, because we don't know it's type. It could be user, or it could be null
-              dynamic result = await _auth.signInAnon();
-              if(result == null){
-                print("error signing in");
-              }else{
-                print("signed in");
-                print(result.uid);
-              }
-            }
+        // ~ Form widget allows us to do form validation later on
+        child: Form(
+          child: Column(
+            children: <Widget>[
+              SizedBox(height: 20.0),
+              // ~ TextFormField for the e-mail
+              TextFormField(
+                onChanged: (val){
+                  // ~ We take email state and set it equal to value which is in e-mail textField
+                  setState(() => email = val);
+                }
+              ),
+              SizedBox(height: 20.0),
+              // ~ TextForField the the password
+              TextFormField(
+                // ~ This hides the password when entering it
+                obscureText: true,
+                onChanged: (val){
+                  // ~ We take password state and set it equal to value which is in password textField
+                  setState(() => password = val);
+                }
+              ),
+              SizedBox(height: 20.0),
+              RaisedButton(
+                color: Colors.pink[400],
+                child: Text(
+                  'Sign in',
+                  style: TextStyle(color: Colors.white),
+                ),
+                // ~ onPressed is async, because we interract with Firebase and it takes some time
+                onPressed: () async{
+                  print(email);
+                  print(password);
+                }
+              )
+            ]
+          ),
         ),
       ),
     );
