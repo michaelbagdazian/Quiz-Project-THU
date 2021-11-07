@@ -28,6 +28,7 @@ class DatabaseService {
 
   // ~ brew list from snapshot
   List<Brew> _brewListFromSnapshot(QuerySnapshot snapshot){
+    // ~ Return the brews from the database as list of objects Brew that we have created in models/brew.dart
     return snapshot.docs.map((doc){
       return Brew(
         // ~ ?? means if empty return ''

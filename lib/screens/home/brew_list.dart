@@ -15,6 +15,7 @@ class _BrewListState extends State<BrewList> {
   @override
   Widget build(BuildContext context) {
     // ~ We access the brews. It's updated when some changes to the database occur
+    // ~ The provider is defined in home class
     final brews = Provider.of<List<Brew>>(context);
     brews.forEach((brew) {
       print(brew.name);
