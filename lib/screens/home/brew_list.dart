@@ -1,3 +1,4 @@
+import 'package:crew_brew/shared/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
@@ -24,24 +25,25 @@ class _BrewListState extends State<BrewList> {
         print(brew.sugars);
         print(brew.strength);
       });
+
+      return ListView.builder(
+        itemCount: brews.length,
+        // ~ itemBuilder is the function in itself which is going to return some kind of template or a widget tree for each item inside the list
+        itemBuilder: (context, index) {
+          return BrewTile(brew: brews[index]);
+        },
+      );
+    } else {
+      return Loading();
     }
 
-    //print(brews?.docs.toString());
-    /* final brews = Provider.of<QuerySnapshot?>(context);
+//print(brews?.docs.toString());
+/* final brews = Provider.of<QuerySnapshot?>(context);
     if(brews?.docs != null ){
       for(var doc in brews!.docs){
         print(doc.data());
       }
     }
      */
-
-    return ListView.builder(
-      itemCount: brews?.length,
-      // ~ itemBuilder is the function in itself which is going to return some kind of template or a widget tree for each item inside the list
-      itemBuilder: (context, index) {
-        // for each item we run a function and return template for this item
-        return BrewTile(brew: brews![index]);
-      },
-    );
   }
 }

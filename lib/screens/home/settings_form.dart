@@ -74,13 +74,13 @@ class _SettingsFormState extends State<SettingsForm> {
                   // * slider
                   // ! here we use userData.strength to put in the current strength that is stored in DB
                   Slider(
-                    value: (_currentStrength < 100 ? 100 : userData.strength)
+                    value: (_currentStrength < 100 ? userData.strength : _currentStrength )
                         .toDouble(),
                     // ~ The strength of the color is increasing when we move the slider to the right
                     activeColor: Colors
-                        .brown[_currentStrength < 100 ? 100 : userData.strength],
+                        .brown[_currentStrength < 100 ? userData.strength : _currentStrength],
                     inactiveColor: Colors
-                        .brown[_currentStrength < 100 ? 100 : userData.strength],
+                        .brown[_currentStrength < 100 ? userData.strength : _currentStrength],
                     // ~ min value is 100, max is 900
                     min: 100,
                     max: 900,
@@ -97,9 +97,15 @@ class _SettingsFormState extends State<SettingsForm> {
                         style: TextStyle(color: Colors.white),
                       ),
                       onPressed: () async {
-                        print(_currentName);
-                        print(_currentSugars);
-                        print(_currentStrength);
+                        // ! Save the data into Firestore DB
+                        // ~ we are gonna use updateUserData declared in services/database.dart
+                        if(_formKey.currentState!.validate()){
+                          await DatabaseService(uid: user.uid).updateUserData(
+                            _currentSugars.isEmpty ? userData.sugars : _currentSugars,
+                            _currentName.isEmpty ? userData.name : _currentName,
+                            _currentStrength < 100 ? userData.strength : _currentStrength,
+                          );
+                        }
                       }),
                 ],
               ),
