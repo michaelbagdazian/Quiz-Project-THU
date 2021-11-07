@@ -1,4 +1,5 @@
 import 'package:crew_brew/models/brew.dart';
+import 'package:crew_brew/screens/home/settings_form.dart';
 import 'package:flutter/material.dart';
 import 'package:crew_brew/services/auth.dart';
 import 'package:crew_brew/services/database.dart';
@@ -23,7 +24,8 @@ class Home extends StatelessWidget {
       showModalBottomSheet(context: context, builder: (context){
         return Container(
           padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
-          child: Text("bottom sheet"),
+          // ~ Settings form is a custom widget we created in setting_form.dart
+          child: SettingsForm(),
         );
       });
     }
