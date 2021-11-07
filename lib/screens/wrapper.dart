@@ -13,9 +13,9 @@ class Wrapper extends StatelessWidget {
     // ! We have defined provider in main.dart
     final user = Provider.of<AppUser?>(context);
     // ~ return either Home or Authenticate widget
-    if (user == null){
+    if (user == null) {
       return Authenticate();
-    }else{
+    } else {
       return Home();
     }
   }

@@ -9,9 +9,9 @@ class SettingsForm extends StatefulWidget {
 }
 
 class _SettingsFormState extends State<SettingsForm> {
-
   // ! Check register.dart or sign_in.dart for description of formKey and how it is used
   final _formKey = GlobalKey<FormState>();
+
   // ~ Values which user can select from drop down to choose how mny sugars they want
   final List<String> sugars = ['0', '1', '2', '3', '4'];
 
@@ -56,8 +56,10 @@ class _SettingsFormState extends State<SettingsForm> {
           Slider(
             value: (_currentStrength < 100 ? 100 : _currentStrength).toDouble(),
             // ~ The strength of the color is increasing when we move the slider to the right
-            activeColor: Colors.brown[_currentStrength < 100 ? 100 : _currentStrength],
-            inactiveColor: Colors.brown[_currentStrength < 100 ? 100 : _currentStrength],
+            activeColor:
+                Colors.brown[_currentStrength < 100 ? 100 : _currentStrength],
+            inactiveColor:
+                Colors.brown[_currentStrength < 100 ? 100 : _currentStrength],
             // ~ min value is 100, max is 900
             min: 100,
             max: 900,
@@ -76,8 +78,7 @@ class _SettingsFormState extends State<SettingsForm> {
                 print(_currentName);
                 print(_currentSugars);
                 print(_currentStrength);
-              }
-          ),
+              }),
         ],
       ),
     );

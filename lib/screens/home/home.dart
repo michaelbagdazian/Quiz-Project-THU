@@ -15,19 +15,20 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     // ~ This function is actually just going to invoke the built-in function
     // ~ This function is called from the settings button onPressed
     // ! This can be used to change the avatar image
-    void _showSettingsPanel(){
+    void _showSettingsPanel() {
       // ~ Builder is the thing that actually builds the template that will sit inside the bottomSheet
-      showModalBottomSheet(context: context, builder: (context){
-        return Container(
-          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
-          // ~ Settings form is a custom widget we created in setting_form.dart
-          child: SettingsForm(),
-        );
-      });
+      showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return Container(
+              padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+              // ~ Settings form is a custom widget we created in setting_form.dart
+              child: SettingsForm(),
+            );
+          });
     }
 
     // ~ Use provider package to listen to the brew stream we defined in database
@@ -45,7 +46,7 @@ class Home extends StatelessWidget {
           actions: <Widget>[
             FlatButton.icon(
               icon: Icon(Icons.person),
-              onPressed: () async{
+              onPressed: () async {
                 // ~ When this is complete, we're gonna get null value in our stream
                 // ~ And then in wrapper it will be updated, so Authenticate screen will be called
                 await _auth.signOut();
@@ -56,8 +57,7 @@ class Home extends StatelessWidget {
                 // ! This can be used to change the avatar image
                 onPressed: () => _showSettingsPanel(),
                 icon: Icon(Icons.settings),
-                label: Text('settings')
-            ),
+                label: Text('settings')),
           ],
         ),
         body: BrewList(),

@@ -18,7 +18,7 @@ class _BrewListState extends State<BrewList> {
     // ~ We access the brews. It's updated when some changes to the database occur
     // ~ The provider is defined in home.dart class
     final brews = Provider.of<List<Brew>?>(context);
-    if(brews!=null){
+    if (brews != null) {
       brews.forEach((brew) {
         print(brew.name);
         print(brew.sugars);
@@ -38,7 +38,7 @@ class _BrewListState extends State<BrewList> {
     return ListView.builder(
       itemCount: brews?.length,
       // ~ itemBuilder is the function in itself which is going to return some kind of template or a widget tree for each item inside the list
-      itemBuilder: (context, index){
+      itemBuilder: (context, index) {
         // for each item we run a function and return template for this item
         return BrewTile(brew: brews![index]);
       },
