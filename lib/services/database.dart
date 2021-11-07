@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:crew_brew/models/brew.dart';
 
 // ! The instance of DatabaseService is created in the class auth.dart when user is registered
 class DatabaseService {
@@ -25,10 +26,24 @@ class DatabaseService {
     });
   }
 
+  // ~ brew list from snapshot
+  List<Brew> _brewListFromSnapshot(QuerySnapshot snapshot){
+    return snapshot.docs.map((doc){
+      return Brew(
+        // ~ ?? means if empty return ''
+          name: doc.get('name') ?? '',
+          sugars: doc.get('sugars') ?? '0',
+          strength: doc.get('strength') ?? 0
+      );
+    }).toList();
+  }
+
   // ~ Create new stream which will notify us about any changes in the database
-  Stream<QuerySnapshot> get brews{
+  // ! Stream<QuerySnapshot> get brews{
+    Stream<List<Brew>> get brews{
     // ! This now returns us a stream whith we will use in Home screen
-    return brewCollection.snapshots();
+    return brewCollection.snapshots()
+        .map(_brewListFromSnapshot);
   }
 
 }
