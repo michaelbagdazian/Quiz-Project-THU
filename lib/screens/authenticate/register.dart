@@ -1,5 +1,6 @@
 import 'package:crew_brew/services/auth.dart';
 import 'package:crew_brew/shared/constants.dart';
+import 'package:crew_brew/shared/loading.dart';
 import 'package:flutter/material.dart';
 
 class Register extends StatefulWidget {
@@ -17,6 +18,8 @@ class _RegisterState extends State<Register> {
   // ~ This key we are going to use to identify our form and we are
   // ~ going to assosiate our form with this global FormState key
   final _formKey = GlobalKey<FormState>();
+  // ! When loading is true, then instead of Scaffold we will be showing loading widget
+  bool loading = false;
 
   // ~ text field states
   String email ='';
@@ -25,7 +28,8 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    // ! If true, we return loading widget, otherwise Scaffold
+    return loading ? Loading() : Scaffold(
       backgroundColor: Colors.brown[100],
       appBar: AppBar(
         backgroundColor: Colors.brown[400],
@@ -95,12 +99,18 @@ class _RegisterState extends State<Register> {
                       // ~ currentState tells us what values are inside the form fields
                       // ~ validate method uses validator properties in the TextFormFields
                       if(_formKey.currentState!.validate()){
+                        // * Here we decide to show the loading screen
+                        setState(() => loading = true);
                         // ~ We will get null or AppUser, so we don't know the type of return. Therefore we use dynamic
                         // ~ We await for the result
                         dynamic result = await _auth.registerWithEmailAndPassword(email, password);
                         // ~ If registration is not succesful, we provide an error message
-                        if(result == null){
-                          setState(() => error = 'please supply a valid email');
+                        if (result == null) {
+                          setState(() {
+                            error = 'please supply a valid email';
+                            // * Here we decide to remove the loading screen
+                            loading = false;
+                          });
                         }
                         // ~ If registration was succesful, we have a stream setup in our root widget which
                         // ~ listens to all changes and when a user succesfuly registers we get that

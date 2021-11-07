@@ -1,5 +1,6 @@
 import 'package:crew_brew/services/auth.dart';
 import 'package:crew_brew/shared/constants.dart';
+import 'package:crew_brew/shared/loading.dart';
 import 'package:flutter/material.dart';
 
 // ! This is a sign-in screen
@@ -18,15 +19,19 @@ class _SignInState extends State<SignIn> {
   // ~ This key we are going to use to identify our form and we are
   // ~ going to assosiate our form with this global FormState key
   final _formKey = GlobalKey<FormState>();
+  // ! When loading is true, then instead of Scaffold we will be showing loading widget
+  bool loading = false;
 
   // ~ text field states
   String email ='';
   String password = '';
   String error = '';
 
+  // ! Build is also called whenever we use setState function. E.g when we press the button we have setState for loading screen
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    // ! If true, we return loading widget, otherwise Scaffold
+    return loading ? Loading() : Scaffold(
       backgroundColor: Colors.brown[100],
       appBar: AppBar(
         backgroundColor: Colors.brown[400],
@@ -96,13 +101,19 @@ class _SignInState extends State<SignIn> {
                   // ~ currentState tells us what values are inside the form fields
                   // ~ validate method uses validator properties in the TextFormFields
                   if (_formKey.currentState!.validate()) {
+                    // * Here we decide to show the loading screen
+                    setState(() => loading = true);
                     // ~ We will get null or AppUser, so we don't know the type of return. Therefore we use dynamic
                     // ~ We await for the result
                     dynamic result = await _auth.signInWithEmailAndPassword(
                         email, password);
                     // ~ If login is not succesful, we provide an error message
                     if (result == null) {
-                      setState(() => error = 'could not sign in with those credentials');
+                      setState(() {
+                        error = 'could not sign in with those credentials';
+                        // * Here we decide to remove the loading screen
+                        loading = false;
+                      });
                     }
                     // ~ If login was succesful, we have a stream setup in our root widget which
                     // ~ listens to all changes and when a user succesfuly logins we get that
