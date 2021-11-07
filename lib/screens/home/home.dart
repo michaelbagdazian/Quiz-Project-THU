@@ -14,6 +14,20 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    // ~ This function is actually just going to invoke the built-in function
+    // ~ This function is called from the settings button onPressed
+    // ! This can be used to change the avatar image
+    void _showSettingsPanel(){
+      // ~ Builder is the thing that actually builds the template that will sit inside the bottomSheet
+      showModalBottomSheet(context: context, builder: (context){
+        return Container(
+          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+          child: Text("bottom sheet"),
+        );
+      });
+    }
+
     // ~ Use provider package to listen to the brew stream we defined in database
     // return StreamProvider<QuerySnapshot?>.value(
     return StreamProvider<List<Brew>?>.value(
@@ -35,6 +49,12 @@ class Home extends StatelessWidget {
                 await _auth.signOut();
               },
               label: Text('logout'),
+            ),
+            FlatButton.icon(
+                // ! This can be used to change the avatar image
+                onPressed: () => _showSettingsPanel(),
+                icon: Icon(Icons.settings),
+                label: Text('settings')
             ),
           ],
         ),
