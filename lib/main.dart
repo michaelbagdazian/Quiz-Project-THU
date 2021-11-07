@@ -15,9 +15,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // ~ If the user is signed in, we want to show Home screen
-    // ~ so we need a way to sprovide that stream data to the root widget
+    // ~ so we need a way to provide that stream data to the root widget
     // ~ so that it can listen to authChanges and provide the information down below
-    // ~ we will sue package " Provider " for this
+    // ! we will use package " Provider " for this
     return StreamProvider<AppUser?>.value(
       // ~ what stream we want to listen to and which data do we expect to get back
       value: AuthService().user,

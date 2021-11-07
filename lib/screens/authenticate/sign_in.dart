@@ -70,7 +70,7 @@ class _SignInState extends State<SignIn> {
                 validator: (val) => val!.isEmpty ? 'Enter an email' : null,
                 onChanged: (val){
                   // ~ We take email state and set it equal to value which is in e-mail textField
-                  setState(() => email = val);
+                  setState(() => email = val.trim());
                 }
               ),
               SizedBox(height: 20.0),

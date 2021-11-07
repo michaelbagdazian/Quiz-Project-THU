@@ -24,4 +24,11 @@ class DatabaseService {
       'strength' : strength,
     });
   }
+
+  // ~ Create new stream which will notify us about any changes in the database
+  Stream<QuerySnapshot> get brews{
+    // ! This now returns us a stream whith we will use in Home screen
+    return brewCollection.snapshots();
+  }
+
 }
