@@ -53,6 +53,19 @@ class _SettingsFormState extends State<SettingsForm> {
             },
           ),
           // * slider
+          Slider(
+            value: (_currentStrength < 100 ? 100 : _currentStrength).toDouble(),
+            // ~ The strength of the color is increasing when we move the slider to the right
+            activeColor: Colors.brown[_currentStrength < 100 ? 100 : _currentStrength],
+            inactiveColor: Colors.brown[_currentStrength < 100 ? 100 : _currentStrength],
+            // ~ min value is 100, max is 900
+            min: 100,
+            max: 900,
+            // ~ in total we have 8 divisions when moving slider
+            divisions: 8,
+            // ~ Round rounds up the value to closest integer ( e.g if it's 295 it will return 300 )
+            onChanged: (val) => setState(() => _currentStrength = val.round()),
+          ),
           RaisedButton(
               color: Colors.pink[400],
               child: Text(
