@@ -1,4 +1,5 @@
 import 'package:crew_brew/models/AppUser.dart';
+import 'package:crew_brew/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 // ! Here we define all methods that are going to interact with firebase_auth for us
@@ -65,6 +66,9 @@ class AuthService{
       UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       // ~ we want to turn this into our own custome user based on user class we have created
       User? user = result.user;
+
+      // ! create a document in Firestore Database for that user with the UID
+      await DatabaseService(uid: user!.uid).updateUserData('0', 'new crew member', 100);
       return _userFromFirebaseUser(user);
     }catch(e){
       print(e.toString());
