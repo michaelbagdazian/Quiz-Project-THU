@@ -3,7 +3,7 @@ import 'package:crew_brew/services/auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:crew_brew/models/AppUser.dart';
+import 'package:crew_brew/models/user/AppUser.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
