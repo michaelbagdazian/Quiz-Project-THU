@@ -16,7 +16,7 @@ class WelcominScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final CustomTextField _customTextField = new CustomTextField();
+    final CustomTextField _customTextField = CustomTextField();
     final CustomText _customText = CustomText();
 
     final TextEditingController _pinController = TextEditingController();
@@ -205,7 +205,7 @@ class WelcominScreen extends StatelessWidget {
           onPressed: () {
             Navigator.push(
               cntxt,
-              new MaterialPageRoute(builder: (cntxt) => new LogInScreen()),
+              MaterialPageRoute(builder: (cntxt) => LogInScreen()),
             );
           },
           label: const Text(
@@ -230,7 +230,7 @@ class WelcominScreen extends StatelessWidget {
           onPressed: () {
             Navigator.push(
               cntxt,
-              new MaterialPageRoute(builder: (cntxt) => new SignUp()),
+              MaterialPageRoute(builder: (cntxt) => SignUp()),
             );
           },
           label: const Text(
