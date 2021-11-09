@@ -23,6 +23,7 @@ class _RegisterState extends State<Register> {
   bool loading = false;
 
   // ~ text field states
+  String username = '';
   String email = '';
   String password = '';
   String error = '';
@@ -60,7 +61,21 @@ class _RegisterState extends State<Register> {
                 key: _formKey,
                 child: Column(children: <Widget>[
                   SizedBox(height: 20.0),
-                  // ~ TextFormField for the e-mail
+                  // * TextFormField for the username
+                  TextFormField(
+                    // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
+                      decoration:
+                      textInputDecoration.copyWith(hintText: 'Username'),
+                      // ~ we return null value is this formField is valid or a string
+                      // ~ if it's not valid
+                      validator: (val) =>
+                      val!.isEmpty ? 'Enter a username' : null,
+                      onChanged: (val) {
+                        // ~ We take email state and set it equal to value which is in e-mail textField
+                        setState(() => username = val.trim());
+                      }),
+                  SizedBox(height: 20.0),
+                  // * TextFormField for the e-mail
                   TextFormField(
                       // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
                       decoration:
@@ -74,7 +89,7 @@ class _RegisterState extends State<Register> {
                         setState(() => email = val.trim());
                       }),
                   SizedBox(height: 20.0),
-                  // ~ TextForField the the password
+                  // * TextForField the the password
                   TextFormField(
                       // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
                       decoration:
@@ -108,7 +123,7 @@ class _RegisterState extends State<Register> {
                           // ~ We will get null or AppUser, so we don't know the type of return. Therefore we use dynamic
                           // ~ We await for the result
                           dynamic result = await _auth
-                              .registerWithEmailAndPassword(email, password);
+                              .registerWithEmailAndPassword(username, email, password);
                           // ~ If registration is not succesful, we provide an error message
                           if (result == null) {
                             setState(() {
