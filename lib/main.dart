@@ -6,6 +6,7 @@ import 'package:test_pro/pages/login.dart';
 import 'package:test_pro/pages/signup.dart';
 import 'package:test_pro/pages/userProfilePage.dart';
 import 'package:test_pro/pages/myQuizesPage.dart';
+import 'customWidgets/quiz/quiz.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,12 +15,14 @@ void main() async {
     MaterialApp(
       initialRoute: '/',
       routes: {
-        '/': (context) => const WelcominScreen(),
+        '/': (context) =>
+            const Quiz(questions: ["Monkey", "Penis"], answer: ["Monkey"]),
+        // const WelcominScreen(),
         '/register': (context) => SignUp(),
         '/login': (context) => LogInScreen(),
         '/home': (context) => const home(),
         '/userProfile': (context) => const userProfile(),
-        '/myQuizes': (context) => const myQuizes(),
+        // '/myQuizes': (context) => const myQuizes(),
       },
       debugShowCheckedModeBanner: false,
       //theme: ThemeData(fontFamily: 'Lobster'),
