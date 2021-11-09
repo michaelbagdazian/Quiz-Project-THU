@@ -25,8 +25,10 @@ class _AuthenticateState extends State<Authenticate> {
   Widget build(BuildContext context) {
     // ~ Here we pass function toggleView defined a few lines upper to switch between screens
     if (showSignIn) {
+      // ~ Here we pass in toggleView as a function to the Widget SignIn
       return SignIn(toggleView: toggleView);
     } else {
+      // ~ Here we pass in toggleView as a function to the Widget Register
       return Register(toggleView: toggleView);
     }
   }
