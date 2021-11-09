@@ -14,12 +14,12 @@ void main() async {
     MaterialApp(
       initialRoute: '/',
       routes: {
-        '/': (context) => WelcominScreen(),
+        '/': (context) => const WelcominScreen(),
         '/register': (context) => SignUp(),
         '/login': (context) => LogInScreen(),
-        '/home': (context) => home(),
-        '/userProfile': (context) => userProfile(),
-        '/myQuizes': (context) => myQuizes(),
+        '/home': (context) => const home(),
+        '/userProfile': (context) => const userProfile(),
+        '/myQuizes': (context) => const myQuizes(),
       },
       debugShowCheckedModeBanner: false,
       //theme: ThemeData(fontFamily: 'Lobster'),

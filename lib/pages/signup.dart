@@ -6,7 +6,7 @@ import 'package:test_pro/customWidgets/customText.dart';
 import 'package:test_pro/customWidgets/customTextField.dart';
 
 class SignUp extends StatelessWidget {
-  final CustomTextField _customTextField = new CustomTextField();
+  final CustomTextField _customTextField = CustomTextField();
   final CustomText _customText = CustomText();
   final _authentication = Authentication();
 
