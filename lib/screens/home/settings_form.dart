@@ -1,4 +1,4 @@
-import 'package:crew_brew/models/AppUser.dart';
+import 'package:crew_brew/models/user/AppUser.dart';
 import 'package:crew_brew/services/database.dart';
 import 'package:crew_brew/shared/loading.dart';
 import 'package:flutter/material.dart';
