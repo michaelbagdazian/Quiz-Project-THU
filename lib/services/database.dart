@@ -88,11 +88,11 @@ class DatabaseService {
   UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
     // ~ Convert snapshot to UserData class that we have created in models/AppUser.dart
     return UserData(
-        uid: uid,
-        username: snapshot['username'],
-        email: snapshot['email'],
-        avatar: snapshot['avatar'],
-        level: snapshot['level'],
+      uid: uid,
+      username: snapshot['username'],
+      email: snapshot['email'],
+      avatar: snapshot['avatar'],
+      level: snapshot['level'],
     );
   }
 
@@ -102,9 +102,13 @@ class DatabaseService {
   // ~ so whoever logins, it will be new stream. Only their document in the firestore database will be accesable to them
   // ! get user doc stream
   // Stream<DocumentSnapshot> get userData{
-  Stream<UserData> get userData {
+  Stream<UserData>? get userData {
     // ~ we return the stream of UserData
     // ! Here snapshot is taken ONLY from what user with this UID should see ( only his userData )
-    return userDataCollection.doc(uid).snapshots().map(_userDataFromSnapshot);
+    if (uid.isEmpty) {
+      return null;
+    } else {
+      return userDataCollection.doc(uid).snapshots().map(_userDataFromSnapshot);
+    }
   }
 }

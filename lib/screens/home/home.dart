@@ -20,7 +20,7 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     // ! Here we access the AppUser data from DB to define UserData StreamProvider. Stream will be passed to drawer
     final user = Provider.of<AppUser?>(context);
-    
+
     // ~ This function is actually just going to invoke the built-in function
     // ~ This function is called from the settings button onPressed
     // ! This can be used to change the avatar image
@@ -44,12 +44,7 @@ class Home extends StatelessWidget {
       initialData: null,
       value: DatabaseService(uid: '').quizes,
       child: Scaffold(
-        // ! Here we define NavBar
-        drawer: StreamProvider<UserData?>.value(
-            value: DatabaseService(uid: user!.uid).userData,
-            initialData: null,
-            child: NavBar()
-        ),
+        drawer: NavBar(),
         backgroundColor: Colors.brown[50],
         appBar: AppBar(
           title: Text('Quiz App'),

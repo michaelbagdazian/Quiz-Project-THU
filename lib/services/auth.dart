@@ -76,7 +76,7 @@ class AuthService {
       // ! Together with the Firebase User instance we create the entry of User Data in the Firebase
       // ~ Username and email is provided, level is 0 and avatar is default
       await DatabaseService(uid: user!.uid)
-          .updateUserData(username, email, 'default', 0);
+          .updateUserData(username, email, 'default.png', 0);
       // ! Create a default Quiz when user is registered. It will be shared by default
       await DatabaseService(uid: user.uid)
           .updateQuizData('default', 'default', username, 'this is default quiz', true);

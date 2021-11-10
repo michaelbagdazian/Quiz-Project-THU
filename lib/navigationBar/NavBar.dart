@@ -1,4 +1,5 @@
 import 'package:crew_brew/models/user/UserData.dart';
+import 'package:crew_brew/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -9,12 +10,14 @@ class NavBar extends StatefulWidget {
 
 class _NavBarState extends State<NavBar> {
 
+  final AuthService _auth = AuthService();
   String userName = 'test';
   String userEmail = 'test';
   String avatar = 'default.png';
 
   @override
   Widget build(BuildContext context) {
+    // ! Here we access userData from the prodiver ( home for now )
     final userData = Provider.of<UserData?>(context);
     if(userData != null){
       userName = userData.username;
@@ -44,6 +47,11 @@ class _NavBarState extends State<NavBar> {
                 fit: BoxFit.cover,
               ),
             ),
+          ),
+          ListTile(
+            leading: Icon(Icons.home),
+            title: Text('Home'),
+            onTap: () => selectedItem(context, 'home'),
           ),
           ListTile(
             leading: Icon(Icons.account_circle_sharp),
@@ -82,7 +90,7 @@ class _NavBarState extends State<NavBar> {
           ListTile(
             leading: Icon(Icons.exit_to_app),
             title: Text('Logout'),
-            onTap: () => selectedItem(context, ''),
+            onTap: () => _auth.signOut(),
           ),
         ],
       ),
@@ -92,10 +100,6 @@ class _NavBarState extends State<NavBar> {
   void selectedItem(BuildContext context, String index) {
     // ~ It works similar to pushNamed, but instead of putting home on top of userProfile, it will replace home with location
     // ~ So location will no longer exist
-    /*Navigator.pushReplacementNamed(context, '/$index', arguments: {
-      'accountName': widget.accountName,
-      'accountEmail': widget.accountEmail,
-      'avatar': widget.avatar,
-    });*/
+    Navigator.pushReplacementNamed(context, '/$index');
   }
 }

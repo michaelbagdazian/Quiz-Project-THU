@@ -21,11 +21,7 @@ class _QuizListState extends State<QuizList> {
     final quizes = Provider.of<List<Quiz>?>(context);
     if (quizes != null) {
       quizes.forEach((quiz) {
-        print(quiz.quizCategory);
-        print(quiz.quizTitle);
-        print(quiz.quizOwner);
-        print(quiz.quizDescription);
-        print(quiz.quizIsShared);
+        // TODO Do something
       });
 
       return ListView.builder(
