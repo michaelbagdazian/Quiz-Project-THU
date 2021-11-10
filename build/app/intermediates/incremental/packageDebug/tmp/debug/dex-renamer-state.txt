@@ -1,0 +1,4 @@
+#Wed Nov 10 14:09:52 CET 2021
+base.0=/home/hansp/flutter/workspace/udemy/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
+renamed.0=classes.dex
+path.0=classes.dex
