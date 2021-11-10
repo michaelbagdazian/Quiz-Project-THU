@@ -1,7 +1,8 @@
 # ScreenShots
 <img src="./misc/WelcomePage.jpg" width=30% height=30%><img src="./misc/Log_in.jpg" width=30% height=30%><img src="./misc/Sign_up.jpg" width=30% height=30%>
 
-<img src="./misc/firebase_users.png" width=50% height=50%>
+<img src="./misc/firebase_users.png">
+
 # Implementd
 -welcoming screen, login screen, register screen (functional)\
 -"register" and "login" buttons and their functionality are implemented\
