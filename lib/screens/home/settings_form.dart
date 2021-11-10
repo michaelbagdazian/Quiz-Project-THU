@@ -1,3 +1,4 @@
+/*
 import 'package:crew_brew/models/user/AppUser.dart';
 import 'package:crew_brew/services/database.dart';
 import 'package:crew_brew/shared/loading.dart';
@@ -5,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:crew_brew/shared/constants.dart';
 import 'package:provider/provider.dart';
 
+// TODO Uncomment this
 class SettingsForm extends StatefulWidget {
   const SettingsForm({Key? key}) : super(key: key);
 
@@ -28,7 +30,7 @@ class _SettingsFormState extends State<SettingsForm> {
   Widget build(BuildContext context) {
     final user = Provider.of<AppUser>(context);
 
-    // ~ By using built-in stream builder we only access the stream data in this single widget.
+    // ! By using built-in stream builder we only access the stream data in this single widget.
     // ~ we only need to access it in single widget and not as before with stream provider ( e.g as in main.dart )
     return StreamBuilder<UserData>(
         stream: DatabaseService(uid: user.uid).userData,
@@ -116,3 +118,4 @@ class _SettingsFormState extends State<SettingsForm> {
         });
   }
 }
+*/

@@ -1,4 +1,4 @@
-import 'package:crew_brew/models/AppUser.dart';
+import 'package:crew_brew/models/user/AppUser.dart';
 import 'package:crew_brew/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -9,6 +9,7 @@ class AuthService {
   // ~ _ in auth means auth property is private and it can only be used in this file
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  // TODO
   // ~ this function creates user object based on Firebase User
   // ~ this is a private function ( _ means it's private )
   // ! the question mark means that this <type>? can possibly be null and flutter will allow you to assign null to it
@@ -16,6 +17,7 @@ class AuthService {
     return user != null ? AppUser(uid: user.uid) : null;
   }
 
+  // TODO
   // ~ auth change user stream
   Stream<AppUser?> get user {
     // ~ authStateChanges notifies about changes to the user's sign-in state (such as sign-in or sign-out)
@@ -27,6 +29,7 @@ class AuthService {
     // .map((User? user) => _userFromFirebaseUser(user));
   }
 
+  // TODO
   // * sign in anonymosly
   // ~ Future - If the asynchronous operation succeeds, the future completes with a value. Otherwise it completes with an error.
   Future signInAnon() async {
@@ -61,7 +64,7 @@ class AuthService {
   }
 
   // * register with e-mail and password
-  Future registerWithEmailAndPassword(String email, String password) async {
+  Future registerWithEmailAndPassword(String username, String email, String password) async {
     try {
       // ~ First we do request to FireBase and it awaits for the response
       UserCredential result = await _auth.createUserWithEmailAndPassword(
@@ -70,8 +73,13 @@ class AuthService {
       User? user = result.user;
 
       // ! create a document in Firestore Database for that user with the UID
+      // ! Together with the Firebase User instance we create the entry of User Data in the Firebase
+      // ~ Username and email is provided, level is 0 and avatar is default
       await DatabaseService(uid: user!.uid)
-          .updateUserData('0', 'new crew member', 100);
+          .updateUserData(username, email, 'default', 0);
+      // ! Create a default Quiz when user is registered. It will be shared by default
+      await DatabaseService(uid: user.uid)
+          .updateQuizData('default', 'default', username, 'this is default quiz', true);
       return _userFromFirebaseUser(user);
     } catch (e) {
       print(e.toString());
@@ -79,6 +87,7 @@ class AuthService {
     }
   }
 
+  // TODO
   // * sign out
   Future signOut() async {
     try {

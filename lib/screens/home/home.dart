@@ -1,11 +1,11 @@
-import 'package:crew_brew/models/brew.dart';
+import 'package:crew_brew/models/Quiz.dart';
+import 'package:crew_brew/screens/home/quiz_list.dart';
 import 'package:crew_brew/screens/home/settings_form.dart';
 import 'package:flutter/material.dart';
 import 'package:crew_brew/services/auth.dart';
 import 'package:crew_brew/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'brew_list.dart';
 
 class Home extends StatelessWidget {
   Home({Key? key}) : super(key: key);
@@ -26,16 +26,17 @@ class Home extends StatelessWidget {
             return Container(
               padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
               // ~ Settings form is a custom widget we created in setting_form.dart
-              child: SettingsForm(),
+              // TODO Uncomment this
+             // child: SettingsForm(),
             );
           });
     }
 
-    // ~ Use provider package to listen to the brew stream we defined in database
+    // ~ Use provider package to listen to the quizes stream we defined in database.dart and then forward the stream to child elements
     // return StreamProvider<QuerySnapshot?>.value(
-    return StreamProvider<List<Brew>?>.value(
+    return StreamProvider<List<Quiz>?>.value(
       initialData: null,
-      value: DatabaseService(uid: '').brews,
+      value: DatabaseService(uid: '').quizes,
       child: Scaffold(
         backgroundColor: Colors.brown[50],
         appBar: AppBar(
@@ -44,6 +45,7 @@ class Home extends StatelessWidget {
           elevation: 0.0,
           // ~ Actions will be appearing on top right of the sidebar
           actions: <Widget>[
+            // * Logout button
             FlatButton.icon(
               icon: Icon(Icons.person),
               onPressed: () async {
@@ -53,6 +55,7 @@ class Home extends StatelessWidget {
               },
               label: Text('logout'),
             ),
+            // * Settings button
             FlatButton.icon(
                 // ! This can be used to change the avatar image
                 onPressed: () => _showSettingsPanel(),
@@ -60,6 +63,7 @@ class Home extends StatelessWidget {
                 label: Text('settings')),
           ],
         ),
+        // * This is the body of our app, which consists of the background and Quizes of ! ALL ! users
         body: Container(
             decoration: BoxDecoration(
               image: DecorationImage(
@@ -67,7 +71,8 @@ class Home extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            child: BrewList()
+            // ! Stream List<Quiz> is provided so this child
+            child: QuizList()
         ),
       ),
     );
