@@ -1,3 +1,4 @@
+import 'package:crew_brew/screens/home/home.dart';
 import 'package:crew_brew/screens/wrapper.dart';
 import 'package:crew_brew/services/auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -24,6 +25,9 @@ class MyApp extends StatelessWidget {
       initialData: null,
       child: MaterialApp(
         home: Wrapper(),
+        routes: {
+          '/home' : (context) => Home(),
+        },
       ),
     );
   }

@@ -1,4 +1,7 @@
 import 'package:crew_brew/models/Quiz.dart';
+import 'package:crew_brew/models/user/AppUser.dart';
+import 'package:crew_brew/models/user/UserData.dart';
+import 'package:crew_brew/navigationBar/NavBar.dart';
 import 'package:crew_brew/screens/home/quiz_list.dart';
 import 'package:crew_brew/screens/home/settings_form.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +18,9 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ! Here we access the AppUser data from DB to define UserData StreamProvider. Stream will be passed to drawer
+    final user = Provider.of<AppUser?>(context);
+    
     // ~ This function is actually just going to invoke the built-in function
     // ~ This function is called from the settings button onPressed
     // ! This can be used to change the avatar image
@@ -38,6 +44,12 @@ class Home extends StatelessWidget {
       initialData: null,
       value: DatabaseService(uid: '').quizes,
       child: Scaffold(
+        // ! Here we define NavBar
+        drawer: StreamProvider<UserData?>.value(
+            value: DatabaseService(uid: user!.uid).userData,
+            initialData: null,
+            child: NavBar()
+        ),
         backgroundColor: Colors.brown[50],
         appBar: AppBar(
           title: Text('Quiz App'),

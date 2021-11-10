@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crew_brew/models/Quiz.dart';
 import 'package:crew_brew/models/user/AppUser.dart';
+import 'package:crew_brew/models/user/UserData.dart';
 import 'package:flutter/material.dart';
 
 // ! The instance of DatabaseService is created in the class auth.dart when user is registered
@@ -59,7 +60,7 @@ class DatabaseService {
   // ! Difference between QuerySnapshot and DocumentSnapshot https://firebase.flutter.dev/docs/firestore/usage/
   // ~ Quiz list from snapshot
   // ! This returns list of ! ALL ! quizes from snapshot in DB
-  List<Quiz> _brewListFromSnapshot(QuerySnapshot snapshot) {
+  List<Quiz> _quizListFromSnapshot(QuerySnapshot snapshot) {
     // ~ Return the brews from the database as list of objects Brew that we have created in models/brew.dart
     return snapshot.docs.map((doc) {
       return Quiz(
@@ -77,28 +78,33 @@ class DatabaseService {
   // Stream<QuerySnapshot> get brews{
   Stream<List<Quiz>> get quizes {
     // ! This now returns us a stream whith we will use in Home screen
-    return quizCollection.snapshots().map(_brewListFromSnapshot);
+    // ~ Here snapshot is taken from all entries
+    return quizCollection.snapshots().map(_quizListFromSnapshot);
   }
 
   // TODO
   // ~ userData from snapshot
-  /*UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
+  // ~ Here we use DocumentSnapshot, so approach is a bit different than quisListFromSnapshot
+  UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
     // ~ Convert snapshot to UserData class that we have created in models/AppUser.dart
     return UserData(
         uid: uid,
-        name: snapshot['name'],
-        sugars: snapshot['sugars'],
-        strength: snapshot['strength']);
-  }*/
+        username: snapshot['username'],
+        email: snapshot['email'],
+        avatar: snapshot['avatar'],
+        level: snapshot['level'],
+    );
+  }
 
   // TODO
   // ~ We create a new stream inside the database service class, which will be linked up to
   // ~ my firestore document. We will take UID and setup a stream with that document
-  // ~ so whoever logins, it will be new stream. Only their document in the firestore database
-  /*// ! get user doc stream
+  // ~ so whoever logins, it will be new stream. Only their document in the firestore database will be accesable to them
+  // ! get user doc stream
   // Stream<DocumentSnapshot> get userData{
   Stream<UserData> get userData {
     // ~ we return the stream of UserData
-    return quizCollection.doc(uid).snapshots().map(_userDataFromSnapshot);
-  }*/
+    // ! Here snapshot is taken ONLY from what user with this UID should see ( only his userData )
+    return userDataCollection.doc(uid).snapshots().map(_userDataFromSnapshot);
+  }
 }
