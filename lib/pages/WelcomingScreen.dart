@@ -16,16 +16,17 @@ class WelcominScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //couple of objects
     final CustomTextField _customTextField = new CustomTextField();
     final CustomText _customText = CustomText();
-
+    //couple of controllers
     final TextEditingController _pinController = TextEditingController();
     final TextEditingController _displayNameController =
         TextEditingController();
-    // ignore: todo
-    // TODO: implement build
+    //size of the screen
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      //see signup.dart
       resizeToAvoidBottomInset: false,
       body: Stack(fit: StackFit.expand, children: [
         //*background pic
@@ -48,11 +49,13 @@ class WelcominScreen extends StatelessWidget {
             SizedBox(
               height: size.height * 0.01,
             ),
+            //*create space between the widget and the sides of the screen
             Container(
                 padding: EdgeInsets.only(
                   left: (0.2 * size.width),
                   right: (0.2 * size.width),
                 ),
+                //*text field to add type in the display name; you can probably use the custom ones, but i will leave that to the frontend team
                 child: TextField(
                   keyboardType: TextInputType.name,
                   controller: _displayNameController,
@@ -79,6 +82,7 @@ class WelcominScreen extends StatelessWidget {
                 left: (0.2 * size.width),
                 right: (0.2 * size.width),
               ),
+              //*text field to add type in the pin of the live quizz; you can probably use the custom ones, but i will leave that to the frontend team
               child: TextField(
                 keyboardType: TextInputType.text,
                 controller: _pinController,
@@ -101,43 +105,17 @@ class WelcominScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: size.height * 0.02),
+            //* Button
             joinButton(),
             SizedBox(height: size.height * 0.05),
+            //*just a widget with the buttons for login or sign up
+            //* frontend can improve the quality of this widget by using the custom Widgets; only if they want to
             signInOrUp(context),
           ],
         ),
       ]),
     );
   }
-
-  // Widget helloMessage() {
-  //   // ignore: prefer_const_literals_to_create_immutables
-  //   return Stack(children: [
-  //     Text(
-  //       'The Quizzler Welcomes You !!!',
-  //       textAlign: TextAlign.center,
-  //       style: TextStyle(
-  //         foreground: Paint()
-  //           ..style = PaintingStyle.stroke
-  //           ..strokeWidth = 3
-  //           ..color = Colors.white,
-  //         fontWeight: FontWeight.bold,
-  //         fontFamily: 'Lobster',
-  //         fontSize: 50,
-  //       ),
-  //     ),
-  //     Text(
-  //       'The Quizzler Welcomes You !!!',
-  //       textAlign: TextAlign.center,
-  //       style: TextStyle(
-  //         fontWeight: FontWeight.bold,
-  //         fontFamily: 'Lobster',
-  //         fontSize: 50,
-  //         color: Colors.teal[400],
-  //       ),
-  //     )
-  //   ]);
-  // }
 
   Widget joinButton() {
     return FloatingActionButton.extended(
@@ -267,6 +245,7 @@ class WelcominScreen extends StatelessWidget {
     );
   }
 
+//small little log at the top of the wecloming page, use whatever pic you want or even comment it out if you want to
   Widget eduLogo() {
     return Container(
       margin: EdgeInsets.only(top: 10),
@@ -279,6 +258,7 @@ class WelcominScreen extends StatelessWidget {
     );
   }
 
+  //?these are to redirect user to a link
   _launchURLBrowser() async {
     const url = 'https://flutterdevs.com/';
     if (await launch(url)) {
@@ -287,6 +267,7 @@ class WelcominScreen extends StatelessWidget {
     }
   }
 
+  //?these are to redirect user to a link
   _launchURLApp() async {
     const url = 'https://flutterdevs.com/';
     if (await launch(url, forceSafariVC: true, forceWebView: true)) {
@@ -295,9 +276,3 @@ class WelcominScreen extends StatelessWidget {
     }
   }
 }
-/* decoration: BoxDecoration(
-          image: DecorationImage(
-          image: AssetImage('assets/images/bgtop.png'),
-          fit: BoxFit.cover,
-        ),
-      )*/

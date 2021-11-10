@@ -2,6 +2,19 @@
 
 import 'package:flutter/material.dart';
 
+/*
+This customTextField is very reusable
+it takes the following arguments:
+TextEditingController _textEditingController: to actually listen to the text that has been typed in
+String _label: a label
+double _width: width of the field
+TextInputType _textInputType: this is to handle multiple textinput types, if you don't know what to use just use text
+{bool obsecured = false}: default argument that can be set to true in case you want the input text to be obsecured; use with passwords
+
+Text Fields documentaion (please visit if you are not sure what is being done inside this customTextField): 
+https://flutter.dev/docs/cookbook/forms/text-input
+
+ */
 class CustomTextField {
   Widget customTextField(TextEditingController _textEditingController,
       String _label, double _width, TextInputType _textInputType,
