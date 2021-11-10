@@ -2,8 +2,10 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:test_pro/services/AddUser.dart';
 
 class Authentication {
+  AddUser _addUser = AddUser();
   final _auth = FirebaseAuth.instance;
   /* registeration method, the arguments are:
   TextEditingController _username: to get the user name that was typed in by the user
@@ -25,7 +27,7 @@ class Authentication {
     if (_passwd.text == _passconfirm.text && _checked == true) {
       try {
         //TODO: find a way to hook the username to a user
-        await _auth.createUserWithEmailAndPassword(
+        final _user = await _auth.createUserWithEmailAndPassword(
           email: _email.text,
           password: _passwd.text,
         );
@@ -34,6 +36,7 @@ class Authentication {
           content: Text('Registration Complete'),
           duration: Duration(seconds: 5),
         ));
+        _addUser.setUser(_user.user!.uid, _email.text, _username.text);
         //go back to the home page
         Navigator.of(_context).pop();
       }
