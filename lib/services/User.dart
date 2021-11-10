@@ -18,10 +18,9 @@ class User {
     this.UID = UID;
   }
 //set the avatar of a user
-  void setCircleAvatar(AssetImage circleAvatar) {
+  void setCircleAvatar(String path) {
     //create a custom circular avatar and pass an image to it
-    customCircularAvatar _circularAvatar =
-        new customCircularAvatar(circleAvatar);
+    customCircularAvatar _circularAvatar = new customCircularAvatar(path);
   }
 
 /*The following map is to convert the User class to a Json Object so we can store it easily in firebase */
