@@ -40,7 +40,7 @@ class Home extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.brown[50],
         appBar: AppBar(
-          title: Text('Brew Crew'),
+          title: Text('Quiz App'),
           backgroundColor: Colors.brown[400],
           elevation: 0.0,
           // ~ Actions will be appearing on top right of the sidebar
@@ -67,7 +67,7 @@ class Home extends StatelessWidget {
         body: Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/coffee_bg.png'),
+                image: AssetImage('assets/home_bg.png'),
                 fit: BoxFit.cover,
               ),
             ),
