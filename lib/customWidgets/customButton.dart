@@ -2,8 +2,11 @@
 
 import 'package:flutter/material.dart';
 
+/*
+this is a custom button
+it takes a label, a color and a funciton that is void incase you don't want your button to do anything
+ */
 class CustomButton {
-//*this is A button with the label 'register on it'
   Widget customButton(String _label, Color _backgroundcolor, void _function) {
     return FloatingActionButton.extended(
       onPressed: () {
