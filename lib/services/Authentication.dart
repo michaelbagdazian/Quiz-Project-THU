@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:test_pro/services/AddUser.dart';
 
 class Authentication {
+  //Just some Objects
   AddUser _addUser = AddUser();
   final _auth = FirebaseAuth.instance;
   /* registeration method, the arguments are:
@@ -36,7 +37,8 @@ class Authentication {
           content: Text('Registration Complete'),
           duration: Duration(seconds: 5),
         ));
-        _addUser.setUser(_user.user!.uid, _email.text, _username.text);
+        //calls the method addUser to add the newly registered User
+        _addUser.addUser(_user.user!.uid, _email.text, _username.text);
         //go back to the home page
         Navigator.of(_context).pop();
       }
