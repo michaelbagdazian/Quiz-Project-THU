@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_complete_guide/classes/game.dart';
-import 'package:flutter_complete_guide/classes/question.dart';
-import 'package:flutter_complete_guide/classes/quiz.dart';
+import './widgets/questionBox.dart';
+import './models/game.dart';
+import './models/question.dart';
+import './models/quiz.dart';
 
 final testQuestion1 = Question(
   id: 1,
@@ -46,12 +47,7 @@ final testQuiz = Quiz(
   id: 1,
   titleOfQuiz: "The Bridge",
   creatorId: 1,
-  listOfIdsQuestions: [
-    testQuestion1,
-    testQuestion2,
-    testQuestion3,
-    testQuestion4
-  ],
+  listOfQuestions: [testQuestion1, testQuestion2, testQuestion3, testQuestion4],
   tags: ["monty", "python"],
 );
 final testGame = Game(
@@ -65,33 +61,17 @@ final testGame = Game(
   lastAnswerCorrect: false,
 );
 void main() {
-  runApp(MyApp());
+  runApp(TheQuizzler());
 }
 
-class MyApp extends StatefulWidget {
+class TheQuizzler extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return MyAppState();
+    return TheQuizzlerState();
   }
 }
 
-class MyAppState extends State<MyApp> {
-  void answer(int number) {
-    testGame.lastButtonPressed = number;
-    if (number ==
-        testQuiz.listOfIdsQuestions[testGame.currentQuestion].correctAnswer) {
-      testGame.lastAnswerCorrect = true;
-    } else {
-      testGame.lastAnswerCorrect = false;
-    }
-    setState(() {
-      testGame.currentQuestion++;
-    });
-    if (testGame.currentQuestion > 3) {
-      testGame.currentQuestion = 0;
-    }
-  }
-
+class TheQuizzlerState extends State<TheQuizzler> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -99,40 +79,13 @@ class MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: Text(testQuiz.getTitleOfQuiz()),
         ),
-        body: Column(
-          children: [
-            Text(testQuiz
-                .listOfIdsQuestions[testGame.currentQuestion].questionText),
-            ElevatedButton(
-              onPressed: () => answer(0),
-              child: Text(testQuiz
-                  .listOfIdsQuestions[testGame.currentQuestion].answers[0]),
-            ),
-            ElevatedButton(
-              onPressed: () => answer(1),
-              child: Text(testQuiz
-                  .listOfIdsQuestions[testGame.currentQuestion].answers[1]),
-            ),
-            ElevatedButton(
-              onPressed: () => answer(2),
-              child: Text(testQuiz
-                  .listOfIdsQuestions[testGame.currentQuestion].answers[2]),
-            ),
-            ElevatedButton(
-              onPressed: () => answer(3),
-              child: Text(testQuiz
-                  .listOfIdsQuestions[testGame.currentQuestion].answers[3]),
-            ),
-            Text("DEBUG"),
-            Text("Right answer: " +
-                testQuiz
-                    .listOfIdsQuestions[testGame.currentQuestion].correctAnswer
-                    .toString()),
-            Text("Last Button pressed: " +
-                testGame.lastButtonPressed.toString()),
-            Text("Yout last answer was : " +
-                testGame.lastAnswerCorrect.toString())
-          ],
+        body: QuestionBox(
+          testGame: testGame,
+          testQuiz: testQuiz,
+          testQuestion1: testQuestion1,
+          testQuestion2: testQuestion2,
+          testQuestion3: testQuestion3,
+          testQuestion4: testQuestion4,
         ),
       ),
     );
