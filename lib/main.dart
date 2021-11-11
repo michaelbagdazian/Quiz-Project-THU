@@ -15,8 +15,11 @@ void main() async {
     MaterialApp(
       initialRoute: '/',
       routes: {
-        '/': (context) =>
-            const Quiz(questions: ["Monkey", "Penis"], answer: ["Monkey"]),
+        '/': (context) => const Quiz(
+              questions: ["Monkey", "Penis"],
+              answer: "Monkey",
+              number: 1,
+            ),
         // const WelcominScreen(),
         '/register': (context) => SignUp(),
         '/login': (context) => LogInScreen(),

@@ -1,7 +1,7 @@
 // ignore_for_file: file_names, camel_case_types
 
 import 'package:flutter/material.dart';
-import 'package:test_pro/nagivation/NavBar.dart';
+import 'package:test_pro/customWidgets/nagivation/NavBar.dart';
 
 class home extends StatefulWidget {
   const home({Key? key}) : super(key: key);

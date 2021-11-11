@@ -1,4 +1,4 @@
-import 'package:test_pro/nagivation/NavBar.dart';
+import 'package:test_pro/customWidgets/nagivation/NavBar.dart';
 import 'package:flutter/material.dart';
 
 // ~ Stateless widget does not change over time and is constant
