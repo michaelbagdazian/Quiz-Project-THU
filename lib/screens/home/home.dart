@@ -18,9 +18,6 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // ! Here we access the AppUser data from DB to define UserData StreamProvider. Stream will be passed to drawer
-    final user = Provider.of<AppUser?>(context);
-
     // ~ This function is actually just going to invoke the built-in function
     // ~ This function is called from the settings button onPressed
     // ! This can be used to change the avatar image

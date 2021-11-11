@@ -19,7 +19,6 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var result = AuthService().user;
     // ~ If the user is signed in, we want to show Home screen
     // ~ so we need a way to provide that stream data to the root widget
     // ~ so that it can listen to authChanges and provide the information down below
@@ -29,7 +28,8 @@ class MyApp extends StatelessWidget {
         StreamProvider<AppUser?>.value(
             value: AuthService().user, initialData: null),
         StreamProvider<UserData?>.value(
-            value: DatabaseService(uid: 'V5p7vIYlFNapXhQWFGE1m7MlwLq1').userData, initialData: null),
+          value: DatabaseService(uid: 'V5p7vIYlFNapXhQWFGE1m7MlwLq1').userData,
+          initialData: null)
       ],
       child: MaterialApp(
         home: Wrapper(),
