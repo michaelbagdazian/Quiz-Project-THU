@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:test_pro/customWidgets/progressbar/progressbar.dart';
 
 class Quiz extends StatelessWidget {
   final int number;
   final String answer;
-
+  final List<String> questions;
   const Quiz(
       {Key? key,
-      required List<String> questions,
+      required this.questions,
       required this.answer,
       required this.number})
       : super(key: key);
@@ -19,10 +18,15 @@ class Quiz extends StatelessWidget {
         Expanded(child: Container(color: Colors.greenAccent)),
         SafeArea(
             child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text("Question $number",
                 style: const TextStyle(color: Colors.white, fontSize: 40)),
-            Image.network("https://picsum.photos/200")
+            Image.network("https://picsum.photos/200"),
+            Column(
+              children: questions.map((e) => Text(e)).toList(),
+            )
           ],
         ))
       ]),
