@@ -4,9 +4,9 @@ import 'package:crew_brew/shared/loading.dart';
 import 'package:flutter/material.dart';
 
 class Register extends StatefulWidget {
-  const Register({Key? key, required this.toggleView}) : super(key: key);
+  const Register({Key? key}) : super(key: key);
 
-  final Function toggleView;
+  // final Function toggleView;
 
   @override
   _RegisterState createState() => _RegisterState();
@@ -30,6 +30,12 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
+
+    // ~ This function removes register screen from the stack
+    void popScreen(){
+      Navigator.pop(context);
+    }
+
     // ! If true, we return loading widget, otherwise Scaffold
     return loading
         ? Loading()
@@ -39,7 +45,7 @@ class _RegisterState extends State<Register> {
               backgroundColor: Colors.brown[400],
               elevation: 0.0,
               title: Text('Sign up to Quiz App'),
-              actions: <Widget>[
+              /*actions: <Widget>[
                 FlatButton.icon(
                     icon: Icon(Icons.person),
                     label: Text('Sign In'),
@@ -47,7 +53,7 @@ class _RegisterState extends State<Register> {
                       // ~ This calss toggleView function from authenticate.dart
                       widget.toggleView();
                     }),
-              ],
+              ],*/
             ),
             body: Container(
               // ~ Symmetric means left and right have the same padding
@@ -131,6 +137,9 @@ class _RegisterState extends State<Register> {
                               // * Here we decide to remove the loading screen
                               loading = false;
                             });
+                            // ! If login is sucessful, pop current screen from the stack so user will not be able to nagivate back (unless he logs out)
+                          }else{
+                            popScreen();
                           }
                           // ~ If registration was succesful, we have a stream setup in our root widget which
                           // ~ listens to all changes and when a user succesfuly registers we get that

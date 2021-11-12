@@ -10,11 +10,8 @@ import 'package:crew_brew/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class SharedQuizes extends StatelessWidget {
-  SharedQuizes({Key? key}) : super(key: key);
-
-  // ~ We have to create a new instance of AuthService
-  final AuthService _auth = AuthService();
+class MyQuizes extends StatelessWidget {
+  MyQuizes({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,11 +32,13 @@ class SharedQuizes extends StatelessWidget {
           });
     }
 
+    final user = Provider.of<AppUser?>(context);
+
     // ~ Use provider package to listen to the quizes stream we defined in database.dart and then forward the stream to child elements
     // return StreamProvider<QuerySnapshot?>.value(
     return StreamProvider<List<Quiz>?>.value(
       initialData: null,
-      value: DatabaseService(uid: '').sharedQuizes,
+      value: DatabaseService(uid: user!.uid).myQuizes,
       child: Scaffold(
         drawer: NavBar(),
         backgroundColor: Colors.brown[50],

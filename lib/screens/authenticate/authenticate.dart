@@ -1,8 +1,9 @@
+/*
 import 'package:crew_brew/screens/authenticate/register.dart';
 import 'package:crew_brew/screens/authenticate/sign_in.dart';
 import 'package:flutter/material.dart';
 
-// ! Authenticate is the wrapper for register and sign_in screens
+// ! Authenticate is the wrapper for register and sign_in screens. Not used for now
 class Authenticate extends StatefulWidget {
   const Authenticate({Key? key}) : super(key: key);
 
@@ -17,19 +18,22 @@ class _AuthenticateState extends State<Authenticate> {
   // ~ This function will be used in register and sign_in when we click on the top right
   // ~ on " register " or "login"
   // ~ we need to pass this function as the parameter to 2 screens
-  void toggleView() {
+  */
+/*void toggleView() {
     setState(() => showSignIn = !showSignIn);
-  }
+  }*//*
+
 
   @override
   Widget build(BuildContext context) {
     // ~ Here we pass function toggleView defined a few lines upper to switch between screens
     if (showSignIn) {
       // ~ Here we pass in toggleView as a function to the Widget SignIn
-      return SignIn(toggleView: toggleView);
+      return SignIn();
     } else {
       // ~ Here we pass in toggleView as a function to the Widget Register
-      return Register(toggleView: toggleView);
+      return Register();
     }
   }
 }
+*/

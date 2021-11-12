@@ -29,13 +29,13 @@ class DatabaseService {
   // * Here we update quizData in DB
   Future updateQuizData(String quizCategory, String quizTitle, String quizOwner,
       String quizDescription, bool quizIsShared) async {
-    // ~ Get the document based on the UID of the user
     // ~ If document does not exist yet, then Firebase will create the document with that UID. Thereby linking the Firestore document for that user with the Firebase User
     // ~ We pass the data through map (key-value pairs) to set method
-    return await quizCollection.doc(uid).set({
+    return await quizCollection.doc().set({
       'quizCategory': quizCategory,
       'quizTitle': quizTitle,
       'quizOwner': quizOwner,
+      'quizOwnerUID' : uid,
       'quizDescription': quizDescription,
       'quizIsShared': quizIsShared,
     });
@@ -59,56 +59,61 @@ class DatabaseService {
 
   // ! Difference between QuerySnapshot and DocumentSnapshot https://firebase.flutter.dev/docs/firestore/usage/
   // ~ Quiz list from snapshot
-  // ! This returns list of ! ALL ! quizes from snapshot in DB
-  List<Quiz> _quizListFromSnapshot(QuerySnapshot snapshot) {
-    // ~ Return the brews from the database as list of objects Brew that we have created in models/brew.dart
-    return snapshot.docs.map((doc) {
-      return Quiz(
-        // ~ ?? means if empty return ''
-        quizCategory: doc.get('quizCategory') ?? '',
-        quizTitle: doc.get('quizTitle') ?? '0',
-        quizOwner: doc.get('quizOwner') ?? '0',
-        quizDescription: doc.get('quizDescription') ?? '0',
-        quizIsShared: doc.get('quizIsShared') ?? false,
-      );
-    }).toList();
-  }
-
-  // ! Difference between QuerySnapshot and DocumentSnapshot https://firebase.flutter.dev/docs/firestore/usage/
-  // ~ Quiz list from snapshot
   // ! This returns list of shared quizes from snapshot in DB
-/*  List<Quiz> _sharedQuizListFromSnapshot(QuerySnapshot snapshot) {
-    // ~ Return the brews from the database as list of objects Brew that we have created in models/brew.dart
-    return snapshot.docs.map((doc) {
+  List<Quiz> _sharedQuizListFromSnapshot(QuerySnapshot snapshot) {
+    List<Quiz> sharedQuizList = [];
+
+    snapshot.docs.forEach((doc) {
       bool quizIsShared = doc.get('quizIsShared');
-      if (quizIsShared) {
-        return Quiz(
-          // ~ ?? means if empty return ''
-          quizCategory: doc.get('quizCategory') ?? '',
-          quizTitle: doc.get('quizTitle') ?? '0',
-          quizOwner: doc.get('quizOwner') ?? '0',
-          quizDescription: doc.get('quizDescription') ?? '0',
-          quizIsShared: doc.get('quizIsShared') ?? false,
-        );
-      } else {
-        return Quiz(
-          // ~ ?? means if empty return ''
-          quizCategory: doc.get('quizCategory') ?? '',
-          quizTitle: doc.get('quizTitle') ?? '0',
-          quizOwner: doc.get('quizOwner') ?? '0',
-          quizDescription: doc.get('quizDescription') ?? '0',
-          quizIsShared: doc.get('quizIsShared') ?? false,
+      if(quizIsShared){
+        sharedQuizList.add(
+          quizListFromSnapshot(doc, quizIsShared)
         );
       }
-    }).toList();
-  }*/
+    });
+
+    return sharedQuizList;
+  }
+
+  // ! This returns list of myQuizes from snapshot in DB
+  List<Quiz> _myQuizListFromSnapshot(QuerySnapshot snapshot) {
+    List<Quiz> sharedQuizList = [];
+
+    snapshot.docs.forEach((doc) {
+      String quizOwnedUID = doc.get('quizOwnerUID');
+      if(quizOwnedUID == uid){
+        sharedQuizList.add(
+            quizListFromSnapshot(doc, doc.get('quizIsShared'))
+        );
+      }
+    });
+
+    return sharedQuizList;
+  }
+
+  // ! This is helped merhod. It returns single quiz from one document
+  Quiz quizListFromSnapshot(DocumentSnapshot doc, bool quizIsShared){
+    return Quiz(
+        quizCategory: doc.get('quizCategory'),
+        quizTitle: doc.get('quizTitle'),
+        quizOwner: doc.get('quizOwner'),
+        quizOwnerUID: doc.get('quizOwnerUID'),
+        quizDescription: doc.get('quizDescription'),
+        quizIsShared: quizIsShared
+    );
+  }
 
   // ~ Create new stream which will notify us about any changes in the quiz_collection in DB
-  // Stream<QuerySnapshot> get brews{
-  Stream<List<Quiz>> get quizes {
-    // ! This now returns us a stream whith we will use in Home screen
+  // ! Here we setup stream for only sharedQuizes
+  Stream<List<Quiz>> get sharedQuizes {
     // ~ Here snapshot is taken from all entries
-    return quizCollection.snapshots().map(_quizListFromSnapshot);
+    return quizCollection.snapshots().map(_sharedQuizListFromSnapshot);
+  }
+
+  // ~ Create new stream which will notify us about any changes in the quiz_collection in DB based on UID
+  // ! Here we setup a stream for only myQuizes
+  Stream<List<Quiz>> get myQuizes {
+    return quizCollection.snapshots().map(_myQuizListFromSnapshot);
   }
 
   // ~ userData from snapshot
@@ -128,7 +133,6 @@ class DatabaseService {
   // ~ my firestore document. We will take UID and setup a stream with that document
   // ~ so whoever logins, it will be new stream. Only their document in the firestore database will be accesable to them
   // ! get user doc stream
-  // Stream<DocumentSnapshot> get userData{
   Stream<UserData>? get userData {
     // ~ we return the stream of UserData
     // ! Here snapshot is taken ONLY from what user with this UID should see ( only his userData )

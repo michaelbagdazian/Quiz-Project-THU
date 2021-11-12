@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 
 // ! This is a sign-in screen
 class SignIn extends StatefulWidget {
-  const SignIn({Key? key, required this.toggleView}) : super(key: key);
+  const SignIn({Key? key}) : super(key: key);
 
-  final Function toggleView;
+  // final Function toggleView;
 
   @override
   _SignInState createState() => _SignInState();
@@ -31,6 +31,11 @@ class _SignInState extends State<SignIn> {
   // ! Build is also called whenever we use setState function. E.g when we press the button we have setState for loading screen
   @override
   Widget build(BuildContext context) {
+    // ~ This function removes sign_in screen from the stack
+    void popScreen(){
+      Navigator.pop(context);
+    }
+
     // ! If true, we return loading widget, otherwise Scaffold
     return loading
         ? Loading()
@@ -40,7 +45,7 @@ class _SignInState extends State<SignIn> {
               backgroundColor: Colors.brown[400],
               elevation: 0.0,
               title: Text('Sign in to Quiz App'),
-              actions: <Widget>[
+              /*actions: <Widget>[
                 FlatButton.icon(
                     icon: Icon(Icons.person),
                     label: Text('Register'),
@@ -48,7 +53,7 @@ class _SignInState extends State<SignIn> {
                       // ~ This calls toggleView function from authenticate.dart
                       widget.toggleView();
                     }),
-              ],
+              ],*/
             ),
             body: Container(
               // ~ Symmetric means left and right have the same padding
@@ -119,6 +124,9 @@ class _SignInState extends State<SignIn> {
                               // * Here we decide to remove the loading screen
                               loading = false;
                             });
+                            // ! If login is sucessful, pop current screen from the stack so user will not be able to nagivate back (unless he logs out)
+                          }else{
+                            popScreen();
                           }
                           // ~ If login was succesful, we have a stream setup in our root widget which
                           // ~ listens to all changes and when a user succesfuly logins we get that
