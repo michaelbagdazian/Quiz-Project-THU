@@ -1,11 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:test_pro/pages/WelcomingScreen.dart';
+// import 'package:test_pro/pages/WelcomingScreen.dart';
 import 'package:test_pro/pages/homePage.dart';
 import 'package:test_pro/pages/login.dart';
 import 'package:test_pro/pages/signup.dart';
-import 'package:test_pro/pages/userProfilePage.dart';
-import 'package:test_pro/pages/myQuizesPage.dart';
+import 'package:test_pro/pages/user_profile_page.dart';
+// import 'package:test_pro/pages/my_quizzes_page.dart';
 import 'customWidgets/quiz/quiz.dart';
 
 void main() async {
