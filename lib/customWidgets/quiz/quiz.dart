@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:test_pro/customWidgets/quiz/quiz_button.dart';
 
 class Quiz extends StatelessWidget {
   final int number;
   final String answer;
   final List<String> questions;
+  final Image? image;
   const Quiz(
       {Key? key,
       required this.questions,
       required this.answer,
-      required this.number})
+      required this.number,
+      this.image})
       : super(key: key);
 
   @override
@@ -21,11 +24,19 @@ class Quiz extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text("Question $number",
-                style: const TextStyle(color: Colors.white, fontSize: 40)),
-            Image.network("https://picsum.photos/200"),
+            Padding(
+              padding: const EdgeInsets.all(15),
+              child: Text(
+                "Question $number",
+                style: const TextStyle(color: Colors.white, fontSize: 40),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(15),
+              child: Image.network("https://picsum.photos/200"),
+            ),
             Column(
-              children: questions.map((e) => Text(e)).toList(),
+              children: questions.map((e) => QuizButton(text: e)).toList(),
             )
           ],
         ))
