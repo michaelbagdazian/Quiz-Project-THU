@@ -1,4 +1,5 @@
 import 'package:crew_brew/screens/home/home.dart';
+import 'package:crew_brew/screens/quizes/sharedQuizes.dart';
 import 'package:crew_brew/screens/userProfile/userProfile.dart';
 import 'package:crew_brew/screens/wrapper.dart';
 import 'package:crew_brew/services/auth.dart';
@@ -27,15 +28,16 @@ class MyApp extends StatelessWidget {
       providers: [
         StreamProvider<AppUser?>.value(
             value: AuthService().user, initialData: null),
-        StreamProvider<UserData?>.value(
+       /* StreamProvider<UserData?>.value(
           value: DatabaseService(uid: 'V5p7vIYlFNapXhQWFGE1m7MlwLq1').userData,
-          initialData: null)
+          initialData: null)*/
       ],
       child: MaterialApp(
         home: Wrapper(),
         routes: {
           '/home': (context) => Home(),
           '/userProfile': (context) => userProfile(),
+          '/sharedQuizes': (context) => SharedQuizes(),
         },
       ),
     );

@@ -10,8 +10,8 @@ import 'package:crew_brew/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Home extends StatelessWidget {
-  Home({Key? key}) : super(key: key);
+class SharedQuizes extends StatelessWidget {
+  SharedQuizes({Key? key}) : super(key: key);
 
   // ~ We have to create a new instance of AuthService
   final AuthService _auth = AuthService();
@@ -30,51 +30,55 @@ class Home extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
               // ~ Settings form is a custom widget we created in setting_form.dart
               // TODO Uncomment this
-             // child: SettingsForm(),
+              // child: SettingsForm(),
             );
           });
     }
 
     // ~ Use provider package to listen to the quizes stream we defined in database.dart and then forward the stream to child elements
     // return StreamProvider<QuerySnapshot?>.value(
-    return Scaffold(
-      drawer: NavBar(),
-      backgroundColor: Colors.brown[50],
-      appBar: AppBar(
-        title: Text('Quiz App'),
-        backgroundColor: Colors.brown[400],
-        elevation: 0.0,
-        // ~ Actions will be appearing on top right of the sidebar
-        /*actions: <Widget>[
-          // * Logout button
-          FlatButton.icon(
-            icon: Icon(Icons.person),
-            onPressed: () async {
-              // ~ When this is complete, we're gonna get null value in our stream
-              // ~ And then in wrapper it will be updated, so Authenticate screen will be called
-              await _auth.signOut();
-            },
-            label: Text('logout'),
-          ),
-          // * Settings button
-          FlatButton.icon(
+    return StreamProvider<List<Quiz>?>.value(
+      initialData: null,
+      value: DatabaseService(uid: '').quizes,
+      child: Scaffold(
+        drawer: NavBar(),
+        backgroundColor: Colors.brown[50],
+        appBar: AppBar(
+          title: Text('Quiz App'),
+          backgroundColor: Colors.brown[400],
+          elevation: 0.0,
+          // ~ Actions will be appearing on top right of the sidebar
+          actions: <Widget>[
+            // * Logout button
+            /*FlatButton.icon(
+              icon: Icon(Icons.person),
+              onPressed: () async {
+                // ~ When this is complete, we're gonna get null value in our stream
+                // ~ And then in wrapper it will be updated, so Authenticate screen will be called
+                await _auth.signOut();
+              },
+              label: Text('logout'),
+            ),*/
+            // * Settings button
+            FlatButton.icon(
               // ! This can be used to change the avatar image
-              onPressed: () => _showSettingsPanel(),
-              icon: Icon(Icons.settings),
-              label: Text('settings')),
-        ],*/
-      ),
-      /*// * This is the body of our app, which consists of the background and Quizes of ! ALL ! users
-      body: Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/home_bg.png'),
-              fit: BoxFit.cover,
+                onPressed: () => _showSettingsPanel(),
+                icon: Icon(Icons.settings),
+                label: Text('settings')),
+          ],
+        ),
+        // * This is the body of our app, which consists of the background and Quizes of ! ALL ! users
+        body: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/home_bg.png'),
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          // ! Stream List<Quiz> is provided so this child
-          child: QuizList()
-      )*/
+            // ! Stream List<Quiz> is provided so this child
+            child: QuizList()
+        ),
+      ),
     );
   }
 }
