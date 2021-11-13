@@ -96,21 +96,21 @@ class Authentication {
           email: _email.text, password: _passwd.text);
       //Assigning the logged in User's data to the global UserDats
       //this makes everything easier when we want to display User's Info on User's Profile
-      //!this needs further development please ignore for now
+      //! ↓↓↓↓↓ this needs further development please ignore for now ↓↓↓↓↓↓↓↓↓
       UserDats = FirebaseFirestore.instance
           .collection('Users')
           //this statement is to fetch document from firebase collection 'Users' by UID
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .get()
           .asStream();
-      UploadFileToFireStorage uploadFileToFireStorage =
-          UploadFileToFireStorage();
-      //! These should be changed
+      //! ↑↑↑↑↑ this needs further development please ignore for now ↑↑↑↑↑↑↑↑↑
+      //! ↓↓↓↓↓↓↓ These should be changed ↓↓↓↓↓↓↓↓
       await Navigator.pushReplacementNamed(_context, '/home', arguments: {
         'accountName': 'nick',
         'accountEmail': _email.text,
         'avatar': 'daniel.jpg',
       });
+      //! ↑↑↑↑↑ These should be changed ↑↑↑↑
     } on FirebaseAuthException catch (e) {
       showDialog(
         context: _context,
