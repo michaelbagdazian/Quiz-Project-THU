@@ -6,10 +6,12 @@ class QuizButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialButton(
+    return Container(
       child: Text(text),
-      color: Colors.amber,
-      onPressed: () => print("Fuck you"),
+      padding: const EdgeInsets.all(10),
+      margin: const EdgeInsets.only(top: 5, bottom: 5),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10), color: Colors.tealAccent),
     );
   }
 }

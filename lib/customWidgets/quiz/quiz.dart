@@ -20,7 +20,8 @@ class Quiz extends StatelessWidget {
       body: Stack(fit: StackFit.expand, children: [
         Expanded(child: Container(color: Colors.greenAccent)),
         SafeArea(
-            child: Column(
+            child: Flex(
+          direction: Axis.vertical,
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
