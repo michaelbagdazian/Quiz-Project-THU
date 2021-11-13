@@ -1,5 +1,5 @@
 // ignore: file_names
-// ignore_for_file: prefer_initializing_formals
+// ignore_for_file: prefer_initializing_formals, file_names
 
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
