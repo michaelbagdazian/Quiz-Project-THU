@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:test_pro/services/Authentication.dart';
+import 'package:test_pro/services/UploadImageToFireStorage.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:test_pro/customWidgets/customText.dart';
 import 'package:test_pro/customWidgets/customTextField.dart';
@@ -180,7 +181,7 @@ class SignUp extends StatelessWidget {
   Widget RegButton(
       String _label, Color _backgroundcolor, BuildContext _context) {
     return FloatingActionButton.extended(
-      onPressed: () {
+      onPressed: () async {
         /*
           when pressed it calls the method register from _authentication class and passes the following arguments:
           _usernameController: which is a TextEditingController for the username

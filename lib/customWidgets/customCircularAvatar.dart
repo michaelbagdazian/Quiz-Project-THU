@@ -3,18 +3,16 @@
 /*
 simple custom circular Avatar
 feel free to change the raduis
+we have to work on this later to actually be able to use whatever source to get images from it and not only from network
 */
 import 'package:flutter/material.dart';
 
 class customCircularAvatar {
-  late AssetImage _assetImage;
+  late NetworkImage _image;
   customCircularAvatar(String path) {
-    _assetImage = AssetImage(path);
+    _image = NetworkImage(path);
   }
-  CircularAvatar() {
-    backgroundImage:
-    _assetImage;
-    raduis:
-    30;
+  Widget getCircularAvatar() {
+    return CircleAvatar(backgroundImage: _image, radius: 30);
   }
 }

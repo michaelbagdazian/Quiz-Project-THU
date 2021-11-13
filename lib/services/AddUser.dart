@@ -14,11 +14,14 @@ import 'User.dart';
 
 class AddUser {
   final _UserCollection = FirebaseFirestore.instance.collection('Users');
+
   void addUser(String UserId, String _email, String _username) {
     //create a new User from our User Class and pass arguments that can useful later
-    User _user = new User(_username, _email, UserId);
+    User _user = new User(_username, _email, UserId, '');
     //adding an avatar for the user
     _user.setCircleAvatar('assets/avatar/generic_robo.png');
+    //setting the user level
+    _user.setLevel(0);
     //converting the user object to a json object
     Map<String, dynamic> _userData = _user.toJson();
     //adding the user json object to the firebase

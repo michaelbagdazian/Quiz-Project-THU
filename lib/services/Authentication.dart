@@ -1,12 +1,15 @@
 // ignore_for_file: file_names
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:test_pro/main.dart';
 import 'package:test_pro/services/AddUser.dart';
+import 'package:test_pro/services/UploadImageToFireStorage.dart';
 
 class Authentication {
   //Just some Objects
-  AddUser _addUser = AddUser();
+  final AddUser _addUser = AddUser();
   final _auth = FirebaseAuth.instance;
   /* registeration method, the arguments are:
   TextEditingController _username: to get the user name that was typed in by the user
@@ -91,6 +94,17 @@ class Authentication {
     try {
       await _auth.signInWithEmailAndPassword(
           email: _email.text, password: _passwd.text);
+      //Assigning the logged in User's data to the global UserDats
+      //this makes everything easier when we want to display User's Info on User's Profile
+      //!this needs further development please ignore for now
+      UserDats = FirebaseFirestore.instance
+          .collection('Users')
+          //this statement is to fetch document from firebase collection 'Users' by UID
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .get()
+          .asStream();
+      UploadFileToFireStorage uploadFileToFireStorage =
+          UploadFileToFireStorage();
       //! These should be changed
       await Navigator.pushReplacementNamed(_context, '/home', arguments: {
         'accountName': 'nick',
