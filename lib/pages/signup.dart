@@ -181,7 +181,7 @@ class SignUp extends StatelessWidget {
   Widget RegButton(
       String _label, Color _backgroundcolor, BuildContext _context) {
     return FloatingActionButton.extended(
-      onPressed: () async {
+      onPressed: () {
         /*
           when pressed it calls the method register from _authentication class and passes the following arguments:
           _usernameController: which is a TextEditingController for the username
