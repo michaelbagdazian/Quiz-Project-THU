@@ -6,6 +6,7 @@ import 'package:test_pro/customWidgets/customTextField.dart';
 import 'package:test_pro/services/Authentication.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+/* This class is very much similar to the signup one so if you understand this will be very easy to understand*/
 class LogInScreen extends StatelessWidget {
   final _customTextField = CustomTextField();
   final _customText = CustomText();
@@ -18,6 +19,7 @@ class LogInScreen extends StatelessWidget {
   final TextEditingController _passwordController = TextEditingController();
 
   @override
+  //to clean the controllers
   void dispose() {
     // Clean up the controller when the widget is disposed.
     _emailController.dispose();
@@ -26,6 +28,7 @@ class LogInScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //size
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
