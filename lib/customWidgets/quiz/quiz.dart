@@ -36,8 +36,16 @@ class Quiz extends StatelessWidget {
               padding: const EdgeInsets.all(15),
               child: Image.network("https://picsum.photos/200"),
             ),
-            Column(
-              children: questions.map((e) => QuizButton(text: e)).toList(),
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: Flex(
+                direction: Axis.vertical,
+                children: questions
+                    .map((e) => Row(
+                          children: [Expanded(child: QuizButton(text: e))],
+                        ))
+                    .toList(),
+              ),
             )
           ],
         ))
