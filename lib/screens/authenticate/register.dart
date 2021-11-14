@@ -3,6 +3,14 @@ import 'package:crew_brew/shared/constants.dart';
 import 'package:crew_brew/shared/loading.dart';
 import 'package:flutter/material.dart';
 
+// ! Information about the class:
+// ~ This class is the screen for registration
+// ! Use of the class:
+// ~ This class extracts the information from the user necessary to register him
+
+// ! TODOS:
+// TODO Integrate the pretty design of register page
+
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
 
@@ -13,16 +21,23 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+  // ! AuthService instance:
+  // ~ We need this instance to have access to the method defined in services/auth.dart called registerWithEmailAndPassword()
   final AuthService _auth = AuthService();
 
+  // ! formKey:
   // ~ This key we are going to use to identify our form and we are
-  // ~ going to assosiate our form with this global FormState key
+  // ~ going to associate our forms with this global FormState key
+  // ~ when we want to validate our form, then we do it via this formKey
   final _formKey = GlobalKey<FormState>();
 
-  // ! When loading is true, then instead of Scaffold we will be showing loading widget
+  // ! Loading state:
+  // ~ when loading is true, then instead of Scaffold we will be showing Loading widget
+  // ~ it is set to true befure we provide data to the DB, waiting for it to respond
   bool loading = false;
 
-  // ~ text field states
+  // ! Text field states:
+  // ~ This are the states which are used to request the data from the user for registration
   String username = '';
   String email = '';
   String password = '';
@@ -30,9 +45,11 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
-
-    // ~ This function removes register screen from the stack
-    void popScreen(){
+    // ! popScreen():
+    // ~ Since we want to allow our user to go back to welcome screen ( perhaps he figures out that he is already registered ), we keep register screen on stack
+    // ~ After the registration was successful, we remove the screen from the stack before moving to Home screen, so that we do not allow user to get back to registration
+    // ~ If he has just already registered
+    void popScreen() {
       Navigator.pop(context);
     }
 
@@ -45,21 +62,12 @@ class _RegisterState extends State<Register> {
               backgroundColor: Colors.brown[400],
               elevation: 0.0,
               title: Text('Sign up to Quiz App'),
-              /*actions: <Widget>[
-                FlatButton.icon(
-                    icon: Icon(Icons.person),
-                    label: Text('Sign In'),
-                    onPressed: () {
-                      // ~ This calss toggleView function from authenticate.dart
-                      widget.toggleView();
-                    }),
-              ],*/
             ),
             body: Container(
               // ~ Symmetric means left and right have the same padding
               // ~ and bottom and right have the same padding
               padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
-              // ~ Form widget allows us to do form validation later on
+              // ! Form widget allows us to do form validation using property "validator". This allows us to put some contains on the provided information
               child: Form(
                 // ~ Here we are associating our global FormKey with our form
                 // ~ this will basically keep track of our form and the state of our form
@@ -67,90 +75,106 @@ class _RegisterState extends State<Register> {
                 key: _formKey,
                 child: Column(children: <Widget>[
                   SizedBox(height: 20.0),
-                  // * TextFormField for the username
+                  // * Start of TextFormField for the username
                   TextFormField(
-                    // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
+                      // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
                       decoration:
-                      textInputDecoration.copyWith(hintText: 'Username'),
-                      // ~ we return null value is this formField is valid or a string
-                      // ~ if it's not valid
+                          textInputDecoration.copyWith(hintText: 'Username'),
+                      // ! validator property:
+                      // ~ we return null value if this formField is VALID or a string it's NOT VALID
+                      // ~ validator will be used in RaisedButton when calling _formKey.currentState!.validate()
                       validator: (val) =>
-                      val!.isEmpty ? 'Enter a username' : null,
+                          val!.isEmpty ? 'Enter a username' : null,
+                      // ! onChanged property:
+                      // ~ When information is entered into the TextForField, this property is triggered
                       onChanged: (val) {
                         // ~ We take email state and set it equal to value which is in e-mail textField
+                        // ~ We also make use of trim() function to remove any spaces
                         setState(() => username = val.trim());
                       }),
+                  // * End of TextFormField for the username
                   SizedBox(height: 20.0),
-                  // * TextFormField for the e-mail
+                  // * Start of TextFormField for the e-mail
                   TextFormField(
                       // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
                       decoration:
                           textInputDecoration.copyWith(hintText: 'Email'),
-                      // ~ we return null value is this formField is valid or a string
-                      // ~ if it's not valid
+                      // ! validator property:
+                      // ~ we return null value if this formField is VALID or a string it's NOT VALID
+                      // ~ validator will be used in RaisedButton when calling _formKey.currentState!.validate()
                       validator: (val) =>
                           val!.isEmpty ? 'Enter an email' : null,
+                      // ! onChanged property:
+                      // ~ When information is entered into the TextForField, this property is triggered
                       onChanged: (val) {
                         // ~ We take email state and set it equal to value which is in e-mail textField
+                        // ~ We also make use of trim() function to remove any spaces
                         setState(() => email = val.trim());
                       }),
+                  // * End of TextFormField for the e-mail
                   SizedBox(height: 20.0),
-                  // * TextForField the the password
+                  // * Start of TextForField for the password
                   TextFormField(
                       // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
                       decoration:
                           textInputDecoration.copyWith(hintText: 'Password'),
                       // ~ This hides the password when entering it
                       obscureText: true,
-                      // ~ we return null value is this formField is valid or a string
-                      // ~ if it's not valid
+                      // ! validator property:
+                      // ~ we return null value if this formField is VALID or a string it's NOT VALID
+                      // ~ validator will be used in RaisedButton when calling _formKey.currentState!.validate()
                       validator: (val) => val!.length < 6
                           ? 'Enter a password 6+ chars long'
                           : null,
+                      // ! onChanged property:
+                      // ~ When information is entered into the TextForField, this property is triggered
                       onChanged: (val) {
                         // ~ We take password state and set it equal to value which is in password textField
-                        setState(() => password = val);
+                        // ~ We also make use of trim() function to remove any spaces
+                        setState(() => password = val.trim());
                       }),
+                  // * End of TextForField for the password
                   SizedBox(height: 20.0),
+                  // * Start of Registration button
                   RaisedButton(
                       color: Colors.pink[400],
                       child: Text(
                         'Register',
                         style: TextStyle(color: Colors.white),
                       ),
+                      // ! onPressed():
                       // ~ onPressed is async, because we interract with Firebase and it takes some time
                       onPressed: () async {
                         // ~ Here we check if our form is valid
                         // ~ currentState tells us what values are inside the form fields
-                        // ~ validate method uses validator properties in the TextFormFields
+                        // ~ validate() method uses validator properties in the TextFormFields
                         if (_formKey.currentState!.validate()) {
                           // * Here we decide to show the loading screen
                           setState(() => loading = true);
                           // ~ We will get null or AppUser, so we don't know the type of return. Therefore we use dynamic
-                          // ~ We await for the result
-                          dynamic result = await _auth
-                              .registerWithEmailAndPassword(username, email, password);
-                          // ~ If registration is not succesful, we provide an error message
+                          // ~ We await for the result from the Firebase
+                          dynamic result =
+                              await _auth.registerWithEmailAndPassword(
+                                  username, email, password);
+                          // ~ If registration is NOT successful, we provide an error message.
                           if (result == null) {
                             setState(() {
-                              error = 'please supply a valid email';
+                              error = 'please supply a valid email or password';
                               // * Here we decide to remove the loading screen
                               loading = false;
                             });
-                            // ! If login is sucessful, pop current screen from the stack so user will not be able to nagivate back (unless he logs out)
-                          }else{
+                            // ! If login is successful:
+                            // ~ pop current screen from the stack then it's automatically redirected to Home page
+                          } else {
                             popScreen();
                           }
-                          // ~ If registration was succesful, we have a stream setup in our root widget which
-                          // ~ listens to all changes and when a user succesfuly registers we get that
-                          // ~ user back and that user comes back to the stream
-                          // ~ so home page will be shown automatically
                         }
                       }),
+                  // * End of Registration button
                   SizedBox(height: 12.0),
-                  Text(
-                      // ~ Here we print the error
-                      error,
+                  // ! Text widget for error message:
+                  // ~ This widget is empty in the beginning, and is updated if there is an error.
+                  Text(error,
                       style: TextStyle(color: Colors.red, fontSize: 14.0)),
                 ]),
               ),

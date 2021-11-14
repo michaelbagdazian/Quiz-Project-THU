@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-// ! This is a loading widget, when we are waiting for something ( login/register/fetch data and etc )
+// ! Information about the class:
+// ~ This class just shows spinning loading widget
+// ! Use of the class:
+// ~ Whenever we wait for some response from Firebase or Firestore, we use this widget
+
+// ! TODOs
+// all done
+
 class Loading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

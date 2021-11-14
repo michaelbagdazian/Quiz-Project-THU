@@ -1,5 +1,13 @@
 import 'package:flutter/material.dart';
 
+// ! Information about the class:
+// ~ This class contains all constant widgets
+// ! Use of the class:
+// ~ This class just makes constant widgets reusable. For extensability copyWith method can be used ( see example in register page TextFormField for the username -> decoration )
+
+// ! TODOs
+// TODO Move another custom widgets here
+
 const textInputDecoration = InputDecoration(
   // ~ This makes the textField white background
   fillColor: Colors.white,

@@ -1,8 +1,13 @@
-// ! This class represents Firebase User, which also only consists of UID
-// ! Additional information about the user is contained in the class UserData
-// ~ This class contains the authenticate information of the user while he navigates between different screen of our app
+// ! Infomartion about the class:
+// ~ This class represents the User instance from Firestore Database, but we define our own for convenience.
+// ! Use of class:
+// ~ In services/auth.dart we return the instance of this class in method _userFromFirebaseUser and then make use of it in the defined Stream<AppUser>.
+
+// ! TODOS:
+// all done
 
 class AppUser {
+  // ~ UID is all we need to understand if user is logged-in or not
   final String uid;
 
   AppUser({required this.uid});
