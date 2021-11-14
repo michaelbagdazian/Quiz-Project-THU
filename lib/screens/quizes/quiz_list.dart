@@ -1,4 +1,4 @@
-import 'package:crew_brew/models/Quiz.dart';
+import 'package:crew_brew/models/quiz/Quiz.dart';
 import 'package:crew_brew/shared/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

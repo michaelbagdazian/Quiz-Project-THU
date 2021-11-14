@@ -1,4 +1,4 @@
-import 'package:crew_brew/models/Quiz.dart';
+import 'package:crew_brew/models/quiz/Quiz.dart';
 import 'package:flutter/material.dart';
 
 // ! Information about the class:
