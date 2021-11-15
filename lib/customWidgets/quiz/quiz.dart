@@ -18,42 +18,48 @@ class Quiz extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(fit: StackFit.expand, children: [
-        Expanded(child: Container(color: Colors.greenAccent)),
+        Expanded(child: Container(color: Colors.deepPurple[400])),
         SafeArea(
-            child: Flex(
-          direction: Axis.vertical,
+            child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(15),
-              child: Text(
-                "Question $number",
-                style: const TextStyle(color: Colors.white, fontSize: 40),
+            Flexible(
+              flex: 2,
+              fit: FlexFit.loose,
+              child: Padding(
+                padding: const EdgeInsets.all(15),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: const Color.fromARGB(40, 0, 0, 0),
+                  ),
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.all(15),
+                  child: const Text(
+                    "This is Some Text. Something long so that we can see the full question and whatnot? Maybe even longer for them big mother fuckers and stuff that would be really fucking long",
+                    style: TextStyle(fontSize: 20, color: Colors.white),
+                  ),
+                ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(15),
-              child: Row(
-                children: [
-                  Expanded(
-                      child: Image.network(
-                    "https://picsum.photos/200",
-                    fit: BoxFit.cover,
-                  ))
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: Flex(
-                direction: Axis.vertical,
-                children: questions
-                    .map((e) => Row(
-                          children: [Expanded(child: QuizButton(text: e))],
-                        ))
-                    .toList(),
-              ),
+            Flexible(
+              flex: 3,
+              fit: FlexFit.tight,
+              child: Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  child: Flex(
+                    direction: Axis.vertical,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: questions
+                        .map(
+                          (e) => Padding(
+                            padding: const EdgeInsets.only(top: 5, bottom: 5),
+                            child: QuizButton(text: e),
+                          ),
+                        )
+                        .toList(),
+                  )),
             )
           ],
         ))

@@ -6,16 +6,19 @@ class QuizButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      child: Text(
-        text,
-        style: const TextStyle(color: Colors.black),
-      ),
-      style: TextButton.styleFrom(
-          // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-          backgroundColor: Colors.amberAccent,
-          primary: Colors.greenAccent),
-      onPressed: () {},
-    );
+    return Flexible(
+        flex: 1,
+        child: TextButton(
+          child: Text(
+            text,
+            style: const TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          style: TextButton.styleFrom(
+              // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+              backgroundColor: Colors.amberAccent,
+              primary: Colors.greenAccent,
+              padding: const EdgeInsets.all(20)),
+          onPressed: () {},
+        ));
   }
 }
