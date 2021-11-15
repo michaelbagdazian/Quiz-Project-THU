@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crew_brew/models/quiz/Quiz.dart';
-import 'package:crew_brew/models/user/AppUser.dart';
 import 'package:crew_brew/models/user/UserData.dart';
-import 'package:flutter/material.dart';
 
 // ! Information about the class:
 // ~ This class is a service class for database manipulations
@@ -134,7 +132,7 @@ class DatabaseService {
     return stream.asBroadcastStream();
   }
 
-  // _userDataFromSnapshot
+  // ! _userDataFromSnapshot
   // ~ Here we convert DocumentSnapshot into our custom defined UserData object
   UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
     return UserData(
