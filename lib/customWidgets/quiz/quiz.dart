@@ -34,7 +34,15 @@ class Quiz extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(15),
-              child: Image.network("https://picsum.photos/200"),
+              child: Row(
+                children: [
+                  Expanded(
+                      child: Image.network(
+                    "https://picsum.photos/200",
+                    fit: BoxFit.cover,
+                  ))
+                ],
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(20),
