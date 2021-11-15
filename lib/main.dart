@@ -23,7 +23,7 @@ void main() async {
       initialRoute: '/',
       routes: {
         '/': (context) => const Quiz(
-              questions: ["Monkey", "Penis"],
+              questions: ["Monkey", "Penis", "Satan", "Jesus"],
               answer: "Monkey",
               number: 1,
             ),
