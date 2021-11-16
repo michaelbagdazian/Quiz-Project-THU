@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.test_pro">
+    package="com.example.crew_brew">
    <application
-        android:label="test_pro"
+        android:label="crew_brew"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

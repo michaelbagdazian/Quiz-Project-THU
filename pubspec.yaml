@@ -1,4 +1,4 @@
-name: test_pro
+name: crew_brew
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -29,24 +29,16 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  firebase_auth: ^3.1.5
+  cloud_firestore: ^3.0.0
+  firebase_core: ^1.10.0
+  provider: ^6.0.1
+  flutter_spinkit: ^5.1.0
 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  linkable: ^3.0.1
-  url_launcher: ^6.0.12
-  firebase_auth: ^3.1.4
-  firebase_core: ^1.10.0
-  cloud_firestore: ^3.1.0
-  firebase_analytics: ^5.0.2
-  json_annotation: ^4.3.0
-  build_runner: ^2.1.5
-  json_serializable: ^6.0.1
-  shared_preferences: ^2.0.8
-  firebase_storage: ^10.1.0
-  image_picker: ^0.8.4+4
-
 
 dev_dependencies:
   flutter_test:
@@ -72,9 +64,9 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-     - assets/images/
-     - assets/menu_images/
-     - assets/avatar/
+    - assets/
+    - assets/menu_images/
+  #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -87,17 +79,12 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  fonts:
-    - family: Satisfy
-      fonts:
-        - asset: assets/fonts/Satisfy-Regular.ttf
-    - family: Lobster
-      fonts:
-       - asset: assets/fonts/Lobster-Regular.ttf
-    - family: ArcDau
-      fonts:
-       - asset: assets/fonts/ArchitectsDaughter-Regular.ttf
-         
+  # fonts:
+  #   - family: Schyler
+  #     fonts:
+  #       - asset: fonts/Schyler-Regular.ttf
+  #       - asset: fonts/Schyler-Italic.ttf
+  #         style: italic
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

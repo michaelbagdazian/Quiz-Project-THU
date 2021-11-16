@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "739959405942",
-    "project_id": "quizzler-13da0",
-    "storage_bucket": "quizzler-13da0.appspot.com"
+    "project_number": "392640557929",
+    "project_id": "daniel-brew-crew-20887",
+    "storage_bucket": "daniel-brew-crew-20887.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:739959405942:android:45969d567f570df55c8e57",
+        "mobilesdk_app_id": "1:392640557929:android:1a47dfd6b791bd161603f8",
         "android_client_info": {
-          "package_name": "com.Team2.Quizzler"
+          "package_name": "com.minisx.brew_crew"
         }
       },
       "oauth_client": [
         {
-          "client_id": "739959405942-k4fdko3ctph4lrpmls68siha74n5keai.apps.googleusercontent.com",
+          "client_id": "392640557929-rqn3bngr8bcpt70v2g4le4jfq9vbns27.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDEUKei6ez8xMwPcz9fwtMrel5tHBlFsy8"
+          "current_key": "AIzaSyDcksAMGIjqEJxCrfS8ukhjfgu3tSMfzVc"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "739959405942-k4fdko3ctph4lrpmls68siha74n5keai.apps.googleusercontent.com",
+              "client_id": "392640557929-rqn3bngr8bcpt70v2g4le4jfq9vbns27.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
