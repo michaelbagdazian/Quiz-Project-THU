@@ -64,7 +64,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.15.0"
-
   cross_file:
     dependency: transitive
     description:
@@ -128,7 +127,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.0"
-
   firebase_storage:
     dependency: "direct main"
     description:
@@ -150,7 +148,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.0"
-
   flutter:
     dependency: "direct main"
     description: flutter
@@ -163,7 +160,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.4"
-
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -171,7 +167,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.4"
-
   flutter_spinkit:
     dependency: "direct main"
     description:
@@ -189,7 +184,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-
   http:
     dependency: transitive
     description:
@@ -197,14 +191,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.13.4"
-
   http_parser:
     dependency: transitive
     description:
       name: http_parser
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.0"  
+    version: "4.0.0"
   image_picker:
     dependency: "direct main"
     description:
@@ -226,7 +219,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.4.1"
-
   intl:
     dependency: transitive
     description:
