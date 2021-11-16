@@ -6,11 +6,15 @@ A new team project using Flutter.
 # ScreenShots
 ### **When a User registers/ is added to firebase:**
 --------------------
-<img src="./misc/firebase_users.png" width=50% height=50%>
+<img src="./ScreenShots/firebase_users.png" width=50% height=50%>
+
+### **When a Quiz is added to firebase:**
+--------------------
+<img src="./ScreenShots/firebase_Quizzes.png" width=50% height=50%>
 
 ### **When a User uploads an image to FireBase Storage:**
 --------------------
-<img src ="./misc/FirebaseStorage.png" width=50% height=50%>
+<img src ="./ScreenShots/FirebaseStorage.png" width=50% height=50%>
 
 # Implementd
 - welcoming screen, login screen, register screen (functional)\ 
