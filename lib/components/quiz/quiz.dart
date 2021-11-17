@@ -28,7 +28,10 @@ class Quiz extends StatelessWidget {
               6), // ~Equivalent to 4 em's
           decoration: const BoxDecoration(color: Color.fromARGB(50, 0, 0, 0)),
           alignment: Alignment.center,
-          child: Text(questionText),
+          child: Text(
+            questionText,
+            style: theme.textTheme.headline6!.copyWith(color: Colors.white),
+          ),
         ),
         Container(
           margin: const EdgeInsets.only(top: 10),

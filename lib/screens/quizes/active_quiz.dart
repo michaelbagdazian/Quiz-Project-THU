@@ -24,7 +24,17 @@ class _ActiveQuizState extends State<ActiveQuiz> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Text("Satan"),
+              Container(
+                alignment: Alignment.center,
+                padding:
+                    EdgeInsets.all((theme.textTheme.bodyText2!.fontSize)! * 1),
+                child: Text(
+                  "Question ${currentQuestion + 1}/${widget.questions.length}",
+                  style: theme.textTheme.headline4!.copyWith(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
               Flexible(
                   flex: 1, child: widget.questions.elementAt(currentQuestion)),
               TextButton(onPressed: () {}, child: const Text("Submit"))
