@@ -26,6 +26,8 @@ class _MyQuizes extends State<MyQuizes> {
 
   Icon cusIcon=Icon(Icons.search);
   Widget cusSearchBar = Text("Quiz App");
+  String textinputed=""; //holds the text you input to the search box
+
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +62,10 @@ class _MyQuizes extends State<MyQuizes> {
                       this.cusIcon=Icon(Icons.cancel);
                       this.cusSearchBar=TextField(
                         textInputAction: TextInputAction.go,
+                        onChanged: (text){
+                          textinputed=text;
+
+                        },
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: "Search",
