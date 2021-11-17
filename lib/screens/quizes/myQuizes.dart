@@ -44,6 +44,12 @@ class MyQuizes extends StatelessWidget {
           backgroundColor: Colors.brown[50],
           appBar: AppBar(
             title: Text('Quiz App'),
+            actions: [
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.search),
+              )
+            ],
             backgroundColor: Colors.brown[400],
             elevation: 0.0,
           ),
