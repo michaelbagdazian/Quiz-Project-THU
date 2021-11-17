@@ -18,12 +18,21 @@ class _ActiveQuizState extends State<ActiveQuiz> {
     ThemeData theme = Theme.of(context);
     return Scaffold(
       backgroundColor: theme.backgroundColor,
-      body: Column(
-        children: [
-          Container(
-            child: widget.questions.elementAt(currentQuestion),
-          )
-        ],
+      body: SizedBox.expand(
+        child: SafeArea(
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // const Flexible(flex: 1, child: Text("data")),
+            widget.questions.elementAt(currentQuestion),
+            // Flexible(
+            //     child: TextButton(
+            //   onPressed: () {},
+            //   child: Text("Submit"),
+            // ))
+          ],
+        )),
       ),
     );
   }
