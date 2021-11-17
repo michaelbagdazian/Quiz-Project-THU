@@ -43,7 +43,7 @@ class Quiz extends StatelessWidget {
                     questionText,
                     style: const TextStyle(
                       fontSize: 20,
-                      // color: , - TODO: Will be defined Later when I figure out how to get the damn thing to work
+                      color: Colors.white,
                     ),
                   ),
                 ),
