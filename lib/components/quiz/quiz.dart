@@ -18,49 +18,30 @@ class Quiz extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    ThemeData theme = Theme.of(context);
+    return Flex(
+      direction: Axis.vertical,
       mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Flexible(
-          flex: 2,
-          fit: FlexFit.loose,
-          child: Padding(
-            padding: const EdgeInsets.all(15),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                color: const Color.fromARGB(40, 0, 0, 0),
-              ),
-              alignment: Alignment.center,
-              padding: const EdgeInsets.all(15),
-              child: Text(
-                questionText,
-                style: const TextStyle(
-                  fontSize: 20,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ),
+        Container(
+          padding: EdgeInsets.all((theme.textTheme.bodyText2!.fontSize)! *
+              6), // ~Equivalent to 4 em's
+          decoration: const BoxDecoration(color: Color.fromARGB(50, 0, 0, 0)),
+          alignment: Alignment.center,
+          child: Text(questionText),
         ),
-        Flexible(
-          flex: 3,
-          fit: FlexFit.tight,
-          child: Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10),
-              child: Flex(
-                direction: Axis.vertical,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: answers
-                    .map(
-                      (e) => Padding(
-                        padding: const EdgeInsets.only(top: 5, bottom: 5),
-                        child: QuizButton(text: e),
-                      ),
-                    )
-                    .toList(),
-              )),
+        Container(
+          margin: const EdgeInsets.only(top: 10),
+          child: Flex(
+            direction: Axis.vertical,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: answers
+                .map((e) => Container(
+                      padding: const EdgeInsets.all(5),
+                      child: QuizButton(text: e),
+                    ))
+                .toList(),
+          ),
         )
       ],
     );

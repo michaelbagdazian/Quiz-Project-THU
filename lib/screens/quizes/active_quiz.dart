@@ -18,21 +18,17 @@ class _ActiveQuizState extends State<ActiveQuiz> {
     ThemeData theme = Theme.of(context);
     return Scaffold(
       backgroundColor: theme.backgroundColor,
-      body: SizedBox.expand(
-        child: SafeArea(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            // const Flexible(flex: 1, child: Text("data")),
-            widget.questions.elementAt(currentQuestion),
-            // Flexible(
-            //     child: TextButton(
-            //   onPressed: () {},
-            //   child: Text("Submit"),
-            // ))
-          ],
-        )),
+      body: SafeArea(
+        child: Flex(
+            direction: Axis.vertical,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const Text("Satan"),
+              Flexible(
+                  flex: 1, child: widget.questions.elementAt(currentQuestion)),
+              TextButton(onPressed: () {}, child: const Text("Submit"))
+            ]),
       ),
     );
   }
