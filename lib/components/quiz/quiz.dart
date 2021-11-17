@@ -18,9 +18,10 @@ class Quiz extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
     return Scaffold(
       body: Stack(fit: StackFit.expand, children: [
-        Expanded(child: Container(color: Colors.green)),
+        Expanded(child: Container(color: theme.backgroundColor)),
         SafeArea(
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -40,7 +41,10 @@ class Quiz extends StatelessWidget {
                   padding: const EdgeInsets.all(15),
                   child: Text(
                     questionText,
-                    style: const TextStyle(fontSize: 20, color: Colors.white),
+                    style: const TextStyle(
+                      fontSize: 20,
+                      // color: , - TODO: Will be defined Later when I figure out how to get the damn thing to work
+                    ),
                   ),
                 ),
               ),

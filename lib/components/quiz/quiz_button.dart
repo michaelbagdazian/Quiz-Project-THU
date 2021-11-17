@@ -6,6 +6,7 @@ class QuizButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
     return Flexible(
         flex: 1,
         child: TextButton(
@@ -14,8 +15,8 @@ class QuizButton extends StatelessWidget {
             style: const TextStyle(color: Colors.white, fontSize: 20),
           ),
           style: TextButton.styleFrom(
-              // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-              backgroundColor: Colors.amberAccent,
+              backgroundColor:
+                  theme.buttonTheme.colorScheme?.secondary ?? Colors.blueAccent,
               primary: Colors.greenAccent,
               padding: const EdgeInsets.all(20)),
           onPressed: () {},
