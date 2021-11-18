@@ -18,11 +18,11 @@ class UploadFileToFireStorage {
   late String url =
       ''; //this is the url to the uploaded document, it gets updated when you upload the image
   /* 
-  ? The following Future/function uploads a file and returns the download url of this file or it returns and error
-  ? It takes three Optional Parameteres:
-  ? imageFile: An Image that you want to upload directly without using an image picker (this will not be used by user)
-  ? path: which is where in fireStore do you want to store the uploaded file; so the relative path would be 'UID/path/...'
-  ? offset: which is just the offset of the file name, for example file would be named offset_Unique Identifier.extension 
+  ~ The following Future/function uploads a file and returns the download url of this file or it returns and error
+  ~ It takes three Optional Parameteres:
+  ~ imageFile: An Image that you want to upload directly without using an image picker (this will not be used by user)
+  ~ path: which is where in fireStore do you want to store the uploaded file; so the relative path would be 'UID/path/...'
+  ~ offset: which is just the offset of the file name, for example file would be named offset_Unique Identifier.extension 
   */
   Future uploadPicture(
       {File? imageFile, String path = "Images", String offset = "Img"}) async {
