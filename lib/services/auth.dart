@@ -8,7 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 // ~ Here we define all methods that are going to interact with firebase_auth for us
 
 // ! TODOS:
-// all done
+// TODO when anonymous user logges out, fix [ERROR:flutter/lib/ui/ui_dart_state.cc(209)] Unhandled Exception: Null check operator used on a null value
 
 class AuthService {
   // ! FireBaseAuth:
@@ -44,6 +44,12 @@ class AuthService {
 
       // ~ we want to turn this into our own custome user based on user class we have created
       User? user = result.user;
+
+      // ~ create a document in Firestore Database for that user with the UID
+      // ~ Together with the Firebase User instance we create the entry of User Data in the Firebase
+      // ~ Username and email is provided, level is 0 and avatar is default
+      await DatabaseService(uid: user!.uid)
+          .updateUserData('anonymous', 'anonymous@gmail.com', 'anon.png', 0);
 
       // ~ When we call signInAnon method from signIn page, then it will return user object to that sign in widget where we called this method
       return _userFromFirebaseUser(user);
@@ -96,7 +102,15 @@ class AuthService {
   // * sign out
   Future signOut() async {
     try {
-      return await _auth.signOut();
+      // ~ If user was signedIn anounymosly, then all the data, as well as the user is deleted from the Firebase and Firestore
+      if(_auth.currentUser!.isAnonymous){
+        await DatabaseService(uid: _auth.currentUser!.uid).deleteAllQuizesPerUID();
+        await DatabaseService(uid: _auth.currentUser!.uid).deleteUserData();
+        // ~ When user is deleted, it's automatically logged out
+        return await _auth.currentUser!.delete();
+      }else{
+        return await _auth.signOut();
+      }
     } catch (e) {
       print(e.toString());
       return null;

@@ -150,7 +150,37 @@ class _SignInState extends State<SignIn> {
                           }
                         }
                       }),
-                  // * End of Registration button
+                  // * End of Signin button
+                  SizedBox(height: 20.0),
+                  // * Start of Signin anonymously button
+                  RaisedButton(
+                      color: Colors.pink[400],
+                      child: Text(
+                        'Sign in anonymously',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      // ! onPressed():
+                      // ~ onPressed is async, because we interract with Firebase and it takes some time
+                      onPressed: () async {
+                          // * Here we decide to show the loading screen
+                          setState(() => loading = true);
+                          // ~ Signin anonymously
+                          dynamic result = await _auth.signInAnon();
+                          // ~ If login is not succesful, we provide an error message
+                          if (result == null) {
+                            setState(() {
+                              error = 'could not sign in with those credentials';
+                              // * Here we decide to remove the loading screen
+                              loading = false;
+                            });
+                            // ! If login is successful:
+                            // ~ pop current screen from the stack then it's automatically redirected to Home page
+                          } else {
+                            popScreen();
+                          }
+                        }
+                      ),
+                  // * End of Signin anonymously button
                   SizedBox(height: 12.0),
                   // ! Text widget for error message:
                   // ~ This widget is empty in the beginning, and is updated if there is an error.

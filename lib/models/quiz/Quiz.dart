@@ -23,4 +23,5 @@ class Quiz {
       required this.quizOwnerUID,
       required this.quizDescription,
       required this.quizIsShared});
+
 }

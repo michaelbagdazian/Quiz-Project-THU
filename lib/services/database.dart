@@ -111,7 +111,7 @@ class DatabaseService {
   }
 
   // ! quizListFromSnapshot
-  // ~ This is helped merhoD. It returns single quiz instance from one document. Used by _myQuizListFromSnapshot and _sharedQuizListFromSnapshot
+  // ~ This is helper method. It returns single quiz instance from one document. Used by _myQuizListFromSnapshot and _sharedQuizListFromSnapshot
   Quiz quizListFromSnapshot(DocumentSnapshot doc, bool quizIsShared) {
     return Quiz(
         quizCategory: doc.get('quizCategory'),
@@ -143,4 +143,24 @@ class DatabaseService {
       level: snapshot['level'],
     );
   }
+
+  // ! deleteQuiz()
+  // ~ This deletes all the quizes for one user
+  // * On stackoverflow it says it's better to use Batch, but for now idk what is it. Will take a look later
+  // * https://stackoverflow.com/questions/63993494/flutter-how-to-delete-multiple-documents-using-where-clause-in-cloud-firestore
+  Future<Null> deleteAllQuizesPerUID(){
+    return quizCollection.where('quizOwnerUID', isEqualTo: uid).get().then((snapshot) async {
+      for(DocumentSnapshot ds in snapshot.docs) {
+        await ds.reference.delete();
+        print("here");
+      }
+    });
+  }
+
+  // ! deleteUserData()
+  // ~ This deletes userData based on UID
+  Future<void> deleteUserData(){
+    return userDataCollection.doc(uid).delete();
+  }
+  
 }
