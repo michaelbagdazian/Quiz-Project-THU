@@ -104,10 +104,13 @@ class AuthService {
     try {
       // ~ If user was signedIn anounymosly, then all the data, as well as the user is deleted from the Firebase and Firestore
       if(_auth.currentUser!.isAnonymous){
-        await DatabaseService(uid: _auth.currentUser!.uid).deleteAllQuizesPerUID();
-        await DatabaseService(uid: _auth.currentUser!.uid).deleteUserData();
+        // ~ We do not use await statement, since we do not want user to wait until data is deleted. So delete() is the fastest executed command
+        // ~ As soon as delete() return a result, user is navigated to welcome screen, but in the background data is deleted from the DB
+        String uid = _auth.currentUser!.uid;
+        DatabaseService(uid: uid).deleteAllQuizesPerUID();
+        DatabaseService(uid: uid).deleteUserData();
         // ~ When user is deleted, it's automatically logged out
-        return await _auth.currentUser!.delete();
+        return _auth.currentUser!.delete();
       }else{
         return await _auth.signOut();
       }

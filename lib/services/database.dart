@@ -152,7 +152,6 @@ class DatabaseService {
     return quizCollection.where('quizOwnerUID', isEqualTo: uid).get().then((snapshot) async {
       for(DocumentSnapshot ds in snapshot.docs) {
         await ds.reference.delete();
-        print("here");
       }
     });
   }
