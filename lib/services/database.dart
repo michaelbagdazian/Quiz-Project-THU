@@ -146,13 +146,19 @@ class DatabaseService {
 
   // ! deleteQuiz()
   // ~ This deletes all the quizes for one user
-  // * On stackoverflow it says it's better to use Batch, but for now idk what is it. Will take a look later
-  // * https://stackoverflow.com/questions/63993494/flutter-how-to-delete-multiple-documents-using-where-clause-in-cloud-firestore
-  Future<Null> deleteAllQuizesPerUID(){
-    return quizCollection.where('quizOwnerUID', isEqualTo: uid).get().then((snapshot) async {
-      for(DocumentSnapshot ds in snapshot.docs) {
-        await ds.reference.delete();
-      }
+  // ~ We are using batch to perform the request. Submitting request as batch means that we send one single request from the client side
+  // ~ so deleting 10 quizes is one request from the client, the rest is handled by the server
+  // ~ it allows client now to wait while delete is performed
+  Future<void> deleteAllQuizesPerUID() {
+    WriteBatch batch = FirebaseFirestore.instance.batch();
+
+    return  quizCollection.where('quizOwnerUID', isEqualTo: uid).get().then((snapshot) {
+
+      snapshot.docs.forEach((document) {
+        batch.delete(document.reference);
+      });
+
+      return batch.commit();
     });
   }
 

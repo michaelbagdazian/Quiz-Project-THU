@@ -1,3 +1,5 @@
+import 'package:crew_brew/models/quiz/question.dart';
+
 // ! Information about the class:
 // ~ This class represent an entry collection in the Firestore DB called 'quizes'. The entry in the Firestore DB is created after the user creates a new Quiz
 // ~ By registration a default Quiz is created, then can be added with " create public/private Quiz "
@@ -15,6 +17,8 @@ class Quiz {
   String quizOwnerUID;
   String quizDescription;
   bool quizIsShared;
+  /*List<Question> listOfQuestions;
+  List<String> tags;*/
 
   Quiz(
       {required this.quizCategory,
@@ -22,6 +26,16 @@ class Quiz {
       required this.quizOwner,
       required this.quizOwnerUID,
       required this.quizDescription,
-      required this.quizIsShared});
+      required this.quizIsShared,
+      /*required this.listOfQuestions,
+      required this.tags*/});
+
+/*  int getNumberOfQuestions(int id) {
+    return listOfQuestions.length;
+  }*/
+
+  String getTitleOfQuiz() {
+    return quizTitle;
+  }
 
 }

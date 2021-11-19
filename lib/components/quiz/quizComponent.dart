@@ -1,13 +1,13 @@
 import 'package:crew_brew/components/quiz/quiz_button.dart';
 import 'package:flutter/material.dart';
 
-class Quiz extends StatelessWidget {
+class QuizComponent extends StatelessWidget {
   final int number;
   final String answer;
   final String questionText;
   final List<String> answers;
   final Image? image;
-  const Quiz(
+  const QuizComponent(
       {Key? key,
       required this.questionText,
       required this.answers,

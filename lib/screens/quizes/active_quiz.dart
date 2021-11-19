@@ -1,8 +1,10 @@
-import 'package:crew_brew/components/quiz/quiz.dart';
+import 'package:crew_brew/components/quiz/quizComponent.dart';
 import 'package:flutter/material.dart';
 
+// ~ Done by Luke
+
 class ActiveQuiz extends StatefulWidget {
-  final List<Quiz> questions;
+  final List<QuizComponent> questions;
   const ActiveQuiz({Key? key, required this.questions}) : super(key: key);
 
   @override
