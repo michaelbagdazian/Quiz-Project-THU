@@ -23,6 +23,24 @@ class AuthService {
     return user != null ? AppUser(uid: user.uid) : null;
   }
 
+  // * sign in with e-mail and password
+  Future signInWithEmailAndPassword(String email, String password) async {
+    try {
+      // ~ First we do request to FireBase and it awaits for the response
+      UserCredential result = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
+
+      // ~ we obtain the result and store it in user variable. It can be with data or null
+      User? user = result.user;
+
+      return _userFromFirebaseUser(user);
+    }
+    catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
   // ! Stream<AppUser?>
   // ~ Here we define the stream for the changes in user authentication ( logged in or logged out ) and then main.dart will provide the stream to children
   Stream<AppUser?> get user {
@@ -55,52 +73,11 @@ class AuthService {
       // ~ When we call signInAnon method from signIn page, then it will return user object to that sign in widget where we called this method
       return _userFromFirebaseUser(user);
     }
-              on FirebaseAuthException catch (e) {
-            return AlertDialog(
-            title: const Text(
-              "Ops! An Error Happend", //maybe change this if you want to; it is just a place holder
-              style: TextStyle(
-                fontFamily: 'Lobster',
-                fontSize: 40,
-              ),
-            ),
-            content: Text('${e.message}'),
-          );
-      } 
-    // catch (e) {
-    //   print(e.toString());
-    //   return null;
-    // }
-  }
-
-  // * sign in with e-mail and password
-  Future signInWithEmailAndPassword(String email, String password) async {
-    try {
-      // ~ First we do request to FireBase and it awaits for the response
-      UserCredential result = await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
-
-      // ~ we obtain the result and store it in user variable. It can be with data or null
-      User? user = result.user;
-
-      return _userFromFirebaseUser(user);
-    } 
-          on FirebaseAuthException catch (e) {
-            return AlertDialog(
-            title: const Text(
-              "Ops! An Error Happend", //maybe change this if you want to; it is just a place holder
-              style: TextStyle(
-                fontFamily: 'Lobster',
-                fontSize: 40,
-              ),
-            ),
-            content: Text('${e.message}'),
-          );
-      }
-    // catch (e) {
-    //   print(e.toString());
-    //   return null;
+    catch (e) {
+      print(e.toString());
+      return null;
     }
+  }
 
   // * register with e-mail and password
   Future registerWithEmailAndPassword(
@@ -120,22 +97,10 @@ class AuthService {
 
       return _userFromFirebaseUser(user);
     }
-              on FirebaseAuthException catch (e) {
-            return AlertDialog(
-            title: const Text(
-              "Ops! An Error Happend", //maybe change this if you want to; it is just a place holder
-              style: TextStyle(
-                fontFamily: 'Lobster',
-                fontSize: 40,
-              ),
-            ),
-            content: Text('${e.message}'),
-          );
-      } 
-    // catch (e) {
-    //   print(e.toString());
-    //   return null;
-    // }
+    catch (e) {
+      print(e.toString());
+      return null;
+    }
   }
 
   // * sign out
