@@ -180,7 +180,7 @@ class WelcominScreen extends StatelessWidget {
           heroTag: "LoginButtonOnHomeScreen",
           onPressed: () {
             Navigator.pushNamed(
-              cntxt,'signin');
+              cntxt,'/signin');
           },
           label: const Text(
             'Log In',
@@ -203,7 +203,7 @@ class WelcominScreen extends StatelessWidget {
           extendedPadding: EdgeInsets.all(40),
           onPressed: () {
             Navigator.pushNamed(
-              cntxt,'register');
+              cntxt,'/register');
           },
           label: const Text(
             'Register',
