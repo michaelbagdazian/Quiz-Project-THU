@@ -7,6 +7,8 @@ class QuizComponent extends StatelessWidget {
   final Image? image;
   final Function onCorrectAnswer;
   final Function onWrongAnswer;
+  final Function onFinishAnswer;
+
   const QuizComponent(
       {Key? key,
       required this.questionText,
@@ -14,6 +16,7 @@ class QuizComponent extends StatelessWidget {
       required this.answer,
       required this.onCorrectAnswer,
       required this.onWrongAnswer,
+      required this.onFinishAnswer,
       this.image})
       : super(key: key);
 
@@ -60,6 +63,7 @@ class QuizComponent extends StatelessWidget {
                           } else {
                             onWrongAnswer();
                           }
+                          onFinishAnswer();
                         },
                       ),
                     ))

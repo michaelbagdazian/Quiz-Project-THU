@@ -65,6 +65,7 @@ class _ActiveQuizState extends State<ActiveQuiz> {
                     onWrongAnswer: () {
                       print("Wrong");
                     },
+                    onFinishAnswer: next,
                   )),
               TextButton(onPressed: next, child: const Text("Submit"))
             ]),
