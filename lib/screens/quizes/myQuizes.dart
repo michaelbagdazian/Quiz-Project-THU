@@ -1,6 +1,7 @@
 import 'package:crew_brew/models/quiz/Quiz.dart';
 import 'package:crew_brew/models/user/AppUser.dart';
 import 'package:crew_brew/navigationBar/NavBar.dart';
+import 'package:crew_brew/screens/quizes/quiz_Search.dart';
 import 'package:crew_brew/screens/quizes/quiz_list.dart';
 import 'package:crew_brew/shared/loading.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,7 @@ class MyQuizes extends StatefulWidget {
 
 class _MyQuizes extends State<MyQuizes> {
   Icon cusIcon = Icon(Icons.search);
-  Widget cusSearchBar = Text("Quiz App");
+
 
   String searchInput = ""; //holds the text you input to the search box
 
@@ -54,39 +55,8 @@ class _MyQuizes extends State<MyQuizes> {
           // ~ Here we provide NavBar for property drawer. This is our navigation bar defined in navigationBar/navBar.dart
           drawer: NavBar(),
           backgroundColor: Colors.brown[50],
-          appBar: AppBar(
-            title: cusSearchBar,
-            actions: <Widget>[
-              IconButton(
-                  onPressed: () {
-                    setState(() {
-                      if (this.cusIcon.icon == Icons.search) {
-                        this.cusIcon = Icon(Icons.cancel);
-                        this.cusSearchBar = TextField(
-                            // ~ This replaces the button on the keyboard of the device
-                            textInputAction: TextInputAction.go,
-                            // ~ When 'go' button is pressed, current widget is informed about state change
-                            onSubmitted: (text) =>
-                                setState(() => searchInput = text),
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: "Search",
-                            ),
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16.0,
-                            ));
-                      } else {
-                        this.searchInput = "";
-                        this.cusIcon = Icon(Icons.search);
-                        this.cusSearchBar = Text("Quiz App");
-                      }
-                    });
-                  },
-                  icon: cusIcon)
-            ],
-            backgroundColor: Colors.brown[400],
-            elevation: 0.0,
+          appBar: quiz_Search(
+            title: Text("My Quizzes"),
           ),
           // ! This is the body of our app, which consists of the background and Quizes of current user
           body: Container(

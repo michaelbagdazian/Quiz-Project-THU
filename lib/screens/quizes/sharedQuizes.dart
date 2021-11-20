@@ -1,11 +1,12 @@
 import 'package:crew_brew/models/quiz/Quiz.dart';
 import 'package:crew_brew/navigationBar/NavBar.dart';
+import 'package:crew_brew/screens/quizes/quiz_Search.dart';
 import 'package:crew_brew/screens/quizes/quiz_list.dart';
 import 'package:flutter/material.dart';
 import 'package:crew_brew/services/auth.dart';
 import 'package:crew_brew/services/database.dart';
 import 'package:provider/provider.dart';
-
+// ignore_for_file: file_names, non_constant_identifier_names
 // ! Information about the class:
 // ~ This class represents sharedQuizes Page
 // ! Use of the class:
@@ -15,9 +16,18 @@ import 'package:provider/provider.dart';
 // TODO Improve loading as done in welcome and sign_in with boolean loading variable
 // TODO Move searchBar to separate widget so it can be reused by myQuizes and sharedQuizes
 
-class SharedQuizes extends StatelessWidget {
+class SharedQuizes extends StatefulWidget {
   SharedQuizes({Key? key}) : super(key: key);
 
+  @override
+  State<SharedQuizes> createState() => _SharedQuizesState();
+}
+
+class _SharedQuizesState extends State<SharedQuizes> {
+  Icon cusIcon = Icon(Icons.search);
+
+
+  String searchInput = "";
   @override
   Widget build(BuildContext context) {
     // ! StreamProvider<Quiz>
@@ -35,10 +45,8 @@ class SharedQuizes extends StatelessWidget {
         // ~ Here we provide NavBar for property drawer. This is our navigation bar defined in navigationBar/navBar.dart
         drawer: NavBar(),
         backgroundColor: Colors.brown[50],
-        appBar: AppBar(
-          title: Text('Quiz App'),
-          backgroundColor: Colors.brown[400],
-          elevation: 0.0,
+        appBar: quiz_Search(
+          title: Text("Shared Quizzes"),
         ),
         // ! This is the body of our app, which consists of the background and shared quizes of all users
         body: Container(
