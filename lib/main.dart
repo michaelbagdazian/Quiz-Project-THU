@@ -1,3 +1,5 @@
+import 'dart:js';
+
 import 'package:crew_brew/screens/authenticate/register.dart';
 import 'package:crew_brew/screens/authenticate/sign_in.dart';
 import 'package:crew_brew/screens/home/home.dart';
@@ -11,6 +13,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:crew_brew/models/user/AppUser.dart';
+import 'package:crew_brew/screens/authenticate/merging/register.dart';
+import 'package:crew_brew/screens/authenticate/merging/sign_in.dart';
+import 'package:crew_brew/screens/authenticate/merging/WelcomingScreen.dart';
 
 // ! Information about the class:
 // ~ Main class
@@ -45,9 +50,14 @@ class MyApp extends StatelessWidget {
           '/userProfile': (context) => userProfile(),
           '/sharedQuizes': (context) => SharedQuizes(),
           '/myQuizes': (context) => MyQuizes(),
-          '/welcome': (context) => Welcome(),
-          '/register': (context) => Register(),
-          '/signin': (context) => SignIn(),
+          //!merging
+          '/welcome': (context) => WelcominScreen(),
+          '/register': (context) => SignUp(),
+          '/signin': (context) => LogIn(),
+          //!original
+          // '/welcome': (context) => Welcome(),
+          // '/register': (context) => Register(),
+          // '/signin': (context) => SignIn(),
         },
       ),
     );
