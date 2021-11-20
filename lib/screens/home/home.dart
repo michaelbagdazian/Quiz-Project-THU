@@ -70,7 +70,7 @@ class _HomeState extends State<Home> {
                         onPressed: () async {
                           await DatabaseService(uid: user.uid).updateQuizData(
                               'default',
-                              'default quiz create from Home',
+                              'test',
                               userData!.username,
                               'this is default quiz',
                               false);

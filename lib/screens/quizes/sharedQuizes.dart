@@ -13,6 +13,7 @@ import 'package:provider/provider.dart';
 
 // ! TODOS:
 // TODO Improve loading as done in welcome and sign_in with boolean loading variable
+// TODO Move searchBar to separate widget so it can be reused by myQuizes and sharedQuizes
 
 class SharedQuizes extends StatelessWidget {
   SharedQuizes({Key? key}) : super(key: key);
@@ -53,7 +54,8 @@ class SharedQuizes extends StatelessWidget {
             // ! QuizList:
             // ~ This is where List is generated
             // ~ Stream List<Quiz> is provided to this child
-            child: QuizList()),
+            // TODO Search
+            child: QuizList(searchInput: "",)),
       ),
     );
   }
