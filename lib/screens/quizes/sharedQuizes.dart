@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:crew_brew/services/auth.dart';
 import 'package:crew_brew/services/database.dart';
 import 'package:provider/provider.dart';
+
 // ignore_for_file: file_names, non_constant_identifier_names
 // ! Information about the class:
 // ~ This class represents sharedQuizes Page
@@ -25,9 +26,9 @@ class SharedQuizes extends StatefulWidget {
 
 class _SharedQuizesState extends State<SharedQuizes> {
   Icon cusIcon = Icon(Icons.search);
+  Widget cusSearchBar = Text("Shared Quizes");
+  String searchInput = ""; //holds the
 
-
-  String searchInput = "";
   @override
   Widget build(BuildContext context) {
     // ! StreamProvider<Quiz>
@@ -45,10 +46,41 @@ class _SharedQuizesState extends State<SharedQuizes> {
         // ~ Here we provide NavBar for property drawer. This is our navigation bar defined in navigationBar/navBar.dart
         drawer: NavBar(),
         backgroundColor: Colors.brown[50],
-        appBar: quiz_Search(
-          title: Text("Shared Quizzes"),
+        appBar: AppBar(
+          title: cusSearchBar,
+          actions: <Widget>[
+            IconButton(
+                onPressed: () {
+                  setState(() {
+                    if (this.cusIcon.icon == Icons.search) {
+                      this.cusIcon = Icon(Icons.cancel);
+                      this.cusSearchBar = TextField(
+                          // ~ This replaces the button on the keyboard of the device
+                          textInputAction: TextInputAction.go,
+                          // ~ When 'go' button is pressed, current widget is informed about state change
+                          onSubmitted: (text) =>
+                              setState(() => searchInput = text),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "Search",
+                          ),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16.0,
+                          ));
+                    } else {
+                      this.searchInput = "";
+                      this.cusIcon = Icon(Icons.search);
+                      this.cusSearchBar = Text("Shared Quizes");
+                    }
+                  });
+                },
+                icon: cusIcon)
+          ],
+          backgroundColor: Colors.brown[400],
+          elevation: 0.0,
         ),
-        // ! This is the body of our app, which consists of the background and shared quizes of all users
+        // ! This is the body of our app, which consists of the background and Quizes of current user
         body: Container(
             // ! BoxDecoration:
             // ~ A widget that lets you draw arbitrary graphics.
@@ -62,8 +94,7 @@ class _SharedQuizesState extends State<SharedQuizes> {
             // ! QuizList:
             // ~ This is where List is generated
             // ~ Stream List<Quiz> is provided to this child
-            // TODO Search
-            child: QuizList(searchInput: "",)),
+            child: QuizList(searchInput: this.searchInput)),
       ),
     );
   }

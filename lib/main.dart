@@ -4,6 +4,7 @@ import 'package:crew_brew/screens/authenticate/register.dart';
 import 'package:crew_brew/screens/authenticate/sign_in.dart';
 import 'package:crew_brew/screens/home/home.dart';
 import 'package:crew_brew/screens/quizes/myQuizes.dart';
+import 'package:crew_brew/screens/quizes/quizWrapper.dart';
 import 'package:crew_brew/screens/quizes/sharedQuizes.dart';
 import 'package:crew_brew/screens/userProfile/userProfile.dart';
 import 'package:crew_brew/screens/authenticate/welcome.dart';
@@ -55,6 +56,7 @@ class MyApp extends StatelessWidget {
           '/welcome': (context) => WelcominScreen(),
           '/register': (context) => SignUp(),
           '/signin': (context) => LogIn(),
+          '/quizWrapper': (context) => QuizWrapper(),
           //!original
           // '/welcome': (context) => Welcome(),
           // '/register': (context) => Register(),

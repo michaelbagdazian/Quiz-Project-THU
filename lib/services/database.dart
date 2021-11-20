@@ -185,19 +185,21 @@ class DatabaseService {
         correctAnswer: doc.get('correctAnswer'));
   }
 
-  List<Question> questionListFromDB(){
+  List<Question> questionListFromDB(QuerySnapshot snapshot){
     List<Question> questionList = [];
 
-    questionsForTestQuiz.get().then((querySnapshot) => {
-      querySnapshot.docs.forEach((doc) {
-        questionList.add(questionFromSnapshot(doc));
-      })
+    snapshot.docs.forEach((doc) {
+      questionList.add(questionFromSnapshot(doc));
     });
 
     return questionList;
   }
 
-  TestQuiz? getTestQuizFromDB(){
+  Stream<List<Question>> get myTestQuiz {
+    return questionsForTestQuiz.snapshots().map(questionListFromDB);
+  }
+
+  /*TestQuiz? getTestQuizFromDB(){
     TestQuiz testQuiz = TestQuiz(titleOfQuiz: 'test', creatorId: 'test', listOfQuestions: [], tags: []);
 
     quizForTestQuiz.get().then((querySnapshot) => {
@@ -215,9 +217,8 @@ class DatabaseService {
         creatorId: doc.get('creator'),
         listOfQuestions: questionListFromDB(),
         tags: List.from(doc.get('tags'))
-    );
+    );*/
   }
 
   // * THIS IS DONE ON 21.11.2021, TO BE REVIEWED
-  
-}
+
