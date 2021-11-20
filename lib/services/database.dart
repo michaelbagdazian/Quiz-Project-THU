@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crew_brew/models/quiz/Quiz.dart';
+import 'package:crew_brew/models/quiz/TestQuiz.dart';
+import 'package:crew_brew/models/quiz/question.dart';
 import 'package:crew_brew/models/user/UserData.dart';
 
 // ! Information about the class:
@@ -167,5 +169,55 @@ class DatabaseService {
   Future<void> deleteUserData(){
     return userDataCollection.doc(uid).delete();
   }
+
+  // * THIS IS DONE ON 21.11.2021, TO BE REVIEWED
+
+  final CollectionReference quizForTestQuiz =
+  FirebaseFirestore.instance.collection('quiz');
+
+  final CollectionReference questionsForTestQuiz =
+  FirebaseFirestore.instance.collection('questions');
+
+  Question questionFromSnapshot(DocumentSnapshot doc){
+    return Question(
+        questionText: doc.get('questionText'),
+        answers: List.from(doc.get('answers')),
+        correctAnswer: doc.get('correctAnswer'));
+  }
+
+  List<Question> questionListFromDB(){
+    List<Question> questionList = [];
+
+    questionsForTestQuiz.get().then((querySnapshot) => {
+      querySnapshot.docs.forEach((doc) {
+        questionList.add(questionFromSnapshot(doc));
+      })
+    });
+
+    return questionList;
+  }
+
+  TestQuiz? getTestQuizFromDB(){
+    TestQuiz testQuiz = TestQuiz(titleOfQuiz: 'test', creatorId: 'test', listOfQuestions: [], tags: []);
+
+    quizForTestQuiz.get().then((querySnapshot) => {
+      querySnapshot.docs.forEach((doc) {
+        testQuiz = testQuizFromSnapshot(doc);
+      })
+    });
+
+    return testQuiz;
+  }
+
+  TestQuiz testQuizFromSnapshot(DocumentSnapshot doc){
+    return TestQuiz(
+        titleOfQuiz: doc.get('title'),
+        creatorId: doc.get('creator'),
+        listOfQuestions: questionListFromDB(),
+        tags: List.from(doc.get('tags'))
+    );
+  }
+
+  // * THIS IS DONE ON 21.11.2021, TO BE REVIEWED
   
 }

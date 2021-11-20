@@ -50,6 +50,7 @@ class MyApp extends StatelessWidget {
           '/userProfile': (context) => userProfile(),
           '/sharedQuizes': (context) => SharedQuizes(),
           '/myQuizes': (context) => MyQuizes(),
+
           //!merging
           '/welcome': (context) => WelcominScreen(),
           '/register': (context) => SignUp(),
@@ -59,6 +60,7 @@ class MyApp extends StatelessWidget {
           // '/register': (context) => Register(),
           // '/signin': (context) => SignIn(),
           ///
+
         },
       ),
     );
