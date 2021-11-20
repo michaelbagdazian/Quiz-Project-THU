@@ -25,7 +25,7 @@ class CreateQCard extends StatelessWidget {
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              SizedBox(height: 8.0),
+              SizedBox(height: 5.0),
 
               //for the titel text of the card
               Text(
@@ -37,7 +37,7 @@ class CreateQCard extends StatelessWidget {
                   )
               ),
               SizedBox(width: 435,
-                height: 210,
+                height: 110,
 
                 //the immage + botton section of the card
                 child: IconButton(onPressed: () {}, //<- here you can change the destination of the card
