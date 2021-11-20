@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:crew_brew/components/quiz/quiz_component.dart';
 import 'package:crew_brew/models/quiz/question.dart';
 import 'package:flutter/material.dart';
 
+const CORRECT_MESSAGE = "Correct";
+const WRONG_MESSAGE = "Wrong";
 // ~ Done by Luke
 
 class ActiveQuiz extends StatefulWidget {
@@ -14,18 +18,23 @@ class ActiveQuiz extends StatefulWidget {
 
 class _ActiveQuizState extends State<ActiveQuiz> {
   int currentQuestion = 0;
-
+  String message = "";
   void next() {
-    if (currentQuestion == widget.questions.length - 1) {
-      // TODO: Show Score Screen Here
+    Timer(const Duration(seconds: 2), () {
+      if (currentQuestion == widget.questions.length - 1) {
+        // TODO: Show Score Screen Here
+        setState(() {
+          currentQuestion = 0;
+        });
+      } else {
+        setState(() {
+          currentQuestion++;
+        });
+      }
       setState(() {
-        currentQuestion = 0;
+        message = "";
       });
-    } else {
-      setState(() {
-        currentQuestion++;
-      });
-    }
+    });
   }
 
   @override
@@ -39,6 +48,20 @@ class _ActiveQuizState extends State<ActiveQuiz> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              if (message != "")
+                Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                      color: (message == CORRECT_MESSAGE)
+                          ? Colors.green
+                          : Colors.red),
+                  child: Text(
+                    message,
+                    style: theme.textTheme.bodyText2!
+                        .copyWith(color: Colors.white),
+                  ),
+                ),
               Container(
                 alignment: Alignment.center,
                 padding:
@@ -61,15 +84,21 @@ class _ActiveQuizState extends State<ActiveQuiz> {
                     answer: 1,
                     onCorrectAnswer: () {
                       // TODO: DO SOMETHING ON CORRECT ANSWER
-                      print("Correct");
+                      print(CORRECT_MESSAGE);
+                      setState(() {
+                        message = CORRECT_MESSAGE;
+                      });
                     },
                     onWrongAnswer: () {
+                      print(WRONG_MESSAGE);
+
                       // TODO: DO SOMETHING ON FALSE ANSWER
-                      print("Wrong");
+                      setState(() {
+                        message = WRONG_MESSAGE;
+                      });
                     },
                     onFinishAnswer: next,
                   )),
-              TextButton(onPressed: next, child: const Text("Submit"))
             ]),
       ),
     );
