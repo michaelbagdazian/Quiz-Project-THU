@@ -31,7 +31,7 @@ class WelcominScreen extends StatelessWidget {
         Expanded(
           flex: 1,
           child: Image.asset(
-            'assets/images/bgtop.png',
+            'assets/images/home_bg.png',
             fit: BoxFit.cover,
           ),
         ),
