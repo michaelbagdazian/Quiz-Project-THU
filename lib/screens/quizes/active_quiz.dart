@@ -60,9 +60,11 @@ class _ActiveQuizState extends State<ActiveQuiz> {
                         widget.questions.elementAt(currentQuestion).answers,
                     answer: 1,
                     onCorrectAnswer: () {
+                      // TODO: DO SOMETHING ON CORRECT ANSWER
                       print("Correct");
                     },
                     onWrongAnswer: () {
+                      // TODO: DO SOMETHING ON FALSE ANSWER
                       print("Wrong");
                     },
                     onFinishAnswer: next,
