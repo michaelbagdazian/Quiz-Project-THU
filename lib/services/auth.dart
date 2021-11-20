@@ -1,6 +1,7 @@
 import 'package:crew_brew/models/user/AppUser.dart';
 import 'package:crew_brew/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 // ! Information about the class:
 // ~ This class is a service class for user authentication
@@ -20,6 +21,24 @@ class AuthService {
   // ~ this function creates customer user object we have created in user/AppUser based on Firebase User
   AppUser? _userFromFirebaseUser(User? user) {
     return user != null ? AppUser(uid: user.uid) : null;
+  }
+
+  // * sign in with e-mail and password
+  Future signInWithEmailAndPassword(String email, String password) async {
+    try {
+      // ~ First we do request to FireBase and it awaits for the response
+      UserCredential result = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
+
+      // ~ we obtain the result and store it in user variable. It can be with data or null
+      User? user = result.user;
+
+      return _userFromFirebaseUser(user);
+    }
+    catch (e) {
+      print(e.toString());
+      return null;
+    }
   }
 
   // ! Stream<AppUser?>
@@ -53,24 +72,8 @@ class AuthService {
 
       // ~ When we call signInAnon method from signIn page, then it will return user object to that sign in widget where we called this method
       return _userFromFirebaseUser(user);
-    } catch (e) {
-      print(e.toString());
-      return null;
     }
-  }
-
-  // * sign in with e-mail and password
-  Future signInWithEmailAndPassword(String email, String password) async {
-    try {
-      // ~ First we do request to FireBase and it awaits for the response
-      UserCredential result = await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
-
-      // ~ we obtain the result and store it in user variable. It can be with data or null
-      User? user = result.user;
-
-      return _userFromFirebaseUser(user);
-    } catch (e) {
+    catch (e) {
       print(e.toString());
       return null;
     }
@@ -93,7 +96,8 @@ class AuthService {
           .updateUserData(username, email, 'default.png', 0);
 
       return _userFromFirebaseUser(user);
-    } catch (e) {
+    }
+    catch (e) {
       print(e.toString());
       return null;
     }
