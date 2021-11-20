@@ -1,10 +1,11 @@
-import 'package:crew_brew/components/quiz/quizComponent.dart';
+import 'package:crew_brew/components/quiz/quiz_component.dart';
+import 'package:crew_brew/models/quiz/question.dart';
 import 'package:flutter/material.dart';
 
 // ~ Done by Luke
 
 class ActiveQuiz extends StatefulWidget {
-  final List<QuizComponent> questions;
+  final List<Question> questions;
   const ActiveQuiz({Key? key, required this.questions}) : super(key: key);
 
   @override
@@ -13,6 +14,20 @@ class ActiveQuiz extends StatefulWidget {
 
 class _ActiveQuizState extends State<ActiveQuiz> {
   int currentQuestion = 0;
+
+  void next() {
+    if (currentQuestion == widget.questions.length - 1) {
+      // TODO: Show Score Screen Here
+      setState(() {
+        currentQuestion = 0;
+      });
+    } else {
+      setState(() {
+        currentQuestion++;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
@@ -36,8 +51,22 @@ class _ActiveQuizState extends State<ActiveQuiz> {
                 ),
               ),
               Flexible(
-                  flex: 1, child: widget.questions.elementAt(currentQuestion)),
-              TextButton(onPressed: () {}, child: const Text("Submit"))
+                  flex: 1,
+                  child: QuizComponent(
+                    questionText: widget.questions
+                        .elementAt(currentQuestion)
+                        .questionText,
+                    answers:
+                        widget.questions.elementAt(currentQuestion).answers,
+                    answer: 1,
+                    onCorrectAnswer: () {
+                      print("Correct");
+                    },
+                    onWrongAnswer: () {
+                      print("Wrong");
+                    },
+                  )),
+              TextButton(onPressed: next, child: const Text("Submit"))
             ]),
       ),
     );
