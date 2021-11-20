@@ -1,18 +1,22 @@
-import 'package:crew_brew/components/quiz/quiz_button.dart';
 import 'package:flutter/material.dart';
 
 class QuizComponent extends StatelessWidget {
-  final int number;
-  final String answer;
   final String questionText;
   final List<String> answers;
+  final int answer;
   final Image? image;
+  final Function onCorrectAnswer;
+  final Function onWrongAnswer;
+  final Function onFinishAnswer;
+
   const QuizComponent(
       {Key? key,
       required this.questionText,
       required this.answers,
       required this.answer,
-      required this.number,
+      required this.onCorrectAnswer,
+      required this.onWrongAnswer,
+      required this.onFinishAnswer,
       this.image})
       : super(key: key);
 
@@ -39,9 +43,29 @@ class QuizComponent extends StatelessWidget {
             direction: Axis.vertical,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: answers
-                .map((e) => Container(
+                .asMap()
+                .keys
+                .map((i) => Container(
                       padding: const EdgeInsets.all(5),
-                      child: QuizButton(text: e),
+                      child: TextButton(
+                        child: Text(
+                          answers[i],
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 20),
+                        ),
+                        style: TextButton.styleFrom(
+                            backgroundColor: Colors.blueAccent,
+                            primary: Colors.greenAccent,
+                            padding: const EdgeInsets.all(20)),
+                        onPressed: () {
+                          if (answer == i) {
+                            onCorrectAnswer();
+                          } else {
+                            onWrongAnswer();
+                          }
+                          onFinishAnswer();
+                        },
+                      ),
                     ))
                 .toList(),
           ),
