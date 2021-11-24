@@ -38,8 +38,6 @@ class QuizTile extends StatelessWidget {
           //Title
           child: Column(
               children: [
-                SizedBox(height: 1.0),
-
                 //for the titel text of the card
                 Text.rich(
                   TextSpan(
@@ -70,8 +68,8 @@ class QuizTile extends StatelessWidget {
                     Align(
                       alignment: Alignment.centerRight,
                       child: SizedBox(
-                        //how big the picture should
-                        height: 100,width: 100,
+                        //how big the picture should and the card itself
+                        height: MediaQuery.of(context).size.height* 0.15,width: MediaQuery.of(context).size.height* 0.13,
                          child: Image.asset("assets/images/eddu.png", ) //<- here should be logik to change the picture
                     )
                     ),
@@ -81,7 +79,8 @@ class QuizTile extends StatelessWidget {
                         Padding(
 
                       //is for that the text and the picture dont overlape
-                  padding: const EdgeInsets.fromLTRB(1, 1, 120, 30),
+                      //change the possition of the text
+                  padding: const EdgeInsets.fromLTRB(1, 3, 110, 30),
 
                           //where the text shoul be
                           child: Align(alignment: Alignment.topLeft,
@@ -103,7 +102,7 @@ class QuizTile extends StatelessWidget {
                   //where the bottom text should be
                   Align(
                     //verticaly possuition of the text
-                    heightFactor: 4.5,
+                    heightFactor: MediaQuery.of(context).devicePixelRatio*1.6,
                     alignment: Alignment.bottomLeft,
                       child:
                   Text(quiz.quizOwner,style:
