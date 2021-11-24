@@ -79,7 +79,7 @@ class _SignUpState extends State<SignUp> {
             body: Container(
               child: Form(
                 key: _formKey,
-                child:Stack(fit: StackFit.expand, children: [
+                child: Stack(fit: StackFit.expand, children: [
                   SizedBox(
                     child: Expanded(
                       flex: 1,
@@ -106,16 +106,16 @@ class _SignUpState extends State<SignUp> {
 
                         // * Start of TextFormField for the username
                         TextFormField(
-                          // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
+                            // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
                             decoration: InputDecoration(
                               enabledBorder: const OutlineInputBorder(
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(12.0)),
+                                    BorderRadius.all(Radius.circular(12.0)),
                                 borderSide: BorderSide(color: Colors.white),
                               ),
                               focusedBorder: const OutlineInputBorder(
                                   borderRadius:
-                                  BorderRadius.all(Radius.circular(5.0)),
+                                      BorderRadius.all(Radius.circular(5.0)),
                                   borderSide: BorderSide(color: Colors.yellow)),
                               contentPadding: const EdgeInsets.all(15),
                               labelText: 'Username',
@@ -129,7 +129,7 @@ class _SignUpState extends State<SignUp> {
                             // ~ we return null value if this formField is VALID or a string it's NOT VALID
                             // ~ validator will be used in RaisedButton when calling _formKey.currentState!.validate()
                             validator: (val) =>
-                            val!.isEmpty ? 'Enter a username' : null,
+                                val!.isEmpty ? 'Enter a username' : null,
                             // ! onChanged property:
                             // ~ When information is entered into the TextForField, this property is triggered
                             onChanged: (val) {
@@ -143,16 +143,16 @@ class _SignUpState extends State<SignUp> {
                         ),
                         // * Start of TextFormField for the e-mail
                         TextFormField(
-                          // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
+                            // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
                             decoration: InputDecoration(
                               enabledBorder: const OutlineInputBorder(
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(12.0)),
+                                    BorderRadius.all(Radius.circular(12.0)),
                                 borderSide: BorderSide(color: Colors.white),
                               ),
                               focusedBorder: const OutlineInputBorder(
                                   borderRadius:
-                                  BorderRadius.all(Radius.circular(5.0)),
+                                      BorderRadius.all(Radius.circular(5.0)),
                                   borderSide: BorderSide(color: Colors.yellow)),
                               contentPadding: const EdgeInsets.all(15),
                               labelText: 'E-mail',
@@ -166,7 +166,7 @@ class _SignUpState extends State<SignUp> {
                             // ~ we return null value if this formField is VALID or a string it's NOT VALID
                             // ~ validator will be used in RaisedButton when calling _formKey.currentState!.validate()
                             validator: (val) =>
-                            val!.isEmpty ? 'Enter an email' : null,
+                                val!.isEmpty ? 'Enter an email' : null,
                             // ! onChanged property:
                             // ~ When information is entered into the TextForField, this property is triggered
                             onChanged: (val) {
@@ -179,16 +179,16 @@ class _SignUpState extends State<SignUp> {
                           height: size.height * 0.02,
                         ),
                         TextFormField(
-                          // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
+                            // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
                             decoration: InputDecoration(
                               enabledBorder: const OutlineInputBorder(
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(12.0)),
+                                    BorderRadius.all(Radius.circular(12.0)),
                                 borderSide: BorderSide(color: Colors.white),
                               ),
                               focusedBorder: const OutlineInputBorder(
                                   borderRadius:
-                                  BorderRadius.all(Radius.circular(5.0)),
+                                      BorderRadius.all(Radius.circular(5.0)),
                                   borderSide: BorderSide(color: Colors.yellow)),
                               contentPadding: const EdgeInsets.all(15),
                               labelText: 'Password',
@@ -224,12 +224,13 @@ class _SignUpState extends State<SignUp> {
                               // ~ We will get null or AppUser, so we don't know the type of return. Therefore we use dynamic
                               // ~ We await for the result from the Firebase
                               dynamic result =
-                              await _auth.registerWithEmailAndPassword(
-                                  username, email, password);
+                                  await _auth.registerWithEmailAndPassword(
+                                      username, email, password, context);
                               // ~ If registration is NOT successful, we provide an error message.
                               if (result == null) {
                                 setState(() {
-                                  error = 'please supply a valid email or password';
+                                  error =
+                                      'please supply a valid email or password';
                                   // * Here we decide to remove the loading screen
                                   loading = false;
                                 });
@@ -260,7 +261,6 @@ class _SignUpState extends State<SignUp> {
                 ]),
               ),
             ),
-
           );
   }
 }
