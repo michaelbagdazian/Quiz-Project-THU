@@ -149,7 +149,7 @@ class _NavBarState extends State<NavBar> {
                       // ~ When Logout is selected, we peform signOut defined in services/auth.dart. We wait until the action was succesful and then redirect to Wrapper
                       // ~ Which then decides which screen to display ( will display Authentiaction screen )
                       onTap: () async {
-                       await _auth.signOut(context);
+                        await _auth.signOut(context);
                         selectedItem(context, '');
                       },
                     ),
