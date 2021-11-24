@@ -1,6 +1,6 @@
 import 'package:crew_brew/models/quiz/Quiz.dart';
 import 'package:crew_brew/models/user/AppUser.dart';
-import 'package:crew_brew/navigationBar/NavBar.dart';
+import 'package:crew_brew/navigationBar/navbar.dart';
 import 'package:crew_brew/screens/quizes/quiz_Search.dart';
 import 'package:crew_brew/screens/quizes/quiz_list.dart';
 import 'package:crew_brew/shared/loading.dart';

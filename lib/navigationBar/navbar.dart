@@ -16,6 +16,8 @@ import 'package:provider/provider.dart';
 // TODO Improve loading as done in welcome and sign_in with boolean loading variable
 
 class NavBar extends StatefulWidget {
+  const NavBar({Key? key}) : super(key: key);
+
   @override
   State<NavBar> createState() => _NavBarState();
 }
@@ -85,7 +87,7 @@ class _NavBarState extends State<NavBar> {
                       // ! BoxDecoration:
                       // ~ A widget that lets you draw arbitrary graphics.
                       // ~ We use it to display the backround image of the UserAccountsDrawerHeader
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: Colors.blue,
                         image: DecorationImage(
                           image: AssetImage(
@@ -98,29 +100,29 @@ class _NavBarState extends State<NavBar> {
                     // * Start of items listed in the drawer
                     // * ====================================
                     ListTile(
-                      leading: Icon(Icons.home),
-                      title: Text('Home'),
+                      leading: const Icon(Icons.home),
+                      title: const Text('Home'),
                       // ~ When tile is clicked, we are redirected to home page using support method defined below
                       onTap: () => selectedItem(context, 'home'),
                     ),
                     ListTile(
-                      leading: Icon(Icons.account_circle_sharp),
-                      title: Text('My profile'),
+                      leading: const Icon(Icons.account_circle_sharp),
+                      title: const Text('My profile'),
                       onTap: () => selectedItem(context, 'userProfile'),
                     ),
                     ListTile(
-                      leading: Icon(Icons.archive),
-                      title: Text('My quizzes'),
+                      leading: const Icon(Icons.archive),
+                      title: const Text('My quizzes'),
                       onTap: () => selectedItem(context, 'myQuizes'),
                     ),
                     ListTile(
-                      leading: Icon(Icons.share),
-                      title: Text('Shared quizzes'),
+                      leading: const Icon(Icons.share),
+                      title: const Text('Shared quizzes'),
                       onTap: () => selectedItem(context, 'sharedQuizes'),
                     ),
                     ListTile(
-                      leading: Icon(Icons.ac_unit_sharp),
-                      title: Text('Test Quiz'),
+                      leading: const Icon(Icons.ac_unit_sharp),
+                      title: const Text('Test Quiz'),
                       onTap: () => selectedItem(context, 'quizWrapper'),
                     ),
                     // ! Divider is used to separate different section of the NavBar
@@ -128,14 +130,14 @@ class _NavBarState extends State<NavBar> {
                       color: Colors.grey[500],
                     ),
                     ListTile(
-                      leading: Icon(Icons.info_outline),
-                      title: Text('Information'),
+                      leading: const Icon(Icons.info_outline),
+                      title: const Text('Information'),
                       // TODO Redirect to information page
                       onTap: () => null,
                     ),
                     ListTile(
-                      leading: Icon(Icons.settings),
-                      title: Text('Settings'),
+                      leading: const Icon(Icons.settings),
+                      title: const Text('Settings'),
                       // TODO Redirect to settings page
                       onTap: () => null,
                     ),
@@ -143,11 +145,11 @@ class _NavBarState extends State<NavBar> {
                       color: Colors.grey[500],
                     ),
                     ListTile(
-                      leading: Icon(Icons.exit_to_app),
-                      title: Text('Logout'),
+                      leading: const Icon(Icons.exit_to_app),
+                      title: const Text('Logout'),
                       // ~ When Logout is selected, we peform signOut defined in services/auth.dart. We wait until the action was succesful and then redirect to Wrapper
                       // ~ Which then decides which screen to display ( will display Authentiaction screen )
-                      onTap: ()  {
+                      onTap: () {
                         _auth.signOut();
                         selectedItem(context, '');
                       },

@@ -1,6 +1,6 @@
 import 'package:crew_brew/models/user/AppUser.dart';
 import 'package:crew_brew/models/user/UserData.dart';
-import 'package:crew_brew/navigationBar/NavBar.dart';
+import 'package:crew_brew/navigationBar/navbar.dart';
 import 'package:crew_brew/shared/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:crew_brew/services/database.dart';
