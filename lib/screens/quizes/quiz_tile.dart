@@ -19,6 +19,8 @@ class QuizTile extends StatelessWidget {
     return GestureDetector(
       onTap: () => print("true"),             //<- here logic when your click the tile
       child: Card(
+        //add a 3d aspeckt for the card
+        elevation: 8.0,
         clipBehavior: Clip.antiAlias,
 
         //set the distance between the card and the phone border
