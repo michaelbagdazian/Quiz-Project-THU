@@ -14,7 +14,7 @@ fontSize[default parameter with value -> "40"]: the font size of your Label
 
 class customAlertBox extends StatelessWidget {
   late final String _label; //label of alertbox
-  late final String _message; //error message
+  late final String? _message; //error message
   late String fontFamily; //font family of your label
   late double fontSize; //font size of your label
 
@@ -43,7 +43,7 @@ class customAlertBox extends StatelessWidget {
         ),
       ),
       //the error message
-      content: Text(_message),
+      content: Text(_message!),
     );
   }
 }
