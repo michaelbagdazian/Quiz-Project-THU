@@ -86,7 +86,7 @@ class _NavBarState extends State<NavBar> {
                       // ~ A widget that lets you draw arbitrary graphics.
                       // ~ We use it to display the backround image of the UserAccountsDrawerHeader
                       decoration: BoxDecoration(
-                        color: Colors.blue,
+                        color: Colors.pink,
                         image: DecorationImage(
                           image: AssetImage(
                               'assets/menu_images/userBackground.png'),

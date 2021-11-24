@@ -1,5 +1,7 @@
 import 'package:crew_brew/models/quiz/Quiz.dart';
 import 'package:flutter/material.dart';
+import 'package:crew_brew/shared/colors.dart';
+import 'package:crew_brew/shared/colors.dart';
 
 // ! Information about the class:
 // ~ This class represents ONE entry in the List
@@ -57,7 +59,7 @@ class QuizTile extends StatelessWidget {
                       ),
                       // icon for identication if the quiz is shared red = not, green = is shared.
                       WidgetSpan(
-                        child: Icon(Icons.group, color: quiz.quizIsShared ? Colors.green : Colors.red),
+                        child: Icon(Icons.group, color: quiz.quizIsShared ? right : wrong),
                       ),
                     ],
                   ),
@@ -93,7 +95,7 @@ class QuizTile extends StatelessWidget {
                       //style of the text
                           TextStyle(
                           fontWeight: FontWeight.bold,
-                           color:Colors.blueAccent,
+                           color: bluething,
                             fontSize: 20,
                           )
                         ),
@@ -111,7 +113,7 @@ class QuizTile extends StatelessWidget {
                       //text style
                   TextStyle(
                     fontWeight: FontWeight.bold,
-                    color:Colors.blueAccent,
+                    color: bluething,
                     fontSize: 20,
 
                   )
