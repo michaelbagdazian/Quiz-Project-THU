@@ -121,7 +121,8 @@ class _NavBarState extends State<NavBar> {
                     ListTile(
                       leading: Icon(Icons.ac_unit_sharp),
                       title: Text('Test Quiz'),
-                      onTap: () => null,//selectedItem(context, 'sharedQuizes'),
+                      onTap: () =>
+                          null, //selectedItem(context, 'sharedQuizes'),
                     ),
                     // ! Divider is used to separate different section of the NavBar
                     Divider(
@@ -147,8 +148,8 @@ class _NavBarState extends State<NavBar> {
                       title: Text('Logout'),
                       // ~ When Logout is selected, we peform signOut defined in services/auth.dart. We wait until the action was succesful and then redirect to Wrapper
                       // ~ Which then decides which screen to display ( will display Authentiaction screen )
-                      onTap: ()  {
-                        _auth.signOut();
+                      onTap: () {
+                        _auth.signOut(context);
                         selectedItem(context, '');
                       },
                     ),

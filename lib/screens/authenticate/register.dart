@@ -155,7 +155,7 @@ class _RegisterState extends State<Register> {
                           // ~ We await for the result from the Firebase
                           dynamic result =
                               await _auth.registerWithEmailAndPassword(
-                                  username, email, password);
+                                  username, email, password, context);
                           // ~ If registration is NOT successful, we provide an error message.
                           if (result == null) {
                             setState(() {

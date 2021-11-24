@@ -1,7 +1,9 @@
 import 'package:crew_brew/models/user/AppUser.dart';
 import 'package:crew_brew/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:crew_brew/shared/customWidgets/customAlertBox.dart';
 
 // ! Information about the class:
 // ~ This class is a service class for user authentication
@@ -24,7 +26,11 @@ class AuthService {
   }
 
   // * sign in with e-mail and password
-  Future signInWithEmailAndPassword(String email, String password) async {
+  // * As you can see, the method takes a parameter of type BuildContext,
+  // * context is used for error handeling, to actually know, what context to use when we need to build the alertbox
+  //* when you call this method just pass in context like so => signInWithEmailAndPassword(email, password, context)
+  Future signInWithEmailAndPassword(
+      String email, String password, BuildContext context) async {
     try {
       // ~ First we do request to FireBase and it awaits for the response
       UserCredential result = await _auth.signInWithEmailAndPassword(
@@ -34,10 +40,15 @@ class AuthService {
       User? user = result.user;
 
       return _userFromFirebaseUser(user);
-    }
-    catch (e) {
-      print(e.toString());
-      return null;
+    } on FirebaseAuthException catch (e) {
+      //~ catch firebase exception
+      //~ return a showDialog which builds an alert box with a title and the message of the exception
+      return showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            //customAlertBox (label, error message)
+            return customAlertBox("Oops !! and error has happened", e.message);
+          });
     }
   }
 
@@ -53,8 +64,11 @@ class AuthService {
   }
 
   // * sign in anonymously
+  // * As you can see, the method takes a parameter of type BuildContext,
+  // * context is used for error handeling, to actually know, what context to use when we need to build the alertbox
+  //* when you call this method just pass in context like so => signInAnon(context)
   // ~ Future - If the asynchronous operation succeeds, the future completes with a value. Otherwise it completes with an error.
-  Future signInAnon() async {
+  Future signInAnon(BuildContext context) async {
     try {
       // ~ we make authentication request and we want to await this, because this will take some time to do
       // ~ and we want to wait for completion before we assign the result to some kind of variable
@@ -72,16 +86,24 @@ class AuthService {
 
       // ~ When we call signInAnon method from signIn page, then it will return user object to that sign in widget where we called this method
       return _userFromFirebaseUser(user);
-    }
-    catch (e) {
-      print(e.toString());
-      return null;
+    } on FirebaseAuthException catch (e) {
+      //~ catch firebase exception
+      //~ return a showDialog which builds an alert box with a title and the message of the exception
+      return showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            //customAlertBox (label, error message)
+            return customAlertBox("Oops !! and error has happened", e.message);
+          });
     }
   }
 
   // * register with e-mail and password
-  Future registerWithEmailAndPassword(
-      String username, String email, String password) async {
+  // * As you can see, the method takes a parameter of type BuildContext,
+  // * context is used for error handeling, to actually know, what context to use when we need to build the alertbox
+  //* when you call this method just pass in context like so => registerWithEmailAndPassword(username, pass, context)
+  Future registerWithEmailAndPassword(String username, String email,
+      String password, BuildContext context) async {
     try {
       // ~ First we do request to FireBase and it awaits for the response
       UserCredential result = await _auth.createUserWithEmailAndPassword(
@@ -96,18 +118,25 @@ class AuthService {
           .updateUserData(username, email, 'default.png', 0);
 
       return _userFromFirebaseUser(user);
-    }
-    catch (e) {
-      print(e.toString());
-      return null;
+      //~ catch firebase exceptiom
+    } on FirebaseAuthException catch (e) {
+      //~ return a showDialog which builds an alert box with a title and the message of the exception
+      return showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            //customAlertBox (label, error message)
+            return customAlertBox("Oops !! and error has happened", e.message);
+          });
     }
   }
 
   // * sign out
-  Future signOut() async {
+  // * As you can see, the method takes a parameter of type BuildContext,
+  // * context is used for error handeling, to actually know, what context to use when we need to build the alertbox
+  Future signOut(BuildContext context) async {
     try {
       // ~ If user was signedIn anounymosly, then all the data, as well as the user is deleted from the Firebase and Firestore
-      if(_auth.currentUser!.isAnonymous){
+      if (_auth.currentUser!.isAnonymous) {
         // ~ We do not use await statement, since we do not want user to wait until data is deleted. So delete() is the fastest executed command
         // ~ As soon as delete() return a result, user is navigated to welcome screen, but in the background data is deleted from the DB
         String uid = _auth.currentUser!.uid;
@@ -115,12 +144,18 @@ class AuthService {
         DatabaseService(uid: uid).deleteUserData();
         // ~ When user is deleted, it's automatically logged out
         return _auth.currentUser!.delete();
-      }else{
+      } else {
         return await _auth.signOut();
       }
-    } catch (e) {
-      print(e.toString());
-      return null;
+    } on FirebaseAuthException catch (e) {
+      //~ catch firebase exceptiom
+      return showDialog(
+          //~ return a showDialog which builds an alert box with a title and the message of the exception
+          context: context,
+          builder: (BuildContext context) {
+            //customAlertBox (label, error message)
+            return customAlertBox("Oops !! and error has happened", e.message);
+          });
     }
   }
 }
