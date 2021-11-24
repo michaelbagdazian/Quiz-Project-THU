@@ -19,12 +19,15 @@ class ActiveQuiz extends StatefulWidget {
 class _ActiveQuizState extends State<ActiveQuiz> {
   int currentQuestion = 0;
   String message = "";
+  int points = 0;
+  bool showScoreScreen = false;
   void next() {
     Timer(const Duration(seconds: 2), () {
       if (currentQuestion == widget.questions.length - 1) {
         // TODO: Show Score Screen Here
         setState(() {
-          currentQuestion = 0;
+          showScoreScreen = true;
+          // currentQuestion = 0;
         });
       } else {
         setState(() {
@@ -76,13 +79,14 @@ class _ActiveQuizState extends State<ActiveQuiz> {
               Flexible(
                   flex: 1,
                   child: QuizComponent(
-                    questionText: widget.questions
+                    questionText: showScoreScreen ? "You got ${points} points!": widget.questions
                         .elementAt(currentQuestion)
                         .questionText,
                     answers:
                         widget.questions.elementAt(currentQuestion).answers,
-                    answer: 1,
+                    answer: widget.questions.elementAt(currentQuestion).correctAnswer,
                     onCorrectAnswer: () {
+                      points++;
                       // TODO: DO SOMETHING ON CORRECT ANSWER
                       print(CORRECT_MESSAGE);
                       setState(() {
@@ -99,6 +103,24 @@ class _ActiveQuizState extends State<ActiveQuiz> {
                     },
                     onFinishAnswer: next,
                   )),
+                  if (showScoreScreen == true)
+                    Container(
+                    padding: const EdgeInsets.all(5),
+                    child: ElevatedButton(
+                        onPressed: () => Navigator.pushReplacementNamed(context, '/home'),
+                        child: Text("Back",
+                          style: const TextStyle(
+                          color: Colors.white, fontSize: 20),
+                        ),
+                        style: TextButton.styleFrom(
+                          backgroundColor: Colors.blueAccent,
+                          primary: Colors.greenAccent,
+                          padding: const EdgeInsets.all(20)
+                        ),
+                    ),
+                    )
+
+
             ]),
       ),
     );
