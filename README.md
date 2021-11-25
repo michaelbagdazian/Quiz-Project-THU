@@ -7,7 +7,7 @@ A new team project using Flutter.
 
 ### **Welcoming page, Login page and Registeration page:**
 ----
-<img src="./misc/WelcomePage.jpg" width=30% height=30%> <img src="./misc/Log_in.jpg" width=30% height=30%> <img src="./misc/Sign_up.jpg" width=30% height=30%>
+<img src="./ScreenShots/WelcomePage.jpg" width=30% height=30%> <img src="./ScreenShots/Log_in.jpg" width=30% height=30%> <img src="./ScreenShots/Sign_up.jpg" width=30% height=30%>
 
 ### **When a User registers/ is added to firebase:**
 --------------------
