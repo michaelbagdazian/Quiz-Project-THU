@@ -24,6 +24,9 @@ A new team project using Flutter.
 ### **Error Handling using Alert Boxes:**
 <img src ="./ScreenShots/alertBoxes.jpeg" width=30% height=30%>
 
+### **Creating New Quizz:**
+<img src ="./ScreenShots/AddQuizzUI.jpeg" width=50% height=50%>
+
 # Implementd
 - welcoming screen, login screen, register screen (functional)\ 
 - "register" and "login" buttons and their functionality are implemented\
