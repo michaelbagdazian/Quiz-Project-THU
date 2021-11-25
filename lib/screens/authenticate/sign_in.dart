@@ -133,8 +133,9 @@ class _SignInState extends State<SignIn> {
                           setState(() => loading = true);
                           // ~ We will get null or AppUser, so we don't know the type of return. Therefore we use dynamic
                           // ~ We await for the result from the Firebase
-                          dynamic result = await _auth
-                              .signInWithEmailAndPassword(email, password);
+                          dynamic result =
+                              await _auth.signInWithEmailAndPassword(
+                                  email, password, context);
                           // ~ If login is not succesful, we provide an error message
                           if (result == null) {
                             setState(() {
@@ -162,24 +163,23 @@ class _SignInState extends State<SignIn> {
                       // ! onPressed():
                       // ~ onPressed is async, because we interract with Firebase and it takes some time
                       onPressed: () async {
-                          // * Here we decide to show the loading screen
-                          setState(() => loading = true);
-                          // ~ Signin anonymously
-                          dynamic result = await _auth.signInAnon();
-                          // ~ If login is not succesful, we provide an error message
-                          if (result == null) {
-                            setState(() {
-                              error = 'could not sign in with those credentials';
-                              // * Here we decide to remove the loading screen
-                              loading = false;
-                            });
-                            // ! If login is successful:
-                            // ~ pop current screen from the stack then it's automatically redirected to Home page
-                          } else {
-                            popScreen();
-                          }
+                        // * Here we decide to show the loading screen
+                        setState(() => loading = true);
+                        // ~ Signin anonymously
+                        dynamic result = await _auth.signInAnon(context);
+                        // ~ If login is not succesful, we provide an error message
+                        if (result == null) {
+                          setState(() {
+                            error = 'could not sign in with those credentials';
+                            // * Here we decide to remove the loading screen
+                            loading = false;
+                          });
+                          // ! If login is successful:
+                          // ~ pop current screen from the stack then it's automatically redirected to Home page
+                        } else {
+                          popScreen();
                         }
-                      ),
+                      }),
                   // * End of Signin anonymously button
                   SizedBox(height: 12.0),
                   // ! Text widget for error message:

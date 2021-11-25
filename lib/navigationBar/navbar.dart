@@ -61,103 +61,107 @@ class _NavBarState extends State<NavBar> {
               return Drawer(
                 // ! ListView widget:
                 // ~ ListView is the most commonly used scrolling widget. It displays its children one after another in the scroll direction.
-                child: ListView(
-                  padding: EdgeInsets.zero,
-                  // ~ Here we define the children of our ListView
-                  children: [
-                    // ! UserAccountsDrawerHeader
-                    // ~ A material design Drawer header that identifies the app's user. You see it on the top left side with backround, user avatar
-                    // ~ and some information about the user
-                    UserAccountsDrawerHeader(
-                      // ~ Here properties for the user data is defined ( username and e-mail )
-                      accountName: Text(userName),
-                      accountEmail: Text(userEmail),
-                      // ! CircleAvatar:
-                      // ~ Here properties for the User Avatar are defined
-                      currentAccountPicture: CircleAvatar(
-                        child: ClipOval(
-                          child: Image.asset(
-                            'assets/menu_images/$avatar',
-                            width: 90,
-                            height: 90,
+                child: Container(
+                  constraints: BoxConstraints(
+                      maxWidth: MediaQuery.of(context).size.width * 0.25),
+                  child: ListView(
+                    padding: EdgeInsets.zero,
+                    // ~ Here we define the children of our ListView
+                    children: [
+                      // ! UserAccountsDrawerHeader
+                      // ~ A material design Drawer header that identifies the app's user. You see it on the top left side with backround, user avatar
+                      // ~ and some information about the user
+                      UserAccountsDrawerHeader(
+                        // ~ Here properties for the user data is defined ( username and e-mail )
+                        accountName: Text(userName),
+                        accountEmail: Text(userEmail),
+                        // ! CircleAvatar:
+                        // ~ Here properties for the User Avatar are defined
+                        currentAccountPicture: CircleAvatar(
+                          child: ClipOval(
+                            child: Image.asset(
+                              'assets/menu_images/$avatar',
+                              width: 90,
+                              height: 90,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        // ! BoxDecoration:
+                        // ~ A widget that lets you draw arbitrary graphics.
+                        // ~ We use it to display the backround image of the UserAccountsDrawerHeader
+                        decoration: const BoxDecoration(
+                          color: Colors.blue,
+                          image: DecorationImage(
+                            image: AssetImage(
+                                'assets/menu_images/userBackground.png'),
                             fit: BoxFit.cover,
                           ),
                         ),
                       ),
-                      // ! BoxDecoration:
-                      // ~ A widget that lets you draw arbitrary graphics.
-                      // ~ We use it to display the backround image of the UserAccountsDrawerHeader
-                      decoration: const BoxDecoration(
-                        color: Colors.blue,
-                        image: DecorationImage(
-                          image: AssetImage(
-                              'assets/menu_images/userBackground.png'),
-                          fit: BoxFit.cover,
-                        ),
+                      // * ====================================
+                      // * Start of items listed in the drawer
+                      // * ====================================
+                      ListTile(
+                        leading: const Icon(Icons.home),
+                        title: const Text('Home'),
+                        // ~ When tile is clicked, we are redirected to home page using support method defined below
+                        onTap: () => selectedItem(context, 'home'),
                       ),
-                    ),
-                    // * ====================================
-                    // * Start of items listed in the drawer
-                    // * ====================================
-                    ListTile(
-                      leading: const Icon(Icons.home),
-                      title: const Text('Home'),
-                      // ~ When tile is clicked, we are redirected to home page using support method defined below
-                      onTap: () => selectedItem(context, 'home'),
-                    ),
-                    ListTile(
-                      leading: const Icon(Icons.account_circle_sharp),
-                      title: const Text('My profile'),
-                      onTap: () => selectedItem(context, 'userProfile'),
-                    ),
-                    ListTile(
-                      leading: const Icon(Icons.archive),
-                      title: const Text('My quizzes'),
-                      onTap: () => selectedItem(context, 'myQuizes'),
-                    ),
-                    ListTile(
-                      leading: const Icon(Icons.share),
-                      title: const Text('Shared quizzes'),
-                      onTap: () => selectedItem(context, 'sharedQuizes'),
-                    ),
-                    ListTile(
-                      leading: const Icon(Icons.ac_unit_sharp),
-                      title: const Text('Test Quiz'),
-                      onTap: () => selectedItem(context, 'quizWrapper'),
-                    ),
-                    // ! Divider is used to separate different section of the NavBar
-                    Divider(
-                      color: Colors.grey[500],
-                    ),
-                    ListTile(
-                      leading: const Icon(Icons.info_outline),
-                      title: const Text('Information'),
-                      // TODO Redirect to information page
-                      onTap: () => null,
-                    ),
-                    ListTile(
-                      leading: const Icon(Icons.settings),
-                      title: const Text('Settings'),
-                      // TODO Redirect to settings page
-                      onTap: () => null,
-                    ),
-                    Divider(
-                      color: Colors.grey[500],
-                    ),
-                    ListTile(
-                      leading: const Icon(Icons.exit_to_app),
-                      title: const Text('Logout'),
-                      // ~ When Logout is selected, we peform signOut defined in services/auth.dart. We wait until the action was succesful and then redirect to Wrapper
-                      // ~ Which then decides which screen to display ( will display Authentiaction screen )
-                      onTap: () {
-                        _auth.signOut();
-                        selectedItem(context, '');
-                      },
-                    ),
-                    // * ====================================
-                    // * End of items listed in the drawer
-                    // * ====================================
-                  ],
+                      ListTile(
+                        leading: const Icon(Icons.account_circle_sharp),
+                        title: const Text('My profile'),
+                        onTap: () => selectedItem(context, 'userProfile'),
+                      ),
+                      ListTile(
+                        leading: const Icon(Icons.archive),
+                        title: const Text('My quizzes'),
+                        onTap: () => selectedItem(context, 'myQuizes'),
+                      ),
+                      ListTile(
+                        leading: const Icon(Icons.share),
+                        title: const Text('Shared quizzes'),
+                        onTap: () => selectedItem(context, 'sharedQuizes'),
+                      ),
+                      ListTile(
+                        leading: const Icon(Icons.ac_unit_sharp),
+                        title: const Text('Test Quiz'),
+                        onTap: () => selectedItem(context, 'quizWrapper'),
+                      ),
+                      // ! Divider is used to separate different section of the NavBar
+                      Divider(
+                        color: Colors.grey[500],
+                      ),
+                      ListTile(
+                        leading: const Icon(Icons.info_outline),
+                        title: const Text('Information'),
+                        // TODO Redirect to information page
+                        onTap: () => null,
+                      ),
+                      ListTile(
+                        leading: const Icon(Icons.settings),
+                        title: const Text('Settings'),
+                        // TODO Redirect to settings page
+                        onTap: () => null,
+                      ),
+                      Divider(
+                        color: Colors.grey[500],
+                      ),
+                      ListTile(
+                        leading: const Icon(Icons.exit_to_app),
+                        title: const Text('Logout'),
+                        // ~ When Logout is selected, we peform signOut defined in services/auth.dart. We wait until the action was succesful and then redirect to Wrapper
+                        // ~ Which then decides which screen to display ( will display Authentiaction screen )
+                        onTap: () {
+                          _auth.signOut(context);
+                          selectedItem(context, '');
+                        },
+                      ),
+                      // * ====================================
+                      // * End of items listed in the drawer
+                      // * ====================================
+                    ],
+                  ),
                 ),
               );
               // ! If the user data is still fetching from DB, return Loading screen
