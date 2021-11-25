@@ -22,7 +22,7 @@ A new team project using Flutter.
 <img src ="./ScreenShots/FirebaseStorage.png" width=50% height=50%>
 
 ### **Error Handling using Alert Boxes:**
-<img src ="./ScreenShots/alertBoxes.jpeg" width=50% height=50%>
+<img src ="./ScreenShots/alertBoxes.jpeg" width=30% height=30%>
 
 # Implementd
 - welcoming screen, login screen, register screen (functional)\ 
