@@ -3,6 +3,7 @@ import 'package:crew_brew/shared/constants.dart';
 import 'package:crew_brew/shared/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:crew_brew/shared/customWidgets/customText.dart';
+import 'package:crew_brew/shared/colors.dart';
 
 // ! Information about the class:
 // ~ This class is the screen for registration
@@ -73,7 +74,7 @@ class _SignUpState extends State<SignUp> {
                   fontSize: 30,
                 ),
               ),
-              backgroundColor: Colors.teal,
+              backgroundColor: welcomeh,
             ),
             //normal ol stack; i use fit to expand the stack to fill the screen; try to change this to fill instead of expand to solve overflow problems
             body: Container(
@@ -110,18 +111,18 @@ class _SignUpState extends State<SignUp> {
                             decoration: InputDecoration(
                               enabledBorder: const OutlineInputBorder(
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(12.0)),
-                                borderSide: BorderSide(color: Colors.white),
+                                BorderRadius.all(Radius.circular(12.0)),
+                                borderSide: BorderSide(color: texts),
                               ),
                               focusedBorder: const OutlineInputBorder(
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(5.0)),
-                                  borderSide: BorderSide(color: Colors.yellow)),
+                                  BorderRadius.all(Radius.circular(5.0)),
+                                  borderSide: BorderSide(color: borders)),
                               contentPadding: const EdgeInsets.all(15),
                               labelText: 'Username',
                               labelStyle: const TextStyle(
                                 fontFamily: 'Lobster',
-                                color: Colors.white,
+                                color: texts,
                                 fontSize: 20.0,
                               ),
                             ),
@@ -147,18 +148,18 @@ class _SignUpState extends State<SignUp> {
                             decoration: InputDecoration(
                               enabledBorder: const OutlineInputBorder(
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(12.0)),
-                                borderSide: BorderSide(color: Colors.white),
+                                BorderRadius.all(Radius.circular(12.0)),
+                                borderSide: BorderSide(color: texts),
                               ),
                               focusedBorder: const OutlineInputBorder(
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(5.0)),
-                                  borderSide: BorderSide(color: Colors.yellow)),
+                                  BorderRadius.all(Radius.circular(5.0)),
+                                  borderSide: BorderSide(color: borders)),
                               contentPadding: const EdgeInsets.all(15),
                               labelText: 'E-mail',
                               labelStyle: const TextStyle(
                                 fontFamily: 'Lobster',
-                                color: Colors.white,
+                                color: texts,
                                 fontSize: 20.0,
                               ),
                             ),
@@ -183,18 +184,19 @@ class _SignUpState extends State<SignUp> {
                             decoration: InputDecoration(
                               enabledBorder: const OutlineInputBorder(
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(12.0)),
-                                borderSide: BorderSide(color: Colors.white),
+                                BorderRadius.all(Radius.circular(12.0)),
+                                borderSide: BorderSide(color: texts),
                               ),
                               focusedBorder: const OutlineInputBorder(
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(5.0)),
-                                  borderSide: BorderSide(color: Colors.yellow)),
+                                  BorderRadius.all(Radius.circular(5.0)),
+                                  borderSide: BorderSide(color: borders)),
+                                 
                               contentPadding: const EdgeInsets.all(15),
                               labelText: 'Password',
                               labelStyle: const TextStyle(
                                 fontFamily: 'Lobster',
-                                color: Colors.white,
+                                color: texts,
                                 fontSize: 20.0,
                               ),
                             ),
@@ -248,7 +250,7 @@ class _SignUpState extends State<SignUp> {
                               fontFamily: 'Lobster',
                             ),
                           ),
-                          backgroundColor: Colors.orange,
+                          backgroundColor: buttons,
                           extendedPadding: const EdgeInsets.all(40),
                           shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
