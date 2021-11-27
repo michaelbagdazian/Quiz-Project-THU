@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crew_brew/models/quiz/Quiz.dart';
-import 'package:crew_brew/models/quiz/TestQuiz.dart';
 import 'package:crew_brew/models/quiz/question.dart';
 import 'package:crew_brew/models/user/UserData.dart';
 
@@ -32,24 +31,178 @@ class DatabaseService {
   final CollectionReference userDataCollection =
       FirebaseFirestore.instance.collection('user_data');
 
+  // * ==================================================
+  // * QUIZES SECTION START
+  // * ==================================================
+
   // ! updateQuizData
   // ~ Here we update quizData in DB
   // ~ We call this function when user creates the quiz on Home page
   // ~ it's return value is Future, because it's async function
-  Future updateQuizData(String quizCategory, String quizTitle, String quizOwner,
-      String quizDescription, bool quizIsShared) async {
-    // ~ If document does not exist yet, then Firebase will create the document for us.
-    // ~ We pass the data through map (key-value pairs) to set method
+  Future updateQuizData(Quiz quiz) async {
+    Map<String, Map<String, bool>> mapOfQuestions =
+        _convertQuestionsToMap(quiz.listOfQuestions);
+
     return await quizCollection.doc().set({
-      'quizCategory': quizCategory,
-      'quizTitle': quizTitle,
-      'quizOwner': quizOwner,
+      'quizCategory': quiz.quizCategory,
+      'quizTitle': quiz.quizTitle,
+      'quizOwner': quiz.quizOwner,
       'quizOwnerUID': uid,
-      'quizDescription': quizDescription,
-      'quizIsShared': quizIsShared,
+      'quizDescription': quiz.quizDescription,
+      'quizIsShared': quiz.quizIsShared,
+      'listOfQuestions': mapOfQuestions,
+      'tags': quiz.tags,
     });
   }
 
+  // ! _convertQuestionsToMap
+  // ~ This is a helper class for updateNewQuizData
+  // ~ This is a private class, which converts List<Question> to Map<String, Map<String, bool>>, since Flutter only has default data types
+  Map<String, Map<String, bool>> _convertQuestionsToMap(
+      List<Question> questions) {
+    Map<String, Map<String, bool>> mapOfQuestions =
+        new Map<String, Map<String, bool>>();
+
+    for (Question question in questions) {
+      String questionText = question.questionText;
+      List<String> answers = question.answers;
+      int correctAnswer = question.correctAnswer;
+
+      Map<String, bool> answersMap = new Map<String, bool>();
+      for (int i = 0; i < answers.length; i++) {
+        answersMap[answers[i]] = (i == correctAnswer);
+      }
+
+      mapOfQuestions[questionText] = answersMap;
+    }
+
+    return mapOfQuestions;
+  }
+
+  // ! Stream<List<Quiz>> for shared quizes
+  // ~ Here we define the stream for the changes in my quizes and then screens/quizes/myQuizes will provide the stream to children
+  Stream<List<Quiz>> get myQuizes {
+    return quizCollection.snapshots().map(_myQuizListFromSnapshot);
+  }
+
+  List<Quiz> _myQuizListFromSnapshot(QuerySnapshot snapshot) {
+    List<Quiz> myQuizList = [];
+
+    snapshot.docs.forEach((doc) {
+      String quizOwnedUID = doc.get('quizOwnerUID');
+      if (quizOwnedUID == uid) {
+        myQuizList.add(_quizFromSnapshot(doc, doc.get('quizIsShared')));
+      }
+    });
+
+    return myQuizList;
+  }
+
+  // ! Stream<List<Quiz>> for shared quizes
+  // ~ Here we define the stream for the changes in shared quizes and then screens/quizes/sharedQuizes will provide the stream to children
+  Stream<List<Quiz>> get sharedQuizes {
+    // ~ Here snapshot is taken from all entries
+    return quizCollection.snapshots().map(_sharedQuizListFromSnapshot);
+  }
+
+  // ! _sharedQuizListFromSnapshot
+  // ~ This returns list of shared quizes from snapshot in DB. This method is used by shredQuizes stream above.
+  List<Quiz> _sharedQuizListFromSnapshot(QuerySnapshot snapshot) {
+    List<Quiz> sharedQuizList = [];
+
+    snapshot.docs.forEach((doc) {
+      bool quizIsShared = doc.get('quizIsShared');
+      if (quizIsShared) {
+        sharedQuizList.add(_quizFromSnapshot(doc, quizIsShared));
+      }
+    });
+
+    return sharedQuizList;
+  }
+
+  // ! quizFromSnapshot
+  // ~ This is helper method. It returns single quiz instance from one document. Used by _myQuizListFromSnapshot and _sharedQuizListFromSnapshot
+  Quiz _quizFromSnapshot(DocumentSnapshot doc, bool quizIsShared) {
+    // ~ Here we perform some type transformation, so the type of our map is the same as we have uploaded it
+    // ~ I know is pretty cryptic, but cannot do anything about it
+    Map<String, Map<String, dynamic>> dynamicMap =
+        Map.from(doc.get('listOfQuestions')).map((key, value) =>
+            MapEntry(key as String, value as Map<String, dynamic>));
+    Map<String, Map<String, bool>> mapOfQuestions = dynamicMap.map((key,
+            value) =>
+        MapEntry(key, value.map((key, value) => MapEntry(key, value as bool))));
+
+    List<Question> listOfQuestions = [];
+
+    mapOfQuestions.forEach((key, value) {
+      Question question = _questionObjectFromMap(key, value);
+
+      listOfQuestions.add(question);
+    });
+
+    return Quiz(
+        quizCategory: doc.get('quizCategory'),
+        quizTitle: doc.get('quizTitle'),
+        quizOwner: doc.get('quizOwner'),
+        quizOwnerUID: doc.get('quizOwnerUID'),
+        quizDescription: doc.get('quizDescription'),
+        quizIsShared: doc.get('quizIsShared'),
+        listOfQuestions: listOfQuestions,
+        tags: List.from(doc.get('tags')));
+  }
+
+  // ! _questionObjectFromMap
+  // ~ This is a helper function used by newQuizFromSnapshot
+  // ~ this returns Question object from the map.
+  Question _questionObjectFromMap(String key, Map<String, bool> value) {
+    Map<String, bool> answers = value;
+    String questionText = key;
+    int correctAnswer = -1;
+
+    int index = 0;
+    List<String> answersList = [];
+    answers.forEach((key, value) {
+      answersList.add(key);
+      if (value == true) {
+        correctAnswer = index;
+      }
+
+      index++;
+    });
+
+    return new Question(
+        questionText: questionText,
+        answers: answersList,
+        correctAnswer: correctAnswer);
+  }
+
+  // ! deleteQuiz()
+  // ~ This deletes all the quizes for one user
+  // ~ We are using batch to perform the request. Submitting request as batch means that we send one single request from the client side
+  // ~ so deleting 10 quizes is one request from the client, the rest is handled by the server
+  // ~ it allows client now to wait while delete is performed
+  Future<void> deleteAllQuizesPerUID() {
+    WriteBatch batch = FirebaseFirestore.instance.batch();
+
+    return quizCollection
+        .where('quizOwnerUID', isEqualTo: uid)
+        .get()
+        .then((snapshot) {
+      snapshot.docs.forEach((document) {
+        batch.delete(document.reference);
+      });
+
+      return batch.commit();
+    });
+  }
+
+  // * ==================================================
+  // * QUIZES SECTION END
+  // * ==================================================
+
+  // * ==================================================
+  // * USER SECTION START
+  // * ==================================================
   // ! updateUserData
   // ~ Here we update userData in DB
   // ~ We call this function when user is registered or we want to update some information for the user
@@ -65,63 +218,6 @@ class DatabaseService {
       'avatar': avatar,
       'level': level,
     });
-  }
-
-  // ! Stream<List<Quiz>> for shared quizes
-  // ~ Here we define the stream for the changes in shared quizes and then screens/quizes/sharedQuizes will provide the stream to children
-  Stream<List<Quiz>> get sharedQuizes {
-    // ~ Here snapshot is taken from all entries
-    return quizCollection.snapshots().map(_sharedQuizListFromSnapshot);
-  }
-
-  // * Difference between QuerySnapshot and DocumentSnapshot https://firebase.flutter.dev/docs/firestore/usage/
-
-  // ! _sharedQuizListFromSnapshot
-  // ~ This returns list of shared quizes from snapshot in DB. This method is used by shredQuizes stream above.
-  List<Quiz> _sharedQuizListFromSnapshot(QuerySnapshot snapshot) {
-    List<Quiz> sharedQuizList = [];
-
-    snapshot.docs.forEach((doc) {
-      bool quizIsShared = doc.get('quizIsShared');
-      if (quizIsShared) {
-        sharedQuizList.add(quizListFromSnapshot(doc, quizIsShared));
-      }
-    });
-
-    return sharedQuizList;
-  }
-
-  // ! Stream<List<Quiz>> for shared quizes
-  // ~ Here we define the stream for the changes in my quizes and then screens/quizes/myQuizes will provide the stream to children
-  Stream<List<Quiz>> get myQuizes {
-    return quizCollection.snapshots().map(_myQuizListFromSnapshot);
-  }
-
-  // ! _myQuizListFromSnapshot
-  // ~ This returns list of myQuizes from snapshot in DB. This method is used by myQuizes stream above.
-  List<Quiz> _myQuizListFromSnapshot(QuerySnapshot snapshot) {
-    List<Quiz> sharedQuizList = [];
-
-    snapshot.docs.forEach((doc) {
-      String quizOwnedUID = doc.get('quizOwnerUID');
-      if (quizOwnedUID == uid) {
-        sharedQuizList.add(quizListFromSnapshot(doc, doc.get('quizIsShared')));
-      }
-    });
-
-    return sharedQuizList;
-  }
-
-  // ! quizListFromSnapshot
-  // ~ This is helper method. It returns single quiz instance from one document. Used by _myQuizListFromSnapshot and _sharedQuizListFromSnapshot
-  Quiz quizListFromSnapshot(DocumentSnapshot doc, bool quizIsShared) {
-    return Quiz(
-        quizCategory: doc.get('quizCategory'),
-        quizTitle: doc.get('quizTitle'),
-        quizOwner: doc.get('quizOwner'),
-        quizOwnerUID: doc.get('quizOwnerUID'),
-        quizDescription: doc.get('quizDescription'),
-        quizIsShared: quizIsShared);
   }
 
   // ! Stream<UserData>
@@ -146,79 +242,14 @@ class DatabaseService {
     );
   }
 
-  // ! deleteQuiz()
-  // ~ This deletes all the quizes for one user
-  // ~ We are using batch to perform the request. Submitting request as batch means that we send one single request from the client side
-  // ~ so deleting 10 quizes is one request from the client, the rest is handled by the server
-  // ~ it allows client now to wait while delete is performed
-  Future<void> deleteAllQuizesPerUID() {
-    WriteBatch batch = FirebaseFirestore.instance.batch();
-
-    return  quizCollection.where('quizOwnerUID', isEqualTo: uid).get().then((snapshot) {
-
-      snapshot.docs.forEach((document) {
-        batch.delete(document.reference);
-      });
-
-      return batch.commit();
-    });
-  }
-
   // ! deleteUserData()
   // ~ This deletes userData based on UID
-  Future<void> deleteUserData(){
+  Future<void> deleteUserData() {
     return userDataCollection.doc(uid).delete();
   }
 
-  // * THIS IS DONE ON 21.11.2021, TO BE REVIEWED
+  // * ==================================================
+  // * USER SECTION END
+  // * ==================================================
 
-  final CollectionReference quizForTestQuiz =
-  FirebaseFirestore.instance.collection('quiz');
-
-  final CollectionReference questionsForTestQuiz =
-  FirebaseFirestore.instance.collection('questions');
-
-  Question questionFromSnapshot(DocumentSnapshot doc){
-    return Question(
-        questionText: doc.get('questionText'),
-        answers: List.from(doc.get('answers')),
-        correctAnswer: doc.get('correctAnswer'));
-  }
-
-  List<Question> questionListFromDB(QuerySnapshot snapshot){
-    List<Question> questionList = [];
-
-    snapshot.docs.forEach((doc) {
-      questionList.add(questionFromSnapshot(doc));
-    });
-
-    return questionList;
-  }
-
-  Stream<List<Question>> get myTestQuiz {
-    return questionsForTestQuiz.snapshots().map(questionListFromDB);
-  }
-
-  /*TestQuiz? getTestQuizFromDB(){
-    TestQuiz testQuiz = TestQuiz(titleOfQuiz: 'test', creatorId: 'test', listOfQuestions: [], tags: []);
-
-    quizForTestQuiz.get().then((querySnapshot) => {
-      querySnapshot.docs.forEach((doc) {
-        testQuiz = testQuizFromSnapshot(doc);
-      })
-    });
-
-    return testQuiz;
-  }
-
-  TestQuiz testQuizFromSnapshot(DocumentSnapshot doc){
-    return TestQuiz(
-        titleOfQuiz: doc.get('title'),
-        creatorId: doc.get('creator'),
-        listOfQuestions: questionListFromDB(),
-        tags: List.from(doc.get('tags'))
-    );*/
-  }
-
-  // * THIS IS DONE ON 21.11.2021, TO BE REVIEWED
-
+}

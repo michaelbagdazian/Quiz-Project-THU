@@ -2,6 +2,7 @@ import 'package:crew_brew/models/user/AppUser.dart';
 import 'package:crew_brew/models/user/UserData.dart';
 import 'package:crew_brew/navigationBar/NavBar.dart';
 import 'package:crew_brew/shared/loading.dart';
+import 'package:crew_brew/testClasses/manualQuizCreation.dart';
 import 'package:flutter/material.dart';
 import 'package:crew_brew/services/database.dart';
 import 'package:provider/provider.dart';
@@ -62,18 +63,15 @@ class _HomeState extends State<Home> {
                     RaisedButton(
                         color: Colors.pink[400],
                         child: Text(
-                          'Create private quiz',
+                          'Create private quiz ',
                           style: TextStyle(color: Colors.white),
                         ),
                         // ! onPressed() :
-                        // ~ When button is pressed, the quiz is created in the DB and is displayed in myQuizes, since it's private Quiz
                         onPressed: () async {
-                          await DatabaseService(uid: user.uid).updateQuizData(
-                              'default',
-                              'test',
-                              userData!.username,
-                              'this is default quiz',
-                              false);
+                          await DatabaseService(uid: user.uid)
+                              .updateQuizData(ManualQuizeCreation()
+                              .createTestQuiz(
+                              user.uid, userData!.username, false));
                         }),
                     // * End of "create private quiz "
                     // * Start of "create public quiz "
@@ -84,14 +82,11 @@ class _HomeState extends State<Home> {
                           style: TextStyle(color: Colors.white),
                         ),
                         // ! onPressed() :
-                        // ~ When button is pressed, the quiz is created in the DB and is displayed in myQuizes AND sharedQuizes, since it's public Quiz
                         onPressed: () async {
-                          await DatabaseService(uid: user.uid).updateQuizData(
-                              'default',
-                              'default quiz create from Home',
-                              userData!.username,
-                              'this is default quiz',
-                              true);
+                          await DatabaseService(uid: user.uid)
+                              .updateQuizData(ManualQuizeCreation()
+                              .createTestQuiz(
+                              user.uid, userData!.username, true));
                         }),
                     // * End of "create public quiz "
                   ]),
