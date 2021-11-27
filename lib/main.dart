@@ -51,18 +51,10 @@ class MyApp extends StatelessWidget {
           '/userProfile': (context) => userProfile(),
           '/sharedQuizes': (context) => SharedQuizes(),
           '/myQuizes': (context) => MyQuizes(),
-
-          //!merging
           '/welcome': (context) => WelcominScreen(),
           '/register': (context) => SignUp(),
           '/signin': (context) => LogIn(),
           '/quizWrapper': (context) => QuizWrapper(),
-          //!original
-          // '/welcome': (context) => Welcome(),
-          // '/register': (context) => Register(),
-          // '/signin': (context) => SignIn(),
-          ///
-
         },
       ),
     );
