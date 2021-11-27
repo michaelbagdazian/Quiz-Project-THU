@@ -11,7 +11,14 @@ class QuizWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // ! Provider.of<AppUser?>(context):
+    Map data = ModalRoute.of(context)!.settings.arguments as Map;
+    if(data != null){
+      Quiz quiz = data['quiz'];
+      return ActiveQuiz(questions: quiz.listOfQuestions);
+    }else{
+      return Loading();
+    }
+   /* // ! Provider.of<AppUser?>(context):
     // ~ Here we listen to the stream, defined in services/auth.dart and provided by main.dart, which informs us about login state of the user
     final user = Provider.of<AppUser?>(context);
 
@@ -30,6 +37,6 @@ class QuizWrapper extends StatelessWidget {
           } else {
             return Loading();
           }
-        });
+        });*/
   }
 }

@@ -118,11 +118,6 @@ class _NavBarState extends State<NavBar> {
                       title: Text('Shared quizzes'),
                       onTap: () => selectedItem(context, 'sharedQuizes'),
                     ),
-                    ListTile(
-                      leading: Icon(Icons.ac_unit_sharp),
-                      title: Text('Test Quiz'),
-                      onTap: () => selectedItem(context, 'quizWrapper'),
-                    ),
                     // ! Divider is used to separate different section of the NavBar
                     Divider(
                       color: Colors.grey[500],

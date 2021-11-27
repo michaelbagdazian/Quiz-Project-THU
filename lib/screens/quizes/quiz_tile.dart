@@ -19,7 +19,9 @@ class QuizTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => print("true"),             //<- here logic when your click the tile
+      onTap: () => Navigator.pushReplacementNamed(context, '/quizWrapper', arguments:{
+        'quiz': quiz
+      }),             //<- here logic when your click the tile
       child: Card(
         //add a 3d aspeckt for the card
         elevation: 8.0,
