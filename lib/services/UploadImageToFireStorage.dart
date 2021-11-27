@@ -1,7 +1,7 @@
 // ignore_for_file: file_names, non_constant_identifier_names, unnecessary_this
 
 import 'dart:io';
-import 'package:crew_brew/shared/customAlertBox.dart';
+import 'package:crew_brew/shared/customWidgets/customAlertBox.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';

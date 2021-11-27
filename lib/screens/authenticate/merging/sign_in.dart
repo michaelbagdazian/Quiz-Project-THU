@@ -27,6 +27,7 @@ class _LogInState extends State<LogIn> {
   // ~ We need this instance to have access to the method defined in services/auth.dart called signInWithEmailAndPassword()
   final AuthService _auth = AuthService();
   final _customText = CustomText();
+  final _customTextFormFieldinstance = customTextFormField();
 
   // ! formKey:
   // ~ This key we are going to use to identify our form and we are
@@ -71,9 +72,9 @@ class _LogInState extends State<LogIn> {
               ),
               backgroundColor: welcomeh,
             ),
-            body:Container(
+            body: Container(
               child: Form(
-                key:_formKey,
+                key: _formKey,
                 child: Stack(fit: StackFit.expand, children: [
                   Expanded(
                     flex: 1,
@@ -94,24 +95,25 @@ class _LogInState extends State<LogIn> {
                         SizedBox(
                           height: size.height * 0.05,
                         ),
+
+                        //! email
                         TextFormField(
-                          //!! Merging
                             keyboardType: TextInputType.emailAddress,
 
                             // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
-                            decoration: InputDecoration(
-                              enabledBorder: const OutlineInputBorder(
+                            decoration: const InputDecoration(
+                              enabledBorder: OutlineInputBorder(
                                 borderRadius:
                                 BorderRadius.all(Radius.circular(12.0)),
                                 borderSide: BorderSide(color: texts),
                               ),
-                              focusedBorder: const OutlineInputBorder(
+                              focusedBorder: OutlineInputBorder(
                                   borderRadius:
                                   BorderRadius.all(Radius.circular(5.0)),
                                   borderSide: BorderSide(color: borders)),
                               contentPadding: const EdgeInsets.all(15),
                               labelText: "E-mail",
-                              labelStyle: const TextStyle(
+                              labelStyle: TextStyle(
                                 fontFamily: 'Lobster',
                                 color: texts,
                                 fontSize: 20.0,
@@ -121,7 +123,7 @@ class _LogInState extends State<LogIn> {
                             // ~ we return null value if this formField is VALID or a string it's NOT VALID
                             // ~ validator will be used in RaisedButton when calling _formKey.currentState!.validate()
                             validator: (val) =>
-                            val!.isEmpty ? 'Enter an email' : null,
+                                val!.isEmpty ? 'Enter an email' : null,
                             // ! onChanged property:
                             // ~ When information is entered into the TextForField, this property is triggered
                             onChanged: (val) {
@@ -132,24 +134,23 @@ class _LogInState extends State<LogIn> {
                         SizedBox(
                           height: size.height * 0.02,
                         ),
+                        //! password
                         TextFormField(
-                          //!! Merging
                             keyboardType: TextInputType.visiblePassword,
-
                             // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
-                            decoration: InputDecoration(
-                              enabledBorder: const OutlineInputBorder(
+                            decoration: const InputDecoration(
+                              enabledBorder: OutlineInputBorder(
                                 borderRadius:
                                 BorderRadius.all(Radius.circular(12.0)),
                                 borderSide: BorderSide(color: texts),
                               ),
-                              focusedBorder: const OutlineInputBorder(
+                              focusedBorder: OutlineInputBorder(
                                   borderRadius:
                                   BorderRadius.all(Radius.circular(5.0)),
                                   borderSide: BorderSide(color: borders)),
                               contentPadding: const EdgeInsets.all(15),
                               labelText: "Password",
-                              labelStyle: const TextStyle(
+                              labelStyle: TextStyle(
                                 fontFamily: 'Lobster',
                                 color: texts,
                                 fontSize: 20.0,
@@ -187,14 +188,15 @@ class _LogInState extends State<LogIn> {
                               setState(() => loading = true);
                               // ~ We will get null or AppUser, so we don't know the type of return. Therefore we use dynamic
                               // ~ We await for the result from the Firebase
-                              dynamic result = await _auth
-                                  .signInWithEmailAndPassword(email, password);
+                              dynamic result =
+                                  await _auth.signInWithEmailAndPassword(
+                                      email, password, context);
                               // ~ If login is not succesful, we provide an error message
                               if (result == null) {
                                 print("I AM HEEER3");
                                 setState(() {
                                   error =
-                                  'could not sign in with those credentials';
+                                      'could not sign in with those credentials';
                                   // * Here we decide to remove the loading screen
                                   loading = false;
                                 });
@@ -206,9 +208,9 @@ class _LogInState extends State<LogIn> {
                               }
                             }
                           },
-                          label: Text(
+                          label: const Text(
                             "Log in",
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 30,
                               fontFamily: 'Lobster',
                             ),
@@ -232,11 +234,12 @@ class _LogInState extends State<LogIn> {
                             // * Here we decide to show the loading screen
                             setState(() => loading = true);
                             // ~ Signin anonymously
-                            dynamic result = await _auth.signInAnon();
+                            dynamic result = await _auth.signInAnon(context);
                             // ~ If login is not succesful, we provide an error message
                             if (result == null) {
                               setState(() {
-                                error = 'could not sign in with those credentials';
+                                error =
+                                    'could not sign in with those credentials';
                                 // * Here we decide to remove the loading screen
                                 loading = false;
                               });
@@ -247,9 +250,9 @@ class _LogInState extends State<LogIn> {
                               popScreen();
                             }
                           },
-                          label: Text(
+                          label: const Text(
                             "Log in anonymously",
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 30,
                               fontFamily: 'Lobster',
                             ),
@@ -268,8 +271,6 @@ class _LogInState extends State<LogIn> {
                       ]),
                 ]),
               ),
-            )
-
-          );
+            ));
   }
 }
