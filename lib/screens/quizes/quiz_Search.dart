@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:crew_brew/services/auth.dart';
 import 'package:crew_brew/services/database.dart';
 import 'package:provider/provider.dart';
+import 'package:crew_brew/shared/colors.dart';
 // ignore_for_file: file_names, non_constant_identifier_names
 
 
@@ -43,7 +44,7 @@ class _quiz_Search  extends State<quiz_Search > {
                             hintText: "Search",
                           ),
                           style: TextStyle(
-                            color: Colors.white,
+                            color: texts,
                             fontSize: 16.0,
                           ));
                     } else {
