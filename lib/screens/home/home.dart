@@ -19,7 +19,7 @@ import 'package:crew_brew/shared/colors.dart';
 // TODO Define more meaningful Home Page
 
 class Home extends StatefulWidget {
-  Home({Key? key}) : super(key: key);
+  const Home({Key? key}) : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();
@@ -70,10 +70,9 @@ class _HomeState extends State<Home> {
                         // ! onPressed() :
                         // ~ When button is pressed, the quiz is created in the DB and is displayed in myQuizes, since it's private Quiz
                         onPressed: () async {
-                          await DatabaseService(uid: user.uid)
-                              .updateQuizData(ManualQuizeCreation()
-                              .createTestQuiz(
-                              user.uid, userData!.username, false));
+                          await DatabaseService(uid: user.uid).updateQuizData(
+                              ManualQuizeCreation().createTestQuiz(
+                                  user.uid, userData!.username, false));
                         }),
                     // * End of "create private quiz "
                     // * Start of "create public quiz "
@@ -86,10 +85,9 @@ class _HomeState extends State<Home> {
                         // ! onPressed() :
                         // ~ When button is pressed, the quiz is created in the DB and is displayed in myQuizes AND sharedQuizes, since it's public Quiz
                         onPressed: () async {
-                          await DatabaseService(uid: user.uid)
-                              .updateQuizData(ManualQuizeCreation()
-                              .createTestQuiz(
-                              user.uid, userData!.username, true));
+                          await DatabaseService(uid: user.uid).updateQuizData(
+                              ManualQuizeCreation().createTestQuiz(
+                                  user.uid, userData!.username, true));
                         }),
                     // * End of "create public quiz "
                   ]),

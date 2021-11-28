@@ -12,7 +12,7 @@ import 'package:crew_brew/models/user/AppUser.dart';
 import 'package:crew_brew/screens/authenticate/register.dart';
 import 'package:crew_brew/screens/authenticate/sign_in.dart';
 import 'package:crew_brew/screens/authenticate/WelcomingScreen.dart';
-
+import 'package:crew_brew/shared/colors.dart';
 // ! Information about the class:
 // ~ Main class
 // ! Use of the class:
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
       value: AuthService().user,
       initialData: null,
       child: MaterialApp(
-        home: Wrapper(),
+        home: const Wrapper(),
         // ! routes
         // ~ Here we define all routes of our apps. They are mainly used in navigationBar/navBar.dart -> selectedItem()
         routes: {
@@ -51,6 +51,10 @@ class MyApp extends StatelessWidget {
           '/signin': (context) => LogIn(),
           '/quizWrapper': (context) => QuizWrapper(),
         },
+        // TODO: Decide on a unified theme and copy it here
+        theme: ThemeData.light().copyWith(
+          backgroundColor: background,
+        ),
       ),
     );
   }
