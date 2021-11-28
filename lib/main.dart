@@ -9,9 +9,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:crew_brew/models/user/AppUser.dart';
-import 'package:crew_brew/screens/authenticate/merging/register.dart';
-import 'package:crew_brew/screens/authenticate/merging/sign_in.dart';
-import 'package:crew_brew/screens/authenticate/merging/WelcomingScreen.dart';
+import 'package:crew_brew/screens/authenticate/register.dart';
+import 'package:crew_brew/screens/authenticate/sign_in.dart';
+import 'package:crew_brew/screens/authenticate/WelcomingScreen.dart';
 
 // ! Information about the class:
 // ~ Main class
