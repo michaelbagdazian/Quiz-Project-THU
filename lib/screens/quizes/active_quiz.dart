@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:crew_brew/components/quiz/quiz_component.dart';
 import 'package:crew_brew/models/quiz/question.dart';
 import 'package:flutter/material.dart';
+import 'package:crew_brew/shared/colors.dart';
 
 const CORRECT_MESSAGE = "Correct";
 const WRONG_MESSAGE = "Wrong";
@@ -56,13 +57,10 @@ class _ActiveQuizState extends State<ActiveQuiz> {
                   alignment: Alignment.center,
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                      color: (message == CORRECT_MESSAGE)
-                          ? Colors.green
-                          : Colors.red),
+                      color: (message == CORRECT_MESSAGE) ? right : wrong),
                   child: Text(
                     message,
-                    style: theme.textTheme.bodyText2!
-                        .copyWith(color: Colors.white),
+                    style: theme.textTheme.bodyText2!.copyWith(color: texts),
                   ),
                 ),
               Container(
@@ -72,7 +70,7 @@ class _ActiveQuizState extends State<ActiveQuiz> {
                 child: Text(
                   "Question ${currentQuestion + 1}/${widget.questions.length}",
                   style: theme.textTheme.headline4!.copyWith(
-                    color: Colors.white,
+                    color: texts,
                   ),
                 ),
               ),
@@ -113,16 +111,20 @@ class _ActiveQuizState extends State<ActiveQuiz> {
                   child: ElevatedButton(
                     onPressed: () =>
                         Navigator.pushReplacementNamed(context, '/home'),
-                    child: Text(
+                    child: const Text(
                       "Back",
-                      style: const TextStyle(color: Colors.white, fontSize: 20),
+                      style: TextStyle(color: texts, fontSize: 20),
                     ),
                     style: TextButton.styleFrom(
-                        backgroundColor: Colors.blueAccent,
-                        primary: Colors.greenAccent,
+                        backgroundColor: bluething,
+                        primary: greenthing,
                         padding: const EdgeInsets.all(20)),
                   ),
-                )
+                  // style: TextButton.styleFrom(
+                  //     backgroundColor: Colors.blueAccent,
+                  //     primary: Colors.greenAccent,
+                  //     padding: const EdgeInsets.all(20)),
+                ),
             ]),
       ),
     );

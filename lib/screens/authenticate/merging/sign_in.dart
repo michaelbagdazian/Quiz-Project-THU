@@ -1,9 +1,10 @@
 import 'package:crew_brew/services/auth.dart';
 import 'package:crew_brew/shared/constants.dart';
+import 'package:crew_brew/shared/customWidgets/customTextFormField.dart';
 import 'package:crew_brew/shared/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:crew_brew/shared/customWidgets/customText.dart';
-import 'package:crew_brew/shared/customWidgets/customTextFormField.dart';
+import 'package:crew_brew/shared/colors.dart';
 
 // ! Information about the class:
 // ~ This class is the screen for login
@@ -70,7 +71,7 @@ class _LogInState extends State<LogIn> {
                   fontSize: 30,
                 ),
               ),
-              backgroundColor: Colors.teal,
+              backgroundColor: welcomeh,
             ),
             body: Container(
               child: Form(
@@ -104,18 +105,18 @@ class _LogInState extends State<LogIn> {
                             decoration: const InputDecoration(
                               enabledBorder: OutlineInputBorder(
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(12.0)),
-                                borderSide: BorderSide(color: Colors.white),
+                                BorderRadius.all(Radius.circular(12.0)),
+                                borderSide: BorderSide(color: texts),
                               ),
                               focusedBorder: OutlineInputBorder(
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(5.0)),
-                                  borderSide: BorderSide(color: Colors.yellow)),
-                              contentPadding: EdgeInsets.all(15),
+                                  BorderRadius.all(Radius.circular(5.0)),
+                                  borderSide: BorderSide(color: borders)),
+                              contentPadding: const EdgeInsets.all(15),
                               labelText: "E-mail",
                               labelStyle: TextStyle(
                                 fontFamily: 'Lobster',
-                                color: Colors.white,
+                                color: texts,
                                 fontSize: 20.0,
                               ),
                             ),
@@ -141,18 +142,18 @@ class _LogInState extends State<LogIn> {
                             decoration: const InputDecoration(
                               enabledBorder: OutlineInputBorder(
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(12.0)),
-                                borderSide: BorderSide(color: Colors.white),
+                                BorderRadius.all(Radius.circular(12.0)),
+                                borderSide: BorderSide(color: texts),
                               ),
                               focusedBorder: OutlineInputBorder(
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(5.0)),
-                                  borderSide: BorderSide(color: Colors.yellow)),
-                              contentPadding: EdgeInsets.all(15),
+                                  BorderRadius.all(Radius.circular(5.0)),
+                                  borderSide: BorderSide(color: borders)),
+                              contentPadding: const EdgeInsets.all(15),
                               labelText: "Password",
                               labelStyle: TextStyle(
                                 fontFamily: 'Lobster',
-                                color: Colors.white,
+                                color: texts,
                                 fontSize: 20.0,
                               ),
                             ),
@@ -215,7 +216,7 @@ class _LogInState extends State<LogIn> {
                               fontFamily: 'Lobster',
                             ),
                           ),
-                          backgroundColor: Colors.orange,
+                          backgroundColor: buttons,
                           extendedPadding: const EdgeInsets.all(40),
                           shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
@@ -257,7 +258,7 @@ class _LogInState extends State<LogIn> {
                               fontFamily: 'Lobster',
                             ),
                           ),
-                          backgroundColor: Colors.orange,
+                          backgroundColor: buttons,
                           extendedPadding: const EdgeInsets.all(40),
                           shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
@@ -267,8 +268,7 @@ class _LogInState extends State<LogIn> {
                           ),
                         ),
                         Text(error,
-                            style:
-                                TextStyle(color: Colors.red, fontSize: 14.0)),
+                            style: TextStyle(color: errors, fontSize: 14.0)),
                       ]),
                 ]),
               ),

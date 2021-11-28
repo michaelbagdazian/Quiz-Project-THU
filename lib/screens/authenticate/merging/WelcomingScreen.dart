@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:crew_brew/shared/customWidgets/customText.dart';
 import 'package:crew_brew/shared/customWidgets/customTextField.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:crew_brew/shared/colors.dart';
 
 class WelcominScreen extends StatelessWidget {
   const WelcominScreen({
@@ -40,8 +41,8 @@ class WelcominScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             //*Text
-            _customText.customText("Welcoem to\n The Quizzler !!!",
-                backgroundColor: Colors.teal[400]),
+            _customText.customText("Welcome to\n The Quizzler !!!",
+                backgroundColor: welcomeh),
             //*Logo/pic on welcoming screen
             eduLogo(),
             SizedBox(
@@ -60,16 +61,16 @@ class WelcominScreen extends StatelessWidget {
                   decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(12.0)),
-                      borderSide: BorderSide(color: Colors.white),
+                      borderSide: BorderSide(color: texts),
                     ),
                     focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                        borderSide: BorderSide(color: Colors.yellow)),
+                        borderSide: BorderSide(color: borders)),
                     contentPadding: EdgeInsets.all(15),
                     labelText: 'Display Name',
                     labelStyle: TextStyle(
                       fontFamily: 'Lobster',
-                      color: Colors.white,
+                      color: texts,
                       fontSize: 15.0,
                     ),
                   ),
@@ -87,16 +88,16 @@ class WelcominScreen extends StatelessWidget {
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(12.0)),
-                    borderSide: BorderSide(color: Colors.white),
+                    borderSide: BorderSide(color: texts),
                   ),
                   focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                      borderSide: BorderSide(color: Colors.yellow)),
+                      borderSide: BorderSide(color: borders)),
                   contentPadding: EdgeInsets.all(15),
                   labelText: 'Pin',
                   labelStyle: TextStyle(
                     fontFamily: 'Lobster',
-                    color: Colors.white,
+                    color: texts,
                     fontSize: 15.0,
                   ),
                 ),
@@ -134,7 +135,7 @@ class WelcominScreen extends StatelessWidget {
         Icons.keyboard_arrow_right_rounded,
         size: 36.0,
       ),
-      backgroundColor: Colors.orange,
+      backgroundColor: buttons,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
             topLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
@@ -155,7 +156,7 @@ class WelcominScreen extends StatelessWidget {
               foreground: Paint()
                 ..style = PaintingStyle.stroke
                 ..strokeWidth = 3
-                ..color = Colors.white,
+                ..color = texts,
               fontWeight: FontWeight.bold,
               fontFamily: 'Lobster',
               fontSize: 30,
@@ -168,7 +169,7 @@ class WelcominScreen extends StatelessWidget {
               fontWeight: FontWeight.bold,
               fontFamily: 'Lobster',
               fontSize: 30,
-              color: Colors.teal,
+              color: welcomeh,
             ),
           )
         ]),
@@ -189,7 +190,7 @@ class WelcominScreen extends StatelessWidget {
               fontFamily: 'Lobster',
             ),
           ),
-          backgroundColor: Colors.orange,
+          backgroundColor: buttons,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
@@ -212,7 +213,7 @@ class WelcominScreen extends StatelessWidget {
               fontFamily: 'Lobster',
             ),
           ),
-          backgroundColor: Colors.orange,
+          backgroundColor: buttons,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
@@ -224,7 +225,7 @@ class WelcominScreen extends StatelessWidget {
         RichText(
           text: TextSpan(
               text: 'Check our ',
-              style: TextStyle(color: Colors.white, fontFamily: 'Satisfy'),
+              style: TextStyle(color: texts, fontFamily: 'Satisfy'),
               children: [
                 TextSpan(
                     text: 'Website',
@@ -232,7 +233,7 @@ class WelcominScreen extends StatelessWidget {
                       ..onTap = () {
                         _launchURLApp();
                       },
-                    style: TextStyle(color: Colors.blue[900]))
+                    style: TextStyle(color: links))
               ]),
         ),
       ],

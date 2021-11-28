@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:crew_brew/services/auth.dart';
 import 'package:crew_brew/services/database.dart';
 import 'package:provider/provider.dart';
+import 'package:crew_brew/shared/colors.dart';
 // ignore_for_file: file_names, non_constant_identifier_names
 
 class quiz_Search extends StatefulWidget implements PreferredSizeWidget {
@@ -33,18 +34,18 @@ class _quiz_Search extends State<quiz_Search> {
                     textInputAction: TextInputAction.go,
                     // ~ When 'go' button is pressed, current widget is informed about state change
                     onSubmitted: (text) => setState(() => searchInput = text),
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: InputBorder.none,
                       hintText: "Search",
                     ),
-                    style: TextStyle(
-                      color: Colors.white,
+                    style: const TextStyle(
+                      color: texts,
                       fontSize: 16.0,
                     ));
               } else {
-                this.searchInput = "";
-                this.cusIcon = Icon(Icons.search);
-                widget.title = Text("Quiz App");
+                searchInput = "";
+                cusIcon = const Icon(Icons.search);
+                widget.title = const Text("Quiz App");
               }
             });
           },

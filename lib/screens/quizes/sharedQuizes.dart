@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:crew_brew/services/auth.dart';
 import 'package:crew_brew/services/database.dart';
 import 'package:provider/provider.dart';
+import 'package:crew_brew/shared/colors.dart';
 
 // ignore_for_file: file_names, non_constant_identifier_names
 // ! Information about the class:
@@ -45,7 +46,7 @@ class _SharedQuizesState extends State<SharedQuizes> {
         // ! NavBar():
         // ~ Here we provide NavBar for property drawer. This is our navigation bar defined in navigationBar/navBar.dart
         drawer: NavBar(),
-        backgroundColor: Colors.brown[50],
+        backgroundColor: background,
         appBar: AppBar(
           title: cusSearchBar,
           actions: <Widget>[
@@ -65,7 +66,7 @@ class _SharedQuizesState extends State<SharedQuizes> {
                             hintText: "Search",
                           ),
                           style: TextStyle(
-                            color: Colors.white,
+                            color: texts,
                             fontSize: 16.0,
                           ));
                     } else {
@@ -77,7 +78,7 @@ class _SharedQuizesState extends State<SharedQuizes> {
                 },
                 icon: cusIcon)
           ],
-          backgroundColor: Colors.brown[400],
+          backgroundColor: topbar,
           elevation: 0.0,
         ),
         // ! This is the body of our app, which consists of the background and Quizes of current user
