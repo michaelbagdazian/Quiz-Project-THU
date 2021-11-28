@@ -81,8 +81,6 @@ class AuthService {
       // ~ create a document in Firestore Database for that user with the UID
       // ~ Together with the Firebase User instance we create the entry of User Data in the Firebase
       // ~ Username and email is provided, level is 0 and avatar is default
-      print("request to DatabaseSevice");
-      print(user?.uid);
       await DatabaseService(uid: user!.uid)
           .updateUserData('anonymous', 'anonymous@gmail.com', 'anon.png', 0);
 

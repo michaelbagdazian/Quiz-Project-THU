@@ -34,7 +34,6 @@ class _HomeState extends State<Home> {
 
     // ! If user is logged in, display the Home screen
     if (user != null) {
-      print("user != null");
       // ! StreamBuilder<UserData>
       // ~ StreamBuilder is a widget that builds itself based on the latest snapshot of interaction with a stream
       // ~ Information about the UserData is forwarded down the stream ONLY for this class. The stream does not go below to children elements
@@ -46,9 +45,7 @@ class _HomeState extends State<Home> {
             UserData? userData = snapshot.data;
 
             // ! If we have successfully accessed the userData from the DB, return scaffold
-            print("listening to userData");
             if (snapshot.hasData) {
-              print("userData is available");
               return Scaffold(
                 // ! NavBar():
                 // ~ Here we provide NavBar for property drawer. This is our navigation bar defined in navigationBar/navBar.dart
@@ -100,13 +97,11 @@ class _HomeState extends State<Home> {
               );
               // ! If the user data from the DB is still fetching, return Loading
             } else {
-              print("no user data");
               return Loading();
             }
           });
       // ! If user is not logged in or data is still fetching from DB, return Loading screen
     } else {
-      print("user is not logged in");
       return Loading();
     }
   }

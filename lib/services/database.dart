@@ -209,7 +209,6 @@ class DatabaseService {
   // ~ it's return value is Future, because it's async function
   Future updateUserData(
       String username, String email, String avatar, int level) async {
-    print("creating user...");
     // ~ Get the document based on the UID of the user
     // ~ If document does not exist yet, then Firebase will create the document with that UID. If it does exist, it will update information using uid
     // ~ We pass the data through map (key-value pairs) to set method

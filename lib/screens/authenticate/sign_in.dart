@@ -179,12 +179,10 @@ class _LogInState extends State<LogIn> {
                           // ! onPressed():
                           // ~ onPressed is async, because we interract with Firebase and it takes some time
                           onPressed: () async {
-                            print("I AM HEEERE1");
                             // ~ Here we check if our form is valid
                             // ~ currentState tells us what values are inside the form fields
                             // ~ validate() method uses validator properties in the TextFormFields
                             if (_formKey.currentState!.validate()) {
-                              print("I AM HEEERE2");
                               // * Here we decide to show the loading screen
                               setState(() => loading = true);
                               // ~ We will get null or AppUser, so we don't know the type of return. Therefore we use dynamic
@@ -194,7 +192,6 @@ class _LogInState extends State<LogIn> {
                                       email, password, context);
                               // ~ If login is not succesful, we provide an error message
                               if (result == null) {
-                                print("I AM HEEER3");
                                 setState(() {
                                   error =
                                       'could not sign in with those credentials';
@@ -205,7 +202,6 @@ class _LogInState extends State<LogIn> {
                                 // ~ pop current screen from the stack then it's automatically redirected to Home page
                               } else {
                                 popScreen();
-                                print("I AM HEEERE4");
                               }
                             }
                           },
@@ -247,7 +243,6 @@ class _LogInState extends State<LogIn> {
                               // ! If login is successful:
                               // ~ pop current screen from the stack then it's automatically redirected to Home page
                             } else {
-                              print("POPING SCREEN");
                               popScreen();
                             }
                           },
