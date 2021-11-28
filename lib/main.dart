@@ -1,13 +1,8 @@
-
-
-import 'package:crew_brew/screens/authenticate/register.dart';
-import 'package:crew_brew/screens/authenticate/sign_in.dart';
 import 'package:crew_brew/screens/home/home.dart';
 import 'package:crew_brew/screens/quizes/myQuizes.dart';
 import 'package:crew_brew/screens/quizes/quizWrapper.dart';
 import 'package:crew_brew/screens/quizes/sharedQuizes.dart';
 import 'package:crew_brew/screens/userProfile/userProfile.dart';
-import 'package:crew_brew/screens/authenticate/welcome.dart';
 import 'package:crew_brew/screens/wrapper.dart';
 import 'package:crew_brew/services/auth.dart';
 import 'package:firebase_core/firebase_core.dart';
