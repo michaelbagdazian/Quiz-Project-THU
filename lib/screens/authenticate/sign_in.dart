@@ -1,7 +1,10 @@
 import 'package:crew_brew/services/auth.dart';
 import 'package:crew_brew/shared/constants.dart';
+import 'package:crew_brew/shared/customWidgets/customTextFormField.dart';
 import 'package:crew_brew/shared/loading.dart';
 import 'package:flutter/material.dart';
+import 'package:crew_brew/shared/customWidgets/customText.dart';
+import 'package:crew_brew/shared/colors.dart';
 
 // ! Information about the class:
 // ~ This class is the screen for login
@@ -11,19 +14,21 @@ import 'package:flutter/material.dart';
 // ! TODOS:
 // TODO Integrate the pretty design of login page
 
-class SignIn extends StatefulWidget {
-  const SignIn({Key? key}) : super(key: key);
+class LogIn extends StatefulWidget {
+  const LogIn({Key? key}) : super(key: key);
 
   // final Function toggleView;
 
   @override
-  _SignInState createState() => _SignInState();
+  _LogInState createState() => _LogInState();
 }
 
-class _SignInState extends State<SignIn> {
+class _LogInState extends State<LogIn> {
   // ! AuthService instance:
   // ~ We need this instance to have access to the method defined in services/auth.dart called signInWithEmailAndPassword()
   final AuthService _auth = AuthService();
+  final _customText = CustomText();
+  final _customTextFormFieldinstance = customTextFormField();
 
   // ! formKey:
   // ~ This key we are going to use to identify our form and we are
@@ -44,6 +49,7 @@ class _SignInState extends State<SignIn> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     // ! popScreen():
     // ~ Since we want to allow our user to go back to welcome screen ( perhaps he figures out that he is already registered ), we keep register screen on stack
     // ~ After the login was successful, we remove the screen from the stack before moving to Home screen, so that we do not allow user to get back to registration
@@ -56,139 +62,216 @@ class _SignInState extends State<SignIn> {
     return loading
         ? Loading()
         : Scaffold(
-            backgroundColor: Colors.brown[100],
+            resizeToAvoidBottomInset: false,
             appBar: AppBar(
-              backgroundColor: Colors.brown[400],
-              elevation: 0.0,
-              title: Text('Sign in to Quiz App'),
+              title: const Text(
+                'Sign In',
+                style: TextStyle(
+                  fontFamily: 'Lobster',
+                  fontSize: 30,
+                ),
+              ),
+              backgroundColor: welcomeh,
             ),
             body: Container(
-              // ~ Symmetric means left and right have the same padding
-              // ~ and bottom and right have the same padding
-              padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
-              // ! Form widget allows us to do form validation using property "validator". This allows us to put some contains on the provided information
               child: Form(
-                // ~ Here we are associating our global FormKey with our form
-                // ~ this will basically keep track of our form and the state of our form
-                // ~ when we want to validate our form, then we do it via this formKey
                 key: _formKey,
-                child: Column(children: <Widget>[
-                  SizedBox(height: 20.0),
-                  // * Start of TextFormField for the e-mail
-                  TextFormField(
-                      // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
-                      decoration:
-                          textInputDecoration.copyWith(hintText: 'Email'),
-                      // ! validator property:
-                      // ~ we return null value if this formField is VALID or a string it's NOT VALID
-                      // ~ validator will be used in RaisedButton when calling _formKey.currentState!.validate()
-                      validator: (val) =>
-                          val!.isEmpty ? 'Enter an email' : null,
-                      // ! onChanged property:
-                      // ~ When information is entered into the TextForField, this property is triggered
-                      onChanged: (val) {
-                        // ~ We take email state and set it equal to value which is in e-mail textField
-                        // ~ We also make use of trim() function to remove any spaces
-                        setState(() => email = val.trim());
-                      }),
-                  // * End of TextFormField for the e-mail
-                  SizedBox(height: 20.0),
-                  // * Start of TextForField for the password
-                  TextFormField(
-                      // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
-                      decoration:
-                          textInputDecoration.copyWith(hintText: 'Password'),
-                      // ~ This hides the password when entering it
-                      obscureText: true,
-                      // ! validator property:
-                      // ~ we return null value if this formField is VALID or a string it's NOT VALID
-                      // ~ validator will be used in RaisedButton when calling _formKey.currentState!.validate()
-                      validator: (val) => val!.length < 6
-                          ? 'Enter a password 6+ chars long'
-                          : null,
-                      // ! onChanged property:
-                      // ~ When information is entered into the TextForField, this property is triggered
-                      onChanged: (val) {
-                        // ~ We take password state and set it equal to value which is in password textField
-                        // ~ We also make use of trim() function to remove any spaces
-                        setState(() => password = val);
-                      }),
-                  // * End of TextForField for the password
-                  SizedBox(height: 20.0),
-                  // * Start of Signin button
-                  RaisedButton(
-                      color: Colors.pink[400],
-                      child: Text(
-                        'Sign in',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      // ! onPressed():
-                      // ~ onPressed is async, because we interract with Firebase and it takes some time
-                      onPressed: () async {
-                        // ~ Here we check if our form is valid
-                        // ~ currentState tells us what values are inside the form fields
-                        // ~ validate() method uses validator properties in the TextFormFields
-                        if (_formKey.currentState!.validate()) {
-                          // * Here we decide to show the loading screen
-                          setState(() => loading = true);
-                          // ~ We will get null or AppUser, so we don't know the type of return. Therefore we use dynamic
-                          // ~ We await for the result from the Firebase
-                          dynamic result =
-                              await _auth.signInWithEmailAndPassword(
-                                  email, password, context);
-                          // ~ If login is not succesful, we provide an error message
-                          if (result == null) {
-                            setState(() {
-                              error =
-                                  'could not sign in with those credentials';
-                              // * Here we decide to remove the loading screen
-                              loading = false;
-                            });
-                            // ! If login is successful:
-                            // ~ pop current screen from the stack then it's automatically redirected to Home page
-                          } else {
-                            popScreen();
-                          }
-                        }
-                      }),
-                  // * End of Signin button
-                  SizedBox(height: 20.0),
-                  // * Start of Signin anonymously button
-                  RaisedButton(
-                      color: Colors.pink[400],
-                      child: Text(
-                        'Sign in anonymously',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      // ! onPressed():
-                      // ~ onPressed is async, because we interract with Firebase and it takes some time
-                      onPressed: () async {
-                        // * Here we decide to show the loading screen
-                        setState(() => loading = true);
-                        // ~ Signin anonymously
-                        dynamic result = await _auth.signInAnon(context);
-                        // ~ If login is not succesful, we provide an error message
-                        if (result == null) {
-                          setState(() {
-                            error = 'could not sign in with those credentials';
-                            // * Here we decide to remove the loading screen
-                            loading = false;
-                          });
-                          // ! If login is successful:
-                          // ~ pop current screen from the stack then it's automatically redirected to Home page
-                        } else {
-                          popScreen();
-                        }
-                      }),
-                  // * End of Signin anonymously button
-                  SizedBox(height: 12.0),
-                  // ! Text widget for error message:
-                  // ~ This widget is empty in the beginning, and is updated if there is an error.
-                  Text(error,
-                      style: TextStyle(color: Colors.red, fontSize: 14.0)),
+                child: Stack(fit: StackFit.expand, children: [
+                  Expanded(
+                    flex: 1,
+                    child: Image.asset(
+                      'assets/images/bgtop.png',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SizedBox(
+                          height: size.height * 0.05,
+                        ),
+                        //*Add the welcoming text first
+                        _customText.customText('Log In to Your\n Account'),
+                        SizedBox(
+                          height: size.height * 0.05,
+                        ),
+
+                        //! email
+                        TextFormField(
+                            keyboardType: TextInputType.emailAddress,
+
+                            // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
+                            decoration: const InputDecoration(
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius:
+                                BorderRadius.all(Radius.circular(12.0)),
+                                borderSide: BorderSide(color: texts),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
+                                  borderSide: BorderSide(color: borders)),
+                              contentPadding: const EdgeInsets.all(15),
+                              labelText: "E-mail",
+                              labelStyle: TextStyle(
+                                fontFamily: 'Lobster',
+                                color: texts,
+                                fontSize: 20.0,
+                              ),
+                            ),
+                            // ! validator property:
+                            // ~ we return null value if this formField is VALID or a string it's NOT VALID
+                            // ~ validator will be used in RaisedButton when calling _formKey.currentState!.validate()
+                            validator: (val) =>
+                                val!.isEmpty ? 'Enter an email' : null,
+                            // ! onChanged property:
+                            // ~ When information is entered into the TextForField, this property is triggered
+                            onChanged: (val) {
+                              // ~ We take email state and set it equal to value which is in e-mail textField
+                              // ~ We also make use of trim() function to remove any spaces
+                              setState(() => email = val.trim());
+                            }),
+                        SizedBox(
+                          height: size.height * 0.02,
+                        ),
+                        //! password
+                        TextFormField(
+                            keyboardType: TextInputType.visiblePassword,
+                            // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
+                            decoration: const InputDecoration(
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius:
+                                BorderRadius.all(Radius.circular(12.0)),
+                                borderSide: BorderSide(color: texts),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
+                                  borderSide: BorderSide(color: borders)),
+                              contentPadding: const EdgeInsets.all(15),
+                              labelText: "Password",
+                              labelStyle: TextStyle(
+                                fontFamily: 'Lobster',
+                                color: texts,
+                                fontSize: 20.0,
+                              ),
+                            ),
+                            // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
+                            obscureText: true,
+                            // ! validator property:
+                            // ~ we return null value if this formField is VALID or a string it's NOT VALID
+                            // ~ validator will be used in RaisedButton when calling _formKey.currentState!.validate()
+                            validator: (val) => val!.length < 6
+                                ? 'Enter a password 6+ chars long'
+                                : null,
+                            // ! onChanged property:
+                            // ~ When information is entered into the TextForField, this property is triggered
+                            onChanged: (val) {
+                              // ~ We take password state and set it equal to value which is in password textField
+                              // ~ We also make use of trim() function to remove any spaces
+                              setState(() => password = val);
+                            }),
+                        SizedBox(
+                          height: size.height * 0.02,
+                        ),
+                        FloatingActionButton.extended(
+                          // ! onPressed():
+                          // ~ onPressed is async, because we interract with Firebase and it takes some time
+                          onPressed: () async {
+                            print("I AM HEEERE1");
+                            // ~ Here we check if our form is valid
+                            // ~ currentState tells us what values are inside the form fields
+                            // ~ validate() method uses validator properties in the TextFormFields
+                            if (_formKey.currentState!.validate()) {
+                              print("I AM HEEERE2");
+                              // * Here we decide to show the loading screen
+                              setState(() => loading = true);
+                              // ~ We will get null or AppUser, so we don't know the type of return. Therefore we use dynamic
+                              // ~ We await for the result from the Firebase
+                              dynamic result =
+                                  await _auth.signInWithEmailAndPassword(
+                                      email, password, context);
+                              // ~ If login is not succesful, we provide an error message
+                              if (result == null) {
+                                print("I AM HEEER3");
+                                setState(() {
+                                  error =
+                                      'could not sign in with those credentials';
+                                  // * Here we decide to remove the loading screen
+                                  loading = false;
+                                });
+                                // ! If login is successful:
+                                // ~ pop current screen from the stack then it's automatically redirected to Home page
+                              } else {
+                                popScreen();
+                                print("I AM HEEERE4");
+                              }
+                            }
+                          },
+                          label: const Text(
+                            "Log in",
+                            style: TextStyle(
+                              fontSize: 30,
+                              fontFamily: 'Lobster',
+                            ),
+                          ),
+                          backgroundColor: buttons,
+                          extendedPadding: const EdgeInsets.all(40),
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              bottomRight: Radius.circular(20),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: size.height * 0.02,
+                        ),
+                        FloatingActionButton.extended(
+                          // ! onPressed():
+                          // ~ onPressed is async, because we interract with Firebase and it takes some time
+                          onPressed: () async {
+                            // * Here we decide to show the loading screen
+                            setState(() => loading = true);
+                            // ~ Signin anonymously
+                            dynamic result = await _auth.signInAnon(context);
+                            // ~ If login is not succesful, we provide an error message
+                            if (result == null) {
+                              setState(() {
+                                error =
+                                    'could not sign in with those credentials';
+                                // * Here we decide to remove the loading screen
+                                loading = false;
+                              });
+                              // ! If login is successful:
+                              // ~ pop current screen from the stack then it's automatically redirected to Home page
+                            } else {
+                              print("POPING SCREEN");
+                              popScreen();
+                            }
+                          },
+                          label: const Text(
+                            "Log in anonymously",
+                            style: TextStyle(
+                              fontSize: 30,
+                              fontFamily: 'Lobster',
+                            ),
+                          ),
+                          backgroundColor: buttons,
+                          extendedPadding: const EdgeInsets.all(40),
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              bottomRight: Radius.circular(20),
+                            ),
+                          ),
+                        ),
+                        Text(error,
+                            style: TextStyle(color: errors, fontSize: 14.0)),
+                      ]),
                 ]),
               ),
-            ),
-          );
+            ));
   }
 }
