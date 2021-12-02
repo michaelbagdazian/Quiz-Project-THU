@@ -18,7 +18,7 @@ https://flutter.dev/docs/cookbook/forms/text-input
 class CustomTextField {
   Widget customTextField(TextEditingController _textEditingController,
       String _label, double _width, TextInputType _textInputType,
-      {bool obsecured = false}) {
+      {bool obsecured = false, String hint = ''}) {
     return SizedBox(
       width: _width,
       child: TextField(
@@ -26,6 +26,7 @@ class CustomTextField {
         keyboardType: _textInputType,
         controller: _textEditingController,
         decoration: InputDecoration(
+          hintText: hint,
           enabledBorder: const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(12.0)),
             borderSide: BorderSide(color: Colors.white),

@@ -1,6 +1,7 @@
 import 'package:crew_brew/models/user/AppUser.dart';
 import 'package:crew_brew/models/user/UserData.dart';
 import 'package:crew_brew/navigationBar/NavBar.dart';
+import 'package:crew_brew/screens/userProfile/settings_form.dart';
 import 'package:crew_brew/services/database.dart';
 import 'package:crew_brew/shared/loading.dart';
 import 'package:provider/provider.dart';
@@ -32,6 +33,17 @@ class _userProfileState extends State<userProfile> {
 
   @override
   Widget build(BuildContext context) {
+    // ! _showSettingsPanel()
+    // ~ panel for updating userData
+    void _showSettingsPanel() {
+      showModalBottomSheet(context: context, builder: (context) {
+        return Container(
+          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+          child: SettingsForm(),
+          color: Colors.grey[900],
+        );
+      });
+    }
     // ! Provider.of<AppUser?>(context):
     // ~ Here we listen to the stream, defined in services/auth.dart and provided by main.dart, which informs us about login state of the user
     final user = Provider.of<AppUser?>(context);
@@ -64,6 +76,15 @@ class _userProfileState extends State<userProfile> {
                   backgroundColor: Colors.grey[850],
                   // ~ Elavation set to 0 removes the shadow ( which makes 3D effect )
                   elevation: 0.0,
+                  actions: <Widget>[
+                    IconButton(
+                      icon: Icon(
+                        Icons.settings,
+                        color: Colors.grey[400],
+                      ),
+                      onPressed: () => _showSettingsPanel(),
+                    ),
+                  ],
                 ),
                 body: Padding(
                   padding: EdgeInsets.fromLTRB(30.0, 40.0, 30.0, 0.0),

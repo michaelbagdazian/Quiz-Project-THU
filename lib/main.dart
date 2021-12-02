@@ -1,4 +1,6 @@
+import 'package:crew_brew/models/quiz/Quiz.dart';
 import 'package:crew_brew/screens/home/home.dart';
+import 'package:crew_brew/screens/quizes/AddNewQuizzUI.dart';
 import 'package:crew_brew/screens/quizes/myQuizes.dart';
 import 'package:crew_brew/screens/quizes/quizWrapper.dart';
 import 'package:crew_brew/screens/quizes/sharedQuizes.dart';
@@ -11,9 +13,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:crew_brew/models/user/AppUser.dart';
-import 'package:crew_brew/screens/authenticate/merging/register.dart';
-import 'package:crew_brew/screens/authenticate/merging/sign_in.dart';
-import 'package:crew_brew/screens/authenticate/merging/WelcomingScreen.dart';
+import 'package:crew_brew/screens/authenticate/register.dart';
+import 'package:crew_brew/screens/authenticate/sign_in.dart';
+import 'package:crew_brew/screens/authenticate/WelcomingScreen.dart';
 
 // ! Information about the class:
 // ~ Main class
@@ -50,19 +52,12 @@ class MyApp extends StatelessWidget {
           '/userProfile': (context) => const userProfile(),
           '/sharedQuizes': (context) => SharedQuizes(),
           '/myQuizes': (context) => MyQuizes(),
-
+          '/welcome': (context) => WelcominScreen(),
+          '/register': (context) => SignUp(),
+          '/signin': (context) => LogIn(),
+          '/quizWrapper': (context) => QuizWrapper(),
           '/AddQuestionsUI': (context) => AddQuestionsUI(),
-
-          //!merging
-          '/welcome': (context) => const WelcominScreen(),
-          '/register': (context) => const SignUp(),
-          '/signin': (context) => const LogIn(),
-          '/quizWrapper': (context) => const QuizWrapper(),
-          //!original
-          // '/welcome': (context) => Welcome(),
-          // '/register': (context) => Register(),
-          // '/signin': (context) => SignIn(),
-          ///
+          '/AddNewQuizzUI': (context) => AddNewQuizzUI(),
         },
       ),
     );
