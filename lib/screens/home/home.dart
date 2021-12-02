@@ -71,10 +71,9 @@ class _HomeState extends State<Home> {
                         // ! onPressed() :
                         // ~ When button is pressed, the quiz is created in the DB and is displayed in myQuizes, since it's private Quiz
                         onPressed: () async {
-                          await DatabaseService(uid: user.uid).updateQuizData(
+                          await DatabaseService(uid: user.uid).createQuizData(
                               ManualQuizeCreation().createTestQuiz(
                                   user.uid, userData!.username, false));
-                          //Navigator.pushNamed(context, '/AddNewQuizzUI');
                         }),
                     // * End of "create private quiz "
                     // * Start of "create public quiz "
@@ -87,7 +86,7 @@ class _HomeState extends State<Home> {
                         // ! onPressed() :
                         // ~ When button is pressed, the quiz is created in the DB and is displayed in myQuizes AND sharedQuizes, since it's public Quiz
                         onPressed: () async {
-                          await DatabaseService(uid: user.uid).updateQuizData(
+                          await DatabaseService(uid: user.uid).createQuizData(
                               ManualQuizeCreation().createTestQuiz(
                                   user.uid, userData!.username, true));
                         }),

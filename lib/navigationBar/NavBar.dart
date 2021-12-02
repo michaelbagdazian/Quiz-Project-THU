@@ -118,6 +118,11 @@ class _NavBarState extends State<NavBar> {
                       title: Text('Shared quizzes'),
                       onTap: () => selectedItem(context, 'sharedQuizes'),
                     ),
+                    ListTile(
+                      leading: Icon(Icons.add),
+                      title: Text('Create quiz'),
+                      onTap: () => selectedItem_v2(context, 'AddQuestionsUI'),
+                    ),
                     // ! Divider is used to separate different section of the NavBar
                     Divider(
                       color: Colors.grey[500],
@@ -171,5 +176,14 @@ class _NavBarState extends State<NavBar> {
     // ~ Replacement means that we do not current screen on stack, but instead replace the pushed screen with current screen
     // ~ Named means that we are using routing defined in main.dart
     Navigator.pushReplacementNamed(context, '/$index');
+  }
+
+  // ! This is helper method, which is used in all onTap in the ListTile
+  void selectedItem_v2(BuildContext context, String index) {
+    // ! pushReplacementNamed:
+    // ~ Push means that we push the screen on top of the current screen
+    // ~ Replacement means that we do not current screen on stack, but instead replace the pushed screen with current screen
+    // ~ Named means that we are using routing defined in main.dart
+    Navigator.pushNamed(context, '/$index');
   }
 }
