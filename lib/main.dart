@@ -2,9 +2,10 @@ import 'package:crew_brew/screens/home/home.dart';
 import 'package:crew_brew/screens/quizes/myQuizes.dart';
 import 'package:crew_brew/screens/quizes/quizWrapper.dart';
 import 'package:crew_brew/screens/quizes/sharedQuizes.dart';
-import 'package:crew_brew/screens/quizes/addQuizzUI.dart';
+import 'package:crew_brew/screens/quizes/addQuestionsUI.dart';
 import 'package:crew_brew/screens/userProfile/userProfile.dart';
 import 'package:crew_brew/screens/wrapper.dart';
+import 'package:crew_brew/services/AddQuestion.dart';
 import 'package:crew_brew/services/auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +51,7 @@ class MyApp extends StatelessWidget {
           '/sharedQuizes': (context) => SharedQuizes(),
           '/myQuizes': (context) => MyQuizes(),
 
-          '/AddQuizzUI': (context) => AddQuizUi(),
+          '/AddQuestionsUI': (context) => AddQuestionsUI(),
 
           //!merging
           '/welcome': (context) => const WelcominScreen(),

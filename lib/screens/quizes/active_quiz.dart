@@ -79,12 +79,16 @@ class _ActiveQuizState extends State<ActiveQuiz> {
               Flexible(
                   flex: 1,
                   child: QuizComponent(
-                    questionText: showScoreScreen ? "You got ${points} points!": widget.questions
-                        .elementAt(currentQuestion)
-                        .questionText,
+                    questionText: showScoreScreen
+                        ? "You got ${points} points!"
+                        : widget.questions
+                            .elementAt(currentQuestion)
+                            .questionText,
                     answers:
                         widget.questions.elementAt(currentQuestion).answers,
-                    answer: widget.questions.elementAt(currentQuestion).correctAnswer,
+                    answer: widget.questions
+                        .elementAt(currentQuestion)
+                        .correctAnswer,
                     onCorrectAnswer: () {
                       points++;
                       // TODO: DO SOMETHING ON CORRECT ANSWER
@@ -103,24 +107,22 @@ class _ActiveQuizState extends State<ActiveQuiz> {
                     },
                     onFinishAnswer: next,
                   )),
-                  if (showScoreScreen == true)
-                    Container(
-                    padding: const EdgeInsets.all(5),
-                    child: ElevatedButton(
-                        onPressed: () => Navigator.pushReplacementNamed(context, '/home'),
-                        child: Text("Back",
-                          style: const TextStyle(
-                          color: Colors.white, fontSize: 20),
-                        ),
-                        style: TextButton.styleFrom(
-                          backgroundColor: Colors.blueAccent,
-                          primary: Colors.greenAccent,
-                          padding: const EdgeInsets.all(20)
-                        ),
+              if (showScoreScreen == true)
+                Container(
+                  padding: const EdgeInsets.all(5),
+                  child: ElevatedButton(
+                    onPressed: () =>
+                        Navigator.pushReplacementNamed(context, '/home'),
+                    child: Text(
+                      "Back",
+                      style: const TextStyle(color: Colors.white, fontSize: 20),
                     ),
-                    )
-
-
+                    style: TextButton.styleFrom(
+                        backgroundColor: Colors.blueAccent,
+                        primary: Colors.greenAccent,
+                        padding: const EdgeInsets.all(20)),
+                  ),
+                )
             ]),
       ),
     );
