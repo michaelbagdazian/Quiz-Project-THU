@@ -6,20 +6,32 @@ import 'package:flutter/material.dart';
 this is a custom button
 it takes a label, a color and a funciton that is void incase you don't want your button to do anything
  */
-class CustomButton {
-  Widget customButton(String _label, Color _backgroundcolor, void _function) {
+class CustomButton extends StatelessWidget {
+  String label;
+  Color backgroundcolor;
+  VoidCallback? function;
+
+  CustomButton({
+    Key? key,
+    required this.label,
+    required this.backgroundcolor,
+    required this.function,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return FloatingActionButton.extended(
       onPressed: () {
-        _function;
+        function!();
       },
       label: Text(
-        _label,
+        label,
         style: const TextStyle(
           fontSize: 30,
           fontFamily: 'Lobster',
         ),
       ),
-      backgroundColor: _backgroundcolor,
+      backgroundColor: backgroundcolor,
       extendedPadding: const EdgeInsets.all(40),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -28,5 +40,7 @@ class CustomButton {
         ),
       ),
     );
+    // TODO: implement build
+    throw UnimplementedError();
   }
 }
