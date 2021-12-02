@@ -25,7 +25,8 @@ A new team project using Flutter.
 <img src ="./ScreenShots/alertBoxes.jpeg" width=30% height=30%>
 
 ### **Creating New Quizz:**
-<img src ="./ScreenShots/AddQuizzUI.jpeg" width=40% height=40%> <img src ="./ScreenShots/Confirmation Box.jpeg" width=40% height=40%>
+<img src ="./ScreenShots/AddQuestionUI.jpeg" width=40% height=40%> <img src ="./ScreenShots/Confirmation Box.jpeg" width=40% height=40%>
+<img src ="./ScreenShots/AddQuizzUI.jpeg" width=40% height=40%> <img src ="./ScreenShots/firebaseQuizzAddition.png" width=60% height=60%>
 
 # Implementd
 - welcoming screen, login screen, register screen (functional)\ 
