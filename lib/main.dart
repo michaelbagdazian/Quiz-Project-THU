@@ -1,4 +1,6 @@
+import 'package:crew_brew/models/quiz/Quiz.dart';
 import 'package:crew_brew/screens/home/home.dart';
+import 'package:crew_brew/screens/quizes/AddNewQuizzUI.dart';
 import 'package:crew_brew/screens/quizes/myQuizes.dart';
 import 'package:crew_brew/screens/quizes/quizWrapper.dart';
 import 'package:crew_brew/screens/quizes/sharedQuizes.dart';
@@ -55,6 +57,7 @@ class MyApp extends StatelessWidget {
           '/signin': (context) => LogIn(),
           '/quizWrapper': (context) => QuizWrapper(),
           '/AddQuestionsUI': (context) => AddQuestionsUI(),
+          '/AddNewQuizzUI': (context) => AddNewQuizzUI(),
         },
       ),
     );
