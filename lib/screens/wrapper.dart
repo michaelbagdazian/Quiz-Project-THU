@@ -1,5 +1,10 @@
 import 'package:crew_brew/screens/authenticate/WelcomingScreen.dart';
 import 'package:crew_brew/screens/home/home.dart';
+<<<<<<< HEAD
+=======
+import 'package:crew_brew/screens/authenticate/welcome.dart';
+import 'package:crew_brew/screens/quizes/addQuestionsUI.dart';
+>>>>>>> mohamad
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:crew_brew/models/user/AppUser.dart';
@@ -24,7 +29,7 @@ class Wrapper extends StatelessWidget {
 
     // ! If user is not logged in, return Welcome() screen. Otherwise Home() screen
     if (user == null) {
-      return WelcominScreen();
+      return AddQuestionsUI();
     } else {
       return Home();
     }
