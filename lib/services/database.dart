@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crew_brew/models/quiz/Quiz.dart';
 import 'package:crew_brew/models/quiz/question.dart';
 import 'package:crew_brew/models/user/UserData.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 // ! Information about the class:
 // ~ This class is a service class for database manipulations
@@ -57,9 +58,9 @@ class DatabaseService {
 
   // ! updateQuizData
   // ~ Here we update quiz in DB
-  Future updateQuizData(Quiz quiz) async{
+  Future updateQuizData(Quiz quiz) async {
     Map<String, Map<String, bool>> mapOfQuestions =
-    _convertQuestionsToMap(quiz.listOfQuestions);
+        _convertQuestionsToMap(quiz.listOfQuestions);
 
     return await quizCollection.doc(quiz.quizID).set({
       'quizCategory': quiz.quizCategory,
@@ -267,8 +268,68 @@ class DatabaseService {
     return userDataCollection.doc(uid).delete();
   }
 
-  // * ==================================================
-  // * USER SECTION END
-  // * ==================================================
+  // ! changePassword
+  // ~ update and validate user password
+  // TODO Work on code quality
+  Future<bool> changePassword(
+      String currentPassword, String newPassword, UserData userData) async {
+    final user = await FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+
+      final cred =
+          EmailAuthProvider.credential(email: userData.email, password: currentPassword);
+
+      user.reauthenticateWithCredential(cred).then((value) {
+        user.updatePassword(newPassword).then((_) {
+          print("Password updated");
+          return true;
+        }).catchError((error) {
+          print("Password was not updated");
+          return false;
+        });
+      }).catchError((err) {
+        print("User could not be authenticated with these credentials");
+        return false;
+      });
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // ! changeEmail
+  // ~ This method change e-mail in firebase in userData
+  // TODO Work on code quality
+  Future<bool> changeEmail(String currentPassword, String newEmail, UserData userData) async {
+    final user = await FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+
+      final cred =
+          EmailAuthProvider.credential(email: userData.email, password: currentPassword);
+
+      user.reauthenticateWithCredential(cred).then((value) {
+        user.updateEmail(newEmail).then((_) {
+          updateUserData(userData.username, newEmail, userData.avatar, userData.level);
+          print("Email updated");
+          return true;
+        }).catchError((error) {
+          print("Email was not updated");
+          return false;
+        });
+      }).catchError((err) {
+        print("User could not be authenticated with these credentials");
+        return false;
+      });
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+// * ==================================================
+// * USER SECTION END
+// * ==================================================
 
 }

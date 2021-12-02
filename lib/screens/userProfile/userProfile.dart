@@ -1,7 +1,7 @@
 import 'package:crew_brew/models/user/AppUser.dart';
 import 'package:crew_brew/models/user/UserData.dart';
 import 'package:crew_brew/navigationBar/NavBar.dart';
-import 'package:crew_brew/screens/userProfile/settings_form.dart';
+import 'package:crew_brew/screens/userProfile/UpdateFormsWrapper.dart';
 import 'package:crew_brew/services/database.dart';
 import 'package:crew_brew/shared/loading.dart';
 import 'package:provider/provider.dart';
@@ -35,11 +35,11 @@ class _userProfileState extends State<userProfile> {
   Widget build(BuildContext context) {
     // ! _showSettingsPanel()
     // ~ panel for updating userData
-    void _showSettingsPanel() {
+    void _showSettingsPanel(String command) {
       showModalBottomSheet(context: context, builder: (context) {
         return Container(
           padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
-          child: SettingsForm(),
+          child: UpdateFormsWrapper(command: command),
           color: Colors.grey[900],
         );
       });
@@ -79,10 +79,10 @@ class _userProfileState extends State<userProfile> {
                   actions: <Widget>[
                     IconButton(
                       icon: Icon(
-                        Icons.settings,
+                        Icons.vpn_key_outlined,
                         color: Colors.grey[400],
                       ),
-                      onPressed: () => _showSettingsPanel(),
+                      onPressed: () => _showSettingsPanel("password"),
                     ),
                   ],
                 ),
@@ -119,13 +119,25 @@ class _userProfileState extends State<userProfile> {
                       // ~ Creates an empty invisible box for us of a height and width we specify
                       // ~ we put it between the elements we want to have space in between
                       SizedBox(height: 10.0),
-                      Text(
-                        username,
-                        style: TextStyle(
-                            color: Colors.amberAccent[200],
-                            letterSpacing: 2.0,
-                            fontSize: 28.0,
-                            fontWeight: FontWeight.bold),
+                      Row(
+                        children: <Widget>[
+                          Text(
+                            username,
+                            style: TextStyle(
+                                color: Colors.amberAccent[200],
+                                letterSpacing: 2.0,
+                                fontSize: 28.0,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(width: 10.0),
+                          IconButton(
+                            icon: Icon(
+                              Icons.edit,
+                              color: Colors.grey[400],
+                            ),
+                            onPressed: () => _showSettingsPanel("username"),
+                          ),
+                        ],
                       ),
                       // * End username field
                       SizedBox(height: 30.0),
@@ -166,6 +178,14 @@ class _userProfileState extends State<userProfile> {
                               fontSize: 18.0,
                               letterSpacing: 1.0,
                             ),
+                          ),
+                          SizedBox(width: 10.0),
+                          IconButton(
+                            icon: Icon(
+                              Icons.edit,
+                              color: Colors.grey[400],
+                            ),
+                            onPressed: () => _showSettingsPanel("email"),
                           ),
                         ],
                       ),
