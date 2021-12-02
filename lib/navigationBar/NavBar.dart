@@ -119,7 +119,7 @@ class _NavBarState extends State<NavBar> {
                       onTap: () => selectedItem(context, 'sharedQuizes'),
                     ),
                     ListTile(
-                      leading: Icon(Icons.share),
+                      leading: Icon(Icons.add),
                       title: Text('Create quiz'),
                       onTap: () => selectedItem_v2(context, 'AddQuestionsUI'),
                     ),
