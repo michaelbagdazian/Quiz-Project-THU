@@ -22,32 +22,19 @@ class Quiz {
   List<Question> listOfQuestions;
   List<String> tags;
 
-<<<<<<< HEAD
   Quiz(
       {required this.quizCategory,
-        required this.quizTitle,
-        required this.quizOwner,
-        required this.quizOwnerUID,
-        required this.quizDescription,
-        required this.quizIsShared,
-        required this.listOfQuestions,
-        required this.tags});
-=======
-  Quiz({
-    required this.quizCategory,
-    required this.quizTitle,
-    required this.quizOwner,
-    required this.quizOwnerUID,
-    required this.quizDescription,
-    required this.quizIsShared,
-    /*required this.listOfQuestions,
-      required this.tags*/
-  });
->>>>>>> mohamad
+      required this.quizTitle,
+      required this.quizOwner,
+      required this.quizOwnerUID,
+      required this.quizDescription,
+      required this.quizIsShared,
+      required this.listOfQuestions,
+      required this.tags});
 
-/*  int getNumberOfQuestions(int id) {
+  int getNumberOfQuestions(int id) {
     return listOfQuestions.length;
-  }*/
+  }
 
   String getTitleOfQuiz() {
     return quizTitle;
