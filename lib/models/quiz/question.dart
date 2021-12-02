@@ -1,12 +1,18 @@
 class Question {
   String questionText;
   List<String> answers;
-  int correctAnswer;
+  late int correctAnswer;
+  // late List<int> correctAnswers = <int>[];
 
-  Question({required this.questionText, required this.answers, required this.correctAnswer});
+  Question({
+    required this.questionText,
+    required this.answers,
+    required this.correctAnswer,
+    //required this.correctAnswers,
+  });
 
   bool isAnswerCorrect(int number) {
-    if (number == correctAnswer) {
+    if (correctAnswer == number) {
       return true;
     } else {
       return false;
