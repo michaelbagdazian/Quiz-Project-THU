@@ -35,15 +35,33 @@ class DatabaseService {
   // * QUIZES SECTION START
   // * ==================================================
 
-  // ! updateQuizData
-  // ~ Here we update quizData in DB
+  // ! createQuizData
+  // ~ Here we create quiz in DB
   // ~ We call this function when user creates the quiz on Home page
   // ~ it's return value is Future, because it's async function
-  Future updateQuizData(Quiz quiz) async {
+  Future createQuizData(Quiz quiz) async {
     Map<String, Map<String, bool>> mapOfQuestions =
         _convertQuestionsToMap(quiz.listOfQuestions);
 
     return await quizCollection.doc().set({
+      'quizCategory': quiz.quizCategory,
+      'quizTitle': quiz.quizTitle,
+      'quizOwner': quiz.quizOwner,
+      'quizOwnerUID': uid,
+      'quizDescription': quiz.quizDescription,
+      'quizIsShared': quiz.quizIsShared,
+      'listOfQuestions': mapOfQuestions,
+      'tags': quiz.tags,
+    });
+  }
+
+  // ! updateQuizData
+  // ~ Here we update quiz in DB
+  Future updateQuizData(Quiz quiz) async{
+    Map<String, Map<String, bool>> mapOfQuestions =
+    _convertQuestionsToMap(quiz.listOfQuestions);
+
+    return await quizCollection.doc(quiz.quizID).set({
       'quizCategory': quiz.quizCategory,
       'quizTitle': quiz.quizTitle,
       'quizOwner': quiz.quizOwner,
@@ -147,6 +165,7 @@ class DatabaseService {
         quizOwnerUID: doc.get('quizOwnerUID'),
         quizDescription: doc.get('quizDescription'),
         quizIsShared: doc.get('quizIsShared'),
+        quizID: doc.id,
         listOfQuestions: listOfQuestions,
         tags: List.from(doc.get('tags')));
   }

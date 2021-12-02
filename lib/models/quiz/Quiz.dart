@@ -19,6 +19,7 @@ class Quiz {
   String quizOwnerUID;
   String quizDescription;
   bool quizIsShared;
+  String quizID;
   List<Question> listOfQuestions;
   List<String> tags;
 
@@ -29,6 +30,7 @@ class Quiz {
       required this.quizOwnerUID,
       required this.quizDescription,
       required this.quizIsShared,
+      required this.quizID,
       required this.listOfQuestions,
       required this.tags});
 

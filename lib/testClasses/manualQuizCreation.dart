@@ -145,6 +145,7 @@ class ManualQuizeCreation {
         quizOwnerUID: quizOwnerUID,
         quizDescription: quizDescription,
         quizIsShared: quizIsShared,
+        quizID: '',
         listOfQuestions: listOfQuestions,
         tags: tags);
   }

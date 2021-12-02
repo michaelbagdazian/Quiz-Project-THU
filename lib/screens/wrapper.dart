@@ -28,7 +28,7 @@ class Wrapper extends StatelessWidget {
 
     // ! If user is not logged in, return Welcome() screen. Otherwise Home() screen
     if (user == null) {
-      return WelcominScreen();
+      return AddQuestionsUI();
     } else {
       return Home();
     }
