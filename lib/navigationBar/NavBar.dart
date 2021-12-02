@@ -121,7 +121,7 @@ class _NavBarState extends State<NavBar> {
                     ListTile(
                       leading: Icon(Icons.add),
                       title: Text('Create quiz'),
-                      onTap: () => selectedItem_v2(context, 'AddQuestionsUI'),
+                      onTap: () => selectedItem_v2(context, 'AddNewQuizzUI'),
                     ),
                     // ! Divider is used to separate different section of the NavBar
                     Divider(
