@@ -19,10 +19,9 @@ class ActiveQuiz extends StatefulWidget {
 }
 
 class _ActiveQuizState extends State<ActiveQuiz> {
-
   @override
   void initState() {
-    countdown().then((value){
+    countdown().then((value) {
       print('Async done');
     });
     super.initState();
@@ -85,26 +84,28 @@ class _ActiveQuizState extends State<ActiveQuiz> {
     int seconds = 0;
     Timer.periodic(
       const Duration(seconds: 1),
-          (timer) {
-            seconds++;
-            setState(() {
-              countdownTime--;
-            });
-            if (seconds > 3) {
-              timer.cancel();
-              setState(() {
-                countdownTime = 0;
-                showCountdown = false;
-                measureTime.start();
-                startTimer();
-              });
-            }
+      (timer) {
+        seconds++;
+        setState(() {
+          countdownTime--;
+        });
+        if (seconds > 3) {
+          timer.cancel();
+          setState(() {
+            countdownTime = 0;
+            showCountdown = false;
+            measureTime.start();
+            startTimer();
+          });
+        }
       },
     );
   }
+
   void startTimer() {
     updateProgress = Timer.periodic(
-      const Duration(seconds: 1), (timer) {
+      const Duration(seconds: 1),
+      (timer) {
         timerProgress = timerProgress - 0.1;
         setState(() {
           timerProgress;
@@ -122,7 +123,6 @@ class _ActiveQuizState extends State<ActiveQuiz> {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
@@ -139,13 +139,10 @@ class _ActiveQuizState extends State<ActiveQuiz> {
                   alignment: Alignment.center,
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                      color: (message == CORRECT_MESSAGE)
-                          ? right
-                          : wrong),
+                      color: (message == CORRECT_MESSAGE) ? right : wrong),
                   child: Text(
                     message,
-                    style: theme.textTheme.bodyText2!
-                        .copyWith(color: texts),
+                    style: theme.textTheme.bodyText2!.copyWith(color: texts),
                   ),
                 ),
               Container(
@@ -160,18 +157,21 @@ class _ActiveQuizState extends State<ActiveQuiz> {
                 ),
               ),
               //if (showScoreScreen == false)
-                Flexible(
+              Flexible(
                   flex: 1,
                   child: QuizComponent(
-                    questionText:
-                      showScoreScreen ? "You got $points points!\nYour time: ${answerTimes.toString()}ms\nYour answers: ${answerCorrect.toString()}bool":
-                      showCountdown ? "Starting in $countdownTime" :
-                      widget.questions
-                        .elementAt(currentQuestion)
-                        .questionText,
+                    questionText: showScoreScreen
+                        ? "You got $points points!\nYour time: ${answerTimes.toString()}ms\nYour answers: ${answerCorrect.toString()}bool"
+                        : showCountdown
+                            ? "Starting in $countdownTime"
+                            : widget.questions
+                                .elementAt(currentQuestion)
+                                .questionText,
                     answers:
                         widget.questions.elementAt(currentQuestion).answers,
-                    answer: widget.questions.elementAt(currentQuestion).correctAnswer,
+                    answer: widget.questions
+                        .elementAt(currentQuestion)
+                        .correctAnswer,
                     onCorrectAnswer: () {
                       points++;
                       answerCorrect.add(1);
@@ -189,17 +189,17 @@ class _ActiveQuizState extends State<ActiveQuiz> {
                     buttonsActive: buttonsActive,
                     showScoreScreen: showScoreScreen,
                     showCountdown: showCountdown,
-
                   )),
               if (showTimeUntilAnswer == true)
-                Text("Time elapsed: ${measureTime.elapsed.inMilliseconds.toString()} ms"),
+                Text(
+                    "Time elapsed: ${measureTime.elapsed.inMilliseconds.toString()} ms"),
               Text("Progress indicator: ${(timerProgress * 100)} %"),
 
               if (showCountdown == false && showScoreScreen == false)
                 LinearProgressIndicator(
-                value: timerProgress,
-                minHeight: 15,
-              ),
+                  value: timerProgress,
+                  minHeight: 15,
+                ),
               const QuizButtonBack(buttonText: "back", isActive: true),
               //Text("Time elapsed: $currentTime")
 /*                    Container(
@@ -217,8 +217,6 @@ class _ActiveQuizState extends State<ActiveQuiz> {
                         ),
                     ),
                     )*/
-
-
             ]),
       ),
     );
