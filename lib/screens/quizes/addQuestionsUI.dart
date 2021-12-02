@@ -286,6 +286,7 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
       quizIsShared: args['isQuizzPublic'],
       listOfQuestions: _ListOfQuestions.getQuestions(),
       tags: args['Tags'],
+      quizID: args['OwnerUId'],
     );
     print(args['OwnerUId']);
 
