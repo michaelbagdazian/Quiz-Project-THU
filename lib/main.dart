@@ -2,8 +2,10 @@ import 'package:crew_brew/screens/home/home.dart';
 import 'package:crew_brew/screens/quizes/myQuizes.dart';
 import 'package:crew_brew/screens/quizes/quizWrapper.dart';
 import 'package:crew_brew/screens/quizes/sharedQuizes.dart';
+import 'package:crew_brew/screens/quizes/addQuestionsUI.dart';
 import 'package:crew_brew/screens/userProfile/userProfile.dart';
 import 'package:crew_brew/screens/wrapper.dart';
+import 'package:crew_brew/services/AddQuestion.dart';
 import 'package:crew_brew/services/auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -25,10 +27,12 @@ void main() async {
   // ~ Initialize fireBase
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     // ! StreamProvider<AppUser?>
@@ -38,18 +42,19 @@ class MyApp extends StatelessWidget {
       value: AuthService().user,
       initialData: null,
       child: MaterialApp(
-        home: Wrapper(),
+        home: const Wrapper(),
         // ! routes
         // ~ Here we define all routes of our apps. They are mainly used in navigationBar/navBar.dart -> selectedItem()
         routes: {
           '/home': (context) => Home(),
-          '/userProfile': (context) => userProfile(),
+          '/userProfile': (context) => const userProfile(),
           '/sharedQuizes': (context) => SharedQuizes(),
           '/myQuizes': (context) => MyQuizes(),
           '/welcome': (context) => WelcominScreen(),
           '/register': (context) => SignUp(),
           '/signin': (context) => LogIn(),
           '/quizWrapper': (context) => QuizWrapper(),
+          '/AddQuestionsUI': (context) => AddQuestionsUI(),
         },
       ),
     );
