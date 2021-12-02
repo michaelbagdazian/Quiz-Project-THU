@@ -1,36 +1,19 @@
 // ignore_for_file: file_names, camel_case_types
 
 import 'package:crew_brew/shared/customWidgets/customButton.dart';
-import 'package:crew_brew/shared/customWidgets/customText.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 
 class customConfirmationBox {
   //create a bool to set an reset based on user's choice
   String label;
   String content;
-  bool _confirmed = false;
   customConfirmationBox({Key? key, required this.label, required this.content});
   /*
   *The Following Widget takes two arguments:
   *String text: what is displayed on the confirmation box
   *context: the context of the screen, on which you want to build this widget
    */
-
-  //setter for _confirmed
-  //sets it to true
-  VoidCallback? setConfirmed() {
-    _confirmed = true;
-  }
-
-  VoidCallback? resetConfirmed() {
-    _confirmed = false;
-  }
-
-  bool getConfirmed() {
-    return _confirmed;
-  }
 
   @override
   Future ConfirmPopUp(BuildContext context) async {
