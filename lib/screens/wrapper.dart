@@ -1,6 +1,8 @@
+import 'package:crew_brew/navigationBar/navbar.dart';
 import 'package:crew_brew/screens/authenticate/WelcomingScreen.dart';
 import 'package:crew_brew/screens/home/home.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:provider/provider.dart';
 import 'package:crew_brew/models/user/AppUser.dart';
 
@@ -26,7 +28,8 @@ class Wrapper extends StatelessWidget {
     if (user == null) {
       return WelcominScreen();
     } else {
-      return Home();
+      return ZoomDrawer(
+          style: DrawerStyle.Style6, menuScreen: NavBar(), mainScreen: Home());
     }
   }
 }

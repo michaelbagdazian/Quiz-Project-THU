@@ -57,147 +57,140 @@ class _NavBarState extends State<NavBar> {
 
               // ! Drawer widget:
               // ~ Drawer widget is used as an additional sub-router that consists of various links to other routes (ie, pages) in the same application
-              return SizedBox(
-                width: MediaQuery.of(context).size.width * 0.71,
-                child: Drawer(
-                  // ! ListView widget:
-                  // ~ ListView is the most commonly used scrolling widget. It displays its children one after another in the scroll direction.
-                  child: Container(
-                    color: theme.primaryColor,
-                    child: SafeArea(
-                      child: ListView(
-                        padding: EdgeInsets.zero,
-                        // ~ Here we define the children of our ListView
+              return Scaffold(
+                body: Container(
+                  color: theme.primaryColor,
+                  child: SafeArea(
+                    child: ListView(
+                      padding: EdgeInsets.zero,
+                      // ~ Here we define the children of our ListView
 
-                        children: [
-                          // ! UserAccountsDrawerHeader
-                          // ~ A material design Drawer header that identifies the app's user. You see it on the top left side with backround, user avatar
-                          // ~ and some information about the user
-                          Padding(
-                            padding: EdgeInsets.only(
-                                top: 1 * em,
-                                bottom: 1 * em,
-                                left: 0.5 * em,
-                                right: 1 * em),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                ClipOval(
-                                  child: Image.asset(
-                                    'assets/menu_images/$avatar',
-                                    width: 4.0 * em,
-                                    height: 4.0 * em,
-                                    fit: BoxFit.cover,
-                                  ),
+                      children: [
+                        // ! UserAccountsDrawerHeader
+                        // ~ A material design Drawer header that identifies the app's user. You see it on the top left side with backround, user avatar
+                        // ~ and some information about the user
+                        Padding(
+                          padding: EdgeInsets.only(
+                              top: 1 * em,
+                              bottom: 1 * em,
+                              left: 0.5 * em,
+                              right: 1 * em),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              ClipOval(
+                                child: Image.asset(
+                                  'assets/menu_images/$avatar',
+                                  width: 4.0 * em,
+                                  height: 4.0 * em,
+                                  fit: BoxFit.cover,
                                 ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Text(userName,
-                                        style:
-                                            theme.textTheme.bodyText2!.copyWith(
-                                          color: Colors.white,
-                                        )),
-                                    Text(userEmail,
-                                        style:
-                                            theme.textTheme.bodyText2!.copyWith(
-                                          color: Colors.white,
-                                        ))
-                                  ],
-                                )
-                              ],
-                            ),
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text(userName,
+                                      style:
+                                          theme.textTheme.bodyText2!.copyWith(
+                                        color: Colors.white,
+                                      )),
+                                  Text(userEmail,
+                                      style:
+                                          theme.textTheme.bodyText2!.copyWith(
+                                        color: Colors.white,
+                                      ))
+                                ],
+                              )
+                            ],
                           ),
-                          // * ====================================
-                          // * Start of items listed in the drawer
-                          // * ====================================
-                          ListTile(
-                            leading:
-                                const Icon(Icons.home, color: Colors.white),
-                            title: Text('Home',
-                                style: theme.textTheme.bodyText2!.copyWith(
-                                  color: Colors.white,
-                                )),
-                            // ~ When tile is clicked, we are redirected to home page using support method defined below
-                            onTap: () => selectedItem(context, 'home'),
-                          ),
-                          ListTile(
-                            leading: const Icon(
-                              Icons.account_circle_sharp,
-                              color: Colors.white,
-                            ),
-                            title: Text('My profile',
-                                style: theme.textTheme.bodyText2!.copyWith(
-                                  color: Colors.white,
-                                )),
-                            onTap: () => selectedItem(context, 'userProfile'),
-                          ),
-                          ListTile(
-                            leading:
-                                const Icon(Icons.archive, color: Colors.white),
-                            title: Text('My quizzes',
-                                style: theme.textTheme.bodyText2!.copyWith(
-                                  color: Colors.white,
-                                )),
-                            onTap: () => selectedItem(context, 'myQuizes'),
-                          ),
-                          ListTile(
-                            leading:
-                                const Icon(Icons.share, color: Colors.white),
-                            title: Text('Shared quizzes',
-                                style: theme.textTheme.bodyText2!.copyWith(
-                                  color: Colors.white,
-                                )),
-                            onTap: () => selectedItem(context, 'sharedQuizes'),
-                          ),
-                          // ! Divider is used to separate different section of the NavBar
-                          Divider(
-                            thickness: 0.08 * em,
+                        ),
+                        // * ====================================
+                        // * Start of items listed in the drawer
+                        // * ====================================
+                        ListTile(
+                          leading: const Icon(Icons.home, color: Colors.white),
+                          title: Text('Home',
+                              style: theme.textTheme.bodyText2!.copyWith(
+                                color: Colors.white,
+                              )),
+                          // ~ When tile is clicked, we are redirected to home page using support method defined below
+                          onTap: () => selectedItem(context, 'home'),
+                        ),
+                        ListTile(
+                          leading: const Icon(
+                            Icons.account_circle_sharp,
                             color: Colors.white,
                           ),
-                          ListTile(
-                            leading: const Icon(Icons.info_outline,
-                                color: Colors.white),
-                            title: Text('Information',
-                                style: theme.textTheme.bodyText2!.copyWith(
-                                  color: Colors.white,
-                                )),
-                            // TODO Redirect to information page
-                            onTap: () => null,
-                          ),
-                          ListTile(
-                            leading:
-                                const Icon(Icons.settings, color: Colors.white),
-                            title: Text('Settings',
-                                style: theme.textTheme.bodyText2!.copyWith(
-                                  color: Colors.white,
-                                )),
-                            // TODO Redirect to settings page
-                            onTap: () => null,
-                          ),
-                          Divider(
-                            thickness: 0.08 * em,
-                            color: Colors.white,
-                          ),
-                          ListTile(
-                            leading: const Icon(Icons.exit_to_app,
-                                color: Colors.white),
-                            title: Text('Logout',
-                                style: theme.textTheme.bodyText2!.copyWith(
-                                  color: Colors.white,
-                                )),
-                            // ~ When Logout is selected, we peform signOut defined in services/auth.dart. We wait until the action was succesful and then redirect to Wrapper
-                            // ~ Which then decides which screen to display ( will display Authentiaction screen )
-                            onTap: () {
-                              _auth.signOut(context);
-                              selectedItem(context, '');
-                            },
-                          ),
-                          // * ====================================
-                          // * End of items listed in the drawer
-                          // * ====================================
-                        ],
-                      ),
+                          title: Text('My profile',
+                              style: theme.textTheme.bodyText2!.copyWith(
+                                color: Colors.white,
+                              )),
+                          onTap: () => selectedItem(context, 'userProfile'),
+                        ),
+                        ListTile(
+                          leading:
+                              const Icon(Icons.archive, color: Colors.white),
+                          title: Text('My quizzes',
+                              style: theme.textTheme.bodyText2!.copyWith(
+                                color: Colors.white,
+                              )),
+                          onTap: () => selectedItem(context, 'myQuizes'),
+                        ),
+                        ListTile(
+                          leading: const Icon(Icons.share, color: Colors.white),
+                          title: Text('Shared quizzes',
+                              style: theme.textTheme.bodyText2!.copyWith(
+                                color: Colors.white,
+                              )),
+                          onTap: () => selectedItem(context, 'sharedQuizes'),
+                        ),
+                        // ! Divider is used to separate different section of the NavBar
+                        Divider(
+                          thickness: 0.08 * em,
+                          color: Colors.white,
+                        ),
+                        ListTile(
+                          leading: const Icon(Icons.info_outline,
+                              color: Colors.white),
+                          title: Text('Information',
+                              style: theme.textTheme.bodyText2!.copyWith(
+                                color: Colors.white,
+                              )),
+                          // TODO Redirect to information page
+                          onTap: () => null,
+                        ),
+                        ListTile(
+                          leading:
+                              const Icon(Icons.settings, color: Colors.white),
+                          title: Text('Settings',
+                              style: theme.textTheme.bodyText2!.copyWith(
+                                color: Colors.white,
+                              )),
+                          // TODO Redirect to settings page
+                          onTap: () => null,
+                        ),
+                        Divider(
+                          thickness: 0.08 * em,
+                          color: Colors.white,
+                        ),
+                        ListTile(
+                          leading: const Icon(Icons.exit_to_app,
+                              color: Colors.white),
+                          title: Text('Logout',
+                              style: theme.textTheme.bodyText2!.copyWith(
+                                color: Colors.white,
+                              )),
+                          // ~ When Logout is selected, we peform signOut defined in services/auth.dart. We wait until the action was succesful and then redirect to Wrapper
+                          // ~ Which then decides which screen to display ( will display Authentiaction screen )
+                          onTap: () {
+                            _auth.signOut(context);
+                            selectedItem(context, '');
+                          },
+                        ),
+                        // * ====================================
+                        // * End of items listed in the drawer
+                        // * ====================================
+                      ],
                     ),
                   ),
                 ),
