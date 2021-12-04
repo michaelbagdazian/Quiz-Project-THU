@@ -286,11 +286,11 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
       quizIsShared: args['isQuizzPublic'],
       listOfQuestions: _ListOfQuestions.getQuestions(),
       tags: args['Tags'],
-      quizID: args['OwnerUId'],
+      quizID: '',
     );
     print(args['OwnerUId']);
 
     await DatabaseService(uid: _newQuizz.quizOwnerUID)
-        .updateQuizData(_newQuizz);
+        .createQuizData(_newQuizz);
   }
 }
