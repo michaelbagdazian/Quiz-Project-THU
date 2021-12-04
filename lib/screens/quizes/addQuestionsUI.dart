@@ -3,7 +3,9 @@
 import 'dart:io';
 
 import 'package:crew_brew/models/quiz/Quiz.dart';
+import 'package:crew_brew/models/quiz/question.dart';
 import 'package:crew_brew/services/AddQuestion.dart';
+import 'package:crew_brew/services/database.dart';
 import 'package:crew_brew/shared/customWidgets/customAlertBox.dart';
 import 'package:crew_brew/shared/customWidgets/customConfirmationBox.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +41,7 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
   //~ instance of a CustomTextField
   final CustomTextField _customTextField = CustomTextField();
   //~instance of AddQuestions
-  final AddQuestions _addQuestions = AddQuestions();
+  final AddQuestions _ListOfQuestions = AddQuestions();
 
   //~ These are bools that can be set/reset by the user with checkboxes
   bool? _isFirstAnswerCorrect = false;
@@ -47,8 +49,10 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
   bool? _isThirdAnswerCorrect = false;
   bool? _isFourthAnswerCorrect = false;
 
+  late var args;
   @override
   Widget build(BuildContext context) {
+    args = ModalRoute.of(context)!.settings.arguments;
     //~ Get the size of the screen
     Size size = MediaQuery.of(context).size;
     return Scaffold(
@@ -251,7 +255,7 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
       return;
     }
     //~ Add a new Question to the list of questions
-    _addQuestions.addNewQuestion(
+    _ListOfQuestions.addNewQuestion(
         _question.text, _usersAnswers, _correctAnswers, context);
     //~ resets everything on screen
     clearFunc();
@@ -259,6 +263,7 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
 
 //~ This function clears and resets everything (text fields and checkboxes) on the screen, this can be used when a new Question is to be Added or if user clicks on clear button
   VoidCallback? clearFunc() {
+    _question.clear();
     _firstAnswer.clear();
     _secondtAnswer.clear();
     _thirdAnswer.clear();
@@ -270,5 +275,22 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
     _isFourthAnswerCorrect = false;
   }
 
-  VoidCallback? submitButtonFunc() {}
+  Future submitButtonFunc() async {
+    // if (_question.text.isNotEmpty) addQuestionButtonFunc();
+    Quiz _newQuizz = Quiz(
+      quizCategory: args['QuizzCategory'],
+      quizTitle: args['QuizzTitle'],
+      quizOwner: args['UserName'],
+      quizOwnerUID: args['OwnerUId'],
+      quizDescription: args['QuizzDescription'],
+      quizIsShared: args['isQuizzPublic'],
+      listOfQuestions: _ListOfQuestions.getQuestions(),
+      tags: args['Tags'],
+      quizID: args['OwnerUId'],
+    );
+    print(args['OwnerUId']);
+
+    await DatabaseService(uid: _newQuizz.quizOwnerUID)
+        .updateQuizData(_newQuizz);
+  }
 }

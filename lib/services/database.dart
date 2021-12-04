@@ -245,14 +245,14 @@ class DatabaseService {
   Stream<UserData>? get userData {
     // ~ Here snapshot is taken ONLY from what user with this UID should see ( only his userData )
     Stream<UserData> stream =
-        userDataCollection.doc(uid).snapshots().map(_userDataFromSnapshot);
+        userDataCollection.doc(uid).snapshots().map(userDataFromSnapshot);
     // ~ We convert out stream to boardCastStream, so that multiple classes can be listeners ( by default it's one listener ). Necessary when using StreamBuilder and not StreamProvider
     return stream.asBroadcastStream();
   }
 
   // ! _userDataFromSnapshot
   // ~ Here we convert DocumentSnapshot into our custom defined UserData object
-  UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
+  UserData userDataFromSnapshot(DocumentSnapshot snapshot) {
     return UserData(
       uid: uid,
       username: snapshot['username'],

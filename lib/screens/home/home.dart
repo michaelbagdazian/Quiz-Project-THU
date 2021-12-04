@@ -1,6 +1,7 @@
 import 'package:crew_brew/models/user/AppUser.dart';
 import 'package:crew_brew/models/user/UserData.dart';
 import 'package:crew_brew/navigationBar/NavBar.dart';
+import 'package:crew_brew/screens/quizes/AddNewQuizzUI.dart';
 import 'package:crew_brew/shared/loading.dart';
 import 'package:crew_brew/testClasses/manualQuizCreation.dart';
 import 'package:flutter/material.dart';
@@ -70,10 +71,9 @@ class _HomeState extends State<Home> {
                         // ! onPressed() :
                         // ~ When button is pressed, the quiz is created in the DB and is displayed in myQuizes, since it's private Quiz
                         onPressed: () async {
-                          await DatabaseService(uid: user.uid)
-                              .createQuizData(ManualQuizeCreation()
-                              .createTestQuiz(
-                              user.uid, userData!.username, false));
+                          await DatabaseService(uid: user.uid).createQuizData(
+                              ManualQuizeCreation().createTestQuiz(
+                                  user.uid, userData!.username, false));
                         }),
                     // * End of "create private quiz "
                     // * Start of "create public quiz "
@@ -86,10 +86,9 @@ class _HomeState extends State<Home> {
                         // ! onPressed() :
                         // ~ When button is pressed, the quiz is created in the DB and is displayed in myQuizes AND sharedQuizes, since it's public Quiz
                         onPressed: () async {
-                          await DatabaseService(uid: user.uid)
-                              .createQuizData(ManualQuizeCreation()
-                              .createTestQuiz(
-                              user.uid, userData!.username, true));
+                          await DatabaseService(uid: user.uid).createQuizData(
+                              ManualQuizeCreation().createTestQuiz(
+                                  user.uid, userData!.username, true));
                         }),
                     // * End of "create public quiz "
                   ]),

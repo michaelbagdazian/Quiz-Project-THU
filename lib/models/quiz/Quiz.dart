@@ -25,14 +25,14 @@ class Quiz {
 
   Quiz(
       {required this.quizCategory,
-        required this.quizTitle,
-        required this.quizOwner,
-        required this.quizOwnerUID,
-        required this.quizDescription,
-        required this.quizIsShared,
-        required this.quizID,
-        required this.listOfQuestions,
-        required this.tags});
+      required this.quizTitle,
+      required this.quizOwner,
+      required this.quizOwnerUID,
+      required this.quizDescription,
+      required this.quizIsShared,
+      required this.quizID,
+      required this.listOfQuestions,
+      required this.tags});
 
   int getNumberOfQuestions(int id) {
     return listOfQuestions.length;
