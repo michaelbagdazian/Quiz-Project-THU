@@ -25,7 +25,7 @@ class userProfile extends StatefulWidget {
 class _userProfileState extends State<userProfile> {
   // ! States
   // ~ Here states of the profile page are defined
-  int userLevel = 0;
+  int points = 0;
   String avatar = 'default.png';
   String username = '';
   String email = '';
@@ -60,7 +60,7 @@ class _userProfileState extends State<userProfile> {
             // ! If there is a data for current user in the DB, then assign it to the variables, otherwise display Loading screen
             if (snapshot.hasData) {
               UserData? userData = snapshot.data;
-              userLevel = userData!.level;
+              points = userData!.points;
               avatar = userData.avatar;
               username = userData.username;
               email = userData.email;
@@ -143,7 +143,7 @@ class _userProfileState extends State<userProfile> {
                       SizedBox(height: 30.0),
                       // * Start current level field
                       Text(
-                        'CURRENT LEVEL',
+                        'POINTS',
                         style: TextStyle(
                           color: Colors.grey,
                           // ~ This gives the spacing between the letters
@@ -154,7 +154,7 @@ class _userProfileState extends State<userProfile> {
                       SizedBox(height: 10.0),
                       Text(
                         // ~ With '$' we output the contat of the data to string
-                        '$userLevel',
+                        '$points',
                         style: TextStyle(
                             color: Colors.amberAccent[200],
                             letterSpacing: 2.0,
