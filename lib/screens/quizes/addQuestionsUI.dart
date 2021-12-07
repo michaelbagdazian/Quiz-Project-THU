@@ -433,6 +433,15 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
 //? Send the Quizz to firebase
     await DatabaseService(uid: _newQuizz.quizOwnerUID)
         .createQuizData(_newQuizz);
+
+    await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          //customAlertBox (label, error message
+          return customAlertBox("Quiz Submitted", "Have Fun!");
+
+        });
+    Navigator.popAndPushNamed(context, '/myQuizes');
   }
 
   //~This function is for navigating through questions (BackWards)
