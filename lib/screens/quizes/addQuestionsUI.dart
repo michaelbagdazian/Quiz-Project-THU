@@ -182,41 +182,51 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
             ),
             //* empty space
             SizedBox(
-              height: size.height * 0.05,
+              height: size.height * 0.1,
             ),
             //* 'Add Question' Button + 'Submit Quizz' Button
-            Column(
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
-                CustomButton(
-                    label: "+",
-                    backgroundcolor: Colors.orange,
-                    function: addQuestionButtonFunc),
-                SizedBox(
-                  height: size.height * 0.02,
-                ),
-                CustomButton(
-                    label: "Clear",
-                    backgroundcolor: Colors.orange,
-                    function: () async {
-                      //* Prompts the user to confirm
-                      var conf = customConfirmationBox(
-                          label: 'Please Confirm',
-                          content:
-                              'Are you sure you want to clear everthing ?');
-                      //* stores what the user has choosen
-                      bool val = await conf.ConfirmPopUp(context);
-                      //* if it the user has confirmed, clear
-                      if (val == true) clearFunc();
-                    }),
-                SizedBox(
-                  height: size.height * 0.02,
-                ),
+                // CustomButton(
+                //     label: "+",
+                //     backgroundcolor: Colors.orange,
+                //     function: addQuestionButtonFunc),
+                // SizedBox(
+                //   height: size.height * 0.02,
+                // ),
+                // CustomButton(
+                //     label: "Clear",
+                //     backgroundcolor: Colors.orange,
+                //     function: () async {
+                //       //* Prompts the user to confirm
+                //       var conf = customConfirmationBox(
+                //           label: 'Please Confirm',
+                //           content:
+                //               'Are you sure you want to clear everthing ?');
+                //       //* stores what the user has choosen
+                //       bool val = await conf.ConfirmPopUp(context);
+                //       //* if it the user has confirmed, clear
+                //       if (val == true) clearFunc();
+                //     }),
+                // SizedBox(
+                //   height: size.height * 0.02,
+                // ),
                 CustomButton(
                     label: "Submit",
                     backgroundcolor: Colors.orange,
                     function: submitButtonFunc),
+                SizedBox(
+                  width: size.width * 0.3,
+                ),
+                FloatingActionButton(
+                  child: const Icon(Icons.add),
+                  backgroundColor: Colors.orange,
+                  onPressed: addQuestionButtonFunc,
+                  enableFeedback: true,
+                  heroTag: null,
+                ),
               ],
             ),
           ],
@@ -248,10 +258,10 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
       return;
     }
     final Map<String, bool> answers = <String, bool>{};
-    answers.update(_firstAnswer.text, (value) => _isFirstAnswerCorrect!);
-    answers.update(_secondAnswer.text, (value) => _isSecondAnswerCorrect!);
-    answers.update(_thirdAnswer.text, (value) => _isThirdAnswerCorrect!);
-    answers.update(_fourthAnswer.text, (value) => _isFourthAnswerCorrect!);
+    answers.putIfAbsent(_firstAnswer.text, () => _isFirstAnswerCorrect!);
+    answers.putIfAbsent(_secondAnswer.text, () => _isSecondAnswerCorrect!);
+    answers.putIfAbsent(_thirdAnswer.text, () => _isThirdAnswerCorrect!);
+    answers.putIfAbsent(_fourthAnswer.text, () => _isFourthAnswerCorrect!);
     //~ Add a new Question to the list of questions
     _ListOfQuestions.addNewQuestion(_question.text, answers, context);
     //~ resets everything on screen
