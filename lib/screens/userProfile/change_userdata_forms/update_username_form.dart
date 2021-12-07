@@ -56,7 +56,7 @@ class _UsernameFormState extends State<UsernameForm> {
                           _username.isEmpty ? userData.username : _username,
                           userData.email,
                           userData.avatar,
-                          userData.level);
+                          userData.points);
                       Navigator.pop(context);
                     }
                   }),

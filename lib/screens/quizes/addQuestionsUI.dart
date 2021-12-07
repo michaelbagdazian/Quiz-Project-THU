@@ -33,7 +33,7 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
   //~ First Answer
   final TextEditingController _firstAnswer = TextEditingController();
   //~ Second Answer
-  final TextEditingController _secondtAnswer = TextEditingController();
+  final TextEditingController _secondAnswer = TextEditingController();
 
   final TextEditingController _thirdAnswer = TextEditingController();
 
@@ -131,7 +131,7 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _customTextField.customTextField(_secondtAnswer, "Answer 2:",
+                _customTextField.customTextField(_secondAnswer, "Answer 2:",
                     size.width / 1.3, TextInputType.text),
                 Checkbox(
                     value: _isSecondAnswerCorrect,
@@ -229,20 +229,20 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
     //~ Create a list of answers to actually pass to when we want to Add a new Question
     List<String> _usersAnswers = <String>[];
     _usersAnswers.add(_firstAnswer.text);
-    _usersAnswers.add(_secondtAnswer.text);
+    _usersAnswers.add(_secondAnswer.text);
     _usersAnswers.add(_thirdAnswer.text);
     _usersAnswers.add(_fourthAnswer.text);
 
     //~ Create A list of Correct Answers
-    List<int> _correctAnswers = <int>[];
+    int _numberOfCorrectAnswers = 0;
     //~ Adding Correct Answers to the list
-    if (_isFirstAnswerCorrect == true) _correctAnswers.add(1);
-    if (_isSecondAnswerCorrect == true) _correctAnswers.add(2);
-    if (_isThirdAnswerCorrect == true) _correctAnswers.add(3);
-    if (_isFourthAnswerCorrect == true) _correctAnswers.add(4);
+    if (_isFirstAnswerCorrect == true) _numberOfCorrectAnswers += 1;
+    if (_isSecondAnswerCorrect == true) _numberOfCorrectAnswers += 1;
+    if (_isThirdAnswerCorrect == true) _numberOfCorrectAnswers += 1;
+    if (_isFourthAnswerCorrect == true) _numberOfCorrectAnswers += 1;
 
     //~ If user didn't mark at least one answer as correct answer
-    if (_correctAnswers.isEmpty) {
+    if (_numberOfCorrectAnswers == 0) {
       //~ show a alert box to inform user that they need to mark at least one answer as correct
       await showDialog(
           context: context,
@@ -254,9 +254,13 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
       //~ Exit this function
       return;
     }
+    final Map<String, bool> answers = <String, bool>{};
+    answers.update(_firstAnswer.text, (value) => _isFirstAnswerCorrect!);
+    answers.update(_secondAnswer.text, (value) => _isSecondAnswerCorrect!);
+    answers.update(_thirdAnswer.text, (value) => _isThirdAnswerCorrect!);
+    answers.update(_fourthAnswer.text, (value) => _isFourthAnswerCorrect!);
     //~ Add a new Question to the list of questions
-    _ListOfQuestions.addNewQuestion(
-        _question.text, _usersAnswers, _correctAnswers, context);
+    _ListOfQuestions.addNewQuestion(_question.text, answers, context);
     //~ resets everything on screen
     clearFunc();
   }
@@ -265,7 +269,7 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
   VoidCallback? clearFunc() {
     _question.clear();
     _firstAnswer.clear();
-    _secondtAnswer.clear();
+    _secondAnswer.clear();
     _thirdAnswer.clear();
     _fourthAnswer.clear();
 
