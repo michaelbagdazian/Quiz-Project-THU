@@ -69,8 +69,8 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
         backgroundColor: Colors.teal,
       ),
       body: Container(
-        constraints: BoxConstraints.expand(),
-        decoration: BoxDecoration(
+        constraints: const BoxConstraints.expand(),
+        decoration: const BoxDecoration(
           image: DecorationImage(
               image: AssetImage('assets/images/bgtop.png'), fit: BoxFit.cover),
         ),
@@ -84,7 +84,7 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
               height: size.height * 0.09,
             ),
             //* Question
-            Container(
+            SizedBox(
               width: size.width / 1.1,
               child: TextField(
                 controller: _question,
@@ -97,7 +97,7 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
                     fontSize: 30,
                   ),
                 ),
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 20,
                 ),
               ),
@@ -190,7 +190,7 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 CustomButton(
-                    label: "Add New Question",
+                    label: "+",
                     backgroundcolor: Colors.orange,
                     function: addQuestionButtonFunc),
                 SizedBox(
@@ -226,16 +226,9 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
   }
 
   Future addQuestionButtonFunc() async {
-    //~ Create a list of answers to actually pass to when we want to Add a new Question
-    List<String> _usersAnswers = <String>[];
-    _usersAnswers.add(_firstAnswer.text);
-    _usersAnswers.add(_secondAnswer.text);
-    _usersAnswers.add(_thirdAnswer.text);
-    _usersAnswers.add(_fourthAnswer.text);
-
-    //~ Create A list of Correct Answers
+    //~ The Following int is used to check if there is no correct answers
     int _numberOfCorrectAnswers = 0;
-    //~ Adding Correct Answers to the list
+    //~ Check how many correct answers are there
     if (_isFirstAnswerCorrect == true) _numberOfCorrectAnswers += 1;
     if (_isSecondAnswerCorrect == true) _numberOfCorrectAnswers += 1;
     if (_isThirdAnswerCorrect == true) _numberOfCorrectAnswers += 1;
@@ -280,19 +273,19 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
   }
 
   Future submitButtonFunc() async {
+    // ignore: non_constant_identifier_names
+    String QuizId = args['OwnerUId'] + "-" + DateTime.now().toString();
     // if (_question.text.isNotEmpty) addQuestionButtonFunc();
     Quiz _newQuizz = Quiz(
-      quizCategory: args['QuizzCategory'],
-      quizTitle: args['QuizzTitle'],
-      quizOwner: args['UserName'],
-      quizOwnerUID: args['OwnerUId'],
-      quizDescription: args['QuizzDescription'],
-      quizIsShared: args['isQuizzPublic'],
-      listOfQuestions: _ListOfQuestions.getQuestions(),
-      tags: args['Tags'],
-      quizID: '',
-    );
-    print(args['OwnerUId']);
+        quizCategory: args['QuizzCategory'],
+        quizTitle: args['QuizzTitle'],
+        quizOwner: args['UserName'],
+        quizOwnerUID: args['OwnerUId'],
+        quizDescription: args['QuizzDescription'],
+        quizIsShared: args['isQuizzPublic'],
+        listOfQuestions: _ListOfQuestions.getQuestions(),
+        tags: args['Tags'],
+        quizID: QuizId);
 
     await DatabaseService(uid: _newQuizz.quizOwnerUID)
         .createQuizData(_newQuizz);

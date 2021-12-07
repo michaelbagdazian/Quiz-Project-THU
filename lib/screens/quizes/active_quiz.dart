@@ -157,50 +157,53 @@ class _ActiveQuizState extends State<ActiveQuiz> {
                 ),
               ),
               //if (showScoreScreen == false)
-              Flexible(
-                  flex: 1,
-                  child: QuizComponent(
-                    questionText: showScoreScreen
-                        ? "You got $points points!\nYour time: ${answerTimes.toString()}ms\nYour answers: ${answerCorrect.toString()}bool"
-                        : showCountdown
-                            ? "Starting in $countdownTime"
-                            : widget.questions
-                                .elementAt(currentQuestion)
-                                .questionText,
-                    answers:
-                        widget.questions.elementAt(currentQuestion).answers,
-                    answer: widget.questions
-                        .elementAt(currentQuestion)
-                        .correctAnswer,
-                    onCorrectAnswer: () {
-                      points++;
-                      answerCorrect.add(1);
-                      setState(() {
-                        message = CORRECT_MESSAGE;
-                      });
-                    },
-                    onWrongAnswer: () {
-                      answerCorrect.add(0);
-                      setState(() {
-                        message = WRONG_MESSAGE;
-                      });
-                    },
-                    onFinishAnswer: next,
-                    buttonsActive: buttonsActive,
-                    showScoreScreen: showScoreScreen,
-                    showCountdown: showCountdown,
-                  )),
-              if (showTimeUntilAnswer == true)
-                Text(
-                    "Time elapsed: ${measureTime.elapsed.inMilliseconds.toString()} ms"),
-              Text("Progress indicator: ${(timerProgress * 100)} %"),
+              //! PROBLEM HERE
+              // Flexible(
+              //     flex: 1,
+              //     child: QuizComponent(
+              //       questionText: showScoreScreen
+              //           ? "You got $points points!\nYour time: ${answerTimes.toString()}ms\nYour answers: ${answerCorrect.toString()}bool"
+              //           : showCountdown
+              //               ? "Starting in $countdownTime"
+              //               : widget.questions
+              //                   .elementAt(currentQuestion)
+              //                   .questionText,
+              //       answers:
+              //           widget.questions.elementAt(currentQuestion).answers,
+              //       answer: widget.questions
+              //           .elementAt(currentQuestion)
+              //           .answers,
+              //       onCorrectAnswer: () {
+              //         points++;
+              //         answerCorrect.add(1);
+              //         setState(() {
+              //           message = CORRECT_MESSAGE;
+              //         });
+              //       },
+              //       onWrongAnswer: () {
+              //         answerCorrect.add(0);
+              //         setState(() {
+              //           message = WRONG_MESSAGE;
+              //         });
+              //       },
+              //       onFinishAnswer: next,
+              //       buttonsActive: buttonsActive,
+              //       showScoreScreen: showScoreScreen,
+              //       showCountdown: showCountdown,
+              //     )),
+              // if (showTimeUntilAnswer == true)
+              //   Text(
+              //       "Time elapsed: ${measureTime.elapsed.inMilliseconds.toString()} ms"),
+              // Text("Progress indicator: ${(timerProgress * 100)} %"),
 
-              if (showCountdown == false && showScoreScreen == false)
-                LinearProgressIndicator(
-                  value: timerProgress,
-                  minHeight: 15,
-                ),
-              const QuizButtonBack(buttonText: "back", isActive: true),
+              // if (showCountdown == false && showScoreScreen == false)
+              //   LinearProgressIndicator(
+              //     value: timerProgress,
+              //     minHeight: 15,
+              //   ),
+              // const QuizButtonBack(buttonText: "back", isActive: true),
+              //! PROBLEM HERE
+
               //Text("Time elapsed: $currentTime")
 /*                    Container(
                     padding: const EdgeInsets.all(5),
