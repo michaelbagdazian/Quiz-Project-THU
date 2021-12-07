@@ -34,7 +34,6 @@ class AddQuestions {
       //~ Create a new instance of Question
       Question? _question =
           Question(questionText: questionText, answers: answers);
-      // _question.correctAnswers = correctAnswers; //! this is for later, when we integrate multiple correct answers
 
       //~ Add the new Question to the list of questions
       Questions.add(_question);
@@ -74,5 +73,12 @@ class AddQuestions {
 //~ shuffles Questions randomly
   void shuffleQuestions() {
     Questions.shuffle();
+  }
+
+  Question? getLastQuestion() {
+    if (getQuestions().isNotEmpty) {
+      return getQuestions()[getQuestions().length - 1];
+    }
+    return null;
   }
 }
