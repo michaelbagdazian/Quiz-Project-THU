@@ -28,23 +28,12 @@ class AddQuestions {
   ~   List <int> correctAnswers: list of integers to determine the correct answers
   ~   Build _context: A Build Context for error handling and alertboxes
   */
-  void addNewQuestion(String questionText, List<String> answers,
-      List<int> correctAnswers, BuildContext _context) {
+  void addNewQuestion(
+      String questionText, Map<String, bool> answers, BuildContext _context) {
     try {
-      /*
-      ! the follwing statement needs to be changed later
-      ! for now this is just temporary
-      ! please change the properties of Class Question so that it can take multiple correct answers
-      */
-      int correctAnswer = correctAnswers.elementAt(
-          0); //! this is done this way so that we fulfill the properties of class Question, BUT PLEASE CHANGE THIS AFTERWARDS
-
       //~ Create a new instance of Question
-      Question? _question = Question(
-          questionText: questionText,
-          answers: answers,
-          correctAnswer: correctAnswer);
-      // _question.correctAnswers = correctAnswers; //! this is for later, when we integrate multiple correct answers
+      Question? _question =
+          Question(questionText: questionText, answers: answers);
 
       //~ Add the new Question to the list of questions
       Questions.add(_question);
@@ -84,5 +73,12 @@ class AddQuestions {
 //~ shuffles Questions randomly
   void shuffleQuestions() {
     Questions.shuffle();
+  }
+
+  Question? getLastQuestion() {
+    if (getQuestions().isNotEmpty) {
+      return getQuestions()[getQuestions().length - 1];
+    }
+    return null;
   }
 }

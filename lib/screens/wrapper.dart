@@ -1,7 +1,5 @@
 import 'package:crew_brew/screens/authenticate/WelcomingScreen.dart';
 import 'package:crew_brew/screens/home/home.dart';
-import 'package:crew_brew/screens/quizes/AddNewQuizzUI.dart';
-import 'package:crew_brew/screens/quizes/addQuestionsUI.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:crew_brew/models/user/AppUser.dart';

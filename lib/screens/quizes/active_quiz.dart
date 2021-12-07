@@ -157,6 +157,7 @@ class _ActiveQuizState extends State<ActiveQuiz> {
                 ),
               ),
               //if (showScoreScreen == false)
+
               Flexible(
                   flex: 1,
                   child: QuizComponent(
@@ -169,9 +170,7 @@ class _ActiveQuizState extends State<ActiveQuiz> {
                                 .questionText,
                     answers:
                         widget.questions.elementAt(currentQuestion).answers,
-                    answer: widget.questions
-                        .elementAt(currentQuestion)
-                        .correctAnswer,
+                    answer: widget.questions.elementAt(currentQuestion).answers,
                     onCorrectAnswer: () {
                       points++;
                       answerCorrect.add(1);
@@ -201,6 +200,7 @@ class _ActiveQuizState extends State<ActiveQuiz> {
                   minHeight: 15,
                 ),
               const QuizButtonBack(buttonText: "back", isActive: true),
+
               //Text("Time elapsed: $currentTime")
 /*                    Container(
                     padding: const EdgeInsets.all(5),

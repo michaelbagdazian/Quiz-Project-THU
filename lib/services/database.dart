@@ -84,15 +84,9 @@ class DatabaseService {
 
     for (Question question in questions) {
       String questionText = question.questionText;
-      List<String> answers = question.answers;
-      int correctAnswer = question.correctAnswer;
+      Map<String, bool> answers = question.answers;
 
-      Map<String, bool> answersMap = new Map<String, bool>();
-      for (int i = 0; i < answers.length; i++) {
-        answersMap[answers[i]] = (i == correctAnswer);
-      }
-
-      mapOfQuestions[questionText] = answersMap;
+      mapOfQuestions[questionText] = answers;
     }
 
     return mapOfQuestions;
@@ -174,26 +168,9 @@ class DatabaseService {
   // ! _questionObjectFromMap
   // ~ This is a helper function used by newQuizFromSnapshot
   // ~ this returns Question object from the map.
-  Question _questionObjectFromMap(String key, Map<String, bool> value) {
-    Map<String, bool> answers = value;
-    String questionText = key;
-    int correctAnswer = -1;
-
-    int index = 0;
-    List<String> answersList = [];
-    answers.forEach((key, value) {
-      answersList.add(key);
-      if (value == true) {
-        correctAnswer = index;
-      }
-
-      index++;
-    });
-
-    return new Question(
-        questionText: questionText,
-        answers: answersList,
-        correctAnswer: correctAnswer);
+  Question _questionObjectFromMap(
+      String questionText, Map<String, bool> answers) {
+    return new Question(questionText: questionText, answers: answers);
   }
 
   // ! deleteQuiz()
@@ -228,7 +205,7 @@ class DatabaseService {
   // ~ We call this function when user is registered or we want to update some information for the user
   // ~ it's return value is Future, because it's async function
   Future updateUserData(
-      String username, String email, String avatar, int level) async {
+      String username, String email, String avatar, int points) async {
     // ~ Get the document based on the UID of the user
     // ~ If document does not exist yet, then Firebase will create the document with that UID. If it does exist, it will update information using uid
     // ~ We pass the data through map (key-value pairs) to set method
@@ -236,7 +213,7 @@ class DatabaseService {
       'username': username,
       'email': email,
       'avatar': avatar,
-      'level': level,
+      'points': points,
     });
   }
 
@@ -258,7 +235,7 @@ class DatabaseService {
       username: snapshot['username'],
       email: snapshot['email'],
       avatar: snapshot['avatar'],
-      level: snapshot['level'],
+      points: snapshot['points'],
     );
   }
 
@@ -276,9 +253,8 @@ class DatabaseService {
     final user = await FirebaseAuth.instance.currentUser;
 
     if (user != null) {
-
-      final cred =
-          EmailAuthProvider.credential(email: userData.email, password: currentPassword);
+      final cred = EmailAuthProvider.credential(
+          email: userData.email, password: currentPassword);
 
       user.reauthenticateWithCredential(cred).then((value) {
         user.updatePassword(newPassword).then((_) {
@@ -301,17 +277,18 @@ class DatabaseService {
   // ! changeEmail
   // ~ This method change e-mail in firebase in userData
   // TODO Work on code quality
-  Future<bool> changeEmail(String currentPassword, String newEmail, UserData userData) async {
+  Future<bool> changeEmail(
+      String currentPassword, String newEmail, UserData userData) async {
     final user = await FirebaseAuth.instance.currentUser;
 
     if (user != null) {
-
-      final cred =
-          EmailAuthProvider.credential(email: userData.email, password: currentPassword);
+      final cred = EmailAuthProvider.credential(
+          email: userData.email, password: currentPassword);
 
       user.reauthenticateWithCredential(cred).then((value) {
         user.updateEmail(newEmail).then((_) {
-          updateUserData(userData.username, newEmail, userData.avatar, userData.level);
+          updateUserData(
+              userData.username, newEmail, userData.avatar, userData.points);
           print("Email updated");
           return true;
         }).catchError((error) {

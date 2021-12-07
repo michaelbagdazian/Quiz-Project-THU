@@ -9,6 +9,7 @@ import 'package:crew_brew/models/user/AppUser.dart';
 import 'package:crew_brew/models/user/UserData.dart';
 import 'package:crew_brew/screens/quizes/addQuestionsUI.dart';
 import 'package:crew_brew/services/database.dart';
+import 'package:crew_brew/shared/customWidgets/customAlertBox.dart';
 import 'package:crew_brew/shared/customWidgets/customButton.dart';
 import 'package:crew_brew/shared/customWidgets/customText.dart';
 import 'package:crew_brew/shared/customWidgets/customTextField.dart';
@@ -28,6 +29,7 @@ class _AddNewQuizzUIState extends State<AddNewQuizzUI> {
   final TextEditingController QuizzTitle = TextEditingController();
   final TextEditingController? QuizzDescription = TextEditingController();
   final TextEditingController? tags = TextEditingController();
+  //? List of Categories
   var categories = <String>[
     'Music',
     'Sport',
@@ -36,6 +38,7 @@ class _AddNewQuizzUIState extends State<AddNewQuizzUI> {
     'CS',
     'Phyiscs',
     'Math',
+    'Trivia',
     'Other',
   ];
   String dropDownVal = 'Other';
@@ -198,6 +201,14 @@ class _AddNewQuizzUIState extends State<AddNewQuizzUI> {
   }
 
   Future startFunc() async {
+    if (QuizzTitle.text.isEmpty) {
+      return showDialog(
+          context: context,
+          builder: (context) {
+            return customAlertBox(
+                'QuizzTitle', 'Please Add a QuizzTitle First');
+          });
+    }
     try {
       //~ get the current user (logged in) here
       final user = FirebaseAuth.instance.currentUser;

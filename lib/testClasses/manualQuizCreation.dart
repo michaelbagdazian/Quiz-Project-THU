@@ -5,97 +5,82 @@ import 'package:crew_brew/models/quiz/question.dart';
 // ~ This class is used for testing purposes. It will return the instance of a quiz, containing all necessary information and structure.
 
 class ManualQuizeCreation {
-  Quiz createTestQuiz(String quizOwnerUID, String quizOwner,
-      bool quizIsShared) {
+  Quiz createTestQuiz(
+      String quizOwnerUID, String quizOwner, bool quizIsShared) {
     // ! Question #1
     // ~ questionText
     String questionText_1 = "What is the capital of Assyria?";
 
     // ~ Answers to Question #1
-    List<String> answers_1 = [];
-    answers_1.add("Nineveh");
-    answers_1.add("I don't know that! Auuuuuuuugh!");
-    answers_1.add("Babylon");
-    answers_1.add("Assur");
-
-    // ~ Correct answer to Question #1
-    int correctAnswer_1 = 3;
+    Map<String, bool> answers_1 = Map<String, bool>();
+    answers_1["Nineveh"] = false;
+    answers_1["I don't know that! Auuuuuuuugh!"] = false;
+    answers_1["Babylon ( true )"] = true;
+    answers_1["Roshan ( true )"] = true;
 
     // ~ Question #1 instance
-    Question question_1 = _createQuestion(
-        questionText_1, answers_1, correctAnswer_1);
+    Question question_1 = _createQuestion(questionText_1, answers_1);
 
     // ! Question #2
     // ~ questionText
-    String questionText_2 = "What is the air-speed velocity of an unladen swallow?";
+    String questionText_2 =
+        "What is the air-speed velocity of an unladen swallow?";
 
     // ~ Answers to Question #2
-    List<String> answers_2 = [];
-    answers_2.add("An African or European swallow?");
-    answers_2.add("about 15 km/h");
-    answers_2.add("172 cms per minute");
-    answers_2.add("I don't know that!");
-
-    // ~ Correct answer to Question #2
-    int correctAnswer_2 = 0;
+    Map<String, bool> answers_2 = Map<String, bool>();
+    answers_2["An African or European swallow?"] = false;
+    answers_2["about 15 km/h ( true )"] = true;
+    answers_2["172 cms per minute"] = false;
+    answers_2["I don't know that!"] = false;
 
     // ~ Question #2 instance
-    Question question_2 = _createQuestion(
-        questionText_2, answers_2, correctAnswer_2);
+    Question question_2 =
+        _createQuestion(questionText_2, answers_2);
 
     // ! Question #3
     // ~ questionText
     String questionText_3 = "What is your name?";
 
     // ~ Answers to Question #3
-    List<String> answers_3 = [];
-    answers_3.add("Donald Trump");
-    answers_3.add("Sir Lancelot of Camelot");
-    answers_3.add("Mickey Mouse");
-    answers_3.add("Marylin Monroe");
-
-    // ~ Correct answer to Question #3
-    int correctAnswer_3 = 1;
+    Map<String, bool> answers_3 = Map<String, bool>();
+    answers_3["Donald Trump"] = false;
+    answers_3["Sir Lancelot of Camelot ( true )"] = true;
+    answers_3["Mickey Mouse ( true )"] = true;
+    answers_3["Marylin Monroe"] = false;
 
     // ~ Question #3 instance
-    Question question_3 = _createQuestion(
-        questionText_3, answers_3, correctAnswer_3);
+    Question question_3 =
+        _createQuestion(questionText_3, answers_3);
 
     // ! Question #4
     // ~ questionText
     String questionText_4 = "What is your favorite color";
 
     // ~ Answers to Question #4
-    List<String> answers_4 = [];
-    answers_4.add("Magenta");
-    answers_4.add("Olive");
-    answers_4.add("Blue");
-    answers_4.add("Blue, no yellow");
-
-    // ~ Correct answer to Question #4
-    int correctAnswer_4 = 2;
+    Map<String, bool> answers_4 = Map<String, bool>();
+    answers_4["Magenta ( true )"] = true;
+    answers_4["Olive"] = false;
+    answers_4["Blue"] = false;
+    answers_4["Blue, no yellow"] = false;
 
     // ~ Question #4 instance
-    Question question_4 = _createQuestion(
-        questionText_4, answers_4, correctAnswer_4);
+    Question question_4 =
+        _createQuestion(questionText_4, answers_4);
 
     // ! Question #5
     // ~ questionText
     String questionText_5 = "What is your Quest?";
 
     // ~ Answers to Question #5
-    List<String> answers_5 = [];
-    answers_5.add("To wash the dishes");
-    answers_5.add("To do my taxes");
-    answers_5.add("To study flutter");
-    answers_5.add("To seek the Holy Grail");
-
-    // ~ Correct answer to Question #5
-    int correctAnswer_5 = 3;
+    Map<String, bool> answers_5 = Map<String, bool>();
+    answers_5["To wash the dishes"] = false;
+    answers_5["To do my taxes"] = false;
+    answers_5["To study flutter"] = false;
+    answers_5["To seek the Holy Grail ( true )"] = true;
 
     // ~ Question #5 instance
-    Question question_5 = _createQuestion(
-        questionText_5, answers_5, correctAnswer_5);
+    Question question_5 =
+        _createQuestion(questionText_5, answers_5);
 
     // ! Question list
     List<Question> questionList = [
@@ -123,15 +108,12 @@ class ManualQuizeCreation {
     return testQuiz;
   }
 
-  Question _createQuestion(String questionText, List<String> answers,
-      int correctAnswer) {
-    return new Question(
-        questionText: questionText,
-        answers: answers,
-        correctAnswer: correctAnswer);
+  Question _createQuestion(String questionText, Map<String, bool> answers) {
+    return new Question(questionText: questionText, answers: answers);
   }
 
-  Quiz _createQuiz(String quizCategory,
+  Quiz _createQuiz(
+      String quizCategory,
       String quizTitle,
       String quizOwner,
       String quizOwnerUID,
@@ -139,7 +121,8 @@ class ManualQuizeCreation {
       bool quizIsShared,
       List<Question> listOfQuestions,
       List<String> tags) {
-    return new Quiz(quizCategory: quizCategory,
+    return new Quiz(
+        quizCategory: quizCategory,
         quizTitle: quizTitle,
         quizOwner: quizOwner,
         quizOwnerUID: quizOwnerUID,
