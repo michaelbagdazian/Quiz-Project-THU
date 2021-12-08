@@ -16,6 +16,8 @@ import 'package:provider/provider.dart';
 // TODO Improve loading as done in welcome and sign_in with boolean loading variable
 
 class NavBar extends StatefulWidget {
+  const NavBar({Key? key}) : super(key: key);
+
   @override
   State<NavBar> createState() => _NavBarState();
 }
@@ -144,7 +146,15 @@ class _NavBarState extends State<NavBar> {
                               )),
                           onTap: () => selectedItem(context, 'sharedQuizes'),
                         ),
-                        // ! Divider is used to separate different section of the NavBar
+                        ListTile(
+                          leading: const Icon(Icons.add, color: Colors.white),
+                          title: Text('Create quiz',
+                              style: theme.textTheme.bodyText2!.copyWith(
+                                color: Colors.white,
+                              )),
+                          onTap: () =>
+                              selected_item_v2(context, 'AddNewQuizzUI'),
+                        ), // ! Divider is used to separate different section of the NavBar
                         Divider(
                           thickness: 0.08 * em,
                           color: Colors.white,
@@ -157,7 +167,7 @@ class _NavBarState extends State<NavBar> {
                                 color: Colors.white,
                               )),
                           // TODO Redirect to information page
-                          onTap: () => null,
+                          onTap: () {},
                         ),
                         ListTile(
                           leading:
@@ -167,7 +177,7 @@ class _NavBarState extends State<NavBar> {
                                 color: Colors.white,
                               )),
                           // TODO Redirect to settings page
-                          onTap: () => null,
+                          onTap: () {},
                         ),
                         Divider(
                           thickness: 0.08 * em,
@@ -213,5 +223,14 @@ class _NavBarState extends State<NavBar> {
     // ~ Replacement means that we do not current screen on stack, but instead replace the pushed screen with current screen
     // ~ Named means that we are using routing defined in main.dart
     Navigator.pushReplacementNamed(context, '/$index');
+  }
+
+  // ! This is helper method, which is used in all onTap in the ListTile
+  void selected_item_v2(BuildContext context, String index) {
+    // ! pushReplacementNamed:
+    // ~ Push means that we push the screen on top of the current screen
+    // ~ Replacement means that we do not current screen on stack, but instead replace the pushed screen with current screen
+    // ~ Named means that we are using routing defined in main.dart
+    Navigator.pushNamed(context, '/$index');
   }
 }

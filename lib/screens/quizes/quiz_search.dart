@@ -1,24 +1,19 @@
-import 'package:crew_brew/models/quiz/Quiz.dart';
-import 'package:crew_brew/navigationBar/navbar.dart';
-import 'package:crew_brew/screens/quizes/quiz_list.dart';
 import 'package:flutter/material.dart';
-import 'package:crew_brew/services/auth.dart';
-import 'package:crew_brew/services/database.dart';
-import 'package:provider/provider.dart';
 import 'package:crew_brew/shared/colors.dart';
 // ignore_for_file: file_names, non_constant_identifier_names
 
-class quiz_Search extends StatefulWidget implements PreferredSizeWidget {
+class QuizSearch extends StatefulWidget implements PreferredSizeWidget {
   var title;
   @override
-  _quiz_Search createState() => _quiz_Search();
+  _QuizSearch createState() => _QuizSearch();
 
-  quiz_Search({Key? key, required this.title}) : super(key: key);
-  Size get preferredSize => new Size.fromHeight(kToolbarHeight);
+  QuizSearch({Key? key, required this.title}) : super(key: key);
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
-class _quiz_Search extends State<quiz_Search> {
-  Icon cusIcon = Icon(Icons.search);
+class _QuizSearch extends State<QuizSearch> {
+  Icon cusIcon = const Icon(Icons.search);
   String searchInput = "";
 
   @override
@@ -27,8 +22,8 @@ class _quiz_Search extends State<quiz_Search> {
       IconButton(
           onPressed: () {
             setState(() {
-              if (this.cusIcon.icon == Icons.search) {
-                this.cusIcon = Icon(Icons.cancel);
+              if (cusIcon.icon == Icons.search) {
+                cusIcon = const Icon(Icons.cancel);
                 widget.title = TextField(
                     // ~ This replaces the button on the keyboard of the device
                     textInputAction: TextInputAction.go,

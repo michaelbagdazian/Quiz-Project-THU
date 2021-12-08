@@ -6,5 +6,4 @@ class Question {
     required this.questionText,
     required this.answers,
   });
-
 }

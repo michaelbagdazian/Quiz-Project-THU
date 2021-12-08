@@ -16,7 +16,7 @@ class WelcominScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //couple of objects
-    final CustomTextField _customTextField = new CustomTextField();
+    final CustomTextField _customTextField = CustomTextField();
     final CustomText _customText = CustomText();
     //couple of controllers
     final TextEditingController _pinController = TextEditingController();
@@ -180,8 +180,7 @@ class WelcominScreen extends StatelessWidget {
           extendedPadding: EdgeInsets.all(50),
           heroTag: "LoginButtonOnHomeScreen",
           onPressed: () {
-            Navigator.pushNamed(
-              cntxt,'/signin');
+            Navigator.pushNamed(cntxt, '/signin');
           },
           label: const Text(
             'Log In',
@@ -203,8 +202,7 @@ class WelcominScreen extends StatelessWidget {
           heroTag: "RegButtonOnHomeScreen",
           extendedPadding: EdgeInsets.all(40),
           onPressed: () {
-            Navigator.pushNamed(
-              cntxt,'/register');
+            Navigator.pushNamed(cntxt, '/register');
           },
           label: const Text(
             'Register',
@@ -254,13 +252,13 @@ class WelcominScreen extends StatelessWidget {
   }
 
   //?these are to redirect user to a link
-  _launchURLBrowser() async {
-    const url = 'https://flutterdevs.com/';
-    if (await launch(url)) {
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
+  // _launchURLBrowser() async {
+  //   const url = 'https://flutterdevs.com/';
+  //   if (await launch(url)) {
+  //   } else {
+  //     throw 'Could not launch $url';
+  //   }
+  // }
 
   //?these are to redirect user to a link
   _launchURLApp() async {

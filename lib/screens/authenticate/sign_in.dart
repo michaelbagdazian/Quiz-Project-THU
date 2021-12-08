@@ -1,6 +1,4 @@
 import 'package:crew_brew/services/auth.dart';
-import 'package:crew_brew/shared/constants.dart';
-import 'package:crew_brew/shared/customWidgets/customTextFormField.dart';
 import 'package:crew_brew/shared/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:crew_brew/shared/customWidgets/customText.dart';
@@ -28,7 +26,7 @@ class _LogInState extends State<LogIn> {
   // ~ We need this instance to have access to the method defined in services/auth.dart called signInWithEmailAndPassword()
   final AuthService _auth = AuthService();
   final _customText = CustomText();
-  final _customTextFormFieldinstance = customTextFormField();
+  // final _customTextFormFieldinstance = customTextFormField();
 
   // ! formKey:
   // ~ This key we are going to use to identify our form and we are
@@ -73,165 +71,122 @@ class _LogInState extends State<LogIn> {
               ),
               backgroundColor: welcomeh,
             ),
-            body: Container(
-              child: Form(
-                key: _formKey,
-                child: Stack(fit: StackFit.expand, children: [
-                  Expanded(
-                    flex: 1,
-                    child: Image.asset(
-                      'assets/images/bgtop.png',
-                      fit: BoxFit.cover,
-                    ),
+            body: Form(
+              key: _formKey,
+              child: Stack(fit: StackFit.expand, children: [
+                Expanded(
+                  flex: 1,
+                  child: Image.asset(
+                    'assets/images/bgtop.png',
+                    fit: BoxFit.cover,
                   ),
-                  Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SizedBox(
-                          height: size.height * 0.05,
-                        ),
-                        //*Add the welcoming text first
-                        _customText.customText('Log In to Your\n Account'),
-                        SizedBox(
-                          height: size.height * 0.05,
-                        ),
+                ),
+                Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SizedBox(
+                        height: size.height * 0.05,
+                      ),
+                      //*Add the welcoming text first
+                      _customText.customText('Log In to Your\n Account'),
+                      SizedBox(
+                        height: size.height * 0.05,
+                      ),
 
-                        //! email
-                        TextFormField(
-                            keyboardType: TextInputType.emailAddress,
+                      //! email
+                      TextFormField(
+                          keyboardType: TextInputType.emailAddress,
 
-                            // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
-                            decoration: const InputDecoration(
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(12.0)),
-                                borderSide: BorderSide(color: texts),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                  borderRadius:
-                                  BorderRadius.all(Radius.circular(5.0)),
-                                  borderSide: BorderSide(color: borders)),
-                              contentPadding: const EdgeInsets.all(15),
-                              labelText: "E-mail",
-                              labelStyle: TextStyle(
-                                fontFamily: 'Lobster',
-                                color: texts,
-                                fontSize: 20.0,
-                              ),
+                          // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
+                          decoration: const InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12.0)),
+                              borderSide: BorderSide(color: texts),
                             ),
-                            // ! validator property:
-                            // ~ we return null value if this formField is VALID or a string it's NOT VALID
-                            // ~ validator will be used in RaisedButton when calling _formKey.currentState!.validate()
-                            validator: (val) =>
-                                val!.isEmpty ? 'Enter an email' : null,
-                            // ! onChanged property:
-                            // ~ When information is entered into the TextForField, this property is triggered
-                            onChanged: (val) {
-                              // ~ We take email state and set it equal to value which is in e-mail textField
-                              // ~ We also make use of trim() function to remove any spaces
-                              setState(() => email = val.trim());
-                            }),
-                        SizedBox(
-                          height: size.height * 0.02,
-                        ),
-                        //! password
-                        TextFormField(
-                            keyboardType: TextInputType.visiblePassword,
-                            // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
-                            decoration: const InputDecoration(
-                              enabledBorder: OutlineInputBorder(
+                            focusedBorder: OutlineInputBorder(
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(12.0)),
-                                borderSide: BorderSide(color: texts),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                  borderRadius:
-                                  BorderRadius.all(Radius.circular(5.0)),
-                                  borderSide: BorderSide(color: borders)),
-                              contentPadding: const EdgeInsets.all(15),
-                              labelText: "Password",
-                              labelStyle: TextStyle(
-                                fontFamily: 'Lobster',
-                                color: texts,
-                                fontSize: 20.0,
-                              ),
-                            ),
-                            // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
-                            obscureText: true,
-                            // ! validator property:
-                            // ~ we return null value if this formField is VALID or a string it's NOT VALID
-                            // ~ validator will be used in RaisedButton when calling _formKey.currentState!.validate()
-                            validator: (val) => val!.length < 6
-                                ? 'Enter a password 6+ chars long'
-                                : null,
-                            // ! onChanged property:
-                            // ~ When information is entered into the TextForField, this property is triggered
-                            onChanged: (val) {
-                              // ~ We take password state and set it equal to value which is in password textField
-                              // ~ We also make use of trim() function to remove any spaces
-                              setState(() => password = val);
-                            }),
-                        SizedBox(
-                          height: size.height * 0.02,
-                        ),
-                        FloatingActionButton.extended(
-                          // ! onPressed():
-                          // ~ onPressed is async, because we interract with Firebase and it takes some time
-                          onPressed: () async {
-                            // ~ Here we check if our form is valid
-                            // ~ currentState tells us what values are inside the form fields
-                            // ~ validate() method uses validator properties in the TextFormFields
-                            if (_formKey.currentState!.validate()) {
-                              // * Here we decide to show the loading screen
-                              setState(() => loading = true);
-                              // ~ We will get null or AppUser, so we don't know the type of return. Therefore we use dynamic
-                              // ~ We await for the result from the Firebase
-                              dynamic result =
-                                  await _auth.signInWithEmailAndPassword(
-                                      email, password, context);
-                              // ~ If login is not succesful, we provide an error message
-                              if (result == null) {
-                                setState(() {
-                                  error =
-                                      'could not sign in with those credentials';
-                                  // * Here we decide to remove the loading screen
-                                  loading = false;
-                                });
-                                // ! If login is successful:
-                                // ~ pop current screen from the stack then it's automatically redirected to Home page
-                              } else {
-                                popScreen();
-                              }
-                            }
-                          },
-                          label: const Text(
-                            "Log in",
-                            style: TextStyle(
-                              fontSize: 30,
+                                    BorderRadius.all(Radius.circular(5.0)),
+                                borderSide: BorderSide(color: borders)),
+                            contentPadding: EdgeInsets.all(15),
+                            labelText: "E-mail",
+                            labelStyle: TextStyle(
                               fontFamily: 'Lobster',
+                              color: texts,
+                              fontSize: 20.0,
                             ),
                           ),
-                          backgroundColor: buttons,
-                          extendedPadding: const EdgeInsets.all(40),
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(20),
-                              bottomRight: Radius.circular(20),
+                          // ! validator property:
+                          // ~ we return null value if this formField is VALID or a string it's NOT VALID
+                          // ~ validator will be used in RaisedButton when calling _formKey.currentState!.validate()
+                          validator: (val) =>
+                              val!.isEmpty ? 'Enter an email' : null,
+                          // ! onChanged property:
+                          // ~ When information is entered into the TextForField, this property is triggered
+                          onChanged: (val) {
+                            // ~ We take email state and set it equal to value which is in e-mail textField
+                            // ~ We also make use of trim() function to remove any spaces
+                            setState(() => email = val.trim());
+                          }),
+                      SizedBox(
+                        height: size.height * 0.02,
+                      ),
+                      //! password
+                      TextFormField(
+                          keyboardType: TextInputType.visiblePassword,
+                          // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
+                          decoration: const InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12.0)),
+                              borderSide: BorderSide(color: texts),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(5.0)),
+                                borderSide: BorderSide(color: borders)),
+                            contentPadding: EdgeInsets.all(15),
+                            labelText: "Password",
+                            labelStyle: TextStyle(
+                              fontFamily: 'Lobster',
+                              color: texts,
+                              fontSize: 20.0,
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          height: size.height * 0.02,
-                        ),
-                        FloatingActionButton.extended(
-                          // ! onPressed():
-                          // ~ onPressed is async, because we interract with Firebase and it takes some time
-                          onPressed: () async {
+                          // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
+                          obscureText: true,
+                          // ! validator property:
+                          // ~ we return null value if this formField is VALID or a string it's NOT VALID
+                          // ~ validator will be used in RaisedButton when calling _formKey.currentState!.validate()
+                          validator: (val) => val!.length < 6
+                              ? 'Enter a password 6+ chars long'
+                              : null,
+                          // ! onChanged property:
+                          // ~ When information is entered into the TextForField, this property is triggered
+                          onChanged: (val) {
+                            // ~ We take password state and set it equal to value which is in password textField
+                            // ~ We also make use of trim() function to remove any spaces
+                            setState(() => password = val);
+                          }),
+                      SizedBox(
+                        height: size.height * 0.02,
+                      ),
+                      FloatingActionButton.extended(
+                        // ! onPressed():
+                        // ~ onPressed is async, because we interract with Firebase and it takes some time
+                        onPressed: () async {
+                          // ~ Here we check if our form is valid
+                          // ~ currentState tells us what values are inside the form fields
+                          // ~ validate() method uses validator properties in the TextFormFields
+                          if (_formKey.currentState!.validate()) {
                             // * Here we decide to show the loading screen
                             setState(() => loading = true);
-                            // ~ Signin anonymously
-                            dynamic result = await _auth.signInAnon(context);
+                            // ~ We will get null or AppUser, so we don't know the type of return. Therefore we use dynamic
+                            // ~ We await for the result from the Firebase
+                            dynamic result =
+                                await _auth.signInWithEmailAndPassword(
+                                    email, password, context);
                             // ~ If login is not succesful, we provide an error message
                             if (result == null) {
                               setState(() {
@@ -245,28 +200,70 @@ class _LogInState extends State<LogIn> {
                             } else {
                               popScreen();
                             }
-                          },
-                          label: const Text(
-                            "Log in anonymously",
-                            style: TextStyle(
-                              fontSize: 30,
-                              fontFamily: 'Lobster',
-                            ),
-                          ),
-                          backgroundColor: buttons,
-                          extendedPadding: const EdgeInsets.all(40),
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(20),
-                              bottomRight: Radius.circular(20),
-                            ),
+                          }
+                        },
+                        label: const Text(
+                          "Log in",
+                          style: TextStyle(
+                            fontSize: 30,
+                            fontFamily: 'Lobster',
                           ),
                         ),
-                        Text(error,
-                            style: TextStyle(color: errors, fontSize: 14.0)),
-                      ]),
-                ]),
-              ),
+                        backgroundColor: buttons,
+                        extendedPadding: const EdgeInsets.all(40),
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            bottomRight: Radius.circular(20),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: size.height * 0.02,
+                      ),
+                      FloatingActionButton.extended(
+                        // ! onPressed():
+                        // ~ onPressed is async, because we interract with Firebase and it takes some time
+                        onPressed: () async {
+                          // * Here we decide to show the loading screen
+                          setState(() => loading = true);
+                          // ~ Signin anonymously
+                          dynamic result = await _auth.signInAnon(context);
+                          // ~ If login is not succesful, we provide an error message
+                          if (result == null) {
+                            setState(() {
+                              error =
+                                  'could not sign in with those credentials';
+                              // * Here we decide to remove the loading screen
+                              loading = false;
+                            });
+                            // ! If login is successful:
+                            // ~ pop current screen from the stack then it's automatically redirected to Home page
+                          } else {
+                            popScreen();
+                          }
+                        },
+                        label: const Text(
+                          "Log in anonymously",
+                          style: TextStyle(
+                            fontSize: 30,
+                            fontFamily: 'Lobster',
+                          ),
+                        ),
+                        backgroundColor: buttons,
+                        extendedPadding: const EdgeInsets.all(40),
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            bottomRight: Radius.circular(20),
+                          ),
+                        ),
+                      ),
+                      Text(error,
+                          style:
+                              const TextStyle(color: errors, fontSize: 14.0)),
+                    ]),
+              ]),
             ));
   }
 }

@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crew_brew/models/quiz/Quiz.dart';
 import 'package:crew_brew/models/quiz/question.dart';
@@ -91,7 +89,7 @@ class DatabaseService {
   Map<String, Map<String, bool>> _convertQuestionsToMap(
       List<Question> questions) {
     Map<String, Map<String, bool>> mapOfQuestions =
-        new Map<String, Map<String, bool>>();
+        Map<String, Map<String, bool>>();
 
     for (Question question in questions) {
       String questionText = question.questionText;
@@ -181,7 +179,7 @@ class DatabaseService {
   // ~ this returns Question object from the map.
   Question _questionObjectFromMap(
       String questionText, Map<String, bool> answers) {
-    return new Question(questionText: questionText, answers: answers);
+    return Question(questionText: questionText, answers: answers);
   }
 
   // ! deleteQuiz()

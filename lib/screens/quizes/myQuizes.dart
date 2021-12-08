@@ -1,14 +1,12 @@
 import 'package:crew_brew/models/quiz/Quiz.dart';
 import 'package:crew_brew/models/user/AppUser.dart';
-import 'package:crew_brew/navigationBar/navbar.dart';
-import 'package:crew_brew/screens/quizes/quiz_Search.dart';
+import 'package:crew_brew/navigationBar/menu_button.dart';
 import 'package:crew_brew/screens/quizes/quiz_list.dart';
 import 'package:crew_brew/shared/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:crew_brew/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:crew_brew/shared/colors.dart';
-
 
 // ignore_for_file: file_names, non_constant_identifier_names
 // ! Information about the class:
@@ -24,12 +22,12 @@ class MyQuizes extends StatefulWidget {
   @override
   _MyQuizes createState() => _MyQuizes();
 
-  MyQuizes({Key? key}) : super(key: key);
+  const MyQuizes({Key? key}) : super(key: key);
 }
 
 class _MyQuizes extends State<MyQuizes> {
-  Icon cusIcon = Icon(Icons.search);
-  Widget cusSearchBar = Text("My Quizes");
+  Icon cusIcon = const Icon(Icons.search);
+  Widget cusSearchBar = const Text("My Quizes");
   String searchInput = ""; //holds the text you input to the search box
 
   @override
@@ -54,7 +52,6 @@ class _MyQuizes extends State<MyQuizes> {
         child: Scaffold(
           // ! NavBar():
           // ~ Here we provide NavBar for property drawer. This is our navigation bar defined in navigationBar/navBar.dart
-          drawer: NavBar(),
           backgroundColor: background,
           appBar: AppBar(
             title: cusSearchBar,
@@ -62,26 +59,26 @@ class _MyQuizes extends State<MyQuizes> {
               IconButton(
                   onPressed: () {
                     setState(() {
-                      if (this.cusIcon.icon == Icons.search) {
-                        this.cusIcon = Icon(Icons.cancel);
-                        this.cusSearchBar = TextField(
+                      if (cusIcon.icon == Icons.search) {
+                        cusIcon = const Icon(Icons.cancel);
+                        cusSearchBar = TextField(
                             // ~ This replaces the button on the keyboard of the device
                             textInputAction: TextInputAction.go,
                             // ~ When 'go' button is pressed, current widget is informed about state change
                             onSubmitted: (text) =>
                                 setState(() => searchInput = text),
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               border: InputBorder.none,
                               hintText: "Search",
                             ),
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: texts,
                               fontSize: 16.0,
                             ));
                       } else {
-                        this.searchInput = "";
-                        this.cusIcon = Icon(Icons.search);
-                        this.cusSearchBar = Text("My Quizes");
+                        searchInput = "";
+                        cusIcon = const Icon(Icons.search);
+                        cusSearchBar = const Text("My Quizes");
                       }
                     });
                   },
@@ -89,13 +86,14 @@ class _MyQuizes extends State<MyQuizes> {
             ],
             backgroundColor: topbar,
             elevation: 0.0,
+            leading: const MenuButton(),
           ),
           // ! This is the body of our app, which consists of the background and Quizes of current user
           body: Container(
               // ! BoxDecoration:
               // ~ A widget that lets you draw arbitrary graphics.
               // ~ We use it to display the backround image of the body
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('assets/home_bg.png'),
                   fit: BoxFit.cover,
@@ -104,7 +102,7 @@ class _MyQuizes extends State<MyQuizes> {
               // ! QuizList:
               // ~ This is where List is generated
               // ~ Stream List<Quiz> is provided to this child
-              child: QuizList(searchInput: this.searchInput)),
+              child: QuizList(searchInput: searchInput)),
         ),
       );
       // ! If user is not logged in or data is still fetching from DB, return Loading screen

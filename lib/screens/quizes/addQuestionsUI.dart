@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:crew_brew/models/quiz/Quiz.dart';
 import 'package:crew_brew/models/quiz/question.dart';
+import 'package:crew_brew/navigationBar/menu_button.dart';
 import 'package:crew_brew/services/AddQuestion.dart';
 import 'package:crew_brew/services/database.dart';
 import 'package:crew_brew/shared/customWidgets/customAlertBox.dart';
@@ -94,6 +95,7 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
           ),
         ),
         backgroundColor: Colors.teal,
+        leading: const MenuButton(),
       ),
       //* Container of all widgets
       body: Container(
@@ -439,7 +441,6 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
         builder: (BuildContext context) {
           //customAlertBox (label, error message
           return customAlertBox("Quiz Submitted", "Have Fun!");
-
         });
     Navigator.popAndPushNamed(context, '/myQuizes');
   }

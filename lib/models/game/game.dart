@@ -13,9 +13,14 @@ class Game {
   List<int> points; // will be changed
   List<bool> buttonsActive; // will be changed
 
-  Game({required this.gameID, required this.gameCreator, required this.quiz, required this.participants,
-      required this.currentQuestion,required this.points, required this.buttonsActive});
-
+  Game(
+      {required this.gameID,
+      required this.gameCreator,
+      required this.quiz,
+      required this.participants,
+      required this.currentQuestion,
+      required this.points,
+      required this.buttonsActive});
 
   int numberOfParticipants() {
     return participants.length;

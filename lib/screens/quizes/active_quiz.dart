@@ -44,7 +44,7 @@ class _ActiveQuizState extends State<ActiveQuiz> {
   bool showTimeUntilAnswer = false;
 
   Stopwatch measureTime = Stopwatch();
-  Duration timeElapsed = Duration();
+  Duration timeElapsed = const Duration();
   late Timer updateProgress;
   double timerProgress = 1;
 

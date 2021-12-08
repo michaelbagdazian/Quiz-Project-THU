@@ -1,9 +1,11 @@
 import 'package:crew_brew/models/user/AppUser.dart';
 import 'package:crew_brew/models/user/UserData.dart';
+import 'package:crew_brew/navigationBar/menu_button.dart';
 import 'package:crew_brew/navigationBar/navbar.dart';
 import 'package:crew_brew/screens/userProfile/UpdateFormsWrapper.dart';
 import 'package:crew_brew/services/database.dart';
 import 'package:crew_brew/shared/loading.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
@@ -71,12 +73,12 @@ class _userProfileState extends State<userProfile> {
               return Scaffold(
                 // ! NavBar():
                 // ~ Here we provide NavBar for property drawer. This is our navigation bar defined in navigationBar/navBar.dart
-                drawer: NavBar(),
                 backgroundColor: Colors.grey[900],
                 appBar: AppBar(
                   title: Text('My profile'),
                   centerTitle: true,
                   backgroundColor: Colors.grey[850],
+                  leading: const MenuButton(),
                   // ~ Elavation set to 0 removes the shadow ( which makes 3D effect )
                   elevation: 0.0,
                   actions: <Widget>[
