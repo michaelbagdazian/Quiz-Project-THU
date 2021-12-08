@@ -2,20 +2,34 @@ import 'dart:async';
 
 import 'package:crew_brew/components/quiz/quiz_button_back.dart';
 import 'package:crew_brew/components/quiz/quiz_component.dart';
+import 'package:crew_brew/models/quiz/game_state.dart';
 import 'package:crew_brew/models/quiz/question.dart';
 import 'package:flutter/material.dart';
 import 'package:crew_brew/shared/colors.dart';
 
 const CORRECT_MESSAGE = "Correct";
 const WRONG_MESSAGE = "Wrong";
-// ~ Done by Luke
+// ~ Done by Luke & Holger
 
 class ActiveQuiz extends StatefulWidget {
   final List<Question> questions;
-  const ActiveQuiz({Key? key, required this.questions}) : super(key: key);
+  GameState state = GameState(id: 1, players: List.filled(4, 0), playerPoints: [List.filled(4, 0)], answerTimes: [List.filled(4, 0)], answerCorrect: [List.filled(4, false)]);
+  late int myPlayerNumber = getMyPlayerNumber();
+  ActiveQuiz({Key? key, required this.questions}) : super(key: key);
 
   @override
   _ActiveQuizState createState() => _ActiveQuizState();
+
+  int getMyPlayerNumber() {
+    for (int i = 0; i < state.players.length; i++) {
+      if (state.players[i] == 0) {
+        state.players[i] == 1;
+        return i;
+      }
+    }
+    return -1;
+    //TODO: must have a way to handle spectators i.e. players not in list an catch potential errors
+  }
 }
 
 class _ActiveQuizState extends State<ActiveQuiz> {
@@ -28,21 +42,27 @@ class _ActiveQuizState extends State<ActiveQuiz> {
     super.initState();
   }
 
-  int currentQuestion = 0;
   String message = "";
+  int countdownTime = 3;
+  Duration timeToAnswer = const Duration(seconds: 10);
 
+  int getMyPlayerNumber() {
+    for (int i = 0; i < widget.state.players.length; i++) {
+      if (widget.state.players[i] == 0) {
+        widget.state.players[i] == 1;
+        return i;
+      }
+    }
+    return -1;
+  }
+/*  int currentQuestion = 0;
   int points = 0;
   List answerTimes = [];
   List answerCorrect = [];
-
-  int countdownTime = 3;
-
-  Duration timeToAnswer = const Duration(seconds: 10);
-
   bool showScoreScreen = false;
   bool buttonsActive = true;
   bool showCountdown = true;
-  bool showTimeUntilAnswer = false;
+  bool showTimeUntilAnswer = false;*/
 
   Stopwatch measureTime = Stopwatch();
   Duration timeElapsed = Duration();
@@ -51,7 +71,7 @@ class _ActiveQuizState extends State<ActiveQuiz> {
 
   void next() {
     updateProgress.cancel();
-    answerTimes.add(measureTime.elapsed.inMilliseconds);
+    state.set   (measureTime.elapsed.inMilliseconds);
     setState(() {
       buttonsActive = false;
       showTimeUntilAnswer = true;
@@ -202,23 +222,6 @@ class _ActiveQuizState extends State<ActiveQuiz> {
               ),
               const QuizButtonBack(buttonText: "back", isActive: true),
               //Text("Time elapsed: $currentTime")
-/*                    Container(
-                    padding: const EdgeInsets.all(5),
-                    child: ElevatedButton(
-                        onPressed: () => Navigator.pushReplacementNamed(context, '/home'),
-                        child: Text("Back",
-                          style: const TextStyle(
-                          color: texts, fontSize: 20),
-                        ),
-                        style: TextButton.styleFrom(
-                          backgroundColor: bluething,
-                          primary: greenthing,
-                          padding: const EdgeInsets.all(20)
-                        ),
-                    ),
-                    )*/
-
-
             ]),
       ),
     );
