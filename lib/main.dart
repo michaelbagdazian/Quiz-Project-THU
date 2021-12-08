@@ -1,9 +1,9 @@
 import 'package:crew_brew/screens/home/home.dart';
-import 'package:crew_brew/screens/quizes/AddNewQuizzUI.dart';
-import 'package:crew_brew/screens/quizes/myQuizes.dart';
-import 'package:crew_brew/screens/quizes/quiz_wrapper.dart';
-import 'package:crew_brew/screens/quizes/sharedQuizes.dart';
-import 'package:crew_brew/screens/quizes/addQuestionsUI.dart';
+import 'package:crew_brew/screens/quizzes/AddNewQuizzUI.dart';
+import 'package:crew_brew/screens/quizzes/myQuizes.dart';
+import 'package:crew_brew/screens/quizzes/quiz_wrapper.dart';
+import 'package:crew_brew/screens/quizzes/sharedQuizes.dart';
+import 'package:crew_brew/screens/quizzes/addQuestionsUI.dart';
 import 'package:crew_brew/screens/userProfile/userProfile.dart';
 import 'package:crew_brew/screens/wrapper.dart';
 import 'package:crew_brew/services/auth.dart';
@@ -51,13 +51,13 @@ class MyApp extends StatelessWidget {
           '/home': (context) => const NavContainer(page: Home()),
           '/userProfile': (context) => const NavContainer(page: userProfile()),
           '/sharedQuizes': (context) => NavContainer(page: SharedQuizes()),
-          '/myQuizes': (context) => NavContainer(page: MyQuizes()),
+          '/myQuizes': (context) => const NavContainer(page: MyQuizes()),
           '/welcome': (context) => const NavContainer(page: WelcominScreen()),
           '/register': (context) => const SignUp(),
           '/signin': (context) => const LogIn(),
           '/quizWrapper': (context) => const QuizWrapper(),
           '/AddQuestionsUI': (context) => AddQuestionsUI(),
-          '/AddNewQuizzUI': (context) => AddNewQuizzUI(),
+          '/AddNewQuizzUI': (context) => const AddNewQuizzUI(),
         },
         // TODO: Decide on a unified theme and copy it here
         theme: ThemeData.light().copyWith(
