@@ -1,8 +1,12 @@
+import 'dart:html';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crew_brew/models/quiz/Quiz.dart';
 import 'package:crew_brew/models/quiz/question.dart';
 import 'package:crew_brew/models/user/UserData.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+import '../models/game/game.dart';
 
 // ! Information about the class:
 // ~ This class is a service class for database manipulations
@@ -31,6 +35,13 @@ class DatabaseService {
   // ~ If by the time this line is executed and 'user_data' collection does not exist in Firebase, it will create it for us
   final CollectionReference userDataCollection =
       FirebaseFirestore.instance.collection('user_data');
+
+  // ! Game collection reference ( a reference to a particular collection on our firestore database )
+  // ~ Here we define reference to collection of user data in DB
+  // ~ when we want to read or write from/into that collection, we will use this reference
+  // ~ If by the time this line is executed and 'game' collection does not exist in Firebase, it will create it for us
+  final CollectionReference gameCollection =
+      FirebaseFirestore.instance.collection('game');
 
   // * ==================================================
   // * QUIZES SECTION START
@@ -229,8 +240,11 @@ class DatabaseService {
 
   // !getUserByID
   // ~ This method was created for Game logic
-  Future<UserData> getUserData(){
-    return userDataCollection.doc(uid).get().then((value) => userDataFromSnapshot(value));
+  Future<UserData> getUserData() {
+    return userDataCollection
+        .doc(uid)
+        .get()
+        .then((value) => userDataFromSnapshot(value));
   }
 
   // ! _userDataFromSnapshot
@@ -313,6 +327,58 @@ class DatabaseService {
 
 // * ==================================================
 // * USER SECTION END
+// * ==================================================
+
+// * ==================================================
+// * GAME SECTION START
+// * ==================================================
+
+// ! createGameData
+  // ~ Here we create quiz in DB
+  // ~ We call this function when user creates the quiz on Home page
+  // ~ it's return value is Future, because it's async function
+  Future createGameData(Game game) async {
+    List<String> participantsIDs = [];
+
+    for (UserData participant in game.participants) {
+      participantsIDs.add(participant.uid);
+    }
+
+    return await quizCollection.doc().set({
+      'gameCreator': game.gameCreator.uid,
+      'quiz': game.quiz.quizID,
+      'participants': participantsIDs,
+      'currentQuestion': game.currentQuestion,
+      'points': <String>[],
+      'buttonsActive': <String>[],
+    });
+  }
+
+  // ! Stream<Game> for games
+  // ~ Here we define the stream for the changes in shared quizes and then screens/quizes/sharedQuizes will provide the stream to children
+  Stream<Game> get game {
+    // ~ Here snapshot is taken from all entries
+    return gameCollection
+        .doc(uid.substring(0, 5))
+        .snapshots()
+        .map(_gameDataFromSnapshot);
+  }
+
+  // ! _gameDataFromSnapshot
+  // ~ Here we convert DocumentSnapshot into our custom defined UserData object
+  Game _gameDataFromSnapshot(DocumentSnapshot doc) {
+    return Game(
+        gameID: doc.id,
+        gameCreator: doc.get('gameCreator'),
+        quiz: doc.get('quiz'),
+        participants: doc.get('participants'),
+        currentQuestion: doc.get('currentQuestion'),
+        points: doc.get('points'),
+        buttonsActive: doc.get('buttonsActive'));
+  }
+
+// * ==================================================
+// * GAME SECTION END
 // * ==================================================
 
 }
