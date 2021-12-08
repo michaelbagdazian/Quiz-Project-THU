@@ -1,9 +1,7 @@
 import 'package:crew_brew/models/quiz/Quiz.dart';
-import 'package:crew_brew/navigationBar/NavBar.dart';
-import 'package:crew_brew/screens/quizes/quiz_Search.dart';
+import 'package:crew_brew/navigationBar/menu_button.dart';
 import 'package:crew_brew/screens/quizes/quiz_list.dart';
 import 'package:flutter/material.dart';
-import 'package:crew_brew/services/auth.dart';
 import 'package:crew_brew/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:crew_brew/shared/colors.dart';
@@ -45,7 +43,6 @@ class _SharedQuizesState extends State<SharedQuizes> {
       child: Scaffold(
         // ! NavBar():
         // ~ Here we provide NavBar for property drawer. This is our navigation bar defined in navigationBar/navBar.dart
-        drawer: NavBar(),
         backgroundColor: background,
         appBar: AppBar(
           title: cusSearchBar,
@@ -80,13 +77,14 @@ class _SharedQuizesState extends State<SharedQuizes> {
           ],
           backgroundColor: topbar,
           elevation: 0.0,
+          leading: const MenuButton(),
         ),
         // ! This is the body of our app, which consists of the background and Quizes of current user
         body: Container(
             // ! BoxDecoration:
             // ~ A widget that lets you draw arbitrary graphics.
             // ~ We use it to display the backround image of the body
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('assets/home_bg.png'),
                 fit: BoxFit.cover,

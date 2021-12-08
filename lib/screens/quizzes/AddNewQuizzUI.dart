@@ -2,32 +2,27 @@
 
 import 'dart:ui';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:crew_brew/models/quiz/Quiz.dart';
-import 'package:crew_brew/models/quiz/question.dart';
-import 'package:crew_brew/models/user/AppUser.dart';
 import 'package:crew_brew/models/user/UserData.dart';
-import 'package:crew_brew/screens/quizes/addQuestionsUI.dart';
 import 'package:crew_brew/services/database.dart';
 import 'package:crew_brew/shared/customWidgets/customAlertBox.dart';
 import 'package:crew_brew/shared/customWidgets/customButton.dart';
 import 'package:crew_brew/shared/customWidgets/customText.dart';
 import 'package:crew_brew/shared/customWidgets/customTextField.dart';
-import 'package:crew_brew/testClasses/manualQuizCreation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:provider/provider.dart';
 
 class AddNewQuizzUI extends StatefulWidget {
+  const AddNewQuizzUI({Key? key}) : super(key: key);
+
   @override
   State<AddNewQuizzUI> createState() => _AddNewQuizzUIState();
 }
 
 class _AddNewQuizzUIState extends State<AddNewQuizzUI> {
-  final TextEditingController QuizzTitle = TextEditingController();
-  final TextEditingController? QuizzDescription = TextEditingController();
+  final TextEditingController quizTitle = TextEditingController();
+  final TextEditingController? quizDescription = TextEditingController();
   final TextEditingController? tags = TextEditingController();
   //? List of Categories
   var categories = <String>[
@@ -45,7 +40,7 @@ class _AddNewQuizzUIState extends State<AddNewQuizzUI> {
 
   bool? isQuizzPublic = false;
 
-  UserData? userData = null;
+  UserData? userData;
 
   @override
   Widget build(BuildContext context) {
@@ -83,14 +78,14 @@ class _AddNewQuizzUIState extends State<AddNewQuizzUI> {
                 height: size.height * 0.07,
               ),
               //* Text Field for Quizz name
-              CustomTextField().customTextField(QuizzTitle, 'Quizz Title',
+              CustomTextField().customTextField(quizTitle, 'Quizz Title',
                   size.width * 0.7, TextInputType.text),
               //* Empty space
               SizedBox(
                 height: size.height * 0.013,
               ),
               //* Text Field for Quizz name
-              CustomTextField().customTextField(QuizzDescription!,
+              CustomTextField().customTextField(quizDescription!,
                   'Short Description', size.width * 0.7, TextInputType.text),
               //* Empty space
               SizedBox(
@@ -201,7 +196,7 @@ class _AddNewQuizzUIState extends State<AddNewQuizzUI> {
   }
 
   Future startFunc() async {
-    if (QuizzTitle.text.isEmpty) {
+    if (quizTitle.text.isEmpty) {
       return showDialog(
           context: context,
           builder: (context) {
@@ -226,19 +221,19 @@ class _AddNewQuizzUIState extends State<AddNewQuizzUI> {
       }
       String UserName =
           userData!.username.isNotEmpty ? userData!.username : 'Anonymous';
-      String QuizzDesc = QuizzDescription != null
-          ? QuizzDescription!.text
+      String QuizzDesc = quizDescription != null
+          ? quizDescription!.text
           : 'just another quizz';
       String ChoosenCategory = dropDownVal;
       List<String> ListOfTags =
           tags != null ? tags!.text.split(',') : ['generic'];
       Navigator.popAndPushNamed(context, '/AddQuestionsUI', arguments: {
         'UserName': UserName,
-        'QuizzTitle': QuizzTitle.text,
+        'QuizzTitle': quizTitle.text,
         'QuizzCategory': ChoosenCategory,
         'isQuizzPublic': isQuizzPublic,
         'OwnerUId': userData!.uid,
-        'QuizzDescription': QuizzDescription!.text,
+        'QuizzDescription': quizDescription!.text,
         'Tags': ListOfTags,
       });
     } catch (e) {

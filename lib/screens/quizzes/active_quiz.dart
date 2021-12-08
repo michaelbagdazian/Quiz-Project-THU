@@ -44,7 +44,7 @@ class _ActiveQuizState extends State<ActiveQuiz> {
   bool showTimeUntilAnswer = false;
 
   Stopwatch measureTime = Stopwatch();
-  Duration timeElapsed = Duration();
+  Duration timeElapsed = const Duration();
   late Timer updateProgress;
   double timerProgress = 1;
 
@@ -169,8 +169,11 @@ class _ActiveQuizState extends State<ActiveQuiz> {
                                 .elementAt(currentQuestion)
                                 .questionText,
                     answers:
-                        widget.questions.elementAt(currentQuestion).answers,
-                    answer: widget.questions.elementAt(currentQuestion).answers,
+                        // widget.questions.elementAt(currentQuestion).answers ??
+                        <String>[],
+                    answer:
+                        // widget.questions.elementAt(currentQuestion).answers
+                        1,
                     onCorrectAnswer: () {
                       points++;
                       answerCorrect.add(1);

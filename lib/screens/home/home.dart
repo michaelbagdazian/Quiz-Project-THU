@@ -1,7 +1,6 @@
 import 'package:crew_brew/models/user/AppUser.dart';
 import 'package:crew_brew/models/user/UserData.dart';
-import 'package:crew_brew/navigationBar/NavBar.dart';
-import 'package:crew_brew/screens/quizes/AddNewQuizzUI.dart';
+import 'package:crew_brew/navigationBar/menu_button.dart';
 import 'package:crew_brew/shared/loading.dart';
 import 'package:crew_brew/testClasses/manualQuizCreation.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +19,7 @@ import 'package:crew_brew/shared/colors.dart';
 // TODO Define more meaningful Home Page
 
 class Home extends StatefulWidget {
-  Home({Key? key}) : super(key: key);
+  const Home({Key? key}) : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();
@@ -50,21 +49,21 @@ class _HomeState extends State<Home> {
               return Scaffold(
                 // ! NavBar():
                 // ~ Here we provide NavBar for property drawer. This is our navigation bar defined in navigationBar/navBar.dart
-                drawer: NavBar(),
                 backgroundColor: background,
                 appBar: AppBar(
-                  title: Text('Home Quiz App'),
+                  title: const Text('Home Quiz App'),
                   backgroundColor: topbar,
+                  leading: const MenuButton(),
                   elevation: 0.0,
                 ),
                 body: Padding(
-                  padding: EdgeInsets.fromLTRB(30.0, 40.0, 30.0, 0.0),
+                  padding: const EdgeInsets.fromLTRB(30.0, 40.0, 30.0, 0.0),
                   child: Column(children: <Widget>[
-                    SizedBox(height: 20.0),
+                    const SizedBox(height: 20.0),
                     // * Start of "create private quiz "
-                    RaisedButton(
-                        color: buttons,
-                        child: Text(
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(primary: buttons),
+                        child: const Text(
                           'Create private quiz',
                           style: TextStyle(color: texts),
                         ),
@@ -77,9 +76,9 @@ class _HomeState extends State<Home> {
                         }),
                     // * End of "create private quiz "
                     // * Start of "create public quiz "
-                    RaisedButton(
-                        color: buttons,
-                        child: Text(
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(primary: buttons),
+                        child: const Text(
                           'Create public quiz',
                           style: TextStyle(color: texts),
                         ),

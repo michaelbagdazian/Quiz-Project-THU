@@ -34,7 +34,7 @@ class _QuizListState extends State<QuizList> {
     // ! If quizes were sucessfuly fetched from the DB, return ListView
     if (quizes != null) {
       // ! Check if there is a search entry, and then change the content of quizes list
-      if(widget.searchInput!=""){
+      if (widget.searchInput != "") {
         quizes = getSearchedQuizes(widget.searchInput, quizes);
       }
 
@@ -56,12 +56,12 @@ class _QuizListState extends State<QuizList> {
 
   // ! getSearchedQuizes
   // ~ This method return list of quizes based on the search result. Search is performed on quizes title
-  List<Quiz> getSearchedQuizes(String searchInput, List<Quiz>? quizes){
+  List<Quiz> getSearchedQuizes(String searchInput, List<Quiz>? quizes) {
     List<Quiz> searchedQuizList = [];
 
-    if(quizes != null){
-      for (Quiz quiz in quizes){
-        if(quiz.quizTitle.toLowerCase().contains(searchInput.toLowerCase())){
+    if (quizes != null) {
+      for (Quiz quiz in quizes) {
+        if (quiz.quizTitle.toLowerCase().contains(searchInput.toLowerCase())) {
           searchedQuizList.add(quiz);
         }
       }
