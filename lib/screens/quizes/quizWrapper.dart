@@ -14,6 +14,7 @@ class QuizWrapper extends StatelessWidget {
     Map data = ModalRoute.of(context)!.settings.arguments as Map;
     if(data != null){
       Quiz quiz = data['quiz'];
+      print("quizID: " + quiz.quizID);
       return ActiveQuiz(questions: quiz.listOfQuestions);
     }else{
       return Loading();

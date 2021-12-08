@@ -12,12 +12,12 @@ class UserData {
   String username;
   String email;
   String avatar;
-  int level;
+  int points;
 
   UserData(
       {required this.uid,
       required this.username,
       required this.email,
       required this.avatar,
-      required this.level});
+      required this.points});
 }

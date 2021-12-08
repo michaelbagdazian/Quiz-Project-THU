@@ -1,7 +1,12 @@
+import 'dart:html';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crew_brew/models/quiz/Quiz.dart';
 import 'package:crew_brew/models/quiz/question.dart';
 import 'package:crew_brew/models/user/UserData.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import '../models/game/game.dart';
 
 // ! Information about the class:
 // ~ This class is a service class for database manipulations
@@ -31,19 +36,44 @@ class DatabaseService {
   final CollectionReference userDataCollection =
       FirebaseFirestore.instance.collection('user_data');
 
+  // ! Game collection reference ( a reference to a particular collection on our firestore database )
+  // ~ Here we define reference to collection of user data in DB
+  // ~ when we want to read or write from/into that collection, we will use this reference
+  // ~ If by the time this line is executed and 'game' collection does not exist in Firebase, it will create it for us
+  final CollectionReference gameCollection =
+      FirebaseFirestore.instance.collection('game');
+
   // * ==================================================
   // * QUIZES SECTION START
   // * ==================================================
 
-  // ! updateQuizData
-  // ~ Here we update quizData in DB
+  // ! createQuizData
+  // ~ Here we create quiz in DB
   // ~ We call this function when user creates the quiz on Home page
   // ~ it's return value is Future, because it's async function
-  Future updateQuizData(Quiz quiz) async {
+  Future createQuizData(Quiz quiz) async {
     Map<String, Map<String, bool>> mapOfQuestions =
         _convertQuestionsToMap(quiz.listOfQuestions);
 
     return await quizCollection.doc().set({
+      'quizCategory': quiz.quizCategory,
+      'quizTitle': quiz.quizTitle,
+      'quizOwner': quiz.quizOwner,
+      'quizOwnerUID': uid,
+      'quizDescription': quiz.quizDescription,
+      'quizIsShared': quiz.quizIsShared,
+      'listOfQuestions': mapOfQuestions,
+      'tags': quiz.tags,
+    });
+  }
+
+  // ! updateQuizData
+  // ~ Here we update quiz in DB
+  Future updateQuizData(Quiz quiz) async {
+    Map<String, Map<String, bool>> mapOfQuestions =
+        _convertQuestionsToMap(quiz.listOfQuestions);
+
+    return await quizCollection.doc(quiz.quizID).set({
       'quizCategory': quiz.quizCategory,
       'quizTitle': quiz.quizTitle,
       'quizOwner': quiz.quizOwner,
@@ -65,15 +95,9 @@ class DatabaseService {
 
     for (Question question in questions) {
       String questionText = question.questionText;
-      List<String> answers = question.answers;
-      int correctAnswer = question.correctAnswer;
+      Map<String, bool> answers = question.answers;
 
-      Map<String, bool> answersMap = new Map<String, bool>();
-      for (int i = 0; i < answers.length; i++) {
-        answersMap[answers[i]] = (i == correctAnswer);
-      }
-
-      mapOfQuestions[questionText] = answersMap;
+      mapOfQuestions[questionText] = answers;
     }
 
     return mapOfQuestions;
@@ -147,6 +171,7 @@ class DatabaseService {
         quizOwnerUID: doc.get('quizOwnerUID'),
         quizDescription: doc.get('quizDescription'),
         quizIsShared: doc.get('quizIsShared'),
+        quizID: doc.id,
         listOfQuestions: listOfQuestions,
         tags: List.from(doc.get('tags')));
   }
@@ -154,26 +179,9 @@ class DatabaseService {
   // ! _questionObjectFromMap
   // ~ This is a helper function used by newQuizFromSnapshot
   // ~ this returns Question object from the map.
-  Question _questionObjectFromMap(String key, Map<String, bool> value) {
-    Map<String, bool> answers = value;
-    String questionText = key;
-    int correctAnswer = -1;
-
-    int index = 0;
-    List<String> answersList = [];
-    answers.forEach((key, value) {
-      answersList.add(key);
-      if (value == true) {
-        correctAnswer = index;
-      }
-
-      index++;
-    });
-
-    return new Question(
-        questionText: questionText,
-        answers: answersList,
-        correctAnswer: correctAnswer);
+  Question _questionObjectFromMap(
+      String questionText, Map<String, bool> answers) {
+    return new Question(questionText: questionText, answers: answers);
   }
 
   // ! deleteQuiz()
@@ -208,7 +216,7 @@ class DatabaseService {
   // ~ We call this function when user is registered or we want to update some information for the user
   // ~ it's return value is Future, because it's async function
   Future updateUserData(
-      String username, String email, String avatar, int level) async {
+      String username, String email, String avatar, int points) async {
     // ~ Get the document based on the UID of the user
     // ~ If document does not exist yet, then Firebase will create the document with that UID. If it does exist, it will update information using uid
     // ~ We pass the data through map (key-value pairs) to set method
@@ -216,7 +224,7 @@ class DatabaseService {
       'username': username,
       'email': email,
       'avatar': avatar,
-      'level': level,
+      'points': points,
     });
   }
 
@@ -225,20 +233,29 @@ class DatabaseService {
   Stream<UserData>? get userData {
     // ~ Here snapshot is taken ONLY from what user with this UID should see ( only his userData )
     Stream<UserData> stream =
-        userDataCollection.doc(uid).snapshots().map(_userDataFromSnapshot);
+        userDataCollection.doc(uid).snapshots().map(userDataFromSnapshot);
     // ~ We convert out stream to boardCastStream, so that multiple classes can be listeners ( by default it's one listener ). Necessary when using StreamBuilder and not StreamProvider
     return stream.asBroadcastStream();
   }
 
+  // !getUserByID
+  // ~ This method was created for Game logic
+  Future<UserData> getUserData() {
+    return userDataCollection
+        .doc(uid)
+        .get()
+        .then((value) => userDataFromSnapshot(value));
+  }
+
   // ! _userDataFromSnapshot
   // ~ Here we convert DocumentSnapshot into our custom defined UserData object
-  UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
+  UserData userDataFromSnapshot(DocumentSnapshot snapshot) {
     return UserData(
       uid: uid,
       username: snapshot['username'],
       email: snapshot['email'],
       avatar: snapshot['avatar'],
-      level: snapshot['level'],
+      points: snapshot['points'],
     );
   }
 
@@ -248,8 +265,120 @@ class DatabaseService {
     return userDataCollection.doc(uid).delete();
   }
 
-  // * ==================================================
-  // * USER SECTION END
-  // * ==================================================
+  // ! changePassword
+  // ~ update and validate user password
+  // TODO Work on code quality
+  Future<bool> changePassword(
+      String currentPassword, String newPassword, UserData userData) async {
+    final user = await FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      final cred = EmailAuthProvider.credential(
+          email: userData.email, password: currentPassword);
+
+      user.reauthenticateWithCredential(cred).then((value) {
+        user.updatePassword(newPassword).then((_) {
+          print("Password updated");
+          return true;
+        }).catchError((error) {
+          print("Password was not updated");
+          return false;
+        });
+      }).catchError((err) {
+        print("User could not be authenticated with these credentials");
+        return false;
+      });
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // ! changeEmail
+  // ~ This method change e-mail in firebase in userData
+  // TODO Work on code quality
+  Future<bool> changeEmail(
+      String currentPassword, String newEmail, UserData userData) async {
+    final user = await FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      final cred = EmailAuthProvider.credential(
+          email: userData.email, password: currentPassword);
+
+      user.reauthenticateWithCredential(cred).then((value) {
+        user.updateEmail(newEmail).then((_) {
+          updateUserData(
+              userData.username, newEmail, userData.avatar, userData.points);
+          print("Email updated");
+          return true;
+        }).catchError((error) {
+          print("Email was not updated");
+          return false;
+        });
+      }).catchError((err) {
+        print("User could not be authenticated with these credentials");
+        return false;
+      });
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+// * ==================================================
+// * USER SECTION END
+// * ==================================================
+
+// * ==================================================
+// * GAME SECTION START
+// * ==================================================
+
+// ! createGameData
+  // ~ Here we create quiz in DB
+  // ~ We call this function when user creates the quiz on Home page
+  // ~ it's return value is Future, because it's async function
+  Future createGameData(Game game) async {
+    List<String> participantsIDs = [];
+
+    for (UserData participant in game.participants) {
+      participantsIDs.add(participant.uid);
+    }
+
+    return await quizCollection.doc().set({
+      'gameCreator': game.gameCreator.uid,
+      'quiz': game.quiz.quizID,
+      'participants': participantsIDs,
+      'currentQuestion': game.currentQuestion,
+      'points': <String>[],
+      'buttonsActive': <String>[],
+    });
+  }
+
+  // ! Stream<Game> for games
+  // ~ Here we define the stream for the changes in shared quizes and then screens/quizes/sharedQuizes will provide the stream to children
+  Stream<Game> get game {
+    // ~ Here snapshot is taken from all entries
+    return gameCollection
+        .doc(uid.substring(0, 5))
+        .snapshots()
+        .map(_gameDataFromSnapshot);
+  }
+
+  // ! _gameDataFromSnapshot
+  // ~ Here we convert DocumentSnapshot into our custom defined UserData object
+  Game _gameDataFromSnapshot(DocumentSnapshot doc) {
+    return Game(
+        gameID: doc.id,
+        gameCreator: doc.get('gameCreator'),
+        quiz: doc.get('quiz'),
+        participants: doc.get('participants'),
+        currentQuestion: doc.get('currentQuestion'),
+        points: doc.get('points'),
+        buttonsActive: doc.get('buttonsActive'));
+  }
+
+// * ==================================================
+// * GAME SECTION END
+// * ==================================================
 
 }

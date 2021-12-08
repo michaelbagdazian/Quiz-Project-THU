@@ -24,6 +24,10 @@ A new team project using Flutter.
 ### **Error Handling using Alert Boxes:**
 <img src ="./ScreenShots/alertBoxes.jpeg" width=30% height=30%>
 
+### **Creating New Quizz:**
+<img src ="./ScreenShots/AddQuestionUI2.jpeg" width=40% height=40%> <img src ="./ScreenShots/Confirmation Box.jpeg" width=40% height=40%>
+<img src ="./ScreenShots/AddQuizzUI.jpeg" width=40% height=40%> <img src ="./ScreenShots/firebaseQuizzAddition.png" width=60% height=60%>
+
 # Implementd
 - welcoming screen, login screen, register screen (functional)\ 
 - "register" and "login" buttons and their functionality are implemented\
@@ -36,6 +40,8 @@ A new team project using Flutter.
 - User class
 - Add User class
 - Creating Quizzes
+- Add Quizz
+- Add Questions
 ...\
 ..\
 .

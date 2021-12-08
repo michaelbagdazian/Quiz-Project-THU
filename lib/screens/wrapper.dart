@@ -6,6 +6,8 @@ import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:provider/provider.dart';
 import 'package:crew_brew/models/user/AppUser.dart';
 
+import 'authenticate/WelcomingScreen.dart';
+
 // ! Information about the class:
 // ~ This class acts as wrapper for Welcome() and Home()
 // ! Use of the class:

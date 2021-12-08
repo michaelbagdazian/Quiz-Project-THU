@@ -1,6 +1,7 @@
 import 'package:crew_brew/models/user/AppUser.dart';
 import 'package:crew_brew/models/user/UserData.dart';
 import 'package:crew_brew/navigationBar/navbar.dart';
+import 'package:crew_brew/screens/userProfile/UpdateFormsWrapper.dart';
 import 'package:crew_brew/services/database.dart';
 import 'package:crew_brew/shared/loading.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +25,7 @@ class userProfile extends StatefulWidget {
 class _userProfileState extends State<userProfile> {
   // ! States
   // ~ Here states of the profile page are defined
-  int userLevel = 0;
+  int points = 0;
   String avatar = 'default.png';
   String username = '';
   String email = '';
@@ -32,6 +33,20 @@ class _userProfileState extends State<userProfile> {
 
   @override
   Widget build(BuildContext context) {
+    // ! _showSettingsPanel()
+    // ~ panel for updating userData
+    void _showSettingsPanel(String command) {
+      showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return Container(
+              padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+              child: UpdateFormsWrapper(command: command),
+              color: Colors.grey[900],
+            );
+          });
+    }
+
     // ! Provider.of<AppUser?>(context):
     // ~ Here we listen to the stream, defined in services/auth.dart and provided by main.dart, which informs us about login state of the user
     final user = Provider.of<AppUser?>(context);
@@ -48,7 +63,7 @@ class _userProfileState extends State<userProfile> {
             // ! If there is a data for current user in the DB, then assign it to the variables, otherwise display Loading screen
             if (snapshot.hasData) {
               UserData? userData = snapshot.data;
-              userLevel = userData!.level;
+              points = userData!.points;
               avatar = userData.avatar;
               username = userData.username;
               email = userData.email;
@@ -64,6 +79,15 @@ class _userProfileState extends State<userProfile> {
                   backgroundColor: Colors.grey[850],
                   // ~ Elavation set to 0 removes the shadow ( which makes 3D effect )
                   elevation: 0.0,
+                  actions: <Widget>[
+                    IconButton(
+                      icon: Icon(
+                        Icons.vpn_key_outlined,
+                        color: Colors.grey[400],
+                      ),
+                      onPressed: () => _showSettingsPanel("password"),
+                    ),
+                  ],
                 ),
                 body: Padding(
                   padding: EdgeInsets.fromLTRB(30.0, 40.0, 30.0, 0.0),
@@ -98,19 +122,31 @@ class _userProfileState extends State<userProfile> {
                       // ~ Creates an empty invisible box for us of a height and width we specify
                       // ~ we put it between the elements we want to have space in between
                       SizedBox(height: 10.0),
-                      Text(
-                        username,
-                        style: TextStyle(
-                            color: Colors.amberAccent[200],
-                            letterSpacing: 2.0,
-                            fontSize: 28.0,
-                            fontWeight: FontWeight.bold),
+                      Row(
+                        children: <Widget>[
+                          Text(
+                            username,
+                            style: TextStyle(
+                                color: Colors.amberAccent[200],
+                                letterSpacing: 2.0,
+                                fontSize: 28.0,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(width: 10.0),
+                          IconButton(
+                            icon: Icon(
+                              Icons.edit,
+                              color: Colors.grey[400],
+                            ),
+                            onPressed: () => _showSettingsPanel("username"),
+                          ),
+                        ],
                       ),
                       // * End username field
                       SizedBox(height: 30.0),
                       // * Start current level field
                       Text(
-                        'CURRENT LEVEL',
+                        'POINTS',
                         style: TextStyle(
                           color: Colors.grey,
                           // ~ This gives the spacing between the letters
@@ -121,7 +157,7 @@ class _userProfileState extends State<userProfile> {
                       SizedBox(height: 10.0),
                       Text(
                         // ~ With '$' we output the contat of the data to string
-                        '$userLevel',
+                        '$points',
                         style: TextStyle(
                             color: Colors.amberAccent[200],
                             letterSpacing: 2.0,
@@ -145,6 +181,14 @@ class _userProfileState extends State<userProfile> {
                               fontSize: 18.0,
                               letterSpacing: 1.0,
                             ),
+                          ),
+                          SizedBox(width: 10.0),
+                          IconButton(
+                            icon: Icon(
+                              Icons.edit,
+                              color: Colors.grey[400],
+                            ),
+                            onPressed: () => _showSettingsPanel("email"),
                           ),
                         ],
                       ),
