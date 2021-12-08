@@ -1,7 +1,7 @@
 import 'package:crew_brew/models/quiz/Quiz.dart';
 import 'package:crew_brew/models/user/AppUser.dart';
 import 'package:crew_brew/navigationBar/menu_button.dart';
-import 'package:crew_brew/screens/quizes/quiz_list.dart';
+import 'package:crew_brew/screens/quizzes/quiz_list.dart';
 import 'package:crew_brew/shared/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:crew_brew/services/database.dart';
