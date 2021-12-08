@@ -227,6 +227,12 @@ class DatabaseService {
     return stream.asBroadcastStream();
   }
 
+  // !getUserByID
+  // ~ This method was created for Game logic
+  Future<UserData> getUserData(){
+    return userDataCollection.doc(uid).get().then((value) => userDataFromSnapshot(value));
+  }
+
   // ! _userDataFromSnapshot
   // ~ Here we convert DocumentSnapshot into our custom defined UserData object
   UserData userDataFromSnapshot(DocumentSnapshot snapshot) {
