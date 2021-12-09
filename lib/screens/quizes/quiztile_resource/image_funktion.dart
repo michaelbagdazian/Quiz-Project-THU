@@ -20,5 +20,6 @@ image(String category){
       return 'assets/images/tile_baground/music.jpg';
     default:
       return 'assets/images/hexagonal_background.jpg';
+
   }
 }

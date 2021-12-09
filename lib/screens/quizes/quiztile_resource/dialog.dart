@@ -13,6 +13,7 @@ class HeroDialogRoute<T> extends PageRoute<T> {
 
   final WidgetBuilder _builder;
 
+
   @override
   bool get opaque => false;
 

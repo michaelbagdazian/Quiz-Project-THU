@@ -129,6 +129,7 @@ class QuizTile extends StatelessWidget {
                 ]),
                 //Bottom Text and Botton
 
+
                 Row(
                   //here are the bottons i have to create my own one because the ones we have arent working with the hero fuktion.
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
