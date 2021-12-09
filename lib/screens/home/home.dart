@@ -1,10 +1,12 @@
 import 'package:crew_brew/models/user/AppUser.dart';
 import 'package:crew_brew/models/user/UserData.dart';
-import 'package:crew_brew/navigationBar/NavBar.dart';
+import 'package:crew_brew/navigationBar/menu_button.dart';
 import 'package:crew_brew/shared/loading.dart';
+import 'package:crew_brew/testClasses/manualQuizCreation.dart';
 import 'package:flutter/material.dart';
 import 'package:crew_brew/services/database.dart';
 import 'package:provider/provider.dart';
+import 'package:crew_brew/shared/colors.dart';
 
 // ! Information about the class:
 // ~ This class is represents home page of the user
@@ -17,7 +19,7 @@ import 'package:provider/provider.dart';
 // TODO Define more meaningful Home Page
 
 class Home extends StatefulWidget {
-  Home({Key? key}) : super(key: key);
+  const Home({Key? key}) : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();
@@ -47,51 +49,45 @@ class _HomeState extends State<Home> {
               return Scaffold(
                 // ! NavBar():
                 // ~ Here we provide NavBar for property drawer. This is our navigation bar defined in navigationBar/navBar.dart
-                drawer: NavBar(),
-                backgroundColor: Colors.brown[50],
+                backgroundColor: background,
                 appBar: AppBar(
-                  title: Text('Home Quiz App'),
-                  backgroundColor: Colors.brown[400],
+                  title: const Text('Home Quiz App'),
+                  backgroundColor: topbar,
+                  leading: const MenuButton(),
                   elevation: 0.0,
                 ),
                 body: Padding(
-                  padding: EdgeInsets.fromLTRB(30.0, 40.0, 30.0, 0.0),
+                  padding: const EdgeInsets.fromLTRB(30.0, 40.0, 30.0, 0.0),
                   child: Column(children: <Widget>[
-                    SizedBox(height: 20.0),
+                    const SizedBox(height: 20.0),
                     // * Start of "create private quiz "
-                    RaisedButton(
-                        color: Colors.pink[400],
-                        child: Text(
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(primary: buttons),
+                        child: const Text(
                           'Create private quiz',
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(color: texts),
                         ),
                         // ! onPressed() :
                         // ~ When button is pressed, the quiz is created in the DB and is displayed in myQuizes, since it's private Quiz
                         onPressed: () async {
-                          await DatabaseService(uid: user.uid).updateQuizData(
-                              'default',
-                              'test',
-                              userData!.username,
-                              'this is default quiz',
-                              false);
+                          await DatabaseService(uid: user.uid).createQuizData(
+                              ManualQuizeCreation().createTestQuiz(
+                                  user.uid, userData!.username, false));
                         }),
                     // * End of "create private quiz "
                     // * Start of "create public quiz "
-                    RaisedButton(
-                        color: Colors.pink[400],
-                        child: Text(
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(primary: buttons),
+                        child: const Text(
                           'Create public quiz',
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(color: texts),
                         ),
                         // ! onPressed() :
                         // ~ When button is pressed, the quiz is created in the DB and is displayed in myQuizes AND sharedQuizes, since it's public Quiz
                         onPressed: () async {
-                          await DatabaseService(uid: user.uid).updateQuizData(
-                              'default',
-                              'default quiz create from Home',
-                              userData!.username,
-                              'this is default quiz',
-                              true);
+                          await DatabaseService(uid: user.uid).createQuizData(
+                              ManualQuizeCreation().createTestQuiz(
+                                  user.uid, userData!.username, true));
                         }),
                     // * End of "create public quiz "
                   ]),

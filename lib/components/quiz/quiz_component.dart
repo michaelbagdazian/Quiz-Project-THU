@@ -4,6 +4,9 @@ class QuizComponent extends StatelessWidget {
   final String questionText;
   final List<String> answers;
   final int answer;
+  final bool buttonsActive;
+  final bool showScoreScreen;
+  final bool showCountdown;
   final Image? image;
   final Function onCorrectAnswer;
   final Function onWrongAnswer;
@@ -14,6 +17,9 @@ class QuizComponent extends StatelessWidget {
       required this.questionText,
       required this.answers,
       required this.answer,
+      required this.buttonsActive,
+      required this.showScoreScreen,
+      required this.showCountdown,
       required this.onCorrectAnswer,
       required this.onWrongAnswer,
       required this.onFinishAnswer,
@@ -37,39 +43,42 @@ class QuizComponent extends StatelessWidget {
             style: theme.textTheme.headline6!.copyWith(color: Colors.white),
           ),
         ),
-        Container(
-          margin: const EdgeInsets.only(top: 10),
-          child: Flex(
-            direction: Axis.vertical,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: answers
-                .asMap()
-                .keys
-                .map((i) => Container(
-                      padding: const EdgeInsets.all(5),
-                      child: TextButton(
-                        child: Text(
-                          answers[i],
-                          style: const TextStyle(
-                              color: Colors.white, fontSize: 20),
+        if (showScoreScreen == false && showCountdown == false)
+          Container(
+            margin: const EdgeInsets.only(top: 10),
+            child: Flex(
+              direction: Axis.vertical,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: answers
+                  .asMap()
+                  .keys
+                  .map((i) => Container(
+                        padding: const EdgeInsets.all(5),
+                        child: TextButton(
+                          child: Text(
+                            answers[i],
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 20),
+                          ),
+                          style: TextButton.styleFrom(
+                              backgroundColor: Colors.blueAccent,
+                              primary: Colors.greenAccent,
+                              padding: const EdgeInsets.all(20)),
+                          onPressed: buttonsActive
+                              ? () {
+                                  if (answer == i) {
+                                    onCorrectAnswer();
+                                  } else {
+                                    onWrongAnswer();
+                                  }
+                                  onFinishAnswer();
+                                }
+                              : null,
                         ),
-                        style: TextButton.styleFrom(
-                            backgroundColor: Colors.blueAccent,
-                            primary: Colors.greenAccent,
-                            padding: const EdgeInsets.all(20)),
-                        onPressed: () {
-                          if (answer == i) {
-                            onCorrectAnswer();
-                          } else {
-                            onWrongAnswer();
-                          }
-                          onFinishAnswer();
-                        },
-                      ),
-                    ))
-                .toList(),
-          ),
-        )
+                      ))
+                  .toList(),
+            ),
+          )
       ],
     );
   }

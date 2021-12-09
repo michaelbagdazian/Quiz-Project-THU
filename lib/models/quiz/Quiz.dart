@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:crew_brew/models/quiz/question.dart';
 
 // ! Information about the class:
@@ -17,8 +19,9 @@ class Quiz {
   String quizOwnerUID;
   String quizDescription;
   bool quizIsShared;
-  /*List<Question> listOfQuestions;
-  List<String> tags;*/
+  String quizID;
+  List<Question> listOfQuestions;
+  List<String> tags;
 
   Quiz(
       {required this.quizCategory,
@@ -27,15 +30,15 @@ class Quiz {
       required this.quizOwnerUID,
       required this.quizDescription,
       required this.quizIsShared,
-      /*required this.listOfQuestions,
-      required this.tags*/});
+      required this.quizID,
+      required this.listOfQuestions,
+      required this.tags});
 
-/*  int getNumberOfQuestions(int id) {
+  int getNumberOfQuestions(int id) {
     return listOfQuestions.length;
-  }*/
+  }
 
   String getTitleOfQuiz() {
     return quizTitle;
   }
-
 }

@@ -4,6 +4,11 @@ A new team project using Flutter.
 
 
 # ScreenShots
+
+### **Welcoming page, Login page and Registeration page:**
+----
+<img src="./ScreenShots/WelcomePage.jpg" width=30% height=30%> <img src="./ScreenShots/Log_in.jpg" width=30% height=30%> <img src="./ScreenShots/Sign_up.jpg" width=30% height=30%>
+
 ### **When a User registers/ is added to firebase:**
 --------------------
 <img src="./ScreenShots/firebase_users.png" width=50% height=50%>
@@ -15,6 +20,13 @@ A new team project using Flutter.
 ### **When a User uploads an image to FireBase Storage:**
 --------------------
 <img src ="./ScreenShots/FirebaseStorage.png" width=50% height=50%>
+
+### **Error Handling using Alert Boxes:**
+<img src ="./ScreenShots/alertBoxes.jpeg" width=30% height=30%>
+
+### **Creating New Quizz:**
+<img src ="./ScreenShots/AddQuestionUI2.jpeg" width=40% height=40%> <img src ="./ScreenShots/Confirmation Box.jpeg" width=40% height=40%>
+<img src ="./ScreenShots/AddQuizzUI.jpeg" width=40% height=40%> <img src ="./ScreenShots/firebaseQuizzAddition.png" width=60% height=60%>
 
 # Implementd
 - welcoming screen, login screen, register screen (functional)\ 
@@ -28,6 +40,8 @@ A new team project using Flutter.
 - User class
 - Add User class
 - Creating Quizzes
+- Add Quizz
+- Add Questions
 ...\
 ..\
 .
