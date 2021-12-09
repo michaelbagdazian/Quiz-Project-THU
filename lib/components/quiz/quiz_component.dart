@@ -1,30 +1,42 @@
-import 'package:flutter/material.dart';
+/* import 'package:flutter/material.dart';
 
 class QuizComponent extends StatelessWidget {
   final String questionText;
-  final List<String> answers;
-  final int answer;
+  //final List<String> answers;
+  final Map<String, bool> answers;
+  //final int answer;
   final bool buttonsActive;
   final bool showScoreScreen;
   final bool showCountdown;
   final Image? image;
-  final Function onCorrectAnswer;
-  final Function onWrongAnswer;
-  final Function onFinishAnswer;
+  final Function handleButtonAnswer;
+  //final Function onCorrectAnswer;
+  //final Function onWrongAnswer;
+  //final Function onFinishAnswer;
 
   const QuizComponent(
       {Key? key,
       required this.questionText,
       required this.answers,
-      required this.answer,
+      //required this.answer,
       required this.buttonsActive,
       required this.showScoreScreen,
       required this.showCountdown,
-      required this.onCorrectAnswer,
-      required this.onWrongAnswer,
-      required this.onFinishAnswer,
+      required this.handleButtonAnswer,
+    //required this.onWrongAnswer,
+    // required this.onCorrectAnswer,
+    //  required this.onFinishAnswer,
       this.image})
       : super(key: key);
+
+  void setCorrect() {
+
+  }
+  void setWrong() {
+
+  }
+  bool hasBeenPressedCorrect = false;
+  bool hasBeenPressedWrong = false;
 
   @override
   Widget build(BuildContext context) {
@@ -49,35 +61,39 @@ class QuizComponent extends StatelessWidget {
           child: Flex(
             direction: Axis.vertical,
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: answers
-                .asMap()
-                .keys
-                .map((i) => Container(
+            //children: answers.map<Widget>((t, b) {
+            children: <Widget> [
+              for (var v in answers.entries)
+                Container(
                       padding: const EdgeInsets.all(5),
                       child: TextButton(
                         child: Text(
-                          answers[i],
+                          v.key,
                           style: const TextStyle(
                               color: Colors.white, fontSize: 20),
                         ),
                         style: TextButton.styleFrom(
-                            backgroundColor: Colors.blueAccent,
+                            backgroundColor: hasBeenPressedCorrect ? Colors.green : hasBeenPressedWrong ? Colors.red : Colors.blueAccent,
                             primary: Colors.greenAccent,
                             padding: const EdgeInsets.all(20)),
-                        onPressed: buttonsActive ? () {
-                          if (answer == i) {
-                            onCorrectAnswer();
-                          } else {
-                            onWrongAnswer();
+                        onPressed: () => {
+                          if (v.value == true && buttonsActive) {
+
+
+                            })
                           }
-                          onFinishAnswer();
-                        } : null,
+                        }
+
+                        //buttonsActive ? () =>
+                        //  v.value ? setCorrect() : setWrong()
+                        //    : null,
                       ),
-                    ))
-                .toList(),
+                    ),
+            ]
           ),
         )
       ],
     );
   }
 }
+*/

@@ -2,13 +2,11 @@ import 'dart:async';
 
 import 'package:crew_brew/components/quiz/quiz_button_back.dart';
 import 'package:crew_brew/components/quiz/quiz_component.dart';
+import 'package:crew_brew/models/quiz/answer.dart';
 import 'package:crew_brew/models/quiz/question.dart';
 import 'package:flutter/material.dart';
 import 'package:crew_brew/shared/colors.dart';
 
-const CORRECT_MESSAGE = "Correct";
-const WRONG_MESSAGE = "Wrong";
-// ~ Done by Luke
 
 class ActiveQuiz extends StatefulWidget {
   final List<Question> questions;
@@ -42,6 +40,11 @@ class _ActiveQuizState extends State<ActiveQuiz> {
   bool buttonsActive = true;
   bool showCountdown = true;
   bool showTimeUntilAnswer = false;
+  //questions.entries.map( (entry) => Answer(entry.key, entry.value)).toList();
+
+  late List<bool> hasBeenPressedCorrect = List.filled(widget.questions.length, false);
+  late List<bool> hasBeenPressedWrong = List.filled(widget.questions.length, false);
+  int iterator = 0;
 
   Stopwatch measureTime = Stopwatch();
   Duration timeElapsed = Duration();
@@ -54,6 +57,9 @@ class _ActiveQuizState extends State<ActiveQuiz> {
     setState(() {
       buttonsActive = false;
       showTimeUntilAnswer = true;
+
+     // hasBeenPressedCorrect = false;
+     // hasBeenPressedWrong = false;
     });
 
     //buttonsActive = false;
@@ -74,9 +80,9 @@ class _ActiveQuizState extends State<ActiveQuiz> {
           showTimeUntilAnswer = false;
         });
       }
-      setState(() {
-        message = "";
-      });
+      //setState(() {
+       // message = "";
+      //});
     });
   }
 
@@ -113,7 +119,7 @@ class _ActiveQuizState extends State<ActiveQuiz> {
         if (timerProgress <= 0) {
           updateProgress.cancel();
           setState(() {
-            message = WRONG_MESSAGE;
+            // do something
           });
           answerCorrect.add(0);
           timerProgress = 1;
@@ -122,6 +128,9 @@ class _ActiveQuizState extends State<ActiveQuiz> {
       },
     );
   }
+void handleAnswerButtons() {
+
+}
 
   @override
   Widget build(BuildContext context) {
@@ -134,7 +143,7 @@ class _ActiveQuizState extends State<ActiveQuiz> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              if (message != "")
+/*              if (message != "")
                 Container(
                   alignment: Alignment.center,
                   padding: const EdgeInsets.all(10),
@@ -144,21 +153,80 @@ class _ActiveQuizState extends State<ActiveQuiz> {
                     message,
                     style: theme.textTheme.bodyText2!.copyWith(color: texts),
                   ),
-                ),
+                ),*/
               Container(
                 alignment: Alignment.center,
                 padding:
                     EdgeInsets.all((theme.textTheme.bodyText2!.fontSize)! * 1),
-                child: Text(
-                  "Question ${currentQuestion + 1}/${widget.questions.length}",
+                child: Text("Question ${currentQuestion + 1}/${widget.questions.length}",
                   style: theme.textTheme.headline4!.copyWith(
                     color: texts,
                   ),
                 ),
               ),
               //if (showScoreScreen == false)
+          Flex(
+            direction: Axis.vertical,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                padding: EdgeInsets.all((theme.textTheme.bodyText2!.fontSize)! *
+                    6), // ~Equivalent to 4 em's
+                decoration: const BoxDecoration(color: Color.fromARGB(50, 0, 0, 0)),
+                alignment: Alignment.center,
+                child: Text( showCountdown ? "Starting in $countdownTime" :
+                    widget.questions.elementAt(currentQuestion).questionText,
+                    style: theme.textTheme.headline6!.copyWith(color: Colors.white),
+                ),
+              ),
+              if (showScoreScreen == false && showCountdown == false)
+                Container(
+                  margin: const EdgeInsets.only(top: 10),
+                  child: Flex(
+                      direction: Axis.vertical,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      //children: answers.map<Widget>((t, b) {
+                      children:
+                        <Widget> [
+                        //for (var v in widget.questions.elementAt(currentQuestion).answers.entries)
+                        for (int i = 0; i < widget.questions.elementAt(currentQuestion).answers.length; i++ )
+                        Container(
+                            padding: const EdgeInsets.all(5),
+                            child: TextButton(
+                                child: Text(
+                                  widget.questions.elementAt(currentQuestion).answers.i,
+                                  style: const TextStyle(
+                                      color: Colors.white, fontSize: 20),
+                                ),
+                                style: TextButton.styleFrom(
+                                    backgroundColor: hasBeenPressedCorrect ? Colors.green : hasBeenPressedWrong ? Colors.red : Colors.blueAccent,
+                                    primary: Colors.greenAccent,
+                                    padding: const EdgeInsets.all(20)),
+                                onPressed: () => {
+                                  if (v.value == true && buttonsActive) {
+                                    setState(() {
+                                      hasBeenPressedCorrect[widget.questions.elementAt(currentQuestion).answers.indexOf(v)] = true;
+                                    })
+                                  }
+                                  else if (v.value == false && buttonsActive) {
+                                    setState(() {
+                                      hasBeenPressedWrong = true;
+                                    })
 
-              Flexible(
+                                  }
+                                }
+
+                              //buttonsActive ? () =>
+                              //  v.value ? setCorrect() : setWrong()
+                              //    : null,
+                            ),
+                          ),
+                      ]
+                  ),
+                )
+            ],
+          ),
+             /* Flexible(
                   flex: 1,
                   child: QuizComponent(
                     questionText: showScoreScreen
@@ -170,25 +238,13 @@ class _ActiveQuizState extends State<ActiveQuiz> {
                                 .questionText,
                     answers:
                         widget.questions.elementAt(currentQuestion).answers,
-                    answer: widget.questions.elementAt(currentQuestion).answers,
-                    onCorrectAnswer: () {
-                      points++;
-                      answerCorrect.add(1);
-                      setState(() {
-                        message = CORRECT_MESSAGE;
-                      });
-                    },
-                    onWrongAnswer: () {
-                      answerCorrect.add(0);
-                      setState(() {
-                        message = WRONG_MESSAGE;
-                      });
-                    },
-                    onFinishAnswer: next,
+                    handleButtonAnswer: () => handleAnswerButtons(),
+                    //onFinishAnswer: next,
                     buttonsActive: buttonsActive,
+
                     showScoreScreen: showScoreScreen,
                     showCountdown: showCountdown,
-                  )),
+                  )*/
               if (showTimeUntilAnswer == true)
                 Text(
                     "Time elapsed: ${measureTime.elapsed.inMilliseconds.toString()} ms"),
@@ -199,24 +255,10 @@ class _ActiveQuizState extends State<ActiveQuiz> {
                   value: timerProgress,
                   minHeight: 15,
                 ),
+
               const QuizButtonBack(buttonText: "back", isActive: true),
 
               //Text("Time elapsed: $currentTime")
-/*                    Container(
-                    padding: const EdgeInsets.all(5),
-                    child: ElevatedButton(
-                        onPressed: () => Navigator.pushReplacementNamed(context, '/home'),
-                        child: Text("Back",
-                          style: const TextStyle(
-                          color: texts, fontSize: 20),
-                        ),
-                        style: TextButton.styleFrom(
-                          backgroundColor: bluething,
-                          primary: greenthing,
-                          padding: const EdgeInsets.all(20)
-                        ),
-                    ),
-                    )*/
             ]),
       ),
     );
