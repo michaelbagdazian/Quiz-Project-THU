@@ -15,7 +15,6 @@ import 'package:crew_brew/screens/authenticate/WelcomingScreen.dart';
 import 'package:crew_brew/shared/colors.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
 import 'navigationBar/nav_container.dart';
 // ! Information about the class:
 // ~ Main class
