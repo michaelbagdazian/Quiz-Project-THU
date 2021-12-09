@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:crew_brew/components/quiz/quiz_button_back.dart';
 import 'package:crew_brew/components/quiz/quiz_component.dart';
+import 'package:crew_brew/models/quiz/Quiz.dart';
 import 'package:crew_brew/models/quiz/question.dart';
 import 'package:flutter/material.dart';
 import 'package:crew_brew/shared/colors.dart';
@@ -11,8 +12,8 @@ const WRONG_MESSAGE = "Wrong";
 // ~ Done by Luke
 
 class ActiveQuiz extends StatefulWidget {
-  final List<Question> questions;
-  const ActiveQuiz({Key? key, required this.questions}) : super(key: key);
+  final Quiz quiz;
+  const ActiveQuiz({Key? key, required this.quiz}) : super(key: key);
 
   @override
   _ActiveQuizState createState() => _ActiveQuizState();
@@ -61,7 +62,11 @@ class _ActiveQuizState extends State<ActiveQuiz> {
     Timer(const Duration(seconds: 2), () {
       measureTime.reset();
       timerProgress = 1;
-      if (currentQuestion == widget.questions.length - 1) {
+      if (currentQuestion == widget.quiz.listOfQuestions.length - 1) {
+        Navigator.pushReplacementNamed(context, "/results", arguments: {
+          'quiz': widget.quiz,
+          'points': points,
+        });
         setState(() {
           showScoreScreen = true;
           showTimeUntilAnswer = false;
@@ -150,7 +155,7 @@ class _ActiveQuizState extends State<ActiveQuiz> {
                 padding:
                     EdgeInsets.all((theme.textTheme.bodyText2!.fontSize)! * 1),
                 child: Text(
-                  "Question ${currentQuestion + 1}/${widget.questions.length}",
+                  "Question ${currentQuestion + 1}/${widget.quiz.listOfQuestions.length}",
                   style: theme.textTheme.headline4!.copyWith(
                     color: texts,
                   ),
@@ -165,15 +170,12 @@ class _ActiveQuizState extends State<ActiveQuiz> {
                         ? "You got $points points!\nYour time: ${answerTimes.toString()}ms\nYour answers: ${answerCorrect.toString()}bool"
                         : showCountdown
                             ? "Starting in $countdownTime"
-                            : widget.questions
+                            : widget.quiz.listOfQuestions
                                 .elementAt(currentQuestion)
                                 .questionText,
-                    answers:
-                        // widget.questions.elementAt(currentQuestion).answers ??
-                        <String>[],
-                    answer:
-                        // widget.questions.elementAt(currentQuestion).answers
-                        1,
+                    answers: widget.quiz.listOfQuestions
+                        .elementAt(currentQuestion)
+                        .answers,
                     onCorrectAnswer: () {
                       points++;
                       answerCorrect.add(1);
@@ -203,23 +205,6 @@ class _ActiveQuizState extends State<ActiveQuiz> {
                   minHeight: 15,
                 ),
               const QuizButtonBack(buttonText: "back", isActive: true),
-
-              //Text("Time elapsed: $currentTime")
-/*                    Container(
-                    padding: const EdgeInsets.all(5),
-                    child: ElevatedButton(
-                        onPressed: () => Navigator.pushReplacementNamed(context, '/home'),
-                        child: Text("Back",
-                          style: const TextStyle(
-                          color: texts, fontSize: 20),
-                        ),
-                        style: TextButton.styleFrom(
-                          backgroundColor: bluething,
-                          primary: greenthing,
-                          padding: const EdgeInsets.all(20)
-                        ),
-                    ),
-                    )*/
             ]),
       ),
     );
