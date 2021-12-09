@@ -95,7 +95,7 @@ class QuizTile extends StatelessWidget {
                                       ),
                                       //how big the picture should and the card itself
                                       height: MediaQuery.of(context).size.height* 0.04,width: MediaQuery.of(context).size.height* 0.05,
-                                      child: Icon(Icons.group, color: quiz.quizIsShared ? (Colors.red) :  Colors.green,), //<- here should be logik to change the picture
+                                      child: Icon(Icons.group, color: quiz.quizIsShared ? Colors.green :  Colors.red,), //<- here should be logik to change the picture
                                     )),
                               ]),
                               //discription
