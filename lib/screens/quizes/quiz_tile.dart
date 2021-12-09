@@ -1,6 +1,5 @@
 import 'package:crew_brew/models/quiz/Quiz.dart';
 import 'package:flutter/material.dart';
-import 'package:crew_brew/shared/colors.dart';
 import 'quiztile_resource/dialog.dart';
 import 'quiztile_resource/image_funktion.dart';
 
@@ -12,7 +11,8 @@ import 'quiztile_resource/image_funktion.dart';
 // ! TODOS:
 // all done
 
-//this funtion is for selecting the background pickture depending of the catrgory
+
+
 class QuizTile extends StatelessWidget {
 
   const QuizTile({Key? key, required this.quiz}) : super(key: key);
@@ -20,6 +20,8 @@ class QuizTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // set the string backPicture with the quizcategory
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     String backPickture = quiz.quizCategory;
 
     return GestureDetector(
@@ -59,15 +61,17 @@ class QuizTile extends StatelessWidget {
                         bottomLeft: Radius.circular(20.0),
                         bottomRight: Radius.circular(20.0),
                     )),
-                      child: Text(quiz.quizTitle,
+                      ///////////////////////////////////////////////Quiz Title
+                      child: Text("  "+quiz.quizTitle+"  ",
                           style: const TextStyle(
                             fontFamily: 'Lobster',
                             fontWeight: FontWeight.bold,
-                            fontSize: 20,
+                            fontSize: 25,
                             color: Colors.white
                           ))
                       )),
-
+                      //////////////////////////////////////////////7
+                  //Quiz identifier
                   Align(
                       alignment: Alignment.topRight,
                       child: Padding(
@@ -80,6 +84,7 @@ class QuizTile extends StatelessWidget {
                       )
                       ),
 
+                   //Shared Icon
                    Align(
                       alignment: Alignment.topRight,
                       child: Container(
@@ -90,10 +95,10 @@ class QuizTile extends StatelessWidget {
                           ),
                         //how big the picture should and the card itself
                           height: MediaQuery.of(context).size.height* 0.04,width: MediaQuery.of(context).size.height* 0.05,
-                          child: Icon(Icons.group, color: quiz.quizIsShared ? right : wrong,), //<- here should be logik to change the picture
+                          child: Icon(Icons.group, color: quiz.quizIsShared ? (Colors.red) :  Colors.green,), //<- here should be logik to change the picture
                       )),
                   ]),
-                //middle part of the card where the picture and describtion is stackede
+                //discription
                 Stack(children: [
                   // discribtion
                   Center(child: Padding(
@@ -113,7 +118,9 @@ class QuizTile extends StatelessWidget {
                               bottomRight: Radius.circular(20.0),
                               )
                               ),
-                              child: Text(quiz.quizDescription,style: const TextStyle(fontFamily: 'Lobster',fontWeight: FontWeight.bold, color: Colors.white, fontSize: 20,
+                              /////////////////////////////////Quiz disription
+                              child: Text("  "+quiz.quizDescription+"  ",style: const TextStyle(fontFamily: 'Lobster',fontWeight: FontWeight.bold, color: Colors.white, fontSize: 20,
+                                ///////////////////////////////
                           ))
                   )
                       ),
@@ -121,6 +128,7 @@ class QuizTile extends StatelessWidget {
                   ),
                 ]),
                 //Bottom Text and Botton
+
                 Row(
                   //here are the bottons i have to create my own one because the ones we have arent working with the hero fuktion.
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -131,6 +139,7 @@ class QuizTile extends StatelessWidget {
                       child: Container(
                         width: MediaQuery.of(context).size.width * 0.26,
                         child: ElevatedButton(
+                          ////////////////////////////////////////////////////// Change Quiz
                           onPressed: () {},                                         //<----here for changing the quiz
                           style: ElevatedButton.styleFrom(
                             primary:  const Color (0xFFFF9800),
@@ -156,7 +165,8 @@ class QuizTile extends StatelessWidget {
                       child: Container(
                         width: MediaQuery.of(context).size.width * 0.26,
                         child: ElevatedButton(
-                          onPressed: () {},                                         //<-here for joining the quiz
+                          //////////////////////////////////////////////////////////join quiz
+                          onPressed: () {},
                           style: ElevatedButton.styleFrom(
                           primary:  const Color (0xFFFF9800),
                           shape: const RoundedRectangleBorder(
@@ -181,6 +191,7 @@ class QuizTile extends StatelessWidget {
                       child: Container(
                         width: MediaQuery.of(context).size.width * 0.26,
                         child: ElevatedButton(
+                          /////////////////////////////////////////////////////////////Play quiz
                           onPressed:() =>
                           Navigator.pushReplacementNamed(context, '/quizWrapper', arguments:
                           {'quiz': quiz},),
@@ -213,8 +224,9 @@ class QuizTile extends StatelessWidget {
 
 
 //when you click on the first card this second card is oppened.
-//____________________________________________________________
+//____________________________________________________________----------------------------------------------------------------------
 const String _heroAddTodo = 'add-todo-hero';
+//with the stransition the values from quiz comes to the new popcard
 class _PopupCard extends StatefulWidget {
   const _PopupCard({Key? key, required this.quiz}) : super(key:key);
   final Quiz quiz;
@@ -226,10 +238,13 @@ class _PopupCardState extends State<_PopupCard> {
   @override
   Widget build(BuildContext context) {
     @override
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     String backPickture = widget.quiz.quizCategory;
     return Center(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(70.0, 25.0, 25.0, 70.0),
+      child: SizedBox(
+        width: width * 0.8,
+        height: height* 0.8,
         child: Hero(
           tag: _heroAddTodo,
           child: Material(
@@ -265,11 +280,12 @@ class _PopupCardState extends State<_PopupCard> {
                         bottomRight: Radius.circular(20.0),
                         )
                         ),
-                          child: Text(widget.quiz.quizTitle,
+                          ///////////////////////////////////////////////
+                          child: Text("  "+widget.quiz.quizTitle+"  ",
                             style: const TextStyle(
                               fontFamily: 'Lobster',
                               fontWeight: FontWeight.bold,
-                              fontSize: 24,
+                              fontSize: 25,
                               color: Colors.white
                                   )
                                 )
@@ -284,7 +300,7 @@ class _PopupCardState extends State<_PopupCard> {
                             borderRadius: BorderRadius.circular(150),
                             border: Border.all(width: 2, color: Colors.white)),
                             height: MediaQuery.of(context).size.height* 0.04,width: MediaQuery.of(context).size.height* 0.05,
-                            child: Icon(Icons.group, color: widget.quiz.quizIsShared ? right : wrong,), //<- here should be logik to change the picture
+                            child: Icon(Icons.group, color: widget.quiz.quizIsShared ? (Colors.red) :  Colors.green,), //<- here should be logik to change the picture
                               )
                           ),
                         ]),
@@ -315,52 +331,119 @@ class _PopupCardState extends State<_PopupCard> {
                                       bottomRight: Radius.circular(20.0),
                                   )
                                   ),
-                                  child: Container(
-                                    child:Text(widget.quiz.quizDescription,style:
-                                      const TextStyle(
-                                        fontFamily: 'Lobster',
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                        fontSize: 20,
-                                      )
-                                      ),
+                                  child: Text("  "+widget.quiz.quizDescription+"  ",style:
+                                    const TextStyle(
+                                      fontFamily: 'Lobster',
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                    )
                                     )
                                   )
                                 ),
                               ),
                             ]),
+                      ////////////////////////////////////////////////////////// Information
                       Align(
                         alignment: Alignment.topLeft,
                         child: SizedBox(
-                          child: Padding(
-                          padding: const EdgeInsets.fromLTRB(10.0, 70.0, 1.0, 5.0),
-                            child: Column(children:[
-
-                            const Text("Information:"),
-                              const Text("Number of Question:"),
-
-                              Container(
-                              width: 100,
-                              height: 100,
-                                child: ListView.builder(
-                                itemCount: widget.quiz.tags.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return Row(children:[
-                                    Container(
-                                    decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.redAccent, width: 3.0),
-                                    borderRadius: const BorderRadius.all(Radius.circular(20.0))),
-                                      child: Text(widget.quiz.tags[index], style: const TextStyle(fontFamily: 'Lobster',fontSize: 15,backgroundColor: Colors.white38))
-                                              )]
-                                            );
-                                          }
-                                      )
+                          child: Padding(padding: const EdgeInsets.fromLTRB(10.0, 5.0, 1.0, 5.0),
+                            child: Container(
+                                decoration: const BoxDecoration(
+                                    color: Colors.black45,
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(20.0),
+                                      topRight: Radius.circular(20.0),
+                                      bottomLeft: Radius.circular(20.0),
+                                      bottomRight: Radius.circular(20.0),
                                     )
-                                  ]
-                                )
+                                ),
+                                  child: RichText(
+                                  text: const TextSpan(
+                                   children:[
+                                 TextSpan(
+                                     text: '  Information:  ',
+                                     style: TextStyle(
+                                       fontFamily: 'Lobster',
+                                       fontWeight: FontWeight.bold,
+                                       color: Colors.white,
+                                       fontSize: 19)),
+                              ]
+                              ),
+
+                            )
+                            )
+                          )
+
                               )
                             ),
-                          ),
+                    ////////////////////////////////////////////////////////////Number of questions
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: SizedBox(
+                          child: Padding(padding: const EdgeInsets.fromLTRB(10.0, 5.0, 1.0, 5.0),
+                              child: Container(
+                                  decoration: const BoxDecoration(
+                                      color: Colors.black45,
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(20.0),
+                                        topRight: Radius.circular(20.0),
+                                        bottomLeft: Radius.circular(20.0),
+                                        bottomRight: Radius.circular(20.0),
+                                      )
+                                  ),
+                                  child: RichText(
+                                    text: const TextSpan(
+                                        children:[
+                                          TextSpan(
+                                              text: '  Number of Questions:  ',
+                                              style: TextStyle(
+                                                fontFamily: 'Lobster',
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white,
+                                                fontSize: 19,)),
+                                        ]
+                                    ),
+
+                                  )
+                              )
+                          )
+                      )
+                  ),
+                      ///////////////////////////////////////////////////////////////more information
+                      Align(
+                          alignment: Alignment.topLeft,
+                          child: SizedBox(
+                              child: Padding(padding: const EdgeInsets.fromLTRB(10.0, 5.0, 1.0, 5.0),
+                                  child: Container(
+                                      decoration: const BoxDecoration(
+                                          color: Colors.black45,
+                                          borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(20.0),
+                                            topRight: Radius.circular(20.0),
+                                            bottomLeft: Radius.circular(20.0),
+                                            bottomRight: Radius.circular(20.0),
+                                          )
+                                      ),
+                                      child: RichText(
+                                        text: const TextSpan(
+                                            children:[
+                                              TextSpan(
+                                                  text: '  More Information:  ',
+                                                  style: TextStyle(
+                                                    fontFamily: 'Lobster',
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.white,
+                                                    fontSize: 19,)),
+                                            ]
+                                        ),
+
+                                      )
+                                  )
+                              )
+
+                          )
+                      ),
                         //Bottom Text and Botton
                     SizedBox(
                       child: Row(
@@ -462,7 +545,7 @@ class _PopupCardState extends State<_PopupCard> {
                         Align(
                         child: SizedBox(
                           child: Align(
-                          alignment: Alignment.topLeft,
+                          alignment: Alignment.bottomLeft,
                              child: Container(
                               decoration: BoxDecoration(
                                 color: Colors.teal.shade500,
@@ -473,7 +556,7 @@ class _PopupCardState extends State<_PopupCard> {
                                 bottomRight: Radius.circular(20.0),
                                    )
                                ),
-                               child: Text("The Owner of the quiz is: "+widget.quiz.quizOwner,
+                               child: Text("  The Owner of the quiz is: "+ "  "+ widget.quiz.quizOwner+"  ",
                                 style: const TextStyle(
                                   fontFamily: 'Lobster',
                                   fontWeight: FontWeight.bold,
