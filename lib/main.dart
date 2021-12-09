@@ -1,22 +1,19 @@
-
-
-import 'package:crew_brew/screens/authenticate/register.dart';
-import 'package:crew_brew/screens/authenticate/sign_in.dart';
+import 'package:crew_brew/models/quiz/Quiz.dart';
 import 'package:crew_brew/screens/home/home.dart';
 import 'package:crew_brew/screens/quizes/myQuizes.dart';
-import 'package:crew_brew/screens/quizes/quizWrapper.dart';
 import 'package:crew_brew/screens/quizes/sharedQuizes.dart';
+import 'package:crew_brew/screens/quizes/addQuestionsUI.dart';
 import 'package:crew_brew/screens/userProfile/userProfile.dart';
-import 'package:crew_brew/screens/authenticate/welcome.dart';
 import 'package:crew_brew/screens/wrapper.dart';
+import 'package:crew_brew/services/AddQuestion.dart';
 import 'package:crew_brew/services/auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:crew_brew/models/user/AppUser.dart';
-import 'package:crew_brew/screens/authenticate/merging/register.dart';
-import 'package:crew_brew/screens/authenticate/merging/sign_in.dart';
-import 'package:crew_brew/screens/authenticate/merging/WelcomingScreen.dart';
+import 'package:crew_brew/screens/authenticate/register.dart';
+import 'package:crew_brew/screens/authenticate/sign_in.dart';
+import 'package:crew_brew/screens/authenticate/WelcomingScreen.dart';
 
 // ! Information about the class:
 // ~ Main class
@@ -30,10 +27,12 @@ void main() async {
   // ~ Initialize fireBase
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     // ! StreamProvider<AppUser?>
@@ -43,26 +42,18 @@ class MyApp extends StatelessWidget {
       value: AuthService().user,
       initialData: null,
       child: MaterialApp(
-        home: Wrapper(),
+        home: const Wrapper(),
         // ! routes
         // ~ Here we define all routes of our apps. They are mainly used in navigationBar/navBar.dart -> selectedItem()
         routes: {
           '/home': (context) => Home(),
-          '/userProfile': (context) => userProfile(),
+          '/userProfile': (context) => const userProfile(),
           '/sharedQuizes': (context) => SharedQuizes(),
           '/myQuizes': (context) => MyQuizes(),
-
-          //!merging
           '/welcome': (context) => WelcominScreen(),
           '/register': (context) => SignUp(),
           '/signin': (context) => LogIn(),
-          '/quizWrapper': (context) => QuizWrapper(),
-          //!original
-          // '/welcome': (context) => Welcome(),
-          // '/register': (context) => Register(),
-          // '/signin': (context) => SignIn(),
-          ///
-
+          '/AddQuestionsUI': (context) => AddQuestionsUI(),
         },
       ),
     );
