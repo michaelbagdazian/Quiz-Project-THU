@@ -16,6 +16,8 @@ import 'package:crew_brew/shared/PorgressbarIndicator/step_progress_indicator.da
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 
+import '../../models/quiz/answer.dart';
+
 // ! Information about the class:
 // ~ This class is a Page to create a quizz and questions to quizz
 // ~ This class has both FrontEnd Code and Backend Code in it
@@ -359,19 +361,19 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
     if (_isFourthAnswerCorrect == true) _numberOfCorrectAnswers += 1;
 
     //~ Create a map to store our answers in
-    final Map<String, bool> answers = <String, bool>{};
+    final List<Answer> answers = [];
     //~ Check if there is an answer to add at all
     if (_firstAnswer.text.isNotEmpty) {
-      answers.putIfAbsent(_firstAnswer.text, () => _isFirstAnswerCorrect!);
+      answers.add(new Answer(answerText: _firstAnswer.text, isCorrect: _isFirstAnswerCorrect!));
     }
     if (_secondAnswer.text.isNotEmpty) {
-      answers.putIfAbsent(_secondAnswer.text, () => _isSecondAnswerCorrect!);
+      answers.add(new Answer(answerText: _secondAnswer.text, isCorrect: _isSecondAnswerCorrect!));
     }
     if (_thirdAnswer.text.isNotEmpty) {
-      answers.putIfAbsent(_thirdAnswer.text, () => _isThirdAnswerCorrect!);
+      answers.add(new Answer(answerText: _thirdAnswer.text, isCorrect: _isThirdAnswerCorrect!));
     }
     if (_fourthAnswer.text.isNotEmpty) {
-      answers.putIfAbsent(_fourthAnswer.text, () => _isFourthAnswerCorrect!);
+      answers.add(new Answer(answerText: _fourthAnswer.text, isCorrect: _isFourthAnswerCorrect!));
     }
 
     //~ If user didn't mark at least one answer as correct answer
@@ -480,25 +482,25 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
     //~ Edit the question controller to actually display the text from our current question
     _question.text = _Currquestion!.questionText;
     //~ ...
-    _firstAnswer.text = _Currquestion!.answers.entries.elementAt(0).key;
-    _secondAnswer.text = _Currquestion!.answers.entries.length >= 2
-        ? _Currquestion!.answers.entries.elementAt(1).key
+    _firstAnswer.text = _Currquestion!.answers[0].answerText;
+    _secondAnswer.text = _Currquestion!.answers.length >= 2
+        ? _Currquestion!.answers[1].answerText
         : "";
-    _thirdAnswer.text = _Currquestion!.answers.entries.length >= 3
-        ? _Currquestion!.answers.entries.elementAt(2).key
+    _thirdAnswer.text = _Currquestion!.answers.length >= 3
+        ? _Currquestion!.answers[2].answerText
         : "";
-    _fourthAnswer.text = _Currquestion!.answers.entries.length >= 4
-        ? _Currquestion!.answers.entries.elementAt(3).key
+    _fourthAnswer.text = _Currquestion!.answers.length >= 4
+        ? _Currquestion!.answers[3].answerText
         : "";
-    _isFirstAnswerCorrect = _Currquestion!.answers.entries.elementAt(0).value;
-    _isSecondAnswerCorrect = _Currquestion!.answers.entries.length >= 2
-        ? _Currquestion!.answers.entries.elementAt(1).value
+    _isFirstAnswerCorrect = _Currquestion!.answers[0].isCorrect;
+    _isSecondAnswerCorrect = _Currquestion!.answers.length >= 2
+        ? _Currquestion!.answers[1].isCorrect
         : false;
-    _isThirdAnswerCorrect = _Currquestion!.answers.entries.length >= 3
-        ? _Currquestion!.answers.entries.elementAt(2).value
+    _isThirdAnswerCorrect = _Currquestion!.answers.length >= 3
+        ? _Currquestion!.answers[2].isCorrect
         : false;
-    _isFourthAnswerCorrect = _Currquestion!.answers.entries.length >= 4
-        ? _Currquestion!.answers.entries.elementAt(3).value
+    _isFourthAnswerCorrect = _Currquestion!.answers.length >= 4
+        ? _Currquestion!.answers[3].isCorrect
         : false;
 
     //?check if we pressed forward again after our CurrQuestion=last question
