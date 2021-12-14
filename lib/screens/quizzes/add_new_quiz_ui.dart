@@ -125,9 +125,7 @@ class _AddNewQuizzUIState extends State<AddNewQuizzUI> {
                       //aligns text inside button
                       alignment: Alignment.bottomCenter,
                       //hint text
-                      hint: const Text('Category'),
-                      dropdownColor:
-                          Colors.white70, //make the menu a bit transparent
+                      hint: const Text('Category'), //make the menu a bit transparent
                       // font style of the items
                       style: const TextStyle(
                           fontFamily: 'Lobster',

@@ -62,6 +62,7 @@ class DatabaseService {
       'quizIsShared': quiz.quizIsShared,
       'listOfQuestions': mapOfQuestions,
       'tags': quiz.tags,
+      'timeStamp': DateTime.now()
     });
   }
 
