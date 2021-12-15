@@ -74,15 +74,15 @@ class _LogInState extends State<LogIn> {
             ),
             body: Form(
               key: _formKey,
-              child: Stack(fit: StackFit.expand, children: [
-                Expanded(
-                  flex: 1,
-                  child: Image.asset(
-                    'assets/images/bgtop.png',
-                    fit: BoxFit.cover,
-                  ),
+              child: Container(
+                constraints: const BoxConstraints.expand(),
+                decoration: const BoxDecoration(
+                  //* Background
+                  image: DecorationImage(
+                      image: AssetImage('assets/images/bgtop.png'),
+                      fit: BoxFit.cover),
                 ),
-                Column(
+                child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -96,80 +96,92 @@ class _LogInState extends State<LogIn> {
                       ),
 
                       //! email
-                      TextFormField(
-                          keyboardType: TextInputType.emailAddress,
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: (0.1 * size.width),
+                          right: (0.1 * size.width),
+                        ),
+                        child: TextFormField(
+                            keyboardType: TextInputType.emailAddress,
 
-                          // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
-                          decoration: const InputDecoration(
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12.0)),
-                              borderSide: BorderSide(color: texts),
-                            ),
-                            focusedBorder: OutlineInputBorder(
+                            // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
+                            decoration: const InputDecoration(
+                              enabledBorder: OutlineInputBorder(
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(5.0)),
-                                borderSide: BorderSide(color: borders)),
-                            contentPadding: EdgeInsets.all(15),
-                            labelText: "E-mail",
-                            labelStyle: TextStyle(
-                              fontFamily: 'Lobster',
-                              color: texts,
-                              fontSize: 20.0,
+                                    BorderRadius.all(Radius.circular(12.0)),
+                                borderSide: BorderSide(color: texts),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5.0)),
+                                  borderSide: BorderSide(color: borders)),
+                              contentPadding: EdgeInsets.all(15),
+                              labelText: "E-mail",
+                              labelStyle: TextStyle(
+                                fontFamily: 'Lobster',
+                                color: texts,
+                                fontSize: 20.0,
+                              ),
                             ),
-                          ),
-                          // ! validator property:
-                          // ~ we return null value if this formField is VALID or a string it's NOT VALID
-                          // ~ validator will be used in RaisedButton when calling _formKey.currentState!.validate()
-                          validator: (val) =>
-                              val!.isEmpty ? 'Enter an email' : null,
-                          // ! onChanged property:
-                          // ~ When information is entered into the TextForField, this property is triggered
-                          onChanged: (val) {
-                            // ~ We take email state and set it equal to value which is in e-mail textField
-                            // ~ We also make use of trim() function to remove any spaces
-                            setState(() => email = val.trim());
-                          }),
+                            // ! validator property:
+                            // ~ we return null value if this formField is VALID or a string it's NOT VALID
+                            // ~ validator will be used in RaisedButton when calling _formKey.currentState!.validate()
+                            validator: (val) =>
+                                val!.isEmpty ? 'Enter an email' : null,
+                            // ! onChanged property:
+                            // ~ When information is entered into the TextForField, this property is triggered
+                            onChanged: (val) {
+                              // ~ We take email state and set it equal to value which is in e-mail textField
+                              // ~ We also make use of trim() function to remove any spaces
+                              setState(() => email = val.trim());
+                            }),
+                      ),
                       SizedBox(
-                        height: size.height * 0.02,
+                        height: size.height * 0.012,
                       ),
                       //! password
-                      TextFormField(
-                          keyboardType: TextInputType.visiblePassword,
-                          // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
-                          decoration: const InputDecoration(
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12.0)),
-                              borderSide: BorderSide(color: texts),
-                            ),
-                            focusedBorder: OutlineInputBorder(
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: (0.1 * size.width),
+                          right: (0.1 * size.width),
+                        ),
+                        child: TextFormField(
+                            keyboardType: TextInputType.visiblePassword,
+                            // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
+                            decoration: const InputDecoration(
+                              enabledBorder: OutlineInputBorder(
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(5.0)),
-                                borderSide: BorderSide(color: borders)),
-                            contentPadding: EdgeInsets.all(15),
-                            labelText: "Password",
-                            labelStyle: TextStyle(
-                              fontFamily: 'Lobster',
-                              color: texts,
-                              fontSize: 20.0,
+                                    BorderRadius.all(Radius.circular(12.0)),
+                                borderSide: BorderSide(color: texts),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5.0)),
+                                  borderSide: BorderSide(color: borders)),
+                              contentPadding: EdgeInsets.all(15),
+                              labelText: "Password",
+                              labelStyle: TextStyle(
+                                fontFamily: 'Lobster',
+                                color: texts,
+                                fontSize: 20.0,
+                              ),
                             ),
-                          ),
-                          // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
-                          obscureText: true,
-                          // ! validator property:
-                          // ~ we return null value if this formField is VALID or a string it's NOT VALID
-                          // ~ validator will be used in RaisedButton when calling _formKey.currentState!.validate()
-                          validator: (val) => val!.length < 6
-                              ? 'Enter a password 6+ chars long'
-                              : null,
-                          // ! onChanged property:
-                          // ~ When information is entered into the TextForField, this property is triggered
-                          onChanged: (val) {
-                            // ~ We take password state and set it equal to value which is in password textField
-                            // ~ We also make use of trim() function to remove any spaces
-                            setState(() => password = val);
-                          }),
+                            // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
+                            obscureText: true,
+                            // ! validator property:
+                            // ~ we return null value if this formField is VALID or a string it's NOT VALID
+                            // ~ validator will be used in RaisedButton when calling _formKey.currentState!.validate()
+                            validator: (val) => val!.length < 6
+                                ? 'Enter a password 6+ chars long'
+                                : null,
+                            // ! onChanged property:
+                            // ~ When information is entered into the TextForField, this property is triggered
+                            onChanged: (val) {
+                              // ~ We take password state and set it equal to value which is in password textField
+                              // ~ We also make use of trim() function to remove any spaces
+                              setState(() => password = val);
+                            }),
+                      ),
                       SizedBox(
                         height: size.height * 0.02,
                       ),
@@ -217,47 +229,49 @@ class _LogInState extends State<LogIn> {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: size.height * 0.02,
-                      ),
-                      FloatingActionButton.extended(
-                        // ! onPressed():
-                        // ~ onPressed is async, because we interract with Firebase and it takes some time
-                        onPressed: () async {
-                          // * Here we decide to show the loading screen
-                          setState(() => loading = true);
-                          // ~ Signin anonymously
-                          dynamic result = await _auth.signInAnon(showError);
-                          // ~ If login is not succesful, we provide an error message
-                          if (result == null) {
-                            setState(() {
-                              // * Here we decide to remove the loading screen
-                              loading = false;
-                            });
-                            // ! If login is successful:
-                            // ~ pop current screen from the stack then it's automatically redirected to Home page
-                          } else {
-                            popScreen();
-                          }
-                        },
-                        label: const Text(
-                          "Log in anonymously",
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontFamily: 'Lobster',
-                          ),
-                        ),
-                        backgroundColor: buttons,
-                        extendedPadding: const EdgeInsets.all(40),
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            bottomRight: Radius.circular(20),
-                          ),
-                        ),
-                      ),
+
+                      //* Log In anonymously button
+                      // SizedBox(
+                      //   height: size.height * 0.02,
+                      // ),
+                      // FloatingActionButton.extended(
+                      //   // ! onPressed():
+                      //   // ~ onPressed is async, because we interract with Firebase and it takes some time
+                      //   onPressed: () async {
+                      //     // * Here we decide to show the loading screen
+                      //     setState(() => loading = true);
+                      //     // ~ Signin anonymously
+                      //     dynamic result = await _auth.signInAnon(showError);
+                      //     // ~ If login is not succesful, we provide an error message
+                      //     if (result == null) {
+                      //       setState(() {
+                      //         // * Here we decide to remove the loading screen
+                      //         loading = false;
+                      //       });
+                      //       // ! If login is successful:
+                      //       // ~ pop current screen from the stack then it's automatically redirected to Home page
+                      //     } else {
+                      //       popScreen();
+                      //     }
+                      //   },
+                      //   label: const Text(
+                      //     "Log in anonymously",
+                      //     style: TextStyle(
+                      //       fontSize: 30,
+                      //       fontFamily: 'Lobster',
+                      //     ),
+                      //   ),
+                      //   backgroundColor: buttons,
+                      //   extendedPadding: const EdgeInsets.all(40),
+                      //   shape: const RoundedRectangleBorder(
+                      //     borderRadius: BorderRadius.only(
+                      //       topLeft: Radius.circular(20),
+                      //       bottomRight: Radius.circular(20),
+                      //     ),
+                      //   ),
+                      // ),
                     ]),
-              ]),
+              ),
             ));
   }
 
@@ -265,9 +279,7 @@ class _LogInState extends State<LogIn> {
     await showDialog(
         context: context,
         builder: (BuildContext context) {
-          return customAlertBox(errorTitle,
-              errorMessage);
+          return customAlertBox(errorTitle, errorMessage);
         });
   }
-
 }
