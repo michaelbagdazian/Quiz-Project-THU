@@ -119,7 +119,7 @@ class QuizTile extends StatelessWidget {
                                               )
                                           ),
                                           /////////////////////////////////Quiz disription
-                                          child: Text("  "+quiz.quizDescription+"  ",style: const TextStyle(fontFamily: 'Lobster',fontWeight: FontWeight.bold, color: Colors.white, fontSize: 20,
+                                          child: Text("  "+quiz.quizDescription+"  ",style: const TextStyle(fontFamily: 'Lobster', color: Colors.white, fontSize: 20,
                                             ///////////////////////////////
                                           ))
                                       )
@@ -331,12 +331,15 @@ class _PopupCardState extends State<_PopupCard> {
                                             bottomRight: Radius.circular(20.0),
                                           )
                                       ),
-                                      child: Text("  "+widget.quiz.quizDescription+"  ",style:
-                                      const TextStyle(
-                                        fontFamily: 'Lobster',
-                                        color: Colors.white,
-                                        fontSize: 20,
-                                      )
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(14.0),
+                                        child: Text("  "+widget.quiz.quizDescription+"  ",style:
+                                        const TextStyle(
+                                          fontFamily: 'Lobster',
+                                          color: Colors.white,
+                                          fontSize: 20,
+                                        )
+                                        ),
                                       )
                                   )
                               ),
@@ -357,19 +360,7 @@ class _PopupCardState extends State<_PopupCard> {
                                                 bottomRight: Radius.circular(20.0),
                                               )
                                           ),
-                                          child: RichText(
-                                            text: const TextSpan(
-                                                children:[
-                                                  TextSpan(
-                                                      text: '  Information:  ',
-                                                      style: TextStyle(
-                                                          fontFamily: 'Lobster',
-                                                          color: Colors.white,
-                                                          fontSize: 19)),
-                                                ]
-                                            ),
 
-                                          )
                                       )
                                   )
 
