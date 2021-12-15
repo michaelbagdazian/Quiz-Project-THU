@@ -16,7 +16,7 @@ class AvatarForm extends StatefulWidget {
 
 class _AvatarFormState extends State<AvatarForm> {
   final _formKey = GlobalKey<FormState>();
-  LinkedHashMap<String, List<Image>> avatars = getAvatarsList();
+  LinkedHashMap<String, List<String>> avatars = getAvatarsList();
 
   // form values
   String _currentPassword = "";
@@ -29,7 +29,7 @@ class _AvatarFormState extends State<AvatarForm> {
 
     if (userData != null && user != null) {
       return Container(
-        padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+        padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
         height: 400.0,
         child: Form(
           key: _formKey,
@@ -70,8 +70,8 @@ class _AvatarFormState extends State<AvatarForm> {
   }
 }
 
-LinkedHashMap<String, List<Image>> getAvatarsList() {
-  LinkedHashMap<String, List<Image>> avatars = new LinkedHashMap();
+LinkedHashMap<String, List<String>> getAvatarsList() {
+  LinkedHashMap<String, List<String>> avatars = new LinkedHashMap();
 
   avatars["aqualine"] = _createAvatars("aqualine");
   avatars["ceratops"] = _createAvatars("ceratops");
@@ -83,16 +83,11 @@ LinkedHashMap<String, List<Image>> getAvatarsList() {
   return avatars;
 }
 
-List<Image> _createAvatars(String avatarName) {
-  List<Image> avatarsList = [];
+List<String> _createAvatars(String avatarName) {
+  List<String> avatarsList = [];
 
   for (int i = 1; i <= 5; i++) {
-    Image img = Image.asset(
-        "assets/avatars/"+avatarName+"/"+avatarName+i.toString()+".png",
-        height: 70,
-        width: 70,
-    );
-    avatarsList.add(img);
+    avatarsList.add("assets/avatars/"+avatarName+"/"+avatarName+i.toString()+".png");
   }
 
   return avatarsList;
