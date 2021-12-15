@@ -76,7 +76,6 @@ class _SignUpState extends State<SignUp> {
                 ),
               ),
               backgroundColor: welcomeh,
-              leading: const MenuButton(),
             ),
             //normal ol stack; i use fit to expand the stack to fill the screen; try to change this to fill instead of expand to solve overflow problems
             body: Form(
