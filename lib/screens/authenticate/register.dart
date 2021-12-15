@@ -80,17 +80,15 @@ class _SignUpState extends State<SignUp> {
             //normal ol stack; i use fit to expand the stack to fill the screen; try to change this to fill instead of expand to solve overflow problems
             body: Form(
               key: _formKey,
-              child: Stack(fit: StackFit.expand, children: [
-                SizedBox(
-                  child: Expanded(
-                    flex: 1,
-                    child: Image.asset(
-                      'assets/images/bgtop.png',
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+              child: Container(
+                constraints: const BoxConstraints.expand(),
+                decoration: const BoxDecoration(
+                  //* Background
+                  image: DecorationImage(
+                      image: AssetImage('assets/images/bgtop.png'),
+                      fit: BoxFit.cover),
                 ),
-                Column(
+                child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -102,118 +100,138 @@ class _SignUpState extends State<SignUp> {
                       _customText.customText('Creat New\n Account'),
                       //*again empty space
                       SizedBox(
-                        height: size.height * 0.05,
+                        height: size.height * 0.1,
                       ),
-
                       // * Start of TextFormField for the username
-                      TextFormField(
-                          // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
-                          decoration: const InputDecoration(
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12.0)),
-                              borderSide: BorderSide(color: texts),
-                            ),
-                            focusedBorder: OutlineInputBorder(
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: (0.1 * size.width),
+                          right: (0.1 * size.width),
+                        ),
+                        child: TextFormField(
+                            // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
+                            decoration: const InputDecoration(
+                              enabledBorder: OutlineInputBorder(
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(5.0)),
-                                borderSide: BorderSide(color: borders)),
-                            contentPadding: EdgeInsets.all(15),
-                            labelText: 'Username',
-                            labelStyle: TextStyle(
-                              fontFamily: 'Lobster',
-                              color: texts,
-                              fontSize: 20.0,
+                                    BorderRadius.all(Radius.circular(12.0)),
+                                borderSide: BorderSide(color: texts),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5.0)),
+                                  borderSide: BorderSide(color: borders)),
+                              contentPadding: EdgeInsets.all(15),
+                              labelText: 'Username',
+                              labelStyle: TextStyle(
+                                fontFamily: 'Lobster',
+                                color: texts,
+                                fontSize: 20.0,
+                              ),
                             ),
-                          ),
-                          // ! validator property:
-                          // ~ we return null value if this formField is VALID or a string it's NOT VALID
-                          // ~ validator will be used in RaisedButton when calling _formKey.currentState!.validate()
-                          validator: (val) =>
-                              val!.isEmpty ? 'Enter a username' : null,
-                          // ! onChanged property:
-                          // ~ When information is entered into the TextForField, this property is triggered
-                          onChanged: (val) {
-                            // ~ We take email state and set it equal to value which is in e-mail textField
-                            // ~ We also make use of trim() function to remove any spaces
-                            setState(() => username = val.trim());
-                          }),
+                            // ! validator property:
+                            // ~ we return null value if this formField is VALID or a string it's NOT VALID
+                            // ~ validator will be used in RaisedButton when calling _formKey.currentState!.validate()
+                            validator: (val) =>
+                                val!.isEmpty ? 'Enter a username' : null,
+                            // ! onChanged property:
+                            // ~ When information is entered into the TextForField, this property is triggered
+                            onChanged: (val) {
+                              // ~ We take email state and set it equal to value which is in e-mail textField
+                              // ~ We also make use of trim() function to remove any spaces
+                              setState(() => username = val.trim());
+                            }),
+                      ),
                       // * End of TextFormField for the username
                       SizedBox(
-                        height: size.height * 0.02,
+                        height: size.height * 0.012,
                       ),
                       // * Start of TextFormField for the e-mail
-                      TextFormField(
-                          // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
-                          decoration: const InputDecoration(
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12.0)),
-                              borderSide: BorderSide(color: texts),
-                            ),
-                            focusedBorder: OutlineInputBorder(
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: (0.1 * size.width),
+                          right: (0.1 * size.width),
+                        ),
+                        child: TextFormField(
+                            // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
+                            decoration: const InputDecoration(
+                              enabledBorder: OutlineInputBorder(
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(5.0)),
-                                borderSide: BorderSide(color: borders)),
-                            contentPadding: EdgeInsets.all(15),
-                            labelText: 'E-mail',
-                            labelStyle: TextStyle(
-                              fontFamily: 'Lobster',
-                              color: texts,
-                              fontSize: 20.0,
+                                    BorderRadius.all(Radius.circular(12.0)),
+                                borderSide: BorderSide(color: texts),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5.0)),
+                                  borderSide: BorderSide(color: borders)),
+                              contentPadding: EdgeInsets.all(15),
+                              labelText: 'E-mail',
+                              labelStyle: TextStyle(
+                                fontFamily: 'Lobster',
+                                color: texts,
+                                fontSize: 20.0,
+                              ),
                             ),
-                          ),
-                          // ! validator property:
-                          // ~ we return null value if this formField is VALID or a string it's NOT VALID
-                          // ~ validator will be used in RaisedButton when calling _formKey.currentState!.validate()
-                          validator: (val) =>
-                              val!.isEmpty ? 'Enter an email' : null,
-                          // ! onChanged property:
-                          // ~ When information is entered into the TextForField, this property is triggered
-                          onChanged: (val) {
-                            // ~ We take email state and set it equal to value which is in e-mail textField
-                            // ~ We also make use of trim() function to remove any spaces
-                            setState(() => email = val.trim());
-                          }),
+                            // ! validator property:
+                            // ~ we return null value if this formField is VALID or a string it's NOT VALID
+                            // ~ validator will be used in RaisedButton when calling _formKey.currentState!.validate()
+                            validator: (val) =>
+                                val!.isEmpty ? 'Enter an email' : null,
+                            // ! onChanged property:
+                            // ~ When information is entered into the TextForField, this property is triggered
+                            onChanged: (val) {
+                              // ~ We take email state and set it equal to value which is in e-mail textField
+                              // ~ We also make use of trim() function to remove any spaces
+                              setState(() => email = val.trim());
+                            }),
+                      ),
                       // * End of TextFormField for the e-mail
                       SizedBox(
-                        height: size.height * 0.02,
+                        height: size.height * 0.012,
                       ),
-                      TextFormField(
-                          // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
-                          decoration: const InputDecoration(
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12.0)),
-                              borderSide: BorderSide(color: texts),
-                            ),
-                            focusedBorder: OutlineInputBorder(
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: (0.1 * size.width),
+                          right: (0.1 * size.width),
+                        ),
+                        child: TextFormField(
+                            // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
+                            decoration: const InputDecoration(
+                              enabledBorder: OutlineInputBorder(
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(5.0)),
-                                borderSide: BorderSide(color: borders)),
-                            contentPadding: EdgeInsets.all(15),
-                            labelText: 'Password',
-                            labelStyle: TextStyle(
-                              fontFamily: 'Lobster',
-                              color: texts,
-                              fontSize: 20.0,
+                                    BorderRadius.all(Radius.circular(12.0)),
+                                borderSide: BorderSide(color: texts),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5.0)),
+                                  borderSide: BorderSide(color: borders)),
+                              contentPadding: EdgeInsets.all(15),
+                              labelText: 'Password',
+                              labelStyle: TextStyle(
+                                fontFamily: 'Lobster',
+                                color: texts,
+                                fontSize: 20.0,
+                              ),
                             ),
-                          ),
-                          // ~ This hides the password when entering it
-                          obscureText: true,
-                          // ! validator property:
-                          // ~ we return null value if this formField is VALID or a string it's NOT VALID
-                          // ~ validator will be used in RaisedButton when calling _formKey.currentState!.validate()
-                          validator: (val) => val!.length < 6
-                              ? 'Enter a password 6+ chars long'
-                              : null,
-                          // ! onChanged property:
-                          // ~ When information is entered into the TextForField, this property is triggered
-                          onChanged: (val) {
-                            // ~ We take password state and set it equal to value which is in password textField
-                            // ~ We also make use of trim() function to remove any spaces
-                            setState(() => password = val.trim());
-                          }),
+                            // ~ This hides the password when entering it
+                            obscureText: true,
+                            // ! validator property:
+                            // ~ we return null value if this formField is VALID or a string it's NOT VALID
+                            // ~ validator will be used in RaisedButton when calling _formKey.currentState!.validate()
+                            validator: (val) => val!.length < 6
+                                ? 'Enter a password 6+ chars long'
+                                : null,
+                            // ! onChanged property:
+                            // ~ When information is entered into the TextForField, this property is triggered
+                            onChanged: (val) {
+                              // ~ We take password state and set it equal to value which is in password textField
+                              // ~ We also make use of trim() function to remove any spaces
+                              setState(() => password = val.trim());
+                            }),
+                      ),
+                      SizedBox(
+                        height: size.height * 0.08,
+                      ),
                       FloatingActionButton.extended(
                         onPressed: () async {
                           // ~ Here we check if our form is valid
@@ -257,7 +275,7 @@ class _SignUpState extends State<SignUp> {
                         ),
                       ),
                     ]),
-              ]),
+              ),
             ),
           );
   }
@@ -266,9 +284,7 @@ class _SignUpState extends State<SignUp> {
     await showDialog(
         context: context,
         builder: (BuildContext context) {
-          return customAlertBox(errorTitle,
-              errorMessage);
+          return customAlertBox(errorTitle, errorMessage);
         });
   }
-
 }
