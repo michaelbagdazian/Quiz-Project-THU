@@ -63,7 +63,8 @@ class AuthService {
   // * context is used for error handeling, to actually know, what context to use when we need to build the alertbox
   //* when you call this method just pass in context like so => signInAnon(context)
   // ~ Future - If the asynchronous operation succeeds, the future completes with a value. Otherwise it completes with an error.
-  Future signInAnon(Function showError) async {
+  Future signInAnon(Function showError, {String displayName = ""}) async {
+    displayName = displayName == "" ? "Anonymous" : displayName;
     try {
       // ~ we make authentication request and we want to await this, because this will take some time to do
       // ~ and we want to wait for completion before we assign the result to some kind of variable
@@ -77,7 +78,7 @@ class AuthService {
       // ~ Together with the Firebase User instance we create the entry of User Data in the Firebase
       // ~ Username and email is provided, level is 0 and avatar is default
       await DatabaseService(uid: user!.uid)
-          .updateUserData('anonymous', 'anonymous@gmail.com', 'anon.png', 0);
+          .updateUserData(displayName, 'anonymous@gmail.com', 'anon.png', 0);
 
       // ~ When we call signInAnon method from signIn page, then it will return user object to that sign in widget where we called this method
       return _userFromFirebaseUser(user);
