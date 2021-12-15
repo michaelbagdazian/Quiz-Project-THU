@@ -12,29 +12,9 @@ class QuizWrapper extends StatelessWidget {
     if (data != null) {
       Quiz quiz = data['quiz'];
       print("quizID: " + quiz.quizID);
-      return ActiveQuiz(questions: quiz.listOfQuestions);
+      return ActiveQuiz(quiz: quiz);
     } else {
-      return Loading();
+      return const Loading();
     }
-    /* // ! Provider.of<AppUser?>(context):
-    // ~ Here we listen to the stream, defined in services/auth.dart and provided by main.dart, which informs us about login state of the user
-    final user = Provider.of<AppUser?>(context);
-
-    return StreamBuilder<List<Quiz>>(
-        // ~ Here we access the data provided in the stream, which is userData ( see user/UserData.dart to view accesable information )
-        stream: DatabaseService(uid: user!.uid).myQuizes,
-        builder: (context, snapshot) {
-          // ! If there is a data for current user in the DB, then assign it to the variables, otherwise display Loading screen
-          if (snapshot.hasData) {
-            List<Quiz>? quizes = snapshot.data;
-            if (quizes != null) {
-              return ActiveQuiz(questions: quizes[0].listOfQuestions);
-            } else {
-              return Loading();
-            }
-          } else {
-            return Loading();
-          }
-        });*/
   }
 }
