@@ -26,15 +26,15 @@ import 'package:flutter/material.dart';
 // ~ This has 5 text fields, one for the question and 4 for the answers.
 // ~ it allows the user to add questions to their quizz
 
-class AddQuestionsUI extends StatefulWidget {
+class EditQuestionsUI extends StatefulWidget {
   //constructor
-  AddQuestionsUI({Key? key}) : super(key: key);
+  EditQuestionsUI({Key? key}) : super(key: key);
 
   @override
-  State<AddQuestionsUI> createState() => _AddQuestionsUIState();
+  State<EditQuestionsUI> createState() => _EditQuestionsUIState();
 }
 
-class _AddQuestionsUIState extends State<AddQuestionsUI> {
+class _EditQuestionsUIState extends State<EditQuestionsUI> {
   //defining some TextEditingControllers to handle user's input
   //~ Question Text
   final TextEditingController _question = TextEditingController();

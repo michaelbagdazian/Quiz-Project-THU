@@ -233,7 +233,7 @@ class _EditQuizzUIState extends State<EditQuizzUI> {
       String ChoosenCategory = dropDownVal;
       List<String> ListOfTags =
           tags != null ? tags!.text.split(',') : ['generic'];
-      Navigator.popAndPushNamed(context, '/AddQuestionsUI', arguments: {
+      Navigator.popAndPushNamed(context, '/EditQuestionsUI', arguments: {
         'UserName': UserName,
         'QuizzTitle': quizTitle.text,
         'QuizzCategory': ChoosenCategory,
