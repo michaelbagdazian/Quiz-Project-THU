@@ -26,20 +26,19 @@ class UpdateFormsWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget selectedForm = Loading();
-    if(this.command == "password"){
+    if (this.command == "password") {
       selectedForm = PasswordForm();
-    }else if(this.command == "email"){
+    } else if (this.command == "email") {
       selectedForm = EmailForm();
-    }else if(this.command == "username"){
+    } else if (this.command == "username") {
       selectedForm = UsernameForm();
     }
 
     final user = Provider.of<AppUser?>(context);
 
     return StreamProvider<UserData?>.value(
-      value: DatabaseService(uid: user!.uid).userData,
-      initialData: null,
-      child: selectedForm
-    );
+        value: DatabaseService(uid: user!.uid).userData,
+        initialData: null,
+        child: selectedForm);
   }
 }

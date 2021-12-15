@@ -20,7 +20,6 @@ class customConfirmationBox {
   *context: the context of the screen, on which you want to Alert Boxes
    */
 
-  @override
   Future ConfirmPopUp(BuildContext context) async {
     // Create a bool to actually change based on user's input, and return it later
     bool confirm = false;
@@ -30,7 +29,7 @@ class customConfirmationBox {
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text(label,
-                style: TextStyle(
+                style: const TextStyle(
                   fontFamily: 'Lobster',
                   fontSize: 40,
                 )),

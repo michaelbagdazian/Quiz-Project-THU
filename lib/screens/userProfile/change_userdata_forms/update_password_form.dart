@@ -8,7 +8,6 @@ import '../../../shared/colors.dart';
 import '../../../shared/constants.dart';
 import '../../../shared/loading.dart';
 
-
 class PasswordForm extends StatefulWidget {
   @override
   _PasswordFormState createState() => _PasswordFormState();
@@ -26,7 +25,7 @@ class _PasswordFormState extends State<PasswordForm> {
     final userData = Provider.of<UserData?>(context);
     final user = Provider.of<AppUser?>(context);
 
-    if(userData != null && user != null){
+    if (userData != null && user != null) {
       return Container(
         height: 230.0,
         child: Form(
@@ -39,23 +38,21 @@ class _PasswordFormState extends State<PasswordForm> {
               ),
               SizedBox(height: 20.0),
               TextFormField(
-                  decoration:
-                  textInputDecoration.copyWith(hintText: 'Current password'),
+                  decoration: textInputDecoration.copyWith(
+                      hintText: 'Current password'),
                   obscureText: true,
-                  validator: (val) => val!.length < 6
-                      ? 'Enter a password 6+ chars long'
-                      : null,
+                  validator: (val) =>
+                      val!.length < 6 ? 'Enter a password 6+ chars long' : null,
                   onChanged: (val) {
                     setState(() => _currentPassword = val);
                   }),
               SizedBox(height: 10.0),
               TextFormField(
                   decoration:
-                  textInputDecoration.copyWith(hintText: 'New password'),
+                      textInputDecoration.copyWith(hintText: 'New password'),
                   obscureText: true,
-                  validator: (val) => val!.length < 6
-                      ? 'Enter a password 6+ chars long'
-                      : null,
+                  validator: (val) =>
+                      val!.length < 6 ? 'Enter a password 6+ chars long' : null,
                   onChanged: (val) {
                     setState(() => _newPassword = val);
                   }),
@@ -68,7 +65,8 @@ class _PasswordFormState extends State<PasswordForm> {
                   ),
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      await DatabaseService(uid: user.uid).changePassword(_currentPassword, _newPassword, userData);
+                      await DatabaseService(uid: user.uid).changePassword(
+                          _currentPassword, _newPassword, userData);
                       Navigator.pop(context);
                     }
                   }),
@@ -76,7 +74,7 @@ class _PasswordFormState extends State<PasswordForm> {
           ),
         ),
       );
-    }else{
+    } else {
       return Loading();
     }
   }

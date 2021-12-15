@@ -11,11 +11,13 @@ import 'package:crew_brew/shared/colors.dart';
 // all done
 
 class Loading extends StatelessWidget {
+  const Loading({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
       color: loading1,
-      child: Center(
+      child: const Center(
         // ~ Another spinners can be selected here https://pub.dev/packages/flutter_spinkit
         child: SpinKitChasingDots(
           color: loading2,
