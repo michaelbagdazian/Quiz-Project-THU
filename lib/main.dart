@@ -61,8 +61,8 @@ class MyApp extends StatelessWidget {
           '/AddNewQuizzUI': (context) => const AddNewQuizzUI(),
         },
         // TODO: Decide on a unified theme and copy it here
-        theme: ThemeData.light().copyWith(
-            backgroundColor: background, primaryColor: const Color(0xff309c9d)),
+        theme: ThemeData.light()
+            .copyWith(backgroundColor: background, primaryColor: welcomeh),
       ),
     );
   }

@@ -1,7 +1,6 @@
-
-image(String category){
-  String image  = category;
-  switch(image) {
+image(String category) {
+  String image = category;
+  switch (image) {
     case "Test":
       return 'assets/images/education.jpg';
     case "History":
