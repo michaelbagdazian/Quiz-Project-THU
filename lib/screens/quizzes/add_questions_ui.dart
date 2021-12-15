@@ -343,6 +343,9 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
     );
   }
 
+  //* ======================= Logic Starts Here ===========================
+
+//* =======================This Is the Function for the add question Button===========================
 //~ This Future adds Questions to our current list of questions, this gets called everytime the user adds a question
   Future addQuestionButtonFunc() async {
     //~ This checks if we are adding a new question or editing an existing one
@@ -365,17 +368,21 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
     //~ Check if there is an answer to add at all
     if (_firstAnswer.text.isNotEmpty) {
       print("_firstAnswer.text.isNotEmpty");
-      answers.add(new Answer(answerText: _firstAnswer.text, isCorrect: _isFirstAnswerCorrect!));
+      answers.add(new Answer(
+          answerText: _firstAnswer.text, isCorrect: _isFirstAnswerCorrect!));
     }
     if (_secondAnswer.text.isNotEmpty) {
       print("_secondAnswer.text.isNotEmpty");
-      answers.add(new Answer(answerText: _secondAnswer.text, isCorrect: _isSecondAnswerCorrect!));
+      answers.add(new Answer(
+          answerText: _secondAnswer.text, isCorrect: _isSecondAnswerCorrect!));
     }
     if (_thirdAnswer.text.isNotEmpty) {
-      answers.add(new Answer(answerText: _thirdAnswer.text, isCorrect: _isThirdAnswerCorrect!));
+      answers.add(new Answer(
+          answerText: _thirdAnswer.text, isCorrect: _isThirdAnswerCorrect!));
     }
     if (_fourthAnswer.text.isNotEmpty) {
-      answers.add(new Answer(answerText: _fourthAnswer.text, isCorrect: _isFourthAnswerCorrect!));
+      answers.add(new Answer(
+          answerText: _fourthAnswer.text, isCorrect: _isFourthAnswerCorrect!));
     }
 
     //~ If user didn't mark at least one answer as correct answer
@@ -393,7 +400,7 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
       return;
     }
 
-    for(Answer answer in answers){
+    for (Answer answer in answers) {
       print(answer.answerText);
     }
 
@@ -407,6 +414,7 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
     clearFunc();
   }
 
+//* =======================This Is the Function for the clear Button===========================
 //~ This function clears and resets everything (text fields and checkboxes) on the screen, this can be used when a new Question is to be Added or if user clicks on clear button
   VoidCallback? clearFunc() {
     _question.clear();
@@ -421,10 +429,23 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
     _isFourthAnswerCorrect = false;
   }
 
+//* =======================This Is the Function for the submit Button===========================
   //~ This Future creates a new quizz object and adds the list of questions to it
   Future submitButtonFunc() async {
     //? this is so that if the user had one last question that they forgot to add, submit button will add it for them
-    if (_question.text != "") addQuestionButtonFunc();
+    if (_question.text != "") await addQuestionButtonFunc();
+    //? check if the question list is empty
+    if (_ListOfQuestions.Questions.isEmpty) {
+      await showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            //? if it is we get an alert box with an error message
+            return customAlertBox("An Error Has Happened !!!",
+                "Please Make Sure that you have added questions to your quizz");
+          });
+      //~ Exit this function
+      return;
+    }
     // ignore: non_constant_identifier_names
     String QuizId = args['OwnerUId'] +
         "-" +
@@ -453,6 +474,7 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
     Navigator.popAndPushNamed(context, '/myQuizes');
   }
 
+  //* =======================This Is the Function for top left arrow icon===========================
   //~This function is for navigating through questions (BackWards)
   void goToPreviousQuestin() {
     //~ Checks if we have at least one question in our list
@@ -467,6 +489,7 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
     }
   }
 
+  //* =======================This Is the Function for top right arrow icon===========================
   //~This function is for navigating through questions (Forward)
   void goToNextQuestion() {
     if (_Currquestion == null || _ListOfQuestions.getQuestions().length == 1) {
@@ -483,6 +506,7 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
     }
   }
 
+  //* =======================This Is the Function for printing question data on the screen===========================
 //~ The Following Future prints the data of the current question on the screen
   Future PrintStuffOnScreen() async {
     //~ Edit the question controller to actually display the text from our current question
