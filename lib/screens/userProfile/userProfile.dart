@@ -1,9 +1,11 @@
 import 'package:crew_brew/models/user/AppUser.dart';
 import 'package:crew_brew/models/user/UserData.dart';
-import 'package:crew_brew/navigationBar/NavBar.dart';
+import 'package:crew_brew/navigationBar/menu_button.dart';
+import 'package:crew_brew/navigationBar/navbar.dart';
 import 'package:crew_brew/screens/userProfile/UpdateFormsWrapper.dart';
 import 'package:crew_brew/services/database.dart';
 import 'package:crew_brew/shared/loading.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
@@ -36,14 +38,17 @@ class _userProfileState extends State<userProfile> {
     // ! _showSettingsPanel()
     // ~ panel for updating userData
     void _showSettingsPanel(String command) {
-      showModalBottomSheet(context: context, builder: (context) {
-        return Container(
-          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
-          child: UpdateFormsWrapper(command: command),
-          color: Colors.grey[900],
-        );
-      });
+      showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return Container(
+              padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+              child: UpdateFormsWrapper(command: command),
+              color: Colors.grey[900],
+            );
+          });
     }
+
     // ! Provider.of<AppUser?>(context):
     // ~ Here we listen to the stream, defined in services/auth.dart and provided by main.dart, which informs us about login state of the user
     final user = Provider.of<AppUser?>(context);
@@ -68,12 +73,12 @@ class _userProfileState extends State<userProfile> {
               return Scaffold(
                 // ! NavBar():
                 // ~ Here we provide NavBar for property drawer. This is our navigation bar defined in navigationBar/navBar.dart
-                drawer: NavBar(),
                 backgroundColor: Colors.grey[900],
                 appBar: AppBar(
                   title: Text('My profile'),
                   centerTitle: true,
                   backgroundColor: Colors.grey[850],
+                  leading: const MenuButton(),
                   // ~ Elavation set to 0 removes the shadow ( which makes 3D effect )
                   elevation: 0.0,
                   actions: <Widget>[

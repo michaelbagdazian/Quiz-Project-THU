@@ -6,6 +6,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../models/quiz/answer.dart';
+
 // ! Information about the class:
 // ~ This class Allows us to create a list of Questions and add/remove/access questions to/from it
 // ! Use of the class:
@@ -29,7 +31,7 @@ class AddQuestions {
   ~   Build _context: A Build Context for error handling and alertboxes
   */
   void addNewQuestion(
-      String questionText, Map<String, bool> answers, BuildContext _context) {
+      String questionText, List<Answer> answers, BuildContext _context) {
     try {
       //~ Create a new instance of Question
       Question? _question =

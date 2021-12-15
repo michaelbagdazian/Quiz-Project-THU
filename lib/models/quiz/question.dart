@@ -1,10 +1,11 @@
+import 'answer.dart';
+
 class Question {
   String questionText;
-  Map<String, bool> answers;
+  List<Answer> answers;
 
   Question({
     required this.questionText,
     required this.answers,
   });
-
 }

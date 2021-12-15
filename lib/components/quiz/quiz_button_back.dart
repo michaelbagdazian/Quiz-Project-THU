@@ -4,12 +4,11 @@ class QuizButtonBack extends StatelessWidget {
   final String buttonText;
   final bool isActive;
 
-  const QuizButtonBack(
-      {Key? key,
-        required this.buttonText,
-        required this.isActive,
-        })
-      : super(key: key);
+  const QuizButtonBack({
+    Key? key,
+    required this.buttonText,
+    required this.isActive,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,17 +16,17 @@ class QuizButtonBack extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(5),
       child: ElevatedButton(
-        onPressed: () => Navigator.pushReplacementNamed(context, '/sharedQuizes'),
+        onPressed: () =>
+            Navigator.pushReplacementNamed(context, '/sharedQuizes'),
         //onPressed: () => onPressed,
-        child: Text(buttonText,
-          style: const TextStyle(
-              color: Colors.white, fontSize: 20),
+        child: Text(
+          buttonText,
+          style: const TextStyle(color: Colors.white, fontSize: 20),
         ),
         style: TextButton.styleFrom(
             backgroundColor: Colors.blueAccent,
             primary: Colors.greenAccent,
-            padding: const EdgeInsets.all(20)
-        ),
+            padding: const EdgeInsets.all(20)),
       ),
     );
   }

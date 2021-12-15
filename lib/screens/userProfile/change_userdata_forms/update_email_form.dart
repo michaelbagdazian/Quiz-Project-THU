@@ -8,7 +8,6 @@ import '../../../shared/colors.dart';
 import '../../../shared/constants.dart';
 import '../../../shared/loading.dart';
 
-
 class EmailForm extends StatefulWidget {
   @override
   _EmailFormState createState() => _EmailFormState();
@@ -26,7 +25,7 @@ class _EmailFormState extends State<EmailForm> {
     final userData = Provider.of<UserData?>(context);
     final user = Provider.of<AppUser?>(context);
 
-    if(userData != null && user != null){
+    if (userData != null && user != null) {
       return Container(
         height: 230.0,
         child: Form(
@@ -40,23 +39,21 @@ class _EmailFormState extends State<EmailForm> {
               SizedBox(height: 20.0),
               TextFormField(
                   decoration:
-                  textInputDecoration.copyWith(hintText: 'new e-mail'),
+                      textInputDecoration.copyWith(hintText: 'new e-mail'),
                   // ~ we return null value is this formField is valid or a string
                   // ~ if it's not valid
-                  validator: (val) =>
-                  val!.isEmpty ? 'Enter an email' : null,
+                  validator: (val) => val!.isEmpty ? 'Enter an email' : null,
                   onChanged: (val) {
                     // ~ We take email state and set it equal to value which is in e-mail textField
                     setState(() => _newEmail = val.trim());
                   }),
               SizedBox(height: 10.0),
               TextFormField(
-                  decoration:
-                  textInputDecoration.copyWith(hintText: 'Current password'),
+                  decoration: textInputDecoration.copyWith(
+                      hintText: 'Current password'),
                   obscureText: true,
-                  validator: (val) => val!.length < 6
-                      ? 'Enter a password 6+ chars long'
-                      : null,
+                  validator: (val) =>
+                      val!.length < 6 ? 'Enter a password 6+ chars long' : null,
                   onChanged: (val) {
                     setState(() => _currentPassword = val);
                   }),
@@ -69,7 +66,8 @@ class _EmailFormState extends State<EmailForm> {
                   ),
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      await DatabaseService(uid: user.uid).changeEmail(_currentPassword, _newEmail, userData);
+                      await DatabaseService(uid: user.uid)
+                          .changeEmail(_currentPassword, _newEmail, userData);
                       Navigator.pop(context);
                     }
                   }),
@@ -77,7 +75,7 @@ class _EmailFormState extends State<EmailForm> {
           ),
         ),
       );
-    }else{
+    } else {
       return Loading();
     }
   }

@@ -8,7 +8,6 @@ import '../../../shared/colors.dart';
 import '../../../shared/constants.dart';
 import '../../../shared/loading.dart';
 
-
 class UsernameForm extends StatefulWidget {
   @override
   _UsernameFormState createState() => _UsernameFormState();
@@ -25,7 +24,7 @@ class _UsernameFormState extends State<UsernameForm> {
     final userData = Provider.of<UserData?>(context);
     final user = Provider.of<AppUser?>(context);
 
-    if(userData != null && user != null){
+    if (userData != null && user != null) {
       return Container(
         height: 170.0,
         child: Form(
@@ -64,7 +63,7 @@ class _UsernameFormState extends State<UsernameForm> {
           ),
         ),
       );
-    }else{
+    } else {
       return Loading();
     }
   }
