@@ -141,7 +141,9 @@ class QuizTile extends StatelessWidget {
                                           width: MediaQuery.of(context).size.width * 0.26,
                                           child: ElevatedButton(
                                             ////////////////////////////////////////////////////// Change Quiz
-                                            onPressed: () {},                                         //<----here for changing the quiz
+                                              onPressed:() =>
+                                                  Navigator.pushReplacementNamed(context, '/EditOldQuizUI', arguments:
+                                                  {'quiz': quiz},),                                   //<----here for changing the quiz
                                             style: ElevatedButton.styleFrom(
                                               primary:  const Color (0xFFFF9800),
                                               shape: const RoundedRectangleBorder(
@@ -153,6 +155,7 @@ class QuizTile extends StatelessWidget {
                                             ), child:const Padding(
                                             padding: EdgeInsets.fromLTRB(5.0, 1.0, 5.0, 0.0),
                                             child: Text(
+
                                               'Edit Quiz',
                                               style: TextStyle(fontFamily: 'Lobster',fontSize: 13),
                                             ),
@@ -443,7 +446,9 @@ class _PopupCardState extends State<_PopupCard> {
                                         child: Container(
                                           width: MediaQuery.of(context).size.width * 0.20,
                                           child: ElevatedButton(
-                                            onPressed: () {},                          //<----here for changing the quiz
+                                              onPressed:() =>
+                                                  Navigator.pushReplacementNamed(context, '/EditOldQuizUI', arguments:
+                                                  {'quiz': widget.quiz},),                     //<----here for changing the quiz
                                             style: ElevatedButton.styleFrom(
                                               primary:  const Color (0xFFFF9800),
                                               shape: const RoundedRectangleBorder(
