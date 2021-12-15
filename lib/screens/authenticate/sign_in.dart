@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:crew_brew/shared/customWidgets/customText.dart';
 import 'package:crew_brew/shared/colors.dart';
 
+import '../../shared/customWidgets/customAlertBox.dart';
+
 // ! Information about the class:
 // ~ This class is the screen for login
 // ! Use of the class:
@@ -43,7 +45,6 @@ class _LogInState extends State<LogIn> {
   // ~ This are the states which are used to request the data from the user for registration
   String email = '';
   String password = '';
-  String error = '';
 
   @override
   Widget build(BuildContext context) {
@@ -186,12 +187,10 @@ class _LogInState extends State<LogIn> {
                             // ~ We await for the result from the Firebase
                             dynamic result =
                                 await _auth.signInWithEmailAndPassword(
-                                    email, password, context);
+                                    email, password, showError);
                             // ~ If login is not succesful, we provide an error message
                             if (result == null) {
                               setState(() {
-                                error =
-                                    'could not sign in with those credentials';
                                 // * Here we decide to remove the loading screen
                                 loading = false;
                               });
@@ -228,12 +227,10 @@ class _LogInState extends State<LogIn> {
                           // * Here we decide to show the loading screen
                           setState(() => loading = true);
                           // ~ Signin anonymously
-                          dynamic result = await _auth.signInAnon(context);
+                          dynamic result = await _auth.signInAnon(showError);
                           // ~ If login is not succesful, we provide an error message
                           if (result == null) {
                             setState(() {
-                              error =
-                                  'could not sign in with those credentials';
                               // * Here we decide to remove the loading screen
                               loading = false;
                             });
@@ -259,11 +256,18 @@ class _LogInState extends State<LogIn> {
                           ),
                         ),
                       ),
-                      Text(error,
-                          style:
-                              const TextStyle(color: errors, fontSize: 14.0)),
                     ]),
               ]),
             ));
   }
+
+  void showError(String errorTitle, String errorMessage) async {
+    await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return customAlertBox(errorTitle,
+              errorMessage);
+        });
+  }
+
 }

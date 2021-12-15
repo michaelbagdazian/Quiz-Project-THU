@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:crew_brew/shared/customWidgets/customText.dart';
 import 'package:crew_brew/shared/colors.dart';
 
+import '../../shared/customWidgets/customAlertBox.dart';
+
 // ! Information about the class:
 // ~ This class is the screen for registration
 // ! Use of the class:
@@ -45,7 +47,6 @@ class _SignUpState extends State<SignUp> {
   String username = '';
   String email = '';
   String password = '';
-  String error = '';
 
   @override
   Widget build(BuildContext context) {
@@ -226,12 +227,10 @@ class _SignUpState extends State<SignUp> {
                             // ~ We await for the result from the Firebase
                             dynamic result =
                                 await _auth.registerWithEmailAndPassword(
-                                    username, email, password, context);
+                                    username, email, password, showError);
                             // ~ If registration is NOT successful, we provide an error message.
                             if (result == null) {
                               setState(() {
-                                error =
-                                    'please supply a valid email or password';
                                 // * Here we decide to remove the loading screen
                                 loading = false;
                               });
@@ -263,4 +262,14 @@ class _SignUpState extends State<SignUp> {
             ),
           );
   }
+
+  void showError(String errorTitle, String errorMessage) async {
+    await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return customAlertBox(errorTitle,
+              errorMessage);
+        });
+  }
+
 }
