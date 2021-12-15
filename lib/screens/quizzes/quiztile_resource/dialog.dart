@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-
 class HeroDialogRoute<T> extends PageRoute<T> {
   HeroDialogRoute({
     required WidgetBuilder builder,
@@ -12,7 +11,6 @@ class HeroDialogRoute<T> extends PageRoute<T> {
         super(settings: settings, fullscreenDialog: fullscreenDialog);
 
   final WidgetBuilder _builder;
-
 
   @override
   bool get opaque => false;
