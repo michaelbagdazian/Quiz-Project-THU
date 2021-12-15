@@ -71,18 +71,18 @@ class QuizTile extends StatelessWidget {
                                             ))
                                     )),
                                 //////////////////////////////////////////////7
-                                //Quiz identifier
-                                Align(
-                                    alignment: Alignment.topRight,
-                                    child: Padding(
-                                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 4),
-                                        child: SizedBox(
-                                          //how big the picture should and the card itself
-                                            height: MediaQuery.of(context).size.height* 0.065,width: MediaQuery.of(context).size.height* 0.15,
-                                            child: Image.asset("assets/images/eddu.png") //<- here should be logik to change the picture
-                                        )
-                                    )
-                                ),
+                                // //Quiz identifier
+                                // Align(
+                                //     alignment: Alignment.topRight,
+                                //     child: Padding(
+                                //         padding: const EdgeInsets.fromLTRB(0, 0, 0, 4),
+                                //         child: SizedBox(
+                                //           //how big the picture should and the card itself
+                                //             height: MediaQuery.of(context).size.height* 0.065,width: MediaQuery.of(context).size.height* 0.15,
+                                //             child: Image.asset("assets/images/eddu.png") //<- here should be logik to change the picture
+                                //         )
+                                //     )
+                                // ),
 
                                 //Shared Icon
                                 Align(
@@ -153,7 +153,7 @@ class QuizTile extends StatelessWidget {
                                             ), child:const Padding(
                                             padding: EdgeInsets.fromLTRB(5.0, 1.0, 5.0, 0.0),
                                             child: Text(
-                                              '     Change Quiz',
+                                              'Edit Quiz',
                                               style: TextStyle(fontFamily: 'Lobster',fontSize: 13),
                                             ),
                                           ),
@@ -364,7 +364,6 @@ class _PopupCardState extends State<_PopupCard> {
                                                       text: '  Information:  ',
                                                       style: TextStyle(
                                                           fontFamily: 'Lobster',
-                                                          fontWeight: FontWeight.bold,
                                                           color: Colors.white,
                                                           fontSize: 19)),
                                                 ]
@@ -392,10 +391,10 @@ class _PopupCardState extends State<_PopupCard> {
                                               )
                                           ),
                                           child: RichText(
-                                            text: const TextSpan(
+                                            text: TextSpan(
                                                 children:[
                                                   TextSpan(
-                                                      text: '  Number of Questions:  ',
+                                                      text: '  Number of Questions:  ' + widget.quiz.listOfQuestions.length.toString() + '  ',
                                                       style: TextStyle(
                                                         fontFamily: 'Lobster',
                                                         fontWeight: FontWeight.bold,
@@ -425,10 +424,10 @@ class _PopupCardState extends State<_PopupCard> {
                                               )
                                           ),
                                           child: RichText(
-                                            text: const TextSpan(
+                                            text: TextSpan(
                                                 children:[
                                                   TextSpan(
-                                                      text: '  More Information:  ',
+                                                      text: '  More Information:  ' + widget.quiz.tags.join(", "),
                                                       style: TextStyle(
                                                         fontFamily: 'Lobster',
                                                         fontWeight: FontWeight.bold,
@@ -465,7 +464,7 @@ class _PopupCardState extends State<_PopupCard> {
                                             ),
                                             child:const Padding(
                                               padding: EdgeInsets.fromLTRB(5.0, 1.0, 5.0, 1.0),
-                                              child: Text('Change Quiz', style: TextStyle(fontFamily: 'Lobster',fontSize: 13),),
+                                              child: Text('Edit Quiz', style: TextStyle(fontFamily: 'Lobster',fontSize: 13),),
                                             ),
                                           ),
                                         )
@@ -496,7 +495,10 @@ class _PopupCardState extends State<_PopupCard> {
                                     Align(
                                         alignment: Alignment.bottomLeft,
                                         child: Container(width: MediaQuery.of(context).size.width * 0.20,
-                                          child: ElevatedButton(onPressed: () {},                                 //<-here for joining the quiz
+                                          child: ElevatedButton(
+                                            onPressed:() =>
+                                              Navigator.pushReplacementNamed(context, '/quizWrapper', arguments:
+                                              {'quiz': widget.quiz},),                                 //<-here for joining the quiz
                                             style: ElevatedButton.styleFrom(
                                               primary:  const Color (0xFFFF9800),
                                               shape: const RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(20), bottomRight: Radius.circular(20),),),
@@ -555,7 +557,7 @@ class _PopupCardState extends State<_PopupCard> {
                                             bottomRight: Radius.circular(20.0),
                                           )
                                       ),
-                                      child: Text("  The Owner of the quiz is: "+ "  "+ widget.quiz.quizOwner+"  ",
+                                      child: Text("     The Owner of the quiz is: "+ widget.quiz.quizOwner,
                                         style: const TextStyle(
                                             fontFamily: 'Lobster',
                                             fontWeight: FontWeight.bold,
