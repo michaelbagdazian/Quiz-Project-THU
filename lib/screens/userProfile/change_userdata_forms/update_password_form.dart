@@ -27,7 +27,8 @@ class _PasswordFormState extends State<PasswordForm> {
 
     if (userData != null && user != null) {
       return Container(
-        height: 230.0,
+        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+        height: 270.0,
         child: Form(
           key: _formKey,
           child: Column(

@@ -233,7 +233,7 @@ class DatabaseService {
     return await userDataCollection.doc(uid).set({
       'username': username,
       'email': email,
-      'avatar': avatar,
+      'avatars': avatar,
       'points': points,
     });
   }
@@ -264,7 +264,7 @@ class DatabaseService {
       uid: uid,
       username: snapshot['username'],
       email: snapshot['email'],
-      avatar: snapshot['avatar'],
+      avatar: snapshot['avatars'],
       points: snapshot['points'],
     );
   }

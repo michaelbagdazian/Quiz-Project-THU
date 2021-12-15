@@ -75,7 +75,7 @@ class AuthService {
 
       // ~ create a document in Firestore Database for that user with the UID
       // ~ Together with the Firebase User instance we create the entry of User Data in the Firebase
-      // ~ Username and email is provided, level is 0 and avatar is default
+      // ~ Username and email is provided, level is 0 and avatars is default
       await DatabaseService(uid: user!.uid)
           .updateUserData('anonymous', 'anonymous@gmail.com', 'anon.png', 0);
 
@@ -103,7 +103,7 @@ class AuthService {
 
       // ~ create a document in Firestore Database for that user with the UID
       // ~ Together with the Firebase User instance we create the entry of User Data in the Firebase
-      // ~ Username and email is provided, level is 0 and avatar is default
+      // ~ Username and email is provided, level is 0 and avatars is default
       await DatabaseService(uid: user!.uid)
           .updateUserData(username, email, 'default.png', 0);
 
