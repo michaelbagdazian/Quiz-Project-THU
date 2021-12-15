@@ -62,8 +62,7 @@ class MyApp extends StatelessWidget {
         },
         // TODO: Decide on a unified theme and copy it here
         theme: ThemeData.light().copyWith(
-          backgroundColor: background,
-        ),
+            backgroundColor: background, primaryColor: const Color(0xff309c9d)),
       ),
     );
   }
