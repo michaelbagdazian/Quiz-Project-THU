@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
           '/userProfile': (context) => const NavContainer(page: userProfile()),
           '/sharedQuizes': (context) => NavContainer(page: SharedQuizes()),
           '/myQuizes': (context) => const NavContainer(page: MyQuizes()),
-          '/welcome': (context) => const NavContainer(page: WelcominScreen()),
+          '/welcome': (context) => NavContainer(page: WelcominScreen()),
           '/register': (context) => const SignUp(),
           '/signin': (context) => const LogIn(),
           '/results': (context) => const NavContainer(page: Result()),
