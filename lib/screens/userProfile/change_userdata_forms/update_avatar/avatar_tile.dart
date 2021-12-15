@@ -13,7 +13,7 @@ class AvatarTile extends StatelessWidget {
       children: <Widget>[
         Text(
           avatar.key[0].toUpperCase() + avatar.key.substring(1),
-          style: TextStyle(fontSize: 18.0, color: Colors.white),
+          style: TextStyle(fontSize: 18.0, color: Colors.grey[400]),
         ),
         SizedBox(height: 15),
         Row(
@@ -66,5 +66,5 @@ class AvatarTile extends StatelessWidget {
       ],
     );
   }
-  
+
 }
