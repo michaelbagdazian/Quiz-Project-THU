@@ -285,7 +285,6 @@ class _PopupCardState extends State<_PopupCard> {
                                     child: Text("  "+widget.quiz.quizTitle+"  ",
                                         style: const TextStyle(
                                             fontFamily: 'Lobster',
-                                            fontWeight: FontWeight.bold,
                                             fontSize: 25,
                                             color: Colors.white
                                         )
@@ -335,7 +334,6 @@ class _PopupCardState extends State<_PopupCard> {
                                       child: Text("  "+widget.quiz.quizDescription+"  ",style:
                                       const TextStyle(
                                         fontFamily: 'Lobster',
-                                        fontWeight: FontWeight.bold,
                                         color: Colors.white,
                                         fontSize: 20,
                                       )
