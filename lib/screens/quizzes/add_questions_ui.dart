@@ -364,9 +364,11 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
     final List<Answer> answers = [];
     //~ Check if there is an answer to add at all
     if (_firstAnswer.text.isNotEmpty) {
+      print("_firstAnswer.text.isNotEmpty");
       answers.add(new Answer(answerText: _firstAnswer.text, isCorrect: _isFirstAnswerCorrect!));
     }
     if (_secondAnswer.text.isNotEmpty) {
+      print("_secondAnswer.text.isNotEmpty");
       answers.add(new Answer(answerText: _secondAnswer.text, isCorrect: _isSecondAnswerCorrect!));
     }
     if (_thirdAnswer.text.isNotEmpty) {
@@ -389,6 +391,10 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
           });
       //~ Exit this function
       return;
+    }
+
+    for(Answer answer in answers){
+      print(answer.answerText);
     }
 
     //~ Add a new Question to the list of questions

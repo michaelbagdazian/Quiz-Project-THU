@@ -111,7 +111,7 @@ class AuthService {
       //~ catch firebase exceptiom
     } on FirebaseAuthException catch (e) {
       //~ execute callback function passed from sign_in.dart which builds an alert box with a title and the message of the exception
-      showError("Log-in error!", e.message);
+      showError("Register error!", e.message);
     }
   }
 

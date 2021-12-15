@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../../models/quiz/answer.dart';
+
 class QuizComponent extends StatelessWidget {
   final String questionText;
-  final Map<String, bool> answers;
+  final List<Answer> answers;
   final bool buttonsActive;
   final bool showScoreScreen;
   final bool showCountdown;
@@ -47,12 +49,12 @@ class QuizComponent extends StatelessWidget {
             child: Flex(
               direction: Axis.vertical,
               crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: answers.entries
+              children: answers
                   .map((entry) => Container(
                         padding: const EdgeInsets.all(5),
                         child: TextButton(
                           child: Text(
-                            entry.key,
+                            entry.answerText,
                             style: const TextStyle(
                                 color: Colors.white, fontSize: 20),
                           ),
@@ -62,7 +64,7 @@ class QuizComponent extends StatelessWidget {
                               padding: const EdgeInsets.all(20)),
                           onPressed: buttonsActive
                               ? () {
-                                  if (entry.value) {
+                                  if (entry.isCorrect) {
                                     onCorrectAnswer();
                                   } else {
                                     onWrongAnswer();

@@ -173,9 +173,7 @@ class _ActiveQuizState extends State<ActiveQuiz> {
                             : widget.quiz.listOfQuestions
                                 .elementAt(currentQuestion)
                                 .questionText,
-                    answers: widget.quiz.listOfQuestions
-                        .elementAt(currentQuestion)
-                        .answers,
+                    answers: widget.quiz.listOfQuestions.elementAt(currentQuestion).answers,
                     onCorrectAnswer: () {
                       points++;
                       answerCorrect.add(1);

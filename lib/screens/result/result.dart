@@ -51,19 +51,19 @@ class Result extends StatelessWidget {
                                 ),
                               ),
                               Column(
-                                children: question.answers.entries
+                                children: question.answers
                                     .map((entry) => Container(
                                           margin: EdgeInsets.all(0.5 * em),
                                           width: double.infinity,
                                           decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(8),
-                                              color: entry.value
+                                              color: entry.isCorrect
                                                   ? Colors.green
                                                   : Colors.red),
                                           child: Padding(
                                             padding: EdgeInsets.all(1.5 * em),
-                                            child: Text(entry.key),
+                                            child: Text(entry.answerText),
                                           ),
                                         ))
                                     .toList(),
