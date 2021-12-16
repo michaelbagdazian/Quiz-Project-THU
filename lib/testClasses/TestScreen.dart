@@ -90,6 +90,17 @@ class _TestScreenState extends State<TestScreen> {
                                   user.uid, userData!.username, true));
                         }),
                     // * End of "create public quiz "
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(primary: buttons),
+                        child: const Text(
+                          'Test Loading screen',
+                          style: TextStyle(color: texts),
+                        ),
+                        // ! onPressed() :
+                        // ~ When button is pressed, the quiz is created in the DB and is displayed in myQuizes AND sharedQuizes, since it's public Quiz
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/loading');
+                        }),
                   ]),
                 ),
               );
