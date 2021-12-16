@@ -1,11 +1,11 @@
-import 'package:crew_brew/screens/home/home.dart';
+import 'package:crew_brew/testClasses/TestScreen.dart';
 import 'package:crew_brew/screens/quizzes/add_new_quiz_ui.dart';
 import 'package:crew_brew/screens/quizzes/my_quizzes.dart';
 import 'package:crew_brew/screens/quizzes/quiz_wrapper.dart';
 import 'package:crew_brew/screens/quizzes/shared_quizzes.dart';
 import 'package:crew_brew/screens/quizzes/add_questions_ui.dart';
 import 'package:crew_brew/screens/result/result.dart';
-import 'package:crew_brew/screens/userProfile/userProfile.dart';
+import 'package:crew_brew/screens/home/home.dart';
 import 'package:crew_brew/screens/wrapper.dart';
 import 'package:crew_brew/services/auth.dart';
 import 'package:provider/provider.dart';
@@ -48,8 +48,8 @@ class MyApp extends StatelessWidget {
         // ! routes
         // ~ Here we define all routes of our apps. They are mainly used in navigationBar/navBar.dart -> selectedItem()
         routes: {
+          '/testScreen': (context) => const NavContainer(page: TestScreen()),
           '/home': (context) => const NavContainer(page: Home()),
-          '/userProfile': (context) => const NavContainer(page: userProfile()),
           '/sharedQuizes': (context) => NavContainer(page: SharedQuizes()),
           '/myQuizes': (context) => const NavContainer(page: MyQuizes()),
           '/welcome': (context) => NavContainer(page: WelcominScreen()),

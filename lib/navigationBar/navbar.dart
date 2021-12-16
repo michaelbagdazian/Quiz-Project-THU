@@ -110,24 +110,15 @@ class _NavBarState extends State<NavBar> {
                         // * Start of items listed in the drawer
                         // * ====================================
                         ListTile(
-                          leading: const Icon(Icons.home, color: Colors.white),
-                          title: Text('Home',
-                              style: theme.textTheme.bodyText2!.copyWith(
-                                color: Colors.white,
-                              )),
-                          // ~ When tile is clicked, we are redirected to home page using support method defined below
-                          onTap: () => selectedItem(context, 'home'),
-                        ),
-                        ListTile(
                           leading: const Icon(
                             Icons.account_circle_sharp,
                             color: Colors.white,
                           ),
-                          title: Text('My profile',
+                          title: Text('Home',
                               style: theme.textTheme.bodyText2!.copyWith(
                                 color: Colors.white,
                               )),
-                          onTap: () => selectedItem(context, 'userProfile'),
+                          onTap: () => selectedItem(context, 'home'),
                         ),
                         ListTile(
                           leading:
@@ -170,14 +161,13 @@ class _NavBarState extends State<NavBar> {
                           onTap: () {},
                         ),
                         ListTile(
-                          leading:
-                              const Icon(Icons.settings, color: Colors.white),
-                          title: Text('Settings',
+                          leading: const Icon(Icons.perm_data_setting_sharp, color: Colors.white),
+                          title: Text('Test Screen',
                               style: theme.textTheme.bodyText2!.copyWith(
                                 color: Colors.white,
                               )),
-                          // TODO Redirect to settings page
-                          onTap: () {},
+                          // ~ When tile is clicked, we are redirected to home page using support method defined below
+                          onTap: () => selectedItem(context, 'testScreen'),
                         ),
                         Divider(
                           thickness: 0.08 * em,
