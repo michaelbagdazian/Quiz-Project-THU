@@ -39,6 +39,10 @@ class _OneAvatarEntryState extends State<OneAvatarEntry> {
         setState(() {
           lockOpacity = Colors.red.withOpacity(0.0);
         });
+      }else{
+        setState(() {
+          lockOpacity = Colors.redAccent.withOpacity(0.9);
+        });
       }
 
       return Column(
