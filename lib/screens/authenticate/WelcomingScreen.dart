@@ -12,17 +12,50 @@ import 'package:flutter/scheduler.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:crew_brew/shared/colors.dart';
 
-class WelcominScreen extends StatelessWidget {
+class WelcominScreen extends StatefulWidget {
   WelcominScreen({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<WelcominScreen> createState() => _WelcominScreenState();
+}
+
+class _WelcominScreenState extends State<WelcominScreen> {
   //couple of objects
   final CustomText _customText = CustomText();
+
   //couple of controllers
   final TextEditingController _pinController = TextEditingController();
+
   final TextEditingController _displayNameController = TextEditingController();
+
+// listen to changes on _displaycontroller
+  @override
+  void initState() {
+    super.initState();
+
+    // Start listening to changes.
+    _displayNameController.addListener(_getDisplayName);
+  }
+
+// delete listener when we leave the screen
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is removed from the widget tree.
+    // This also removes the _printLatestValue listener.
+    _displayNameController.dispose();
+    super.dispose();
+  }
+
+//get the changes from the _displaycontroller
+  Future _getDisplayName() async {
+    return _displayNameController.text;
+  }
+
   //size of the screen
   final AuthService _auth = AuthService();
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -58,8 +91,12 @@ class WelcominScreen extends StatelessWidget {
                   right: (0.2 * size.width),
                 ),
                 //*text field to add type in the display name; you can probably use the custom ones, but i will leave that to the frontend team
-                child: CustomTextField().customTextField(_displayNameController,
-                    'Display Name', size.width, TextInputType.text),
+                child: CustomTextField().customTextField(
+                  _displayNameController,
+                  'Display Name',
+                  size.width,
+                  TextInputType.text,
+                ),
               ),
               SizedBox(height: size.height * 0.01),
               Container(
@@ -93,7 +130,7 @@ class WelcominScreen extends StatelessWidget {
               ),
               SizedBox(height: size.height * 0.02),
               //* Button
-              joinButton(context, _displayNameController.text),
+              joinButton(context),
               SizedBox(height: size.height * 0.05),
               //*just a widget with the buttons for login or sign up
               //* frontend can improve the quality of this widget by using the custom Widgets; only if they want to
@@ -105,12 +142,14 @@ class WelcominScreen extends StatelessWidget {
     );
   }
 
-  Widget joinButton(BuildContext context, String _displayName) {
+  Widget joinButton(BuildContext context) {
     return FloatingActionButton.extended(
       heroTag: "joinButton",
       extendedPadding: EdgeInsets.fromLTRB(15, 40, 40, 40),
       extendedIconLabelSpacing: 20,
       onPressed: () async {
+        //get the entered display name
+        String _username = await _getDisplayName();
         // ~ Signin anonymously
         dynamic result = await _auth.signInAnon(() async {
           await showDialog(
@@ -118,7 +157,7 @@ class WelcominScreen extends StatelessWidget {
               builder: (BuildContext context) {
                 return customAlertBox("An Error Has Happened !!!", "");
               });
-        }, displayName: _displayName);
+        }, displayName: _username);
         // ~ If login is not succesful, we provide an error message
         if (result == null) {
           await showDialog(
@@ -210,15 +249,6 @@ class WelcominScreen extends StatelessWidget {
       ),
     );
   }
-
-  //?these are to redirect user to a link
-  // _launchURLBrowser() async {
-  //   const url = 'https://flutterdevs.com/';
-  //   if (await launch(url)) {
-  //   } else {
-  //     throw 'Could not launch $url';
-  //   }
-  // }
 
   //?these are to redirect user to a link
   _launchURLApp() async {
