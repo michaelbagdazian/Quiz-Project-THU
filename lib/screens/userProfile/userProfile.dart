@@ -29,7 +29,7 @@ class _userProfileState extends State<userProfile> {
   // ! States
   // ~ Here states of the profile page are defined
   int points = 0;
-  String avatar = 'default.png';
+  String avatar = 'assets/avatars/default.png';
   String username = '';
   String email = '';
   UserData? userData = null;
@@ -93,7 +93,7 @@ class _userProfileState extends State<userProfile> {
                   ],
                 ),
                 body: Padding(
-                  padding: EdgeInsets.fromLTRB(30.0, 40.0, 30.0, 0.0),
+                  padding: EdgeInsets.fromLTRB(30.0, 20.0, 30.0, 0.0),
                   child: Column(
                     // ~ This alligns everything to the left
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -105,13 +105,13 @@ class _userProfileState extends State<userProfile> {
                             child: CircleAvatar(
                               backgroundImage: AssetImage(avatar),
                               backgroundColor: Colors.grey[900],
-                              radius: 50.0,
+                              radius: 70.0,
                         ),
                       )),
                       // ~ This is a line which literally looks like divider
                       Divider(
                         // ~ This is the height between top element and bottom, not the line itself
-                        height: 70.0,
+                        height: 50.0,
                         color: Colors.grey[800],
                       ),
                       // * Start username field
