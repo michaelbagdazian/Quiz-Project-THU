@@ -279,60 +279,61 @@ class DatabaseService {
   // ~ update and validate user password
   // TODO Work on code quality
   Future<bool> changePassword(
-      String currentPassword, String newPassword, UserData userData) async {
+      String currentPassword, String newPassword, UserData userData, Function showError) async {
     final user = await FirebaseAuth.instance.currentUser;
+    bool isSuccess = true;
 
     if (user != null) {
       final cred = EmailAuthProvider.credential(
           email: userData.email, password: currentPassword);
 
-      user.reauthenticateWithCredential(cred).then((value) {
-        user.updatePassword(newPassword).then((_) {
-          print("Password updated");
-          return true;
+      await user.reauthenticateWithCredential(cred).then((value) async {
+        await user.updatePassword(newPassword).then((_) {
         }).catchError((error) {
-          print("Password was not updated");
-          return false;
+          showError("Password update failed", error.message);
+          isSuccess = false;
         });
       }).catchError((err) {
-        print("User could not be authenticated with these credentials");
-        return false;
+        showError("Authentication fail", err.message);
+        isSuccess = false;
       });
-      return true;
-    } else {
-      return false;
+    }else{
+      showError("Connection problem", "No internet or user is deleted");
+      isSuccess = false;
     }
+    return isSuccess;
   }
 
   // ! changeEmail
   // ~ This method change e-mail in firebase in userData
   // TODO Work on code quality
   Future<bool> changeEmail(
-      String currentPassword, String newEmail, UserData userData) async {
+      String currentPassword, String newEmail, UserData userData, Function showError) async {
     final user = await FirebaseAuth.instance.currentUser;
+    bool isSuccess = true;
 
     if (user != null) {
       final cred = EmailAuthProvider.credential(
           email: userData.email, password: currentPassword);
 
-      user.reauthenticateWithCredential(cred).then((value) {
-        user.updateEmail(newEmail).then((_) {
+      await user.reauthenticateWithCredential(cred).then((value) async {
+        await user.updateEmail(newEmail).then((_) {
           updateUserData(
               userData.username, newEmail, userData.avatar, userData.points);
-          print("Email updated");
-          return true;
         }).catchError((error) {
-          print("Email was not updated");
-          return false;
+          showError("E-mail update failed", error.message);
+          isSuccess = false;
         });
       }).catchError((err) {
-        print("User could not be authenticated with these credentials");
-        return false;
+        showError("Authentication fail", err.message);
+        isSuccess = false;
       });
-      return true;
     } else {
-      return false;
+      showError("Connection problem", "No internet or user is deleted");
+      isSuccess = false;
     }
+
+    return isSuccess;
   }
 
 // * ==================================================
