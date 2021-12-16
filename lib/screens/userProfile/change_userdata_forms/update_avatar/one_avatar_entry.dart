@@ -53,7 +53,6 @@ class _OneAvatarEntryState extends State<OneAvatarEntry> {
               InkWell(
                 onTap: () {
                   if (canSelect) {
-                    print("can select");
                     if (backgroundColor == Colors.green[800]) {
                       /// ~ Unselect if user taps on the avatar which is already selected
                       widget.setLastTapped(null, null);
@@ -62,7 +61,6 @@ class _OneAvatarEntryState extends State<OneAvatarEntry> {
                       widget.setLastTapped(widget, toggleColor);
                     }
                   } else {
-                    print("cannot select");
                     blinkRed();
                   }
                 },

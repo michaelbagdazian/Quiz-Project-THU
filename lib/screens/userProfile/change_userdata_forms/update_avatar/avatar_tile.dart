@@ -46,7 +46,6 @@ class AvatarTile extends StatelessWidget {
   void setLastTapped(OneAvatarEntry? lastTapped, Function? toggleCollor) {
     if(toggleLastTappedColor != null){
       toggleLastTappedColor!();
-      print("here");
     }
 
     this.toggleLastTappedColor = toggleCollor;
