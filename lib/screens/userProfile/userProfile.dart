@@ -69,6 +69,7 @@ class _userProfileState extends State<userProfile> {
               avatar = userData.avatar;
               username = userData.username;
               email = userData.email;
+              print("AVATAR IS:" + avatar);
 
               return Scaffold(
                 // ! NavBar():
@@ -102,7 +103,7 @@ class _userProfileState extends State<userProfile> {
                           child: InkWell(
                             onTap: () => _showSettingsPanel("avatars"),
                             child: CircleAvatar(
-                              backgroundImage: AssetImage('assets/menu_images/$avatar'),
+                              backgroundImage: AssetImage(avatar),
                               backgroundColor: Colors.grey[900],
                               radius: 50.0,
                         ),

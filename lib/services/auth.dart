@@ -78,7 +78,7 @@ class AuthService {
       // ~ Together with the Firebase User instance we create the entry of User Data in the Firebase
       // ~ Username and email is provided, level is 0 and avatars is default
       await DatabaseService(uid: user!.uid)
-          .updateUserData(displayName, 'anonymous@gmail.com', 'anon.png', 0);
+          .updateUserData(displayName, 'anonymous@gmail.com', 'assets/avatars/default.png', 0);
 
       // ~ When we call signInAnon method from signIn page, then it will return user object to that sign in widget where we called this method
       return _userFromFirebaseUser(user);
@@ -106,7 +106,7 @@ class AuthService {
       // ~ Together with the Firebase User instance we create the entry of User Data in the Firebase
       // ~ Username and email is provided, level is 0 and avatars is default
       await DatabaseService(uid: user!.uid)
-          .updateUserData(username, email, 'default.png', 0);
+          .updateUserData(username, email, 'assets/avatars/default.png', 0);
 
       return _userFromFirebaseUser(user);
       //~ catch firebase exceptiom
