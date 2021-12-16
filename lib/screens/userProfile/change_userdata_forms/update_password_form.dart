@@ -87,7 +87,10 @@ class _PasswordFormState extends State<PasswordForm> {
         ),
       );
     } else {
-      return Loading();
+      return Container(
+          height: 270.0,
+          child: Loading()
+      );
     }
   }
 

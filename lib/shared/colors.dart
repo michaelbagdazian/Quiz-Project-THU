@@ -26,7 +26,7 @@ const Color navbarb = Color(0xFF2196F3);
 
 //loading
 
-const Color loading1 = Color(0xFFFFFFFF);
+Color loading1 = Colors.grey[900]!;
 const Color loading2 = Color(0xFF082C8E);
 
 //quizzes
