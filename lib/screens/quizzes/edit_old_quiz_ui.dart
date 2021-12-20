@@ -41,13 +41,15 @@ class _EditQuizzUIState extends State<EditQuizzUI> {
 
   bool? isQuizzPublic = false;
 
+  late Quiz quiz;
+
   UserData? userData;
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     Map data = ModalRoute.of(context)!.settings.arguments as Map;
-    Quiz quiz = data['quiz'] as Quiz;
+    quiz = data['quiz'] as Quiz;
     quizTitle.text = quiz.quizTitle;
     quizDescription!.text = quiz.quizDescription;
     tags!.text = quiz.tags.join(", ");
@@ -234,13 +236,8 @@ class _EditQuizzUIState extends State<EditQuizzUI> {
       List<String> ListOfTags =
           tags != null ? tags!.text.split(',') : ['generic'];
       Navigator.popAndPushNamed(context, '/EditQuestionsUI', arguments: {
-        'UserName': UserName,
-        'QuizzTitle': quizTitle.text,
-        'QuizzCategory': ChoosenCategory,
-        'isQuizzPublic': isQuizzPublic,
-        'OwnerUId': userData!.uid,
-        'QuizzDescription': quizDescription!.text,
-        'Tags': ListOfTags,
+        'quiz': quiz,
+
       });
     } catch (e) {
       print(e.toString());
