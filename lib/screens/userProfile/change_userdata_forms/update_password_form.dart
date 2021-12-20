@@ -6,6 +6,7 @@ import '../../../models/user/UserData.dart';
 import '../../../services/database.dart';
 import '../../../shared/colors.dart';
 import '../../../shared/constants.dart';
+import '../../../shared/customWidgets/customAlertBox.dart';
 import '../../../shared/loading.dart';
 
 class PasswordForm extends StatefulWidget {
@@ -19,15 +20,17 @@ class _PasswordFormState extends State<PasswordForm> {
   // form values
   String _currentPassword = "";
   String _newPassword = "";
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
     final userData = Provider.of<UserData?>(context);
     final user = Provider.of<AppUser?>(context);
 
-    if (userData != null && user != null) {
+    if (userData != null && user != null && !isLoading) {
       return Container(
-        height: 230.0,
+        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+        height: 270.0,
         child: Form(
           key: _formKey,
           child: Column(
@@ -65,9 +68,18 @@ class _PasswordFormState extends State<PasswordForm> {
                   ),
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      await DatabaseService(uid: user.uid).changePassword(
-                          _currentPassword, _newPassword, userData);
-                      Navigator.pop(context);
+                      setState(() {
+                        isLoading = true;
+                      });
+                      await DatabaseService(uid: user.uid)
+                          .changePassword(_currentPassword, _newPassword,
+                              userData, showError)
+                          .then((value) => {
+                                setState(() {
+                                  isLoading = false;
+                                }),
+                                if (value == true) Navigator.pop(context)
+                              });
                     }
                   }),
             ],
@@ -75,7 +87,18 @@ class _PasswordFormState extends State<PasswordForm> {
         ),
       );
     } else {
-      return Loading();
+      return Container(
+          height: 270.0,
+          child: Loading()
+      );
     }
+  }
+
+  void showError(String errorTitle, String errorMessage) async {
+    await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return customAlertBox(errorTitle, errorMessage);
+        });
   }
 }

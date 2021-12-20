@@ -26,7 +26,8 @@ class _UsernameFormState extends State<UsernameForm> {
 
     if (userData != null && user != null) {
       return Container(
-        height: 170.0,
+        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+        height: 200.0,
         child: Form(
           key: _formKey,
           child: Column(

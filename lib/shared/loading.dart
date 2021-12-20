@@ -19,9 +19,9 @@ class Loading extends StatelessWidget {
       color: loading1,
       child: const Center(
         // ~ Another spinners can be selected here https://pub.dev/packages/flutter_spinkit
-        child: SpinKitChasingDots(
+        child: SpinKitSpinningLines(
           color: loading2,
-          size: 50.0,
+          size: 200.0,
         ),
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:crew_brew/screens/userProfile/change_userdata_forms/update_avatar/update_avatar_form.dart';
 import 'package:crew_brew/screens/userProfile/change_userdata_forms/update_email_form.dart';
 import 'package:crew_brew/screens/userProfile/change_userdata_forms/update_password_form.dart';
 import 'package:crew_brew/screens/userProfile/change_userdata_forms/update_username_form.dart';
@@ -32,6 +33,8 @@ class UpdateFormsWrapper extends StatelessWidget {
       selectedForm = EmailForm();
     } else if (this.command == "username") {
       selectedForm = UsernameForm();
+    } else if(this.command == "avatars"){
+      selectedForm = AvatarForm();
     }
 
     final user = Provider.of<AppUser?>(context);
