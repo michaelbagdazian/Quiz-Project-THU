@@ -3,6 +3,7 @@
 import 'dart:io';
 
 import 'package:crew_brew/models/quiz/Quiz.dart';
+import 'package:crew_brew/models/quiz/answer.dart';
 import 'package:crew_brew/models/quiz/question.dart';
 import 'package:crew_brew/navigationBar/menu_button.dart';
 import 'package:crew_brew/services/AddQuestion.dart';
@@ -37,21 +38,21 @@ class EditQuestionsUI extends StatefulWidget {
 class _EditQuestionsUIState extends State<EditQuestionsUI> {
   //defining some TextEditingControllers to handle user's input
   //~ Question Text
-  final TextEditingController question = TextEditingController();
+  final TextEditingController _question = TextEditingController();
   //~ First Answer
-  final TextEditingController firstAnswer = TextEditingController();
+  final TextEditingController _firstAnswer = TextEditingController();
   //~ Second Answer
-  final TextEditingController secondAnswer = TextEditingController();
+  final TextEditingController _secondAnswer = TextEditingController();
   //~ Third Answer
-  final TextEditingController thirdAnswer = TextEditingController();
+  final TextEditingController _thirdAnswer = TextEditingController();
   //~ Fourth Answer
-  final TextEditingController fourthAnswer = TextEditingController();
+  final TextEditingController _fourthAnswer = TextEditingController();
 
   //~ instance of a CustomTextField
   final CustomTextField _customTextField = CustomTextField();
 
   //~instance of AddQuestions
-  late AddQuestions _ListOfQuestions = AddQuestions();
+  late AddQuestions _addQuestion = AddQuestions();
 
   //~ Our Current Question; normally it should be the last question in our question list
   Question? _Currquestion = null;
@@ -74,20 +75,17 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
   //* Build Widget Starts here
   @override
   Widget build(BuildContext context) {
-
     Size size = MediaQuery.of(context).size;
     Map data = ModalRoute.of(context)!.settings.arguments as Map;
     quiz = data['quiz'] as Quiz;
-   _ListOfQuestions.setQuestions(quiz.listOfQuestions);
-   _Currquestion = _ListOfQuestions.getLastQuestion();
-
-
+    _addQuestion.setQuestions(quiz.listOfQuestions);
+    _Currquestion = _addQuestion.getLastQuestion();
 
     //~ Determining the number of total steps for the progress bar indicator
     StepProgressBarIndicatorSteps = _Currquestion == null
-        ? ValueNotifier<int>(_ListOfQuestions.getQuestions().length)
+        ? ValueNotifier<int>(_addQuestion.getQuestions().length)
         : ValueNotifier<int>(
-            _ListOfQuestions.getQuestions().indexOf(_Currquestion!) + 2);
+            _addQuestion.getQuestions().indexOf(_Currquestion!) + 2);
     //~ getting the arguments from the previous screen
     args = ModalRoute.of(context)!.settings.arguments;
     //~ Get the size of the screen
@@ -181,7 +179,7 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
                           onPressed: () async => {
                                 //? Incrementing dashes here
                                 if (StepProgressBarIndicatorSteps.value <
-                                    _ListOfQuestions.getQuestions().length + 1)
+                                    _addQuestion.getQuestions().length + 1)
                                   {
                                     StepProgressBarIndicatorSteps.value++,
                                   }
@@ -200,7 +198,7 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
             SizedBox(
               width: size.width / 1.1,
               child: TextField(
-                controller: question, // Controller to control the text
+                controller: _question, // Controller to control the text
                 keyboardType: TextInputType.multiline,
                 decoration: InputDecoration(
                   hintText: "Question",
@@ -245,7 +243,7 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 //* field for answer 1
-                _customTextField.customTextField(firstAnswer, "Answer 1:",
+                _customTextField.customTextField(_firstAnswer, "Answer 1:",
                     size.width / 1.3, TextInputType.text),
                 //* Checkbox for answer 1
                 Checkbox(
@@ -265,7 +263,7 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _customTextField.customTextField(secondAnswer, "Answer 2:",
+                _customTextField.customTextField(_secondAnswer, "Answer 2:",
                     size.width / 1.3, TextInputType.text),
                 Checkbox(
                     value: _isSecondAnswerCorrect,
@@ -284,7 +282,7 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _customTextField.customTextField(thirdAnswer, "Answer 3:",
+                _customTextField.customTextField(_thirdAnswer, "Answer 3:",
                     size.width / 1.3, TextInputType.text),
                 Checkbox(
                     value: _isThirdAnswerCorrect,
@@ -303,7 +301,7 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _customTextField.customTextField(fourthAnswer, "Answer 4:",
+                _customTextField.customTextField(_fourthAnswer, "Answer 4:",
                     size.width / 1.3, TextInputType.text),
                 Checkbox(
                     value: _isFourthAnswerCorrect,
@@ -354,10 +352,10 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
 //~ This Future adds Questions to our current list of questions, this gets called everytime the user adds a question
   Future addQuestionButtonFunc() async {
     //~ This checks if we are adding a new question or editing an existing one
-    if (_ListOfQuestions.Questions.isNotEmpty) {
-      if (_Currquestion != _ListOfQuestions.getLastQuestion()) {
+    if (_addQuestion.Questions.isNotEmpty) {
+      if (_Currquestion != _addQuestion.getLastQuestion()) {
         //~ If editing, then we remove the old Question
-        _ListOfQuestions.removeQuestion(_Currquestion!);
+        _addQuestion.removeQuestion(_Currquestion!);
       }
     }
     //~ The Following int is used to check if there is no correct answers
@@ -369,24 +367,31 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
     if (_isFourthAnswerCorrect == true) _numberOfCorrectAnswers += 1;
 
     //~ Create a map to store our answers in
-    final Map<String, bool> answers = <String, bool>{};
+    final List<Answer> answers = [];
+
     //~ Check if there is an answer to add at all
-    if (firstAnswer.text.isNotEmpty) {
-      answers.putIfAbsent(firstAnswer.text, () => _isFirstAnswerCorrect!);
+    if (_firstAnswer.text.isNotEmpty) {
+      print("_firstAnswer.text.isNotEmpty");
+      answers.add(new Answer(
+          answerText: _firstAnswer.text, isCorrect: _isFirstAnswerCorrect!));
     }
-    if (secondAnswer.text.isNotEmpty) {
-      answers.putIfAbsent(secondAnswer.text, () => _isSecondAnswerCorrect!);
+    if (_secondAnswer.text.isNotEmpty) {
+      print("_secondAnswer.text.isNotEmpty");
+      answers.add(new Answer(
+          answerText: _secondAnswer.text, isCorrect: _isSecondAnswerCorrect!));
     }
-    if (thirdAnswer.text.isNotEmpty) {
-      answers.putIfAbsent(thirdAnswer.text, () => _isThirdAnswerCorrect!);
+    if (_thirdAnswer.text.isNotEmpty) {
+      answers.add(new Answer(
+          answerText: _thirdAnswer.text, isCorrect: _isThirdAnswerCorrect!));
     }
-    if (fourthAnswer.text.isNotEmpty) {
-      answers.putIfAbsent(fourthAnswer.text, () => _isFourthAnswerCorrect!);
+    if (_fourthAnswer.text.isNotEmpty) {
+      answers.add(new Answer(
+          answerText: _fourthAnswer.text, isCorrect: _isFourthAnswerCorrect!));
     }
 
     //~ If user didn't mark at least one answer as correct answer
     if (_numberOfCorrectAnswers == 0 ||
-        question.text.isEmpty ||
+        _question.text.isEmpty ||
         answers.isEmpty) {
       //~ show a alert box to inform user that they need to mark at least one answer as correct
       await showDialog(
@@ -400,22 +405,22 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
     }
 
     //~ Add a new Question to the list of questions
-    _ListOfQuestions.addNewQuestion(question.text, answers, context);
+    _addQuestion.addNewQuestion(_question.text, answers, context);
     //~ Add a step in the progress indicator
     StepProgressBarIndicatorSteps.value++;
     //~ Move the pointer of the Current Question to get the new last question
-    _Currquestion = _ListOfQuestions.getLastQuestion();
+    _Currquestion = _addQuestion.getLastQuestion();
     //~ resets everything on screen
     clearFunc();
   }
 
 //~ This function clears and resets everything (text fields and checkboxes) on the screen, this can be used when a new Question is to be Added or if user clicks on clear button
   VoidCallback? clearFunc() {
-    question.clear();
-    firstAnswer.clear();
-    secondAnswer.clear();
-    thirdAnswer.clear();
-    fourthAnswer.clear();
+    _question.clear();
+    _firstAnswer.clear();
+    _secondAnswer.clear();
+    _thirdAnswer.clear();
+    _fourthAnswer.clear();
 
     _isFirstAnswerCorrect = false;
     _isSecondAnswerCorrect = false;
@@ -426,11 +431,10 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
   //~ This Future creates a new quizz object and adds the list of questions to it
   Future submitButtonFunc() async {
     //? this is so that if the user had one last question that they forgot to add, submit button will add it for them
-    if (question.text != "") addQuestionButtonFunc();
+    if (_question.text != "") addQuestionButtonFunc();
 
 //? Send the Quizz to firebase
-    await DatabaseService(uid: quiz.quizOwnerUID)
-        .updateQuizData(quiz);
+    await DatabaseService(uid: quiz.quizOwnerUID).updateQuizData(quiz);
 
     await showDialog(
         context: context,
@@ -444,62 +448,59 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
   //~This function is for navigating through questions (BackWards)
   void goToPreviousQuestin() {
     //~ Checks if we have at least one question in our list
-    if (_Currquestion == null || _ListOfQuestions.getQuestions().length == 1) {
+    if (_Currquestion == null || _addQuestion.getQuestions().length == 1) {
       return;
     }
 
     //~ Move CurrQuestion to the previous question, but we check if we have reached the first question, in which case, we don't go back anymore
-    if (_ListOfQuestions.getQuestions().indexOf(_Currquestion!) > 0) {
-      _Currquestion = _ListOfQuestions.getQuestions()[
-          _ListOfQuestions.getQuestions().indexOf(_Currquestion!) - 1];
+    if (_addQuestion.getQuestions().indexOf(_Currquestion!) > 0) {
+      _Currquestion = _addQuestion.getQuestions()[
+          _addQuestion.getQuestions().indexOf(_Currquestion!) - 1];
     }
   }
 
   //~This function is for navigating through questions (Forward)
   void goToNextQuestion() {
-    if (_Currquestion == null || _ListOfQuestions.getQuestions().length == 1) {
+    if (_Currquestion == null || _addQuestion.getQuestions().length == 1) {
       return;
     }
-    if (_ListOfQuestions.getQuestions().indexOf(_Currquestion!) <
-        _ListOfQuestions.getQuestions()
-            .indexOf(_ListOfQuestions.getLastQuestion()!)) {
-      _Currquestion = _ListOfQuestions.getQuestions()[
-          _ListOfQuestions.getQuestions().indexOf(_Currquestion!) + 1];
+    if (_addQuestion.getQuestions().indexOf(_Currquestion!) <
+        _addQuestion.getQuestions().indexOf(_addQuestion.getLastQuestion()!)) {
+      _Currquestion = _addQuestion.getQuestions()[
+          _addQuestion.getQuestions().indexOf(_Currquestion!) + 1];
     } else {
-      _Currquestion != _ListOfQuestions.getLastQuestion();
+      _Currquestion != _addQuestion.getLastQuestion();
       IsLastQuestion++;
     }
   }
 
-//~ The Following Future prints the data of the current question on the screen
   Future PrintStuffOnScreen() async {
     //~ Edit the question controller to actually display the text from our current question
-    question.text = _Currquestion!.questionText;
+    _question.text = _Currquestion!.questionText;
     //~ ...
-    firstAnswer.text = _Currquestion!.answers.entries.elementAt(0).key;
-    secondAnswer.text = _Currquestion!.answers.entries.length >= 2
-        ? _Currquestion!.answers.entries.elementAt(1).key
+    _firstAnswer.text = _Currquestion!.answers[0].answerText;
+    _secondAnswer.text = _Currquestion!.answers.length >= 2
+        ? _Currquestion!.answers[1].answerText
         : "";
-    thirdAnswer.text = _Currquestion!.answers.entries.length >= 3
-        ? _Currquestion!.answers.entries.elementAt(2).key
+    _thirdAnswer.text = _Currquestion!.answers.length >= 3
+        ? _Currquestion!.answers[2].answerText
         : "";
-    fourthAnswer.text = _Currquestion!.answers.entries.length >= 4
-        ? _Currquestion!.answers.entries.elementAt(3).key
+    _fourthAnswer.text = _Currquestion!.answers.length >= 4
+        ? _Currquestion!.answers[3].answerText
         : "";
-    _isFirstAnswerCorrect = _Currquestion!.answers.entries.elementAt(0).value;
-    _isSecondAnswerCorrect = _Currquestion!.answers.entries.length >= 2
-        ? _Currquestion!.answers.entries.elementAt(1).value
+    _isFirstAnswerCorrect = _Currquestion!.answers[0].isCorrect;
+    _isSecondAnswerCorrect = _Currquestion!.answers.length >= 2
+        ? _Currquestion!.answers[1].isCorrect
         : false;
-    _isThirdAnswerCorrect = _Currquestion!.answers.entries.length >= 3
-        ? _Currquestion!.answers.entries.elementAt(2).value
+    _isThirdAnswerCorrect = _Currquestion!.answers.length >= 3
+        ? _Currquestion!.answers[2].isCorrect
         : false;
-    _isFourthAnswerCorrect = _Currquestion!.answers.entries.length >= 4
-        ? _Currquestion!.answers.entries.elementAt(3).value
+    _isFourthAnswerCorrect = _Currquestion!.answers.length >= 4
+        ? _Currquestion!.answers[3].isCorrect
         : false;
 
     //?check if we pressed forward again after our CurrQuestion=last question
-    if (StepProgressBarIndicatorSteps.value >
-        _ListOfQuestions.Questions.length) {
+    if (StepProgressBarIndicatorSteps.value > _addQuestion.Questions.length) {
       clearFunc();
     }
   }
