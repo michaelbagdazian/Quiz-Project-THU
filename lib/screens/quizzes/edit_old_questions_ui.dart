@@ -91,8 +91,7 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
     //~ Get the size of the screen
     //Size size = MediaQuery.of(context).size;
     return Scaffold(
-      resizeToAvoidBottomInset:
-          false, //~ this is here so we don't have an overflow problem
+      // resizeToAvoidBottomInset: false, //~ this is here so we don't have an overflow problem
       //* AppBar
       appBar: AppBar(
         title: const Text(
@@ -103,7 +102,7 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
           ),
         ),
         backgroundColor: Colors.teal,
-        leading: const MenuButton(),
+        //leading: const MenuButton(),
       ),
       //* Container of all widgets
       body: Container(
@@ -113,237 +112,239 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
           image: DecorationImage(
               image: AssetImage('assets/images/bgtop.png'), fit: BoxFit.cover),
         ),
-        child: Column(
-          //* A Column that has it all
-          crossAxisAlignment: CrossAxisAlignment.center,
-          //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            //* empty space
-            SizedBox(
-              height: size.height * 0.003,
-            ),
-            //* ProgressBar Starts here
-            ValueListenableBuilder<int>(
-                valueListenable: StepProgressBarIndicatorSteps,
-                builder: (context, value, _) {
-                  //* Row that contains two arrows and dashes
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      //* Back Arrow
-                      IconButton(
-                        enableFeedback: true,
-                        icon: const Icon(
-                          //* Icon of the icon button (arrow)
-                          Icons.arrow_back_ios_rounded,
-                          color: Colors.black,
-                        ),
-                        onPressed: () async => {
-                          //? Decrementing dashes here
-                          if (StepProgressBarIndicatorSteps.value > 1)
-                            {
-                              StepProgressBarIndicatorSteps.value--,
-                            }
-                          else
-                            null,
-                          //? getting the values of the current question
-                          await PrintStuffOnScreen(),
-                          //? set CurrQuestion as CurrQuestion.previous
-                          goToPreviousQuestin(),
-                        },
-                      ),
-                      SizedBox(
-                        width: value * 1,
-                      ),
-                      //* Dashes
-                      SizedBox(
-                        width: size.width * 0.7,
-                        child: StepProgressIndicator(
-                          totalSteps: value,
-                          currentStep: value,
-                          selectedColor: Colors.orange,
-                        ),
-                      ),
-                      SizedBox(
-                        width: value * 1,
-                      ),
-                      //* Forward Arrow
-                      IconButton(
+        child: SingleChildScrollView(
+          child: Column(
+            //* A Column that has it all
+            crossAxisAlignment: CrossAxisAlignment.center,
+            //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              //* empty space
+              SizedBox(
+                height: size.height * 0.003,
+              ),
+              //* ProgressBar Starts here
+              ValueListenableBuilder<int>(
+                  valueListenable: StepProgressBarIndicatorSteps,
+                  builder: (context, value, _) {
+                    //* Row that contains two arrows and dashes
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        //* Back Arrow
+                        IconButton(
                           enableFeedback: true,
                           icon: const Icon(
-                            Icons.arrow_forward_ios_rounded,
+                            //* Icon of the icon button (arrow)
+                            Icons.arrow_back_ios_rounded,
                             color: Colors.black,
                           ),
                           onPressed: () async => {
-                                //? Incrementing dashes here
-                                if (StepProgressBarIndicatorSteps.value <
-                                    _addQuestion.getQuestions().length + 1)
-                                  {
-                                    StepProgressBarIndicatorSteps.value++,
-                                  }
-                                else
-                                  null,
-                                //? Set CurrQuestion as CurrQuestion.next
-                                goToNextQuestion(),
-                                //? getting the values of the current question
-                                await PrintStuffOnScreen(),
-                              }),
-                    ],
-                  );
-                }),
-            SizedBox(height: size.height * 0.01),
-            //* Question Field
-            SizedBox(
-              width: size.width / 1.1,
-              child: TextField(
-                controller: _question, // Controller to control the text
-                keyboardType: TextInputType.multiline,
-                decoration: InputDecoration(
-                  hintText: "Question",
-                  hintStyle: const TextStyle(
-                    color: Colors.white60,
-                    fontFamily: 'Lobster',
-                    fontSize: 30,
-                  ),
-                  //* This is an icon that can be clicked to clear all, it is placed inside the Text Field
-                  suffixIcon: IconButton(
-                    //* Clear All icon
-                    onPressed: () async {
-                      //* Prompts the user to confirm
-                      var conf = customConfirmationBox(
-                          label: 'Please Confirm',
-                          content:
-                              'Are you sure you want to clear everthing ?');
-                      //* stores what the user has choosen
-                      bool val = await conf.ConfirmPopUp(context);
-                      //* if it the user has confirmed, clear
-                      if (val == true) clearFunc();
-                    },
-                    icon: const Icon(
-                      Icons.layers_clear_outlined,
-                      color: Colors.black,
+                            //? Decrementing dashes here
+                            if (StepProgressBarIndicatorSteps.value > 1)
+                              {
+                                StepProgressBarIndicatorSteps.value--,
+                              }
+                            else
+                              null,
+                            //? getting the values of the current question
+                            await PrintStuffOnScreen(),
+                            //? set CurrQuestion as CurrQuestion.previous
+                            goToPreviousQuestin(),
+                          },
+                        ),
+                        SizedBox(
+                          width: value * 1,
+                        ),
+                        //* Dashes
+                        SizedBox(
+                          width: size.width * 0.7,
+                          child: StepProgressIndicator(
+                            totalSteps: value,
+                            currentStep: value,
+                            selectedColor: Colors.orange,
+                          ),
+                        ),
+                        SizedBox(
+                          width: value * 1,
+                        ),
+                        //* Forward Arrow
+                        IconButton(
+                            enableFeedback: true,
+                            icon: const Icon(
+                              Icons.arrow_forward_ios_rounded,
+                              color: Colors.black,
+                            ),
+                            onPressed: () async => {
+                                  //? Incrementing dashes here
+                                  if (StepProgressBarIndicatorSteps.value <
+                                      _addQuestion.getQuestions().length + 1)
+                                    {
+                                      StepProgressBarIndicatorSteps.value++,
+                                    }
+                                  else
+                                    null,
+                                  //? Set CurrQuestion as CurrQuestion.next
+                                  goToNextQuestion(),
+                                  //? getting the values of the current question
+                                  await PrintStuffOnScreen(),
+                                }),
+                      ],
+                    );
+                  }),
+              SizedBox(height: size.height * 0.01),
+              //* Question Field
+              SizedBox(
+                width: size.width / 1.1,
+                child: TextField(
+                  controller: _question, // Controller to control the text
+                  keyboardType: TextInputType.multiline,
+                  decoration: InputDecoration(
+                    hintText: "Question",
+                    hintStyle: const TextStyle(
+                      color: Colors.white60,
+                      fontFamily: 'Lobster',
+                      fontSize: 30,
+                    ),
+                    //* This is an icon that can be clicked to clear all, it is placed inside the Text Field
+                    suffixIcon: IconButton(
+                      //* Clear All icon
+                      onPressed: () async {
+                        //* Prompts the user to confirm
+                        var conf = customConfirmationBox(
+                            label: 'Please Confirm',
+                            content:
+                                'Are you sure you want to clear everthing ?');
+                        //* stores what the user has choosen
+                        bool val = await conf.ConfirmPopUp(context);
+                        //* if it the user has confirmed, clear
+                        if (val == true) clearFunc();
+                      },
+                      icon: const Icon(
+                        Icons.layers_clear_outlined,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
-                ),
-                style: const TextStyle(
-                  fontSize: 20,
+                  style: const TextStyle(
+                    fontSize: 20,
+                  ),
                 ),
               ),
-            ),
 
-            //* empty space
-            SizedBox(
-              height: size.height * 0.07,
-            ),
+              //* empty space
+              SizedBox(
+                height: size.height * 0.07,
+              ),
 
-            //* Text Field + Checkbox next to it
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                //* field for answer 1
-                _customTextField.customTextField(_firstAnswer, "Answer 1:",
-                    size.width / 1.3, TextInputType.text),
-                //* Checkbox for answer 1
-                Checkbox(
-                    value: _isFirstAnswerCorrect,
-                    onChanged: (bool? value) {
-                      setState(() {
-                        _isFirstAnswerCorrect = value;
-                      });
-                    }),
-              ],
-            ),
-            //* empty space
-            SizedBox(
-              height: size.height * 0.02,
-            ),
-            //* Text Field + Checkbox next to it
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _customTextField.customTextField(_secondAnswer, "Answer 2:",
-                    size.width / 1.3, TextInputType.text),
-                Checkbox(
-                    value: _isSecondAnswerCorrect,
-                    onChanged: (bool? value) {
-                      setState(() {
-                        _isSecondAnswerCorrect = value;
-                      });
-                    }),
-              ],
-            ),
-            //* empty space
-            SizedBox(
-              height: size.height * 0.02,
-            ),
-            //* Text Field + Checkbox next to it
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _customTextField.customTextField(_thirdAnswer, "Answer 3:",
-                    size.width / 1.3, TextInputType.text),
-                Checkbox(
-                    value: _isThirdAnswerCorrect,
-                    onChanged: (bool? value) {
-                      setState(() {
-                        _isThirdAnswerCorrect = value;
-                      });
-                    }),
-              ],
-            ),
-            //* empty space
-            SizedBox(
-              height: size.height * 0.02,
-            ),
-            //* Text Field + Checkbox next to it
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _customTextField.customTextField(_fourthAnswer, "Answer 4:",
-                    size.width / 1.3, TextInputType.text),
-                Checkbox(
-                    value: _isFourthAnswerCorrect,
-                    onChanged: (bool? value) {
-                      setState(() {
-                        _isFourthAnswerCorrect = value;
-                      });
-                    }),
-              ],
-            ),
-            //* empty space
-            SizedBox(
-              height: size.height - size.height * 0.87,
-            ),
-            //* 'Add Question' Button + 'Submit Quizz' Button
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                //* Button To Submit the Quizz
-                CustomButton(
-                    label: "Submit",
-                    backgroundcolor: Colors.orange,
-                    function: submitButtonFunc),
-                SizedBox(
-                  width: size.width * 0.3,
-                ),
-                //* Button To Add a question
-                FloatingActionButton(
-                  child: const Icon(
-                    Icons.add_sharp,
+              //* Text Field + Checkbox next to it
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  //* field for answer 1
+                  _customTextField.customTextField(_firstAnswer, "Answer 1:",
+                      size.width / 1.3, TextInputType.text),
+                  //* Checkbox for answer 1
+                  Checkbox(
+                      value: _isFirstAnswerCorrect,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          _isFirstAnswerCorrect = value;
+                        });
+                      }),
+                ],
+              ),
+              //* empty space
+              SizedBox(
+                height: size.height * 0.02,
+              ),
+              //* Text Field + Checkbox next to it
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _customTextField.customTextField(_secondAnswer, "Answer 2:",
+                      size.width / 1.3, TextInputType.text),
+                  Checkbox(
+                      value: _isSecondAnswerCorrect,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          _isSecondAnswerCorrect = value;
+                        });
+                      }),
+                ],
+              ),
+              //* empty space
+              SizedBox(
+                height: size.height * 0.02,
+              ),
+              //* Text Field + Checkbox next to it
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _customTextField.customTextField(_thirdAnswer, "Answer 3:",
+                      size.width / 1.3, TextInputType.text),
+                  Checkbox(
+                      value: _isThirdAnswerCorrect,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          _isThirdAnswerCorrect = value;
+                        });
+                      }),
+                ],
+              ),
+              //* empty space
+              SizedBox(
+                height: size.height * 0.02,
+              ),
+              //* Text Field + Checkbox next to it
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _customTextField.customTextField(_fourthAnswer, "Answer 4:",
+                      size.width / 1.3, TextInputType.text),
+                  Checkbox(
+                      value: _isFourthAnswerCorrect,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          _isFourthAnswerCorrect = value;
+                        });
+                      }),
+                ],
+              ),
+              //* empty space
+              SizedBox(
+                height: size.height - size.height * 0.87,
+              ),
+              //* 'Add Question' Button + 'Submit Quizz' Button
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  //* Button To Submit the Quizz
+                  CustomButton(
+                      label: "Submit",
+                      backgroundcolor: Colors.orange,
+                      function: submitButtonFunc),
+                  SizedBox(
+                    width: size.width * 0.3,
                   ),
-                  backgroundColor: Colors.orange,
-                  onPressed: () {
-                    addQuestionButtonFunc(); //~
-                  },
-                  enableFeedback: true,
-                  heroTag: null,
-                ),
-              ],
-            ),
-          ],
+                  //* Button To Add a question
+                  FloatingActionButton(
+                    child: const Icon(
+                      Icons.add_sharp,
+                    ),
+                    backgroundColor: Colors.orange,
+                    onPressed: () {
+                      addQuestionButtonFunc(); //~
+                    },
+                    enableFeedback: true,
+                    heroTag: null,
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

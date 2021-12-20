@@ -55,13 +55,13 @@ class _WelcominScreenState extends State<WelcominScreen> {
 
   //size of the screen
   final AuthService _auth = AuthService();
-
+  final int offset = 30;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       //see signup.dart
-      resizeToAvoidBottomInset: false,
+      //resizeToAvoidBottomInset: false,
       body: Container(
         constraints: const BoxConstraints.expand(),
         decoration: const BoxDecoration(
@@ -71,71 +71,56 @@ class _WelcominScreenState extends State<WelcominScreen> {
         ),
         child:
             //*children inside screen
-            Padding(
-          padding: const EdgeInsets.all(1.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              //*Text
-              _customText.customText("Welcome to\n The Quizzler !!!",
-                  backgroundColor: welcomeh),
-              //*Logo/pic on welcoming screen
-              eduLogo(),
-              SizedBox(
-                height: size.height * 0.01,
-              ),
-              //*create space between the widget and the sides of the screen
-              Container(
-                padding: EdgeInsets.only(
-                  left: (0.2 * size.width),
-                  right: (0.2 * size.width),
+            SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(1.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: size.height * 0.02,
                 ),
-                //*text field to add type in the display name; you can probably use the custom ones, but i will leave that to the frontend team
-                child: CustomTextField().customTextField(
-                  _displayNameController,
-                  'Display Name',
-                  size.width,
-                  TextInputType.text,
+                //*Text
+                _customText.customText("Welcome to\n The Quizzler !!!",
+                    backgroundColor: welcomeh),
+                //*Logo/pic on welcoming screen
+                eduLogo(),
+                SizedBox(
+                  height: size.height * 0.01,
                 ),
-              ),
-              SizedBox(height: size.height * 0.01),
-              Container(
-                padding: EdgeInsets.only(
-                  left: (0.2 * size.width),
-                  right: (0.2 * size.width),
+                //*create space between the widget and the sides of the screen
+                Container(
+                  padding: EdgeInsets.only(
+                    left: (0.2 * size.width),
+                    right: (0.2 * size.width),
+                  ),
+                  //*text field to add type in the display name; you can probably use the custom ones, but i will leave that to the frontend team
+                  child: CustomTextField().customTextField(
+                    _displayNameController,
+                    'Display Name',
+                    size.width,
+                    TextInputType.text,
+                  ),
                 ),
-                //*text field to add type in the pin of the live quizz; you can probably use the custom ones, but i will leave that to the frontend team
-                child: CustomTextField().customTextField(
-                    _pinController, 'Pin', size.width, TextInputType.text),
-                //  TextField(
-                //   keyboardType: TextInputType.text,
-                //   controller: _pinController,
-                //   decoration: InputDecoration(
-                //     enabledBorder: OutlineInputBorder(
-                //       borderRadius: BorderRadius.all(Radius.circular(12.0)),
-                //       borderSide: BorderSide(color: texts),
-                //     ),
-                //     focusedBorder: OutlineInputBorder(
-                //         borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                //         borderSide: BorderSide(color: borders)),
-                //     contentPadding: EdgeInsets.all(15),
-                //     labelText: 'Pin',
-                //     labelStyle: TextStyle(
-                //       fontFamily: 'Lobster',
-                //       color: texts,
-                //       fontSize: 15.0,
-                //     ),
-                //   ),
-                // ),
-              ),
-              SizedBox(height: size.height * 0.02),
-              //* Button
-              joinButton(context),
-              SizedBox(height: size.height * 0.05),
-              //*just a widget with the buttons for login or sign up
-              //* frontend can improve the quality of this widget by using the custom Widgets; only if they want to
-              signInOrUp(context),
-            ],
+                SizedBox(height: size.height * 0.01),
+                Container(
+                  padding: EdgeInsets.only(
+                    left: (0.2 * size.width),
+                    right: (0.2 * size.width),
+                  ),
+                  //*text field to add type in the pin of the live quizz; you can probably use the custom ones, but i will leave that to the frontend team
+                  child: CustomTextField().customTextField(
+                      _pinController, 'Pin', size.width, TextInputType.text),
+                ),
+                SizedBox(height: size.height * 0.02),
+                //* Button
+                joinButton(context),
+                SizedBox(height: size.height * 0.05),
+                //*just a widget with the buttons for login or sign up
+                //* frontend can improve the quality of this widget by using the custom Widgets; only if they want to
+                signInOrUp(context),
+              ],
+            ),
           ),
         ),
       ),
