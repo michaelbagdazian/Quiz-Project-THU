@@ -19,8 +19,7 @@ class _AvatarFormState extends State<AvatarForm> {
   LinkedHashMap<String, List<String>> avatars = getAvatarsList();
 
   // form values
-  String _currentPassword = "";
-  String _newEmail = "";
+  String _avatarPath = "";
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +42,7 @@ class _AvatarFormState extends State<AvatarForm> {
                   // ! itemBuilder:
                   // ~ itemBuilder is the function in itself which is going to return some kind of template or a widget tree for each item inside the list
                   itemBuilder: (context, index) {
-                    return AvatarTile(avatar: avatars.entries.elementAt(index));
+                    return AvatarTile(avatar: avatars.entries.elementAt(index), setAvatarPath: setAvatarPath);
                   },
                 ),
               ),
@@ -55,8 +54,11 @@ class _AvatarFormState extends State<AvatarForm> {
                   ),
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      await DatabaseService(uid: user.uid)
-                          .changeEmail(_currentPassword, _newEmail, userData);
+                      await DatabaseService(uid: user.uid).updateUserData(
+                          userData.username,
+                          userData.email,
+                          _avatarPath.isEmpty ? userData.avatar : _avatarPath,
+                          userData.points);
                       Navigator.pop(context);
                     }
                   }),
@@ -67,6 +69,10 @@ class _AvatarFormState extends State<AvatarForm> {
     } else {
       return Loading();
     }
+  }
+
+  void setAvatarPath(String avatarPath){
+    _avatarPath = avatarPath;
   }
 }
 

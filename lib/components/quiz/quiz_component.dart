@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../models/quiz/answer.dart';
-
 class QuizComponent extends StatelessWidget {
   final String questionText;
-  final List<Answer> answers;
+  final List<String> answers;
+  final int answer;
   final bool buttonsActive;
   final bool showScoreScreen;
   final bool showCountdown;
@@ -17,6 +16,7 @@ class QuizComponent extends StatelessWidget {
       {Key? key,
       required this.questionText,
       required this.answers,
+      required this.answer,
       required this.buttonsActive,
       required this.showScoreScreen,
       required this.showCountdown,
@@ -45,39 +45,38 @@ class QuizComponent extends StatelessWidget {
         ),
         if (showScoreScreen == false && showCountdown == false)
           Container(
-            margin: const EdgeInsets.only(top: 10),
-            child: Flex(
-              direction: Axis.vertical,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: answers
-                  .map((entry) => Container(
-                        padding: const EdgeInsets.all(5),
-                        child: TextButton(
-                          child: Text(
-                            entry.answerText,
-                            style: const TextStyle(
-                                color: Colors.white, fontSize: 20),
-                          ),
-                          style: TextButton.styleFrom(
-                              backgroundColor: Colors.blueAccent,
-                              primary: Colors.greenAccent,
-                              padding: const EdgeInsets.all(20)),
-                          onPressed: buttonsActive
-                              ? () {
-                                  if (entry.isCorrect) {
-                                    onCorrectAnswer();
-                                  } else {
-                                    onWrongAnswer();
-                                  }
-                                  onFinishAnswer();
-                                }
-                              : null,
+          margin: const EdgeInsets.only(top: 10),
+          child: Flex(
+            direction: Axis.vertical,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: answers
+                .asMap()
+                .keys
+                .map((i) => Container(
+                      padding: const EdgeInsets.all(5),
+                      child: TextButton(
+                        child: Text(
+                          answers[i],
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 20),
                         ),
-                      ))
-                  .cast<Widget>()
-                  .toList(),
-            ),
-          )
+                        style: TextButton.styleFrom(
+                            backgroundColor: Colors.blueAccent,
+                            primary: Colors.greenAccent,
+                            padding: const EdgeInsets.all(20)),
+                        onPressed: buttonsActive ? () {
+                          if (answer == i) {
+                            onCorrectAnswer();
+                          } else {
+                            onWrongAnswer();
+                          }
+                          onFinishAnswer();
+                        } : null,
+                      ),
+                    ))
+                .toList(),
+          ),
+        )
       ],
     );
   }

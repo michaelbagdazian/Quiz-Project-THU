@@ -6,6 +6,7 @@ import '../../../models/user/UserData.dart';
 import '../../../services/database.dart';
 import '../../../shared/colors.dart';
 import '../../../shared/constants.dart';
+import '../../../shared/customWidgets/customAlertBox.dart';
 import '../../../shared/loading.dart';
 
 class EmailForm extends StatefulWidget {
@@ -19,13 +20,14 @@ class _EmailFormState extends State<EmailForm> {
   // form values
   String _currentPassword = "";
   String _newEmail = "";
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
     final userData = Provider.of<UserData?>(context);
     final user = Provider.of<AppUser?>(context);
 
-    if (userData != null && user != null) {
+    if (userData != null && user != null && !isLoading) {
       return Container(
         padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
         height: 270.0,
@@ -67,9 +69,18 @@ class _EmailFormState extends State<EmailForm> {
                   ),
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
+                      setState(() {
+                        isLoading = true;
+                      });
                       await DatabaseService(uid: user.uid)
-                          .changeEmail(_currentPassword, _newEmail, userData);
-                      Navigator.pop(context);
+                          .changeEmail(
+                              _currentPassword, _newEmail, userData, showError)
+                          .then((value) => {
+                                setState(() {
+                                  isLoading = false;
+                                }),
+                                if (value == true) Navigator.pop(context)
+                              });
                     }
                   }),
             ],
@@ -77,7 +88,18 @@ class _EmailFormState extends State<EmailForm> {
         ),
       );
     } else {
-      return Loading();
+      return Container(
+          height: 270.0,
+          child: Loading()
+      );
     }
+  }
+
+  void showError(String errorTitle, String errorMessage) async {
+    await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return customAlertBox(errorTitle, errorMessage);
+        });
   }
 }
