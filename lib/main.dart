@@ -6,6 +6,7 @@ import 'package:crew_brew/screens/quizzes/my_quizzes.dart';
 import 'package:crew_brew/screens/quizzes/quiz_wrapper.dart';
 import 'package:crew_brew/screens/quizzes/shared_quizzes.dart';
 import 'package:crew_brew/screens/quizzes/add_questions_ui.dart';
+import 'package:crew_brew/screens/result/result.dart';
 import 'package:crew_brew/screens/userProfile/userProfile.dart';
 import 'package:crew_brew/screens/wrapper.dart';
 import 'package:crew_brew/services/auth.dart';
@@ -53,9 +54,10 @@ class MyApp extends StatelessWidget {
           '/userProfile': (context) => const NavContainer(page: userProfile()),
           '/sharedQuizes': (context) => NavContainer(page: SharedQuizes()),
           '/myQuizes': (context) => const NavContainer(page: MyQuizes()),
-          '/welcome': (context) => const NavContainer(page: WelcominScreen()),
+          '/welcome': (context) => NavContainer(page: WelcominScreen()),
           '/register': (context) => const SignUp(),
           '/signin': (context) => const LogIn(),
+          '/results': (context) => const NavContainer(page: Result()),
           '/quizWrapper': (context) => const QuizWrapper(),
           '/AddQuestionsUI': (context) => AddQuestionsUI(),
           '/AddNewQuizzUI': (context) => const AddNewQuizzUI(),
@@ -63,9 +65,8 @@ class MyApp extends StatelessWidget {
           '/EditQuestionsUI': (context) => EditQuestionsUI(),
         },
         // TODO: Decide on a unified theme and copy it here
-        theme: ThemeData.light().copyWith(
-          backgroundColor: background,
-        ),
+        theme: ThemeData.light()
+            .copyWith(backgroundColor: background, primaryColor: welcomeh),
       ),
     );
   }

@@ -4,6 +4,7 @@ import 'package:crew_brew/navigationBar/menu_button.dart';
 import 'package:crew_brew/navigationBar/navbar.dart';
 import 'package:crew_brew/screens/userProfile/UpdateFormsWrapper.dart';
 import 'package:crew_brew/services/database.dart';
+import 'package:crew_brew/shared/colors.dart';
 import 'package:crew_brew/shared/loading.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:provider/provider.dart';
@@ -42,7 +43,6 @@ class _userProfileState extends State<userProfile> {
           context: context,
           builder: (context) {
             return Container(
-              padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
               child: UpdateFormsWrapper(command: command),
               color: Colors.grey[900],
             );
@@ -99,17 +99,18 @@ class _userProfileState extends State<userProfile> {
                     children: <Widget>[
                       // ~ Make a circle image with CircleAvatar
                       Center(
-                        child: CircleAvatar(
-                          backgroundImage:
-                              AssetImage('assets/menu_images/$avatar'),
-                          backgroundColor: Colors.amberAccent[200],
-                          radius: 40.0,
+                          child: InkWell(
+                            onTap: () => _showSettingsPanel("avatars"),
+                            child: CircleAvatar(
+                              backgroundImage: AssetImage('assets/menu_images/$avatar'),
+                              backgroundColor: Colors.grey[900],
+                              radius: 50.0,
                         ),
-                      ),
+                      )),
                       // ~ This is a line which literally looks like divider
                       Divider(
                         // ~ This is the height between top element and bottom, not the line itself
-                        height: 90.0,
+                        height: 70.0,
                         color: Colors.grey[800],
                       ),
                       // * Start username field

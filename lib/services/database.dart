@@ -5,6 +5,7 @@ import 'package:crew_brew/models/user/UserData.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../models/game/game.dart';
+import '../models/quiz/answer.dart';
 
 // ! Information about the class:
 // ~ This class is a service class for database manipulations
@@ -94,7 +95,11 @@ class DatabaseService {
 
     for (Question question in questions) {
       String questionText = question.questionText;
-      Map<String, bool> answers = question.answers;
+      Map<String, bool> answers = Map<String, bool>();
+
+      for(Answer answer in question.answers){
+        answers[answer.answerText] = answer.isCorrect;
+      }
 
       mapOfQuestions[questionText] = answers;
     }
@@ -180,7 +185,13 @@ class DatabaseService {
   // ~ this returns Question object from the map.
   Question _questionObjectFromMap(
       String questionText, Map<String, bool> answers) {
-    return Question(questionText: questionText, answers: answers);
+
+    List<Answer> answersList = [];
+    answers.forEach((key, value) {
+      answersList.add(new Answer(answerText: key, isCorrect: value));
+    });
+
+    return Question(questionText: questionText, answers: answersList);
   }
 
   // ! deleteQuiz()
@@ -222,7 +233,7 @@ class DatabaseService {
     return await userDataCollection.doc(uid).set({
       'username': username,
       'email': email,
-      'avatar': avatar,
+      'avatars': avatar,
       'points': points,
     });
   }
@@ -253,7 +264,7 @@ class DatabaseService {
       uid: uid,
       username: snapshot['username'],
       email: snapshot['email'],
-      avatar: snapshot['avatar'],
+      avatar: snapshot['avatars'],
       points: snapshot['points'],
     );
   }

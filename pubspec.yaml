@@ -79,7 +79,13 @@ flutter:
     - assets/
     - assets/menu_images/
     - assets/images/
-    - assets/avatar/
+    - assets/avatars/
+    - assets/avatars/aqualine/
+    - assets/avatars/ceratops/
+    - assets/avatars/duskpin/
+    - assets/avatars/leafers/
+    - assets/avatars/primosaur/
+    - assets/avatars/starky/
 
   #   - images/a_dot_ham.jpeg
 

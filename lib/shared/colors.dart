@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 
 const Color welcomeh = Color(0xFF009689);
 // Headline on the welcoming screen
-const Color topbar = Color(0xFF060895);
+const Color topbar = welcomeh;
+// Color(0xFF060895);
 //bar at the top idk what its called, dont know final color
 const Color buttons = Color(0xFFFF9800);
 //general color for all the buttons

@@ -32,7 +32,6 @@ class _MyQuizes extends State<MyQuizes> {
 
   @override
   Widget build(BuildContext context) {
-    print("IN QUIZES BUILD: " + searchInput);
     // ! Provider.of<AppUser?>(context):
     // ~ Here we listen to the stream, defined in services/auth.dart and provided by main.dart, which informs us about login state of the user
     // ~ We need user instance to have acess to DatabaseService instance

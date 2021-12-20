@@ -16,7 +16,7 @@ void main() {
   group('Uploading an Image', () {
     test('response.statusCode should be equal to 200', () async {
       io.File? _image;
-      _image = io.File('/assets/avatar/generic_robo.png');
+      _image = io.File('/assets/avatars/generic_robo.png');
       UploadFileToFireStorage uploadFileToFireStorage =
           UploadFileToFireStorage();
       //uploading an image to firestore

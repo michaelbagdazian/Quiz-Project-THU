@@ -16,6 +16,8 @@ import 'package:crew_brew/shared/PorgressbarIndicator/step_progress_indicator.da
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 
+import '../../models/quiz/answer.dart';
+
 // ! Information about the class:
 // ~ This class is a Page to create a quizz and questions to quizz
 // ~ This class has both FrontEnd Code and Backend Code in it
@@ -341,6 +343,9 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
     );
   }
 
+  //* ======================= Logic Starts Here ===========================
+
+//* =======================This Is the Function for the add question Button===========================
 //~ This Future adds Questions to our current list of questions, this gets called everytime the user adds a question
   Future addQuestionButtonFunc() async {
     //~ This checks if we are adding a new question or editing an existing one
@@ -359,19 +364,25 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
     if (_isFourthAnswerCorrect == true) _numberOfCorrectAnswers += 1;
 
     //~ Create a map to store our answers in
-    final Map<String, bool> answers = <String, bool>{};
+    final List<Answer> answers = [];
     //~ Check if there is an answer to add at all
     if (_firstAnswer.text.isNotEmpty) {
-      answers.putIfAbsent(_firstAnswer.text, () => _isFirstAnswerCorrect!);
+      print("_firstAnswer.text.isNotEmpty");
+      answers.add(new Answer(
+          answerText: _firstAnswer.text, isCorrect: _isFirstAnswerCorrect!));
     }
     if (_secondAnswer.text.isNotEmpty) {
-      answers.putIfAbsent(_secondAnswer.text, () => _isSecondAnswerCorrect!);
+      print("_secondAnswer.text.isNotEmpty");
+      answers.add(new Answer(
+          answerText: _secondAnswer.text, isCorrect: _isSecondAnswerCorrect!));
     }
     if (_thirdAnswer.text.isNotEmpty) {
-      answers.putIfAbsent(_thirdAnswer.text, () => _isThirdAnswerCorrect!);
+      answers.add(new Answer(
+          answerText: _thirdAnswer.text, isCorrect: _isThirdAnswerCorrect!));
     }
     if (_fourthAnswer.text.isNotEmpty) {
-      answers.putIfAbsent(_fourthAnswer.text, () => _isFourthAnswerCorrect!);
+      answers.add(new Answer(
+          answerText: _fourthAnswer.text, isCorrect: _isFourthAnswerCorrect!));
     }
 
     //~ If user didn't mark at least one answer as correct answer
@@ -389,6 +400,10 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
       return;
     }
 
+    for (Answer answer in answers) {
+      print(answer.answerText);
+    }
+
     //~ Add a new Question to the list of questions
     _ListOfQuestions.addNewQuestion(_question.text, answers, context);
     //~ Add a step in the progress indicator
@@ -399,6 +414,7 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
     clearFunc();
   }
 
+//* =======================This Is the Function for the clear Button===========================
 //~ This function clears and resets everything (text fields and checkboxes) on the screen, this can be used when a new Question is to be Added or if user clicks on clear button
   VoidCallback? clearFunc() {
     _question.clear();
@@ -413,10 +429,23 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
     _isFourthAnswerCorrect = false;
   }
 
+//* =======================This Is the Function for the submit Button===========================
   //~ This Future creates a new quizz object and adds the list of questions to it
   Future submitButtonFunc() async {
     //? this is so that if the user had one last question that they forgot to add, submit button will add it for them
-    if (_question.text != "") addQuestionButtonFunc();
+    if (_question.text != "") await addQuestionButtonFunc();
+    //? check if the question list is empty
+    if (_ListOfQuestions.Questions.isEmpty) {
+      await showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            //? if it is we get an alert box with an error message
+            return customAlertBox("An Error Has Happened !!!",
+                "Please Make Sure that you have added questions to your quizz");
+          });
+      //~ Exit this function
+      return;
+    }
     // ignore: non_constant_identifier_names
     String QuizId = args['OwnerUId'] +
         "-" +
@@ -445,6 +474,7 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
     Navigator.popAndPushNamed(context, '/myQuizes');
   }
 
+  //* =======================This Is the Function for top left arrow icon===========================
   //~This function is for navigating through questions (BackWards)
   void goToPreviousQuestin() {
     //~ Checks if we have at least one question in our list
@@ -459,6 +489,7 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
     }
   }
 
+  //* =======================This Is the Function for top right arrow icon===========================
   //~This function is for navigating through questions (Forward)
   void goToNextQuestion() {
     if (_Currquestion == null || _ListOfQuestions.getQuestions().length == 1) {
@@ -475,30 +506,31 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
     }
   }
 
+  //* =======================This Is the Function for printing question data on the screen===========================
 //~ The Following Future prints the data of the current question on the screen
   Future PrintStuffOnScreen() async {
     //~ Edit the question controller to actually display the text from our current question
     _question.text = _Currquestion!.questionText;
     //~ ...
-    _firstAnswer.text = _Currquestion!.answers.entries.elementAt(0).key;
-    _secondAnswer.text = _Currquestion!.answers.entries.length >= 2
-        ? _Currquestion!.answers.entries.elementAt(1).key
+    _firstAnswer.text = _Currquestion!.answers[0].answerText;
+    _secondAnswer.text = _Currquestion!.answers.length >= 2
+        ? _Currquestion!.answers[1].answerText
         : "";
-    _thirdAnswer.text = _Currquestion!.answers.entries.length >= 3
-        ? _Currquestion!.answers.entries.elementAt(2).key
+    _thirdAnswer.text = _Currquestion!.answers.length >= 3
+        ? _Currquestion!.answers[2].answerText
         : "";
-    _fourthAnswer.text = _Currquestion!.answers.entries.length >= 4
-        ? _Currquestion!.answers.entries.elementAt(3).key
+    _fourthAnswer.text = _Currquestion!.answers.length >= 4
+        ? _Currquestion!.answers[3].answerText
         : "";
-    _isFirstAnswerCorrect = _Currquestion!.answers.entries.elementAt(0).value;
-    _isSecondAnswerCorrect = _Currquestion!.answers.entries.length >= 2
-        ? _Currquestion!.answers.entries.elementAt(1).value
+    _isFirstAnswerCorrect = _Currquestion!.answers[0].isCorrect;
+    _isSecondAnswerCorrect = _Currquestion!.answers.length >= 2
+        ? _Currquestion!.answers[1].isCorrect
         : false;
-    _isThirdAnswerCorrect = _Currquestion!.answers.entries.length >= 3
-        ? _Currquestion!.answers.entries.elementAt(2).value
+    _isThirdAnswerCorrect = _Currquestion!.answers.length >= 3
+        ? _Currquestion!.answers[2].isCorrect
         : false;
-    _isFourthAnswerCorrect = _Currquestion!.answers.entries.length >= 4
-        ? _Currquestion!.answers.entries.elementAt(3).value
+    _isFourthAnswerCorrect = _Currquestion!.answers.length >= 4
+        ? _Currquestion!.answers[3].isCorrect
         : false;
 
     //?check if we pressed forward again after our CurrQuestion=last question

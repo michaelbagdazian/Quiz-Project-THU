@@ -10,16 +10,20 @@ class CustomButton extends StatelessWidget {
   String label;
   Color backgroundcolor;
   VoidCallback? function;
+  double? padding;
 
   CustomButton({
     Key? key,
     required this.label,
     required this.backgroundcolor,
     required this.function,
+    this.padding,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    //check if padding is passed, if not we pass 40 as the edgeinsets
+    padding = padding ?? 40;
     return FloatingActionButton.extended(
       heroTag: null,
       onPressed: () {
@@ -33,7 +37,7 @@ class CustomButton extends StatelessWidget {
         ),
       ),
       backgroundColor: backgroundcolor,
-      extendedPadding: const EdgeInsets.all(40),
+      extendedPadding: EdgeInsets.all(padding!),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(20),
@@ -41,6 +45,5 @@ class CustomButton extends StatelessWidget {
         ),
       ),
     );
-    // TODO: implement build
   }
 }
