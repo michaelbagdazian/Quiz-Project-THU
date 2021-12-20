@@ -1,4 +1,6 @@
 import 'package:crew_brew/models/quiz/Quiz.dart';
+import 'package:crew_brew/models/quiz/game_state.dart';
+import 'package:crew_brew/models/quiz/quiz_state.dart';
 import 'package:crew_brew/navigationBar/menu_button.dart';
 import 'package:crew_brew/shared/colors.dart';
 import 'package:flutter/material.dart';
@@ -8,9 +10,10 @@ class Result extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Map data = ModalRoute.of(context)!.settings.arguments as Map;
+    //Map data = ModalRoute.of(context)!.settings.arguments as Map;
+    final args = ModalRoute.of(context)!.settings.arguments as QuizState;
     ThemeData theme = Theme.of(context);
-    Quiz quiz = (data['quiz'] as Quiz);
+    //Quiz quiz = (data['quiz'] as Quiz);
     final em = theme.textTheme.bodyText2?.fontSize ?? 16;
 
     return Scaffold(
@@ -21,8 +24,14 @@ class Result extends StatelessWidget {
         leading: const MenuButton(),
         elevation: 0.0,
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      body: Text(
+        args.quiz.quizTitle +"\n"
+            + args.quiz.listOfQuestions.toString() +"\n"
+            + args.quiz.listOfQuestions[0].questionText +"\n"
+            + args.stateVector.toString(),
+      ),
+      //Column(
+        /*mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
@@ -49,34 +58,35 @@ class Result extends StatelessWidget {
                                   question.questionText,
                                   style: theme.textTheme.headline6,
                                 ),
-                              ),
-                              Column(
-                                children: question.answers.entries
-                                    .map((entry) => Container(
-                                          margin: EdgeInsets.all(0.5 * em),
-                                          width: double.infinity,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              color: entry.value
-                                                  ? Colors.green
-                                                  : Colors.red),
-                                          child: Padding(
-                                            padding: EdgeInsets.all(1.5 * em),
-                                            child: Text(entry.key),
-                                          ),
-                                        ))
-                                    .toList(),
-                              )
-                            ],
-                          ),
-                        ),
-                      ))
-                  .toList(),
-            ),
-          )
-        ],
-      ),
-    );
+                              ),*/
+                              //sorry had to comment that out to run things - holger
+                              // Column(
+                              //   children: question.answers.entries
+                              //       .map((entry) => Container(
+                              //             margin: EdgeInsets.all(0.5 * em),
+                              //             width: double.infinity,
+                              //             decoration: BoxDecoration(
+                              //                 borderRadius:
+                              //                     BorderRadius.circular(8),
+                              //                 color: entry.value
+                              //                     ? Colors.green
+                              //                     : Colors.red),
+                              //             child: Padding(
+                              //               padding: EdgeInsets.all(1.5 * em),
+                              //               child: Text(entry.key),
+                              //             ),
+                              //           ))
+                              //       .toList(),
+                              // )
+                         //   ],
+                       //   ),
+                      //  ),
+                      );
+                  //.toList(),
+         //   ),
+         // )
+        //],
+      //),
+    //);
   }
 }
