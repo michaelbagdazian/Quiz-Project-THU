@@ -1,5 +1,7 @@
 import 'package:crew_brew/screens/home/home.dart';
 import 'package:crew_brew/screens/quizzes/add_new_quiz_ui.dart';
+import 'package:crew_brew/screens/quizzes/edit_old_questions_ui.dart';
+import 'package:crew_brew/screens/quizzes/edit_old_quiz_ui.dart';
 import 'package:crew_brew/screens/quizzes/my_quizzes.dart';
 import 'package:crew_brew/screens/quizzes/quiz_wrapper.dart';
 import 'package:crew_brew/screens/quizzes/shared_quizzes.dart';
@@ -59,6 +61,8 @@ class MyApp extends StatelessWidget {
           '/quizWrapper': (context) => const QuizWrapper(),
           '/AddQuestionsUI': (context) => AddQuestionsUI(),
           '/AddNewQuizzUI': (context) => const AddNewQuizzUI(),
+          '/EditOldQuizUI': (context) => const EditQuizzUI(),
+          '/EditQuestionsUI': (context) => EditQuestionsUI(),
         },
         // TODO: Decide on a unified theme and copy it here
         theme: ThemeData.light()
