@@ -22,6 +22,10 @@ class AddQuestions {
     Questions = <Question>[];
   }
 
+  void setQuestions(List<Question> Questions){
+    this.Questions = Questions;
+  }
+
   /*
   ~ The Following function is used to Add Question to the list of Questions
   ~ it takes 4 arguments:

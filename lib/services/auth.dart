@@ -93,8 +93,14 @@ class AuthService {
   // * As you can see, the method takes a parameter of type BuildContext,
   // * context is used for error handeling, to actually know, what context to use when we need to build the alertbox
   //* when you call this method just pass in context like so => registerWithEmailAndPassword(username, pass, context)
-  Future registerWithEmailAndPassword(String username, String email,
-      String password, Function showError) async {
+  Future registerWithEmailAndPassword(
+      String username, String email, String password, Function showError,
+      {String? passwdConfirmation}) async {
+    if (password != passwdConfirmation) {
+      showError('Password Confirmation',
+          'Make sure your password confirmation matches your password');
+      return;
+    }
     try {
       // ~ First we do request to FireBase and it awaits for the response
       UserCredential result = await _auth.createUserWithEmailAndPassword(

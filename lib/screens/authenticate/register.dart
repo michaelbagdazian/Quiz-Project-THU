@@ -47,6 +47,7 @@ class _SignUpState extends State<SignUp> {
   String username = '';
   String email = '';
   String password = '';
+  String confirmPassword = '';
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +67,7 @@ class _SignUpState extends State<SignUp> {
         : Scaffold(
             //this following statement is to make sure that a keyboard on the screen won't push the whole screen up when it pops up
             resizeToAvoidBottomInset: false,
+
             //appbar on the registeration screen
             appBar: AppBar(
               title: const Text(
@@ -100,7 +102,7 @@ class _SignUpState extends State<SignUp> {
                       _customText.customText('Creat New\n Account'),
                       //*again empty space
                       SizedBox(
-                        height: size.height * 0.1,
+                        height: size.height * 0.07,
                       ),
                       // * Start of TextFormField for the username
                       Padding(
@@ -188,6 +190,7 @@ class _SignUpState extends State<SignUp> {
                       SizedBox(
                         height: size.height * 0.012,
                       ),
+                      // * Start of TextFormField for the password
                       Padding(
                         padding: EdgeInsets.only(
                           left: (0.1 * size.width),
@@ -230,8 +233,53 @@ class _SignUpState extends State<SignUp> {
                             }),
                       ),
                       SizedBox(
-                        height: size.height * 0.08,
+                        height: size.height * 0.012,
                       ),
+                      // * Start of TextFormField for the password confirmation
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: (0.1 * size.width),
+                          right: (0.1 * size.width),
+                        ),
+                        child: TextFormField(
+                            // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
+                            decoration: const InputDecoration(
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(12.0)),
+                                borderSide: BorderSide(color: texts),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5.0)),
+                                  borderSide: BorderSide(color: borders)),
+                              contentPadding: EdgeInsets.all(15),
+                              labelText: 'Confirm password',
+                              labelStyle: TextStyle(
+                                fontFamily: 'Lobster',
+                                color: texts,
+                                fontSize: 20.0,
+                              ),
+                            ),
+                            obscureText: true,
+                            // ! validator property:
+                            // ~ we return null value if this formField is VALID or a string it's NOT VALID
+                            // ~ validator will be used in RaisedButton when calling _formKey.currentState!.validate()
+                            validator: (val) =>
+                                val!.isEmpty ? 'Confirm password' : null,
+                            // ! onChanged property:
+                            // ~ When information is entered into the TextForField, this property is triggered
+                            onChanged: (val) {
+                              // ~ We take email state and set it equal to value which is in e-mail textField
+                              // ~ We also make use of trim() function to remove any spaces
+                              setState(() => confirmPassword = val.trim());
+                            }),
+                      ),
+                      //* empty space
+                      SizedBox(
+                        height: size.height * 0.1,
+                      ),
+                      //* Register Button
                       FloatingActionButton.extended(
                         onPressed: () async {
                           // ~ Here we check if our form is valid
@@ -244,7 +292,8 @@ class _SignUpState extends State<SignUp> {
                             // ~ We await for the result from the Firebase
                             dynamic result =
                                 await _auth.registerWithEmailAndPassword(
-                                    username, email, password, showError);
+                                    username, email, password, showError,
+                                    passwdConfirmation: confirmPassword);
                             // ~ If registration is NOT successful, we provide an error message.
                             if (result == null) {
                               setState(() {
