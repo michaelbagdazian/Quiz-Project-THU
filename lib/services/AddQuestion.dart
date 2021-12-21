@@ -22,7 +22,7 @@ class AddQuestions {
     Questions = <Question>[];
   }
 
-  void setQuestions(List<Question> Questions){
+  void setQuestions(List<Question> Questions) {
     this.Questions = Questions;
   }
 
@@ -43,8 +43,21 @@ class AddQuestions {
 
       //~ Add the new Question to the list of questions
       Questions.add(_question);
+
       //~ Delete Question, for memory managment
       _question = null;
+    } catch (e) {
+      //~ Debugging Statement, it can/should be turned into an alertbox later
+      print(e.toString());
+    }
+  }
+
+  void EditOldQuestion(String questionText, List<Answer> answers,
+      BuildContext _context, Question currQuestion) {
+    try {
+      Questions.elementAt(Questions.indexOf(currQuestion)).answers = answers;
+      Questions.elementAt(Questions.indexOf(currQuestion)).questionText =
+          questionText;
     } catch (e) {
       //~ Debugging Statement, it can/should be turned into an alertbox later
       print(e.toString());

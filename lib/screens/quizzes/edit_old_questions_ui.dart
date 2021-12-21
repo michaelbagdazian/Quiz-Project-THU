@@ -405,8 +405,9 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
       return;
     }
 
-    //~ Add a new Question to the list of questions
-    _addQuestion.addNewQuestion(_question.text, answers, context);
+    //~ edit question
+    _addQuestion.EditOldQuestion(
+        _question.text, answers, context, _Currquestion!);
     //~ Add a step in the progress indicator
     StepProgressBarIndicatorSteps.value++;
     //~ Move the pointer of the Current Question to get the new last question
