@@ -4,6 +4,7 @@ import 'package:crew_brew/models/quiz/quiz_state.dart';
 import 'package:crew_brew/navigationBar/menu_button.dart';
 import 'package:crew_brew/shared/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:collection/collection.dart';
 
 class Result extends StatelessWidget {
   const Result({Key? key}) : super(key: key);
@@ -23,29 +24,31 @@ class Result extends StatelessWidget {
         backgroundColor: topbar,
         leading: const MenuButton(),
         elevation: 0.0,
-      ),
-      body: Text(
+        ),
+      body:/* Text(
         args.quiz.quizTitle +"\n"
             + args.quiz.listOfQuestions.toString() +"\n"
             + args.quiz.listOfQuestions[0].questionText +"\n"
             + args.stateVector.toString(),
-      ),
-      //Column(
-        /*mainAxisAlignment: MainAxisAlignment.center,
+      ),*/
+      //sorry had to comment that out to run things - holger
+      Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
             padding: EdgeInsets.only(top: 2 * em, bottom: 2 * em),
             child: Text(
-              "You got ${data['points'].toString()}/${quiz.listOfQuestions.length}",
+              "You got ${args.stateVector.playerPoints[0].sum.toString()}/${args.quiz.listOfQuestions.length}",
               textAlign: TextAlign.center,
               style: theme.textTheme.headline5,
             ),
           ),
           Expanded(
             child: ListView(
-              children: quiz.listOfQuestions
-                  .map((question) => Card(
+              children: <Widget> [
+              for (var i = 0; i < args.quiz.listOfQuestions.length; i++) //
+                Card(
                         child: Padding(
                           padding: EdgeInsets.all(1 * em),
                           child: Column(
@@ -55,38 +58,52 @@ class Result extends StatelessWidget {
                                 padding: EdgeInsets.only(
                                     top: 1.5 * em, bottom: 2 * em),
                                 child: Text(
-                                  question.questionText,
+                                  args.quiz.listOfQuestions[i].questionText,
                                   style: theme.textTheme.headline6,
                                 ),
-                              ),*/
-                              //sorry had to comment that out to run things - holger
-                              // Column(
-                              //   children: question.answers.entries
-                              //       .map((entry) => Container(
-                              //             margin: EdgeInsets.all(0.5 * em),
-                              //             width: double.infinity,
-                              //             decoration: BoxDecoration(
-                              //                 borderRadius:
-                              //                     BorderRadius.circular(8),
-                              //                 color: entry.value
-                              //                     ? Colors.green
-                              //                     : Colors.red),
-                              //             child: Padding(
-                              //               padding: EdgeInsets.all(1.5 * em),
-                              //               child: Text(entry.key),
-                              //             ),
-                              //           ))
-                              //       .toList(),
-                              // )
-                         //   ],
-                       //   ),
-                      //  ),
-                      );
-                  //.toList(),
-         //   ),
-         // )
-        //],
-      //),
-    //);
+                              ),
+
+                               Column(
+                                 children: <Widget> [
+                               for (var j = 0; j < args.quiz.listOfQuestions[i].answers.length ; j++)
+                                 Container(
+                                    margin: EdgeInsets.all(0.5 * em),
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                         borderRadius:
+                                            BorderRadius.circular(8),
+                                         border: args.stateVector.buttonsPressed[0][j] ? Border.all(color: Colors.black) : null,
+                                         color: args.quiz.listOfQuestions[i].answers[j].isCorrect
+                                             ? Colors.green
+                                             : Colors.red),
+                                    child: Padding(
+                                         padding: EdgeInsets.all(1.5 * em),
+                                         child: Text(args.quiz.listOfQuestions[i].answers[j].answerText),
+                                     ),
+                                   )
+                                ]
+                               )
+                            ],
+                          ),
+                       ),
+                      )
+               ],
+              ),
+          ),
+               Padding(
+                  padding: const EdgeInsets.all(5),
+                  child: ElevatedButton(
+                    onPressed: () => Navigator.pushReplacementNamed(context, '/sharedQuizes'),
+                    child: const Text("back"),
+                    style: TextButton.styleFrom(
+                        backgroundColor: Colors.blueAccent,
+                        primary: Colors.greenAccent,
+                        padding: const EdgeInsets.all(20)),
+                  )
+              ),
+
+        ],
+      ),
+    );
   }
 }
