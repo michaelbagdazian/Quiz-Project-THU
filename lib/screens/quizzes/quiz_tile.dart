@@ -165,7 +165,7 @@ class QuizTile extends StatelessWidget {
                                         ////////////////////////////////////////////////////// Change Quiz
 
                                         onPressed: () =>
-                                            Navigator.pushReplacementNamed(
+                                            Navigator.pushNamed(
                                           context,
                                           '/EditOldQuizUI',
                                           arguments: {'quiz': quiz},
@@ -479,7 +479,7 @@ class _PopupCardState extends State<_PopupCard> {
                             child: Container(
                               width: MediaQuery.of(context).size.width * 0.20,
                               child: ElevatedButton(
-                                onPressed: () => Navigator.pushReplacementNamed(
+                                onPressed: () => Navigator.pushNamed(
                                   context,
                                   '/EditOldQuizUI',
                                   arguments: {'quiz': widget.quiz},
