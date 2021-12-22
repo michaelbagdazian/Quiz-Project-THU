@@ -1,5 +1,9 @@
 import 'package:crew_brew/models/quiz/Quiz.dart';
+import 'package:crew_brew/services/database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:provider/provider.dart';
+import '../../../models/user/AppUser.dart';
 import '../quiztile_resource/dialog.dart';
 import '../quiztile_resource/image_funktion.dart';
 
@@ -12,14 +16,19 @@ import '../quiztile_resource/image_funktion.dart';
 // all done
 
 class QuizTile extends StatelessWidget {
-  const QuizTile({Key? key, required this.quiz}) : super(key: key);
+  QuizTile({Key? key, required this.quiz}) : super(key: key);
   final Quiz quiz;
   @override
   Widget build(BuildContext context) {
     // set the string backPicture with the quizcategory
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+    final user = Provider.of<AppUser?>(context);
     String backPickture = quiz.quizCategory;
+
+    void delete(){
+      DatabaseService(uid: user!.uid).deleteOneQuizesPerUID(quiz);
+    }
 
     return GestureDetector(
         //when the card is pressed it oppends a new one
@@ -38,231 +47,252 @@ class QuizTile extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(25)),
                 //here the background for the card is set
-                child: Container(
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            fit: BoxFit.cover,
-                            //this funtion set the background immage
-                            image: AssetImage(image(backPickture)))),
-                    child: Padding(
-                        // the distance between the contetent of the card and the corder of the card
-                        padding: const EdgeInsets.all(14.0),
-                        //Content of the card
-                        child: Column(children: [
-                          //Title and Shared Icon
-                          Stack(children: [
-                            Padding(
-                                padding: const EdgeInsets.fromLTRB(0, 0, 70, 0),
-                                // is for the background of the text
-                                child: Container(
+                // ~ This adds option to delete
+                child: Slidable(
+                  startActionPane: ActionPane(
+                    // A motion is a widget used to control how the pane animates.
+                    motion: ScrollMotion(),
+                    // All actions are defined in the children parameter.
+                    children: [
+                      // A SlidableAction can have an icon and/or a label.
+                      SlidableAction(
+                        onPressed: (context){
+                          print("hi");
+                          delete();
+                        },
+                        backgroundColor: Color(0xFFFE4A49),
+                        foregroundColor: Colors.white,
+                        icon: Icons.delete,
+                        label: 'Delete',
+                      ),
+                    ],
+                  ),
+                  child: Container(
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              fit: BoxFit.cover,
+                              //this funtion set the background immage
+                              image: AssetImage(image(backPickture)))),
+                      child: Padding(
+                          // the distance between the contetent of the card and the corder of the card
+                          padding: const EdgeInsets.all(14.0),
+                          //Content of the card
+                          child: Column(children: [
+                            //Title and Shared Icon
+                            Stack(children: [
+                              Padding(
+                                  padding: const EdgeInsets.fromLTRB(0, 0, 70, 0),
+                                  // is for the background of the text
+                                  child: Container(
+                                      decoration: BoxDecoration(
+                                          color: Colors.teal.shade500,
+                                          borderRadius: const BorderRadius.only(
+                                            topLeft: Radius.circular(20.0),
+                                            topRight: Radius.circular(20.0),
+                                            bottomLeft: Radius.circular(20.0),
+                                            bottomRight: Radius.circular(20.0),
+                                          )),
+                                      ///////////////////////////////////////////////Quiz Title
+                                      child: Text("  " + quiz.quizTitle + "  ",
+                                          style: const TextStyle(
+                                              fontFamily: 'Lobster',
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 25,
+                                              color: Colors.white)))),
+                              //////////////////////////////////////////////7
+                              // //Quiz identifier
+                              // Align(
+                              //     alignment: Alignment.topRight,
+                              //     child: Padding(
+                              //         padding: const EdgeInsets.fromLTRB(0, 0, 0, 4),
+                              //         child: SizedBox(
+                              //           //how big the picture should and the card itself
+                              //             height: MediaQuery.of(context).size.height* 0.065,width: MediaQuery.of(context).size.height* 0.15,
+                              //             child: Image.asset("assets/images/eddu.png") //<- here should be logik to change the picture
+                              //         )
+                              //     )
+                              // ),
+
+                              //Shared Icon
+                              Align(
+                                  alignment: Alignment.topRight,
+                                  child: Container(
                                     decoration: BoxDecoration(
-                                        color: Colors.teal.shade500,
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(20.0),
-                                          topRight: Radius.circular(20.0),
-                                          bottomLeft: Radius.circular(20.0),
-                                          bottomRight: Radius.circular(20.0),
-                                        )),
-                                    ///////////////////////////////////////////////Quiz Title
-                                    child: Text("  " + quiz.quizTitle + "  ",
-                                        style: const TextStyle(
-                                            fontFamily: 'Lobster',
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 25,
-                                            color: Colors.white)))),
-                            //////////////////////////////////////////////7
-                            // //Quiz identifier
-                            // Align(
-                            //     alignment: Alignment.topRight,
-                            //     child: Padding(
-                            //         padding: const EdgeInsets.fromLTRB(0, 0, 0, 4),
-                            //         child: SizedBox(
-                            //           //how big the picture should and the card itself
-                            //             height: MediaQuery.of(context).size.height* 0.065,width: MediaQuery.of(context).size.height* 0.15,
-                            //             child: Image.asset("assets/images/eddu.png") //<- here should be logik to change the picture
-                            //         )
-                            //     )
-                            // ),
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(150),
+                                      border: Border.all(
+                                          width: 2, color: Colors.white),
+                                    ),
+                                    //how big the picture should and the card itself
+                                    height:
+                                        MediaQuery.of(context).size.height * 0.04,
+                                    width:
+                                        MediaQuery.of(context).size.height * 0.05,
+                                    child: Icon(
+                                      Icons.group,
+                                      color: quiz.quizIsShared
+                                          ? Colors.green
+                                          : Colors.red,
+                                    ), //<- here should be logik to change the picture
+                                  )),
+                            ]),
+                            //discription
+                            Stack(children: [
+                              // discribtion
+                              Center(
+                                child: Padding(
+                                  //is for that the text and the picture dont overlape
+                                  //change the possition of the text
+                                  padding: const EdgeInsets.fromLTRB(1, 5, 10, 5),
+                                  //where the text shoul be
+                                  child: Align(
+                                      alignment: Alignment.topLeft,
+                                      //text content
+                                      child: Container(
+                                          decoration: const BoxDecoration(
+                                              color: Colors.black45,
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(20.0),
+                                                topRight: Radius.circular(20.0),
+                                                bottomLeft: Radius.circular(20.0),
+                                                bottomRight:
+                                                    Radius.circular(20.0),
+                                              )),
 
-                            //Shared Icon
-                            Align(
-                                alignment: Alignment.topRight,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(150),
-                                    border: Border.all(
-                                        width: 2, color: Colors.white),
-                                  ),
-                                  //how big the picture should and the card itself
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.04,
-                                  width:
-                                      MediaQuery.of(context).size.height * 0.05,
-                                  child: Icon(
-                                    Icons.group,
-                                    color: quiz.quizIsShared
-                                        ? Colors.green
-                                        : Colors.red,
-                                  ), //<- here should be logik to change the picture
-                                )),
-                          ]),
-                          //discription
-                          Stack(children: [
-                            // discribtion
-                            Center(
-                              child: Padding(
-                                //is for that the text and the picture dont overlape
-                                //change the possition of the text
-                                padding: const EdgeInsets.fromLTRB(1, 5, 10, 5),
-                                //where the text shoul be
-                                child: Align(
-                                    alignment: Alignment.topLeft,
-                                    //text content
-                                    child: Container(
-                                        decoration: const BoxDecoration(
-                                            color: Colors.black45,
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(20.0),
-                                              topRight: Radius.circular(20.0),
-                                              bottomLeft: Radius.circular(20.0),
-                                              bottomRight:
-                                                  Radius.circular(20.0),
-                                            )),
+                                          /////////////////////////////////
+                                        child: Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              10.0, 10.0, 5.0, 10.0),
+                                          child: Text(
+                                              "Quiz description: " + quiz.quizDescription + "  ",
 
-                                        /////////////////////////////////
-                                      child: Padding(
-                                        padding: const EdgeInsets.fromLTRB(
-                                            10.0, 10.0, 5.0, 10.0),
-                                        child: Text(
-                                            "Quiz description: " + quiz.quizDescription + "  ",
+                                              style: const TextStyle(
+                                                  fontFamily: 'Lobster',
+                                                  fontSize: 21,
+                                                  color: Colors.white)),
+                                        ),
+                                      )),
 
-                                            style: const TextStyle(
-                                                fontFamily: 'Lobster',
-                                                fontSize: 21,
-                                                color: Colors.white)),
-                                      ),
-                                    )),
-
+                                ),
                               ),
-                            ),
-                          ]),
-                          //Bottom Text and Botton
+                            ]),
+                            //Bottom Text and Botton
 
-                          Row(
-                              //here are the bottons i have to create my own one because the ones we have arent working with the hero fuktion.
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                //where the bottom text should be
-                                Align(
-                                    alignment: Alignment.topLeft,
+                            Row(
+                                //here are the bottons i have to create my own one because the ones we have arent working with the hero fuktion.
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  //where the bottom text should be
+                                  Align(
+                                      alignment: Alignment.topLeft,
 
-                                    child: Container(
+                                      child: Container(
 
-                                      width: MediaQuery.of(context).size.width *
-                                          0.26,
-                                      child: ElevatedButton(
-                                        ////////////////////////////////////////////////////// Change Quiz
+                                        width: MediaQuery.of(context).size.width *
+                                            0.26,
+                                        child: ElevatedButton(
+                                          ////////////////////////////////////////////////////// Change Quiz
 
-                                        onPressed: () =>
-                                            Navigator.pushNamed(
-                                          context,
-                                          '/EditOldQuizUI',
-                                          arguments: {'quiz': quiz},
-                                        ), //<----here for changing the quiz
+                                          onPressed: () =>
+                                              Navigator.pushNamed(
+                                            context,
+                                            '/EditOldQuizUI',
+                                            arguments: {'quiz': quiz},
+                                          ), //<----here for changing the quiz
 
-                                        style: ElevatedButton.styleFrom(
-                                          primary: const Color(0xFFFF9800),
-                                          shape: const RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(20),
-                                              bottomRight: Radius.circular(20),
+                                          style: ElevatedButton.styleFrom(
+                                            primary: const Color(0xFFFF9800),
+                                            shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(20),
+                                                bottomRight: Radius.circular(20),
+                                              ),
+                                            ),
+                                          ),
+                                          child: const Padding(
+                                            padding: EdgeInsets.fromLTRB(
+                                                5.0, 1.0, 5.0, 0.0),
+                                            child: Text(
+                                              'Edit Quiz',
+                                              style: TextStyle(
+                                                  fontFamily: 'Lobster',
+                                                  fontSize: 13),
                                             ),
                                           ),
                                         ),
-                                        child: const Padding(
-                                          padding: EdgeInsets.fromLTRB(
-                                              5.0, 1.0, 5.0, 0.0),
-                                          child: Text(
-                                            'Edit Quiz',
-                                            style: TextStyle(
-                                                fontFamily: 'Lobster',
-                                                fontSize: 13),
+                                      )),
+
+                                  Align(
+                                      alignment: Alignment.topLeft,
+
+                                      child: Container(
+
+                                        width: MediaQuery.of(context).size.width *
+                                            0.26,
+                                        child: ElevatedButton(
+                                          //////////////////////////////////////////////////////////join quiz
+                                          onPressed: () {},
+                                          style: ElevatedButton.styleFrom(
+                                            primary: const Color(0xFFFF9800),
+                                            shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(20),
+                                                bottomRight: Radius.circular(20),
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                      ),
-                                    )),
-
-                                Align(
-                                    alignment: Alignment.topLeft,
-
-                                    child: Container(
-
-                                      width: MediaQuery.of(context).size.width *
-                                          0.26,
-                                      child: ElevatedButton(
-                                        //////////////////////////////////////////////////////////join quiz
-                                        onPressed: () {},
-                                        style: ElevatedButton.styleFrom(
-                                          primary: const Color(0xFFFF9800),
-                                          shape: const RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(20),
-                                              bottomRight: Radius.circular(20),
+                                          child: const Padding(
+                                            padding: EdgeInsets.fromLTRB(
+                                                5.0, 1.0, 5.0, 0.0),
+                                            child: Text(
+                                              'Join Quiz',
+                                              style: TextStyle(
+                                                  fontFamily: 'Lobster',
+                                                  fontSize: 13),
                                             ),
                                           ),
                                         ),
-                                        child: const Padding(
-                                          padding: EdgeInsets.fromLTRB(
-                                              5.0, 1.0, 5.0, 0.0),
-                                          child: Text(
-                                            'Join Quiz',
-                                            style: TextStyle(
-                                                fontFamily: 'Lobster',
-                                                fontSize: 13),
+                                      )),
+
+                                  Align(
+                                      alignment: Alignment.topLeft,
+
+                                      child: Container(
+
+                                        width: MediaQuery.of(context).size.width *
+                                            0.26,
+                                        child: ElevatedButton(
+                                          /////////////////////////////////////////////////////////////Play quiz
+                                          onPressed: () =>
+                                              Navigator.pushReplacementNamed(
+                                            context,
+                                            '/quizWrapper',
+                                            arguments: {'quiz': quiz},
                                           ),
-                                        ),
-                                      ),
-                                    )),
-
-                                Align(
-                                    alignment: Alignment.topLeft,
-
-                                    child: Container(
-
-                                      width: MediaQuery.of(context).size.width *
-                                          0.26,
-                                      child: ElevatedButton(
-                                        /////////////////////////////////////////////////////////////Play quiz
-                                        onPressed: () =>
-                                            Navigator.pushReplacementNamed(
-                                          context,
-                                          '/quizWrapper',
-                                          arguments: {'quiz': quiz},
-                                        ),
-                                        style: ElevatedButton.styleFrom(
-                                          primary: const Color(0xFFFF9800),
-                                          shape: const RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(20),
-                                              bottomRight: Radius.circular(20),
+                                          style: ElevatedButton.styleFrom(
+                                            primary: const Color(0xFFFF9800),
+                                            shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(20),
+                                                bottomRight: Radius.circular(20),
+                                              ),
+                                            ),
+                                          ),
+                                          child: const Padding(
+                                            padding: EdgeInsets.fromLTRB(
+                                                5.0, 1.0, 5.0, 0.0),
+                                            child: Text(
+                                              'Play Quiz',
+                                              style: TextStyle(
+                                                  fontFamily: 'Lobster',
+                                                  fontSize: 13),
                                             ),
                                           ),
                                         ),
-                                        child: const Padding(
-                                          padding: EdgeInsets.fromLTRB(
-                                              5.0, 1.0, 5.0, 0.0),
-                                          child: Text(
-                                            'Play Quiz',
-                                            style: TextStyle(
-                                                fontFamily: 'Lobster',
-                                                fontSize: 13),
-                                          ),
-                                        ),
-                                      ),
-                                    )),
-                              ]),
-                        ]))))));
+                                      )),
+                                ]),
+                          ]))),
+                ))));
   }
 }
 

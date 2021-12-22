@@ -215,6 +215,14 @@ class DatabaseService {
     });
   }
 
+  // ! deleteOneQuizesPerUID()
+  // ~ deletes single quiz from DB
+  void deleteOneQuizesPerUID(Quiz quiz) {
+    if(quiz.quizOwnerUID == uid){
+      quizCollection.doc(quiz.quizID).delete();
+    }
+  }
+
   // * ==================================================
   // * QUIZES SECTION END
   // * ==================================================
