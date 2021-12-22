@@ -40,6 +40,7 @@ class _ActiveQuizState extends State<ActiveQuiz> {
 
    @override
    void initState() {
+         int maxQuestion = getMaxQuestions(widget.quiz);
          widget.stateVector = GameState(
          id: 1,
          players: List.filled(4, 0),
@@ -47,7 +48,13 @@ class _ActiveQuizState extends State<ActiveQuiz> {
          answerTimes: [List.filled(widget.quiz.listOfQuestions.length, 0)],
          answerCorrect: [List.filled(widget.quiz.listOfQuestions.length, false)],
          buttonsPressed: [List.filled(getMaxQuestions(widget.quiz), false)],
-         buttonsPressedCorrect: [List.filled(getMaxQuestions(widget.quiz), false)],
+         buttonsPressedCorrect:[List.filled(getMaxQuestions(widget.quiz), false)],
+         buttonsPressedSaved: [List.empty(growable: true)],
+
+         //List.generate(widget.quiz.listOfQuestions.length, (i) => List.filled(maxQuestion, false))
+
+         //List.generate(widget.quiz.listOfQuestions.length, (i) => List.filled(getMaxQuestions(widget.quiz), false))
+
            //List.generate(widget.quiz.listOfQuestions.length, (i) => List.generate(getMaxQuestions(widget.quiz)),
              //List.generate(widget.quiz.listOfQuestions.length, (i) => false)]
              //List (getMaxQuestions(widget.quiz) ]
@@ -112,7 +119,6 @@ class _ActiveQuizState extends State<ActiveQuiz> {
 
 
   void next() {
-    print(widget.stateVector.buttonsPressed);
     widget.updateProgress.cancel();
     widget.stateVector.setAnswerTimes(widget.myPlayerNumber, widget.stateVector.currentQuestion, widget.measureTime.elapsed.inMilliseconds);
 
@@ -128,10 +134,21 @@ class _ActiveQuizState extends State<ActiveQuiz> {
         }
       }
     }
+   // if (widget.quiz.listOfQuestions[widget.stateVector.currentQuestion].answers.length < widget.stateVector.buttonsPressed.length) {
+      for (int l = 0; l < widget.quiz.listOfQuestions[widget.stateVector.currentQuestion].answers.length; l++) {
+        widget.stateVector.buttonsPressedSaved[widget.myPlayerNumber].add(widget.stateVector.buttonsPressed[widget.myPlayerNumber][l]);
+      }
+    //}
+    //else {
+    //  widget.stateVector.buttonsPressedSaved[widget.myPlayerNumber].addAll(widget.stateVector.buttonsPressed[widget.myPlayerNumber]);
+    //}
+
+
     setState(() {
       widget.stateVector.buttonsActive = false;
       widget.stateVector.showTimeUntilAnswer = true;
       widget.stateVector.buttonsPressedCorrect;
+      widget.stateVector.buttonsPressedSaved;
 
     });
 
@@ -180,7 +197,7 @@ class _ActiveQuizState extends State<ActiveQuiz> {
   }*/
   startTimer() {
     widget.updateProgress = Timer.periodic(
-      const Duration(seconds: 1), (timer) {
+      const Duration(seconds: 2), (timer) {
       timerProgress = timerProgress - 0.1;
       setState(() {
         timerProgress;
@@ -301,6 +318,7 @@ void answer(int number) {
                 ),
               //for debug
               Text(widget.stateVector.toString()),
+              Text("SavedButtonPresses: ${widget.stateVector.buttonsPressedSaved.toString()}"),
               Row(
                 children: <Widget> [
                   Expanded(

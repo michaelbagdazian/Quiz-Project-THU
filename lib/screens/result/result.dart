@@ -47,7 +47,7 @@ class Result extends StatelessWidget {
           Expanded(
             child: ListView(
               children: <Widget> [
-              for (var i = 0; i < args.quiz.listOfQuestions.length; i++) //
+              for (var i = 0, k = 0; i < args.quiz.listOfQuestions.length; i++) //
                 Card(
                         child: Padding(
                           padding: EdgeInsets.all(1 * em),
@@ -65,14 +65,14 @@ class Result extends StatelessWidget {
 
                                Column(
                                  children: <Widget> [
-                               for (var j = 0; j < args.quiz.listOfQuestions[i].answers.length ; j++)
+                               for (var j = 0; j < args.quiz.listOfQuestions[i].answers.length ; j++, k++)
                                  Container(
                                     margin: EdgeInsets.all(0.5 * em),
                                     width: double.infinity,
                                     decoration: BoxDecoration(
                                          borderRadius:
                                             BorderRadius.circular(8),
-                                         border: args.stateVector.buttonsPressed[0][j] ? Border.all(color: Colors.black) : null,
+                                         border: args.stateVector.buttonsPressedSaved[0][k] ? Border.all(color: Colors.black, width: 4) : null,
                                          color: args.quiz.listOfQuestions[i].answers[j].isCorrect
                                              ? Colors.green
                                              : Colors.red),
