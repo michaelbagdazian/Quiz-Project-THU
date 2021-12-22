@@ -1,7 +1,7 @@
 import 'package:crew_brew/models/quiz/Quiz.dart';
 import 'package:flutter/material.dart';
-import 'quiztile_resource/dialog.dart';
-import 'quiztile_resource/image_funktion.dart';
+import '../quiztile_resource/dialog.dart';
+import '../quiztile_resource/image_funktion.dart';
 
 // ! Information about the class:
 // ~ This class represents ONE entry in the List

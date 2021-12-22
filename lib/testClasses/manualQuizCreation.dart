@@ -38,7 +38,7 @@ class ManualQuizeCreation {
     // ~ Question #2 instance
     Question question_2 = _createQuestion(questionText_2, answers_2);
 
-    /*// ! Question #3
+    // ! Question #3
     // ~ questionText
     String questionText_3 = "What is your name?";
 
@@ -51,7 +51,7 @@ class ManualQuizeCreation {
 
     // ~ Question #3 instance
     Question question_3 = _createQuestion(questionText_3, answers_3);
-
+/*
     // ! Question #4
     // ~ questionText
     String questionText_4 = "What is your favorite color";
@@ -84,8 +84,8 @@ class ManualQuizeCreation {
     List<Question> questionList = [
       question_1,
       question_2,
-      /*question_3,
-      question_4,
+      question_3,
+      /*question_4,
       question_5*/
     ];
 

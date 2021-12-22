@@ -15,8 +15,8 @@ import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:provider/provider.dart';
 
-import '../../models/user/AppUser.dart';
-import '../../shared/loading.dart';
+import '../../../models/user/AppUser.dart';
+import '../../../shared/loading.dart';
 
 class EditQuizzUI extends StatefulWidget {
   const EditQuizzUI({Key? key}) : super(key: key);
@@ -49,7 +49,7 @@ class _EditQuizzUIState extends State<EditQuizzUI> {
   /*UserData? userData;*/
 
   // ~ This variables helps us to make sure that we allow new data to be passed in the fields
-  bool controllersInitiated = false;
+  bool variablesInitiated = false;
 
   @override
   Widget build(BuildContext context) {
@@ -58,14 +58,14 @@ class _EditQuizzUIState extends State<EditQuizzUI> {
     user = Provider.of<AppUser?>(context);
 
     // TODO Daniel: This should be moved about
-    if(!controllersInitiated){
+    if(!variablesInitiated){
       quiz = data['quiz'] as Quiz;
       quizTitle.text = quiz!.quizTitle;
       quizDescription!.text = quiz!.quizDescription;
       tags!.text = quiz!.tags.join(", ");
       isQuizzPublic = quiz!.quizIsShared;
       currentQuizCategory = quiz!.quizCategory;
-      controllersInitiated = true;
+      variablesInitiated = true;
     }
 
 
