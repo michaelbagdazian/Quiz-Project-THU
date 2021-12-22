@@ -46,6 +46,7 @@ class QuizTile extends StatelessWidget {
                 // ~ This adds option to delete
                 child: Slidable(
                   startActionPane: ActionPane(
+                    extentRatio: 0.35,
                     // A motion is a widget used to control how the pane animates.
                     motion: StretchMotion(),
                     // All actions are defined in the children parameter.
