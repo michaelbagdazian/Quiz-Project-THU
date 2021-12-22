@@ -26,10 +26,6 @@ class QuizTile extends StatelessWidget {
     final user = Provider.of<AppUser?>(context);
     String backPickture = quiz.quizCategory;
 
-    void delete(){
-      DatabaseService(uid: user!.uid).deleteOneQuizesPerUID(quiz);
-    }
-
     return GestureDetector(
         //when the card is pressed it oppends a new one
         onTap: () =>
@@ -51,14 +47,14 @@ class QuizTile extends StatelessWidget {
                 child: Slidable(
                   startActionPane: ActionPane(
                     // A motion is a widget used to control how the pane animates.
-                    motion: ScrollMotion(),
+                    motion: StretchMotion(),
                     // All actions are defined in the children parameter.
                     children: [
                       // A SlidableAction can have an icon and/or a label.
                       SlidableAction(
                         onPressed: (context){
-                          print("hi");
-                          delete();
+                          print("trying to delete");
+                          DatabaseService(uid: user!.uid).deleteOneQuizesPerUID(quiz);
                         },
                         backgroundColor: Color(0xFFFE4A49),
                         foregroundColor: Colors.white,
