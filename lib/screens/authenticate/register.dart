@@ -1,9 +1,11 @@
+import 'package:crew_brew/navigationBar/menu_button.dart';
 import 'package:crew_brew/services/auth.dart';
-import 'package:crew_brew/shared/constants.dart';
 import 'package:crew_brew/shared/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:crew_brew/shared/customWidgets/customText.dart';
 import 'package:crew_brew/shared/colors.dart';
+
+import '../../shared/customWidgets/customAlertBox.dart';
 
 // ! Information about the class:
 // ~ This class is the screen for registration
@@ -45,7 +47,7 @@ class _SignUpState extends State<SignUp> {
   String username = '';
   String email = '';
   String password = '';
-  String error = '';
+  String confirmPassword = '';
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +67,7 @@ class _SignUpState extends State<SignUp> {
         : Scaffold(
             //this following statement is to make sure that a keyboard on the screen won't push the whole screen up when it pops up
             resizeToAvoidBottomInset: false,
+
             //appbar on the registeration screen
             appBar: AppBar(
               title: const Text(
@@ -77,50 +80,51 @@ class _SignUpState extends State<SignUp> {
               backgroundColor: welcomeh,
             ),
             //normal ol stack; i use fit to expand the stack to fill the screen; try to change this to fill instead of expand to solve overflow problems
-            body: Container(
-              child: Form(
-                key: _formKey,
-                child: Stack(fit: StackFit.expand, children: [
-                  SizedBox(
-                    child: Expanded(
-                      flex: 1,
-                      child: Image.asset(
-                        'assets/images/bgtop.png',
-                        fit: BoxFit.cover,
+            body: Form(
+              key: _formKey,
+              child: Container(
+                constraints: const BoxConstraints.expand(),
+                decoration: const BoxDecoration(
+                  //* Background
+                  image: DecorationImage(
+                      image: AssetImage('assets/images/bgtop.png'),
+                      fit: BoxFit.cover),
+                ),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      //* you will see a lot of these sizedboxes, i use them to create a bit of an empty space between the children/widgets/components
+                      SizedBox(
+                        height: size.height * 0.05,
                       ),
-                    ),
-                  ),
-                  Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        //* you will see a lot of these sizedboxes, i use them to create a bit of an empty space between the children/widgets/components
-                        SizedBox(
-                          height: size.height * 0.05,
+                      //*Add the welcoming text first; as you can see i am using a customText Widget so i don't have to re-style every text on the page
+                      _customText.customText('Creat New\n Account'),
+                      //*again empty space
+                      SizedBox(
+                        height: size.height * 0.07,
+                      ),
+                      // * Start of TextFormField for the username
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: (0.1 * size.width),
+                          right: (0.1 * size.width),
                         ),
-                        //*Add the welcoming text first; as you can see i am using a customText Widget so i don't have to re-style every text on the page
-                        _customText.customText('Creat New\n Account'),
-                        //*again empty space
-                        SizedBox(
-                          height: size.height * 0.05,
-                        ),
-
-                        // * Start of TextFormField for the username
-                        TextFormField(
+                        child: TextFormField(
                             // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
-                            decoration: InputDecoration(
-                              enabledBorder: const OutlineInputBorder(
+                            decoration: const InputDecoration(
+                              enabledBorder: OutlineInputBorder(
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(12.0)),
+                                    BorderRadius.all(Radius.circular(12.0)),
                                 borderSide: BorderSide(color: texts),
                               ),
-                              focusedBorder: const OutlineInputBorder(
+                              focusedBorder: OutlineInputBorder(
                                   borderRadius:
-                                  BorderRadius.all(Radius.circular(5.0)),
+                                      BorderRadius.all(Radius.circular(5.0)),
                                   borderSide: BorderSide(color: borders)),
-                              contentPadding: const EdgeInsets.all(15),
+                              contentPadding: EdgeInsets.all(15),
                               labelText: 'Username',
-                              labelStyle: const TextStyle(
+                              labelStyle: TextStyle(
                                 fontFamily: 'Lobster',
                                 color: texts,
                                 fontSize: 20.0,
@@ -138,26 +142,32 @@ class _SignUpState extends State<SignUp> {
                               // ~ We also make use of trim() function to remove any spaces
                               setState(() => username = val.trim());
                             }),
-                        // * End of TextFormField for the username
-                        SizedBox(
-                          height: size.height * 0.02,
+                      ),
+                      // * End of TextFormField for the username
+                      SizedBox(
+                        height: size.height * 0.012,
+                      ),
+                      // * Start of TextFormField for the e-mail
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: (0.1 * size.width),
+                          right: (0.1 * size.width),
                         ),
-                        // * Start of TextFormField for the e-mail
-                        TextFormField(
+                        child: TextFormField(
                             // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
-                            decoration: InputDecoration(
-                              enabledBorder: const OutlineInputBorder(
+                            decoration: const InputDecoration(
+                              enabledBorder: OutlineInputBorder(
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(12.0)),
+                                    BorderRadius.all(Radius.circular(12.0)),
                                 borderSide: BorderSide(color: texts),
                               ),
-                              focusedBorder: const OutlineInputBorder(
+                              focusedBorder: OutlineInputBorder(
                                   borderRadius:
-                                  BorderRadius.all(Radius.circular(5.0)),
+                                      BorderRadius.all(Radius.circular(5.0)),
                                   borderSide: BorderSide(color: borders)),
-                              contentPadding: const EdgeInsets.all(15),
+                              contentPadding: EdgeInsets.all(15),
                               labelText: 'E-mail',
-                              labelStyle: const TextStyle(
+                              labelStyle: TextStyle(
                                 fontFamily: 'Lobster',
                                 color: texts,
                                 fontSize: 20.0,
@@ -175,26 +185,32 @@ class _SignUpState extends State<SignUp> {
                               // ~ We also make use of trim() function to remove any spaces
                               setState(() => email = val.trim());
                             }),
-                        // * End of TextFormField for the e-mail
-                        SizedBox(
-                          height: size.height * 0.02,
+                      ),
+                      // * End of TextFormField for the e-mail
+                      SizedBox(
+                        height: size.height * 0.012,
+                      ),
+                      // * Start of TextFormField for the password
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: (0.1 * size.width),
+                          right: (0.1 * size.width),
                         ),
-                        TextFormField(
+                        child: TextFormField(
                             // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
-                            decoration: InputDecoration(
-                              enabledBorder: const OutlineInputBorder(
+                            decoration: const InputDecoration(
+                              enabledBorder: OutlineInputBorder(
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(12.0)),
+                                    BorderRadius.all(Radius.circular(12.0)),
                                 borderSide: BorderSide(color: texts),
                               ),
-                              focusedBorder: const OutlineInputBorder(
+                              focusedBorder: OutlineInputBorder(
                                   borderRadius:
-                                  BorderRadius.all(Radius.circular(5.0)),
+                                      BorderRadius.all(Radius.circular(5.0)),
                                   borderSide: BorderSide(color: borders)),
-                                 
-                              contentPadding: const EdgeInsets.all(15),
+                              contentPadding: EdgeInsets.all(15),
                               labelText: 'Password',
-                              labelStyle: const TextStyle(
+                              labelStyle: TextStyle(
                                 fontFamily: 'Lobster',
                                 color: texts,
                                 fontSize: 20.0,
@@ -215,54 +231,109 @@ class _SignUpState extends State<SignUp> {
                               // ~ We also make use of trim() function to remove any spaces
                               setState(() => password = val.trim());
                             }),
-                        FloatingActionButton.extended(
-                          onPressed: () async {
-                            // ~ Here we check if our form is valid
-                            // ~ currentState tells us what values are inside the form fields
-                            // ~ validate() method uses validator properties in the TextFormFields
-                            if (_formKey.currentState!.validate()) {
-                              // * Here we decide to show the loading screen
-                              setState(() => loading = true);
-                              // ~ We will get null or AppUser, so we don't know the type of return. Therefore we use dynamic
-                              // ~ We await for the result from the Firebase
-                              dynamic result =
-                                  await _auth.registerWithEmailAndPassword(
-                                      username, email, password, context);
-                              // ~ If registration is NOT successful, we provide an error message.
-                              if (result == null) {
-                                setState(() {
-                                  error =
-                                      'please supply a valid email or password';
-                                  // * Here we decide to remove the loading screen
-                                  loading = false;
-                                });
-                                // ! If login is successful:
-                                // ~ pop current screen from the stack then it's automatically redirected to Home page
-                              } else {
-                                popScreen();
-                              }
+                      ),
+                      SizedBox(
+                        height: size.height * 0.012,
+                      ),
+                      // * Start of TextFormField for the password confirmation
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: (0.1 * size.width),
+                          right: (0.1 * size.width),
+                        ),
+                        child: TextFormField(
+                            // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
+                            decoration: const InputDecoration(
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(12.0)),
+                                borderSide: BorderSide(color: texts),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5.0)),
+                                  borderSide: BorderSide(color: borders)),
+                              contentPadding: EdgeInsets.all(15),
+                              labelText: 'Confirm password',
+                              labelStyle: TextStyle(
+                                fontFamily: 'Lobster',
+                                color: texts,
+                                fontSize: 20.0,
+                              ),
+                            ),
+                            obscureText: true,
+                            // ! validator property:
+                            // ~ we return null value if this formField is VALID or a string it's NOT VALID
+                            // ~ validator will be used in RaisedButton when calling _formKey.currentState!.validate()
+                            validator: (val) =>
+                                val!.isEmpty ? 'Confirm password' : null,
+                            // ! onChanged property:
+                            // ~ When information is entered into the TextForField, this property is triggered
+                            onChanged: (val) {
+                              // ~ We take email state and set it equal to value which is in e-mail textField
+                              // ~ We also make use of trim() function to remove any spaces
+                              setState(() => confirmPassword = val.trim());
+                            }),
+                      ),
+                      //* empty space
+                      SizedBox(
+                        height: size.height * 0.1,
+                      ),
+                      //* Register Button
+                      FloatingActionButton.extended(
+                        onPressed: () async {
+                          // ~ Here we check if our form is valid
+                          // ~ currentState tells us what values are inside the form fields
+                          // ~ validate() method uses validator properties in the TextFormFields
+                          if (_formKey.currentState!.validate()) {
+                            // * Here we decide to show the loading screen
+                            setState(() => loading = true);
+                            // ~ We will get null or AppUser, so we don't know the type of return. Therefore we use dynamic
+                            // ~ We await for the result from the Firebase
+                            dynamic result =
+                                await _auth.registerWithEmailAndPassword(
+                                    username, email, password, showError,
+                                    passwdConfirmation: confirmPassword);
+                            // ~ If registration is NOT successful, we provide an error message.
+                            if (result == null) {
+                              setState(() {
+                                // * Here we decide to remove the loading screen
+                                loading = false;
+                              });
+                              // ! If login is successful:
+                              // ~ pop current screen from the stack then it's automatically redirected to Home page
+                            } else {
+                              popScreen();
                             }
-                          },
-                          label: Text(
-                            'Register',
-                            style: const TextStyle(
-                              fontSize: 30,
-                              fontFamily: 'Lobster',
-                            ),
-                          ),
-                          backgroundColor: buttons,
-                          extendedPadding: const EdgeInsets.all(40),
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(20),
-                              bottomRight: Radius.circular(20),
-                            ),
+                          }
+                        },
+                        label: const Text(
+                          'Register',
+                          style: TextStyle(
+                            fontSize: 30,
+                            fontFamily: 'Lobster',
                           ),
                         ),
-                      ]),
-                ]),
+                        backgroundColor: buttons,
+                        extendedPadding: const EdgeInsets.all(40),
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            bottomRight: Radius.circular(20),
+                          ),
+                        ),
+                      ),
+                    ]),
               ),
             ),
           );
+  }
+
+  void showError(String errorTitle, String errorMessage) async {
+    await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return customAlertBox(errorTitle, errorMessage);
+        });
   }
 }

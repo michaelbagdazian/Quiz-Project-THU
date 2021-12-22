@@ -30,7 +30,7 @@ class AuthService {
   // * context is used for error handeling, to actually know, what context to use when we need to build the alertbox
   //* when you call this method just pass in context like so => signInWithEmailAndPassword(email, password, context)
   Future signInWithEmailAndPassword(
-      String email, String password, BuildContext context) async {
+      String email, String password, Function showError) async {
     try {
       // ~ First we do request to FireBase and it awaits for the response
       UserCredential result = await _auth.signInWithEmailAndPassword(
@@ -42,13 +42,8 @@ class AuthService {
       return _userFromFirebaseUser(user);
     } on FirebaseAuthException catch (e) {
       //~ catch firebase exception
-      //~ return a showDialog which builds an alert box with a title and the message of the exception
-      return showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            //customAlertBox (label, error message)
-            return customAlertBox("Oops !! and error has happened", e.message);
-          });
+      //~ execute callback function passed from sign_in.dart which builds an alert box with a title and the message of the exception
+      showError("Log-in error!", e.message);
     }
   }
 
@@ -68,7 +63,8 @@ class AuthService {
   // * context is used for error handeling, to actually know, what context to use when we need to build the alertbox
   //* when you call this method just pass in context like so => signInAnon(context)
   // ~ Future - If the asynchronous operation succeeds, the future completes with a value. Otherwise it completes with an error.
-  Future signInAnon(BuildContext context) async {
+  Future signInAnon(Function showError, {String displayName = ""}) async {
+    displayName = displayName == "" ? "Anonymous" : displayName;
     try {
       // ~ we make authentication request and we want to await this, because this will take some time to do
       // ~ and we want to wait for completion before we assign the result to some kind of variable
@@ -80,21 +76,16 @@ class AuthService {
 
       // ~ create a document in Firestore Database for that user with the UID
       // ~ Together with the Firebase User instance we create the entry of User Data in the Firebase
-      // ~ Username and email is provided, level is 0 and avatar is default
+      // ~ Username and email is provided, level is 0 and avatars is default
       await DatabaseService(uid: user!.uid)
-          .updateUserData('anonymous', 'anonymous@gmail.com', 'anon.png', 0);
+          .updateUserData(displayName, 'anonymous@gmail.com', 'assets/avatars/default.png', 0);
 
       // ~ When we call signInAnon method from signIn page, then it will return user object to that sign in widget where we called this method
       return _userFromFirebaseUser(user);
     } on FirebaseAuthException catch (e) {
       //~ catch firebase exception
-      //~ return a showDialog which builds an alert box with a title and the message of the exception
-      return showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            //customAlertBox (label, error message)
-            return customAlertBox("Oops !! and error has happened", e.message);
-          });
+      //~ execute callback function passed from sign_in.dart which builds an alert box with a title and the message of the exception
+      showError("Log-in error!", e.message);
     }
   }
 
@@ -102,8 +93,14 @@ class AuthService {
   // * As you can see, the method takes a parameter of type BuildContext,
   // * context is used for error handeling, to actually know, what context to use when we need to build the alertbox
   //* when you call this method just pass in context like so => registerWithEmailAndPassword(username, pass, context)
-  Future registerWithEmailAndPassword(String username, String email,
-      String password, BuildContext context) async {
+  Future registerWithEmailAndPassword(
+      String username, String email, String password, Function showError,
+      {String? passwdConfirmation}) async {
+    if (password != passwdConfirmation) {
+      showError('Password Confirmation',
+          'Make sure your password confirmation matches your password');
+      return;
+    }
     try {
       // ~ First we do request to FireBase and it awaits for the response
       UserCredential result = await _auth.createUserWithEmailAndPassword(
@@ -113,20 +110,15 @@ class AuthService {
 
       // ~ create a document in Firestore Database for that user with the UID
       // ~ Together with the Firebase User instance we create the entry of User Data in the Firebase
-      // ~ Username and email is provided, level is 0 and avatar is default
+      // ~ Username and email is provided, level is 0 and avatars is default
       await DatabaseService(uid: user!.uid)
-          .updateUserData(username, email, 'default.png', 0);
+          .updateUserData(username, email, 'assets/avatars/default.png', 0);
 
       return _userFromFirebaseUser(user);
       //~ catch firebase exceptiom
     } on FirebaseAuthException catch (e) {
-      //~ return a showDialog which builds an alert box with a title and the message of the exception
-      return showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            //customAlertBox (label, error message)
-            return customAlertBox("Oops !! and error has happened", e.message);
-          });
+      //~ execute callback function passed from sign_in.dart which builds an alert box with a title and the message of the exception
+      showError("Register error!", e.message);
     }
   }
 

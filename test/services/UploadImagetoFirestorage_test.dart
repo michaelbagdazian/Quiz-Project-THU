@@ -1,15 +1,10 @@
-// ignore: file_names
 // ignore_for_file: avoid_web_libraries_in_flutter, file_names
 
 import 'dart:io' as io;
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:integration_test/integration_test.dart';
 import 'package:crew_brew/services/UploadImageToFireStorage.dart';
 import 'package:http/http.dart' as http;
-import 'package:mockito/mockito.dart';
 
 /*
 ! This class is to test Uploading an Image to firestore
@@ -21,7 +16,7 @@ void main() {
   group('Uploading an Image', () {
     test('response.statusCode should be equal to 200', () async {
       io.File? _image;
-      _image = io.File('/assets/avatar/generic_robo.png');
+      _image = io.File('/assets/avatars/generic_robo.png');
       UploadFileToFireStorage uploadFileToFireStorage =
           UploadFileToFireStorage();
       //uploading an image to firestore
