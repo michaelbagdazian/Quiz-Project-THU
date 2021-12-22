@@ -229,13 +229,18 @@ class QuizTile extends StatelessWidget {
 const String _heroAddTodo = 'add-todo-hero';
 //with the stransition the values from quiz comes to the new popcard
 class _PopupCard extends StatefulWidget {
+
   const _PopupCard({Key? key, required this.quiz}) : super(key:key);
   final Quiz quiz;
   @override
   State<_PopupCard> createState() => _PopupCardState();
+
 }
 
 class _PopupCardState extends State<_PopupCard> {
+  late final Quiz quiz;
+
+
   @override
   Widget build(BuildContext context) {
     @override
@@ -301,7 +306,7 @@ class _PopupCardState extends State<_PopupCard> {
                                       borderRadius: BorderRadius.circular(150),
                                       border: Border.all(width: 2, color: Colors.white)),
                                   height: MediaQuery.of(context).size.height* 0.04,width: MediaQuery.of(context).size.height* 0.05,
-                                  child: Icon(Icons.group, color: widget.quiz.quizIsShared ? (Colors.red) :  Colors.green,), //<- here should be logik to change the picture
+                                  child: Icon(Icons.group, color: widget.quiz.quizIsShared ? (Colors.green) :  Colors.red,), //<- here should be logik to change the picture
                                 )
                             ),
                           ]),
@@ -359,20 +364,12 @@ class _PopupCardState extends State<_PopupCard> {
                                                 bottomRight: Radius.circular(20.0),
                                               )
                                           ),
-                                          child: RichText(
-                                            text: const TextSpan(
-                                                children:[
-                                                  TextSpan(
-                                                      text: '  Information:  ',
-                                                      style: TextStyle(
-                                                          fontFamily: 'Lobster',
-                                                          fontWeight: FontWeight.bold,
-                                                          color: Colors.white,
-                                                          fontSize: 19)),
-                                                ]
-                                            ),
-
-                                          )
+                                          child: Text(' Information:  ',
+                                                  style: TextStyle(
+                                                      fontFamily: 'Lobster',
+                                                      fontWeight: FontWeight.bold,
+                                                      color: Colors.white,
+                                                      fontSize: 19)),
                                       )
                                   )
 
@@ -498,7 +495,10 @@ class _PopupCardState extends State<_PopupCard> {
                                     Align(
                                         alignment: Alignment.bottomLeft,
                                         child: Container(width: MediaQuery.of(context).size.width * 0.20,
-                                          child: ElevatedButton(onPressed: () {},                                 //<-here for joining the quiz
+                                          child: ElevatedButton(
+                                            onPressed:() =>
+                                                Navigator.pushReplacementNamed(context, '/quizWrapper', arguments:
+                                                {'quiz': quiz}),//<-here for joining the quiz
                                             style: ElevatedButton.styleFrom(
                                               primary:  const Color (0xFFFF9800),
                                               shape: const RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(20), bottomRight: Radius.circular(20),),),
@@ -557,7 +557,7 @@ class _PopupCardState extends State<_PopupCard> {
                                             bottomRight: Radius.circular(20.0),
                                           )
                                       ),
-                                      child: Text("  The Owner of the quiz is: "+ "  "+ widget.quiz.quizOwner+"  ",
+                                      child: Text("  The Owner of the quiz is: "+ "  "+"  "+ widget.quiz.quizOwner+"  ",
                                         style: const TextStyle(
                                             fontFamily: 'Lobster',
                                             fontWeight: FontWeight.bold,
