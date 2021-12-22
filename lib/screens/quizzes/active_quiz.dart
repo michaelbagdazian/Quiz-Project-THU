@@ -12,43 +12,46 @@ import 'package:crew_brew/shared/colors.dart';
 class ActiveQuiz extends StatefulWidget {
   //final List<Question> questions;
   final Quiz quiz;
-  GameState stateVector = GameState(
+  /*GameState stateVector = GameState(
       id: 1,
       players: List.filled(4, 0),
-      playerPoints: [List.filled(8, 0)],
+      playerPoints: [List.filled(4, 0)],
       answerTimes: [List.filled(4, 0)],
       answerCorrect: [List.filled(4, false)],
       buttonsPressed: [List.filled(4, false)],
       buttonsPressedCorrect: [List.filled(4, false)]
-  );
+  );*/
   // for later with multiplayer
   //late int myPlayerNumber = getMyPlayerNumber():
 
   final int myPlayerNumber = 0;
   Stopwatch measureTime = Stopwatch();
   late Timer updateProgress;
-
+  late GameState stateVector;
   ActiveQuiz({Key? key, required this.quiz}) : super(key: key);
 
   @override
   _ActiveQuizState createState() => _ActiveQuizState();
 
-  int getMyPlayerNumber() {
-    for (int i = 0; i < stateVector.players.length; i++) {
-      if (stateVector.players[i] == 0) {
-        stateVector.players[i] == 1;
-        return i;
-      }
-    }
-    return -1;
-    //TODO: must have a way to handle spectators i.e. players not in list an catch potential errors
-  }
+
 }
 
 class _ActiveQuizState extends State<ActiveQuiz> {
 
    @override
    void initState() {
+         widget.stateVector = GameState(
+         id: 1,
+         players: List.filled(4, 0),
+         playerPoints: [List.filled(widget.quiz.listOfQuestions.length, 0)],
+         answerTimes: [List.filled(widget.quiz.listOfQuestions.length, 0)],
+         answerCorrect: [List.filled(widget.quiz.listOfQuestions.length, false)],
+         buttonsPressed: [List.filled(getMaxQuestions(widget.quiz), false)],
+         buttonsPressedCorrect: [List.filled(getMaxQuestions(widget.quiz), false)],
+           //List.generate(widget.quiz.listOfQuestions.length, (i) => List.generate(getMaxQuestions(widget.quiz)),
+             //List.generate(widget.quiz.listOfQuestions.length, (i) => false)]
+             //List (getMaxQuestions(widget.quiz) ]
+     );
      //widget.updateProgress = Timer.periodic(const Duration(seconds: 1), (timer) {
 
      //});
@@ -58,6 +61,26 @@ class _ActiveQuizState extends State<ActiveQuiz> {
 //      print('Async done');
 //     });
       super.initState();
+   }
+   int getMaxQuestions(Quiz quiz){
+     int ret = 0;
+     for (int i = 0; i < quiz.listOfQuestions.length; i++) {
+       if (quiz.listOfQuestions[i].answers.length > ret) {
+         ret = quiz.listOfQuestions[i].answers.length;
+       }
+     }
+     return ret;
+   }
+
+   int getMyPlayerNumber() {
+     for (int i = 0; i < widget.stateVector.players.length; i++) {
+       if (widget.stateVector.players[i] == 0) {
+         widget.stateVector.players[i] == 1;
+         return i;
+       }
+     }
+     return -1;
+     //TODO: must have a way to handle spectators i.e. players not in list an catch potential errors
    }
 
   //String message = "";
@@ -89,6 +112,7 @@ class _ActiveQuizState extends State<ActiveQuiz> {
 
 
   void next() {
+    print(widget.stateVector.buttonsPressed);
     widget.updateProgress.cancel();
     widget.stateVector.setAnswerTimes(widget.myPlayerNumber, widget.stateVector.currentQuestion, widget.measureTime.elapsed.inMilliseconds);
 
@@ -214,7 +238,7 @@ void answer(int number) {
               ListView(
 
                 children: <Widget>[
-                  for (var i = 0; i <widget.quiz.listOfQuestions[widget.stateVector.currentQuestion].answers.length; i++)
+                  for (var i = 0; i < widget.quiz.listOfQuestions[widget.stateVector.currentQuestion].answers.length; i++)
                     Padding(
                         padding: const EdgeInsets.all(2),
                         child: ElevatedButton(
@@ -277,7 +301,6 @@ void answer(int number) {
                 ),
               //for debug
               Text(widget.stateVector.toString()),
-              //
               Row(
                 children: <Widget> [
                   Expanded(
