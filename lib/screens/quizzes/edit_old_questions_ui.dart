@@ -69,8 +69,6 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
   //~ Arguments from the Add Quizz Page (Quiz title, tags,Owner UId, etc...)
   late var args;
 
-  int IsLastQuestion = 0;
-
   late Quiz quiz;
   //* Build Widget Starts here
   @override
@@ -78,13 +76,16 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
     Size size = MediaQuery.of(context).size;
     Map data = ModalRoute.of(context)!.settings.arguments as Map;
     quiz = data['quiz'] as Quiz;
+    // TODO setQuestions and getLastQuestion has to be done once
     _addQuestion.setQuestions(quiz.listOfQuestions);
     _Currquestion = _addQuestion.getLastQuestion();
 
     //~ Determining the number of total steps for the progress bar indicator
+    // ! When StepProgressBarIndicatorSteps changes, it notifies ValueListenableBuilder that it has changed
     StepProgressBarIndicatorSteps = _Currquestion == null
         ? ValueNotifier<int>(_addQuestion.getQuestions().length)
         : ValueNotifier<int>(
+            // TODO Change this to 1 or smth else to see how bar is changing
             _addQuestion.getQuestions().indexOf(_Currquestion!) + 2);
     //~ getting the arguments from the previous screen
     args = ModalRoute.of(context)!.settings.arguments;
@@ -103,7 +104,6 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
           ),
         ),
         backgroundColor: Colors.teal,
-        leading: const MenuButton(),
       ),
       //* Container of all widgets
       body: Container(
@@ -126,6 +126,7 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
             //* ProgressBar Starts here
             ValueListenableBuilder<int>(
                 valueListenable: StepProgressBarIndicatorSteps,
+                // ! Value is what is passed from valueListenable
                 builder: (context, value, _) {
                   //* Row that contains two arrows and dashes
                   return Row(
@@ -133,6 +134,7 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       //* Back Arrow
+                      // ! Icon to the left
                       IconButton(
                         enableFeedback: true,
                         icon: const Icon(
@@ -149,8 +151,10 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
                           else
                             null,
                           //? getting the values of the current question
+                          // TODO Examine this
                           await PrintStuffOnScreen(),
                           //? set CurrQuestion as CurrQuestion.previous
+                          // TODO Examine this
                           goToPreviousQuestin(),
                         },
                       ),
@@ -176,6 +180,7 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
                             Icons.arrow_forward_ios_rounded,
                             color: Colors.black,
                           ),
+                          // ! Arrow right
                           onPressed: () async => {
                                 //? Incrementing dashes here
                                 if (StepProgressBarIndicatorSteps.value <
@@ -186,8 +191,10 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
                                 else
                                   null,
                                 //? Set CurrQuestion as CurrQuestion.next
+                                // TODO Examine this
                                 goToNextQuestion(),
                                 //? getting the values of the current question
+                                // TODO Examine this
                                 await PrintStuffOnScreen(),
                               }),
                     ],
@@ -405,7 +412,7 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
     }
 
     //~ Add a new Question to the list of questions
-    _addQuestion.addNewQuestion(_question.text, answers, context);
+    _addQuestion.EditOldQuestion(_question.text, answers, context, _Currquestion!);
     //~ Add a step in the progress indicator
     StepProgressBarIndicatorSteps.value++;
     //~ Move the pointer of the Current Question to get the new last question
@@ -470,7 +477,6 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
           _addQuestion.getQuestions().indexOf(_Currquestion!) + 1];
     } else {
       _Currquestion != _addQuestion.getLastQuestion();
-      IsLastQuestion++;
     }
   }
 
