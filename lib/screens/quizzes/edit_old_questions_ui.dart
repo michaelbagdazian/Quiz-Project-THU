@@ -416,7 +416,7 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
     clearFunc();
   }
 
-//~ This function clears and resets everything (text fields and checkboxes) on the screen, this can be used when a new Question is to be Added or if user clicks on clear button
+//~ This function clears and resets evferything (text fields and checkboxes) on the screen, this can be used when a new Question is to be Added or if user clicks on clear button
   VoidCallback? clearFunc() {
     _question.clear();
     _firstAnswer.clear();
