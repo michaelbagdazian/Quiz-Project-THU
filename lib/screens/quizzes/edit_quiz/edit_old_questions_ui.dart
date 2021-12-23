@@ -103,8 +103,8 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
       StepProgressBarIndicatorSteps = _Currquestion == null
           ? ValueNotifier<int>(_addQuestion.getQuestions().length)
           : ValueNotifier<int>(
-        // TODO Change this to 1 or smth else to see how bar is changing
-          _addQuestion.getQuestions().indexOf(_Currquestion!) + 1);
+              // TODO Change this to 1 or smth else to see how bar is changing
+              _addQuestion.getQuestions().indexOf(_Currquestion!) + 1);
 
       progressBarInitiated = true;
 
@@ -180,6 +180,9 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
                           // TODO Examine this
                           goToPreviousQuestin(),
                           PrintStuffOnScreen(),
+
+                          // ~ rebuild the widget
+                          setState(() {}),
                         },
                       ),
                       SizedBox(
@@ -225,6 +228,9 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
                                 // TODO Examine this
                                 // ! UNCOMMENT
                                 PrintStuffOnScreen(),
+
+                                // ~ rebuild the widget
+                                setState(() {}),
                               }),
                     ],
                   );
@@ -285,6 +291,7 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
                 Checkbox(
                     value: _isFirstAnswerCorrect,
                     onChanged: (bool? value) {
+                      print("_answerCorrect1");
                       setState(() {
                         _isFirstAnswerCorrect = value;
                       });
@@ -304,6 +311,7 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
                 Checkbox(
                     value: _isSecondAnswerCorrect,
                     onChanged: (bool? value) {
+                      print("_answerCorrect2");
                       setState(() {
                         _isSecondAnswerCorrect = value;
                       });
@@ -323,6 +331,7 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
                 Checkbox(
                     value: _isThirdAnswerCorrect,
                     onChanged: (bool? value) {
+                      print("_answerCorrect3");
                       setState(() {
                         _isThirdAnswerCorrect = value;
                       });
@@ -342,6 +351,7 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
                 Checkbox(
                     value: _isFourthAnswerCorrect,
                     onChanged: (bool? value) {
+                      print("_answerCorrect4");
                       setState(() {
                         _isFourthAnswerCorrect = value;
                       });
@@ -386,7 +396,7 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
   }
 
 //~ This Future adds Questions to our current list of questions, this gets called everytime the user adds a question
-  Future addQuestionButtonFunc() async {
+  Future<bool> addQuestionButtonFunc() async {
     //~ This checks if we are adding a new question or editing an existing one
     /*if (_addQuestion.Questions.isNotEmpty) {
       if (_Currquestion != _addQuestion.getLastQuestion()) {
@@ -440,7 +450,7 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
                 "Please Make Sure the question field is not empty and there is at least on correct answer");
           });
       //~ Exit this function
-      return;
+      return false;
     }
 
     //~ Add a new Question to the list of questions
@@ -460,6 +470,8 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
     // _Currquestion = _addQuestion.getLastQuestion();
     //~ resets everything on screen
     // clearFunc();
+
+    return true;
   }
 
 //~ This function clears and resets everything (text fields and checkboxes) on the screen, this can be used when a new Question is to be Added or if user clicks on clear button
@@ -478,19 +490,23 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
 
   //~ This Future creates a new quizz object and adds the list of questions to it
   Future submitButtonFunc() async {
+    bool noError = false;
     //? this is so that if the user had one last question that they forgot to add, submit button will add it for them
-    if (_question.text != "") addQuestionButtonFunc();
+    if (_question.text != "") {
+      await addQuestionButtonFunc().then((value) => noError = value);
+    }
 
-//? Send the Quizz to firebase
-    await DatabaseService(uid: quiz!.quizOwnerUID).updateQuizData(quiz!);
+    if(noError){
+      await DatabaseService(uid: quiz!.quizOwnerUID).updateQuizData(quiz!);
 
-    await showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          //customAlertBox (label, error message
-          return customAlertBox("Quiz Updated", "Have Fun!");
-        });
-    Navigator.popAndPushNamed(context, '/myQuizes');
+      await showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            //customAlertBox (label, error message
+            return customAlertBox("Quiz Updated", "Have Fun!");
+          });
+      Navigator.popAndPushNamed(context, '/myQuizes');
+    }
   }
 
   //~This function is for navigating through questions (BackWards)
@@ -514,8 +530,11 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
     }
     if (_addQuestion.getQuestions().indexOf(_Currquestion!) <
         _addQuestion.getQuestions().indexOf(_addQuestion.getLastQuestion()!)) {
+      print("inside goToNextQuetsion second if");
       _Currquestion = _addQuestion.getQuestions()[
           _addQuestion.getQuestions().indexOf(_Currquestion!) + 1];
+      print("inside goToNextQuetsion second if | currQuestion:" +
+          _Currquestion!.questionText);
     } else {
       _Currquestion != _addQuestion.getLastQuestion();
     }
