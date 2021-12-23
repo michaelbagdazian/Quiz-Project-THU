@@ -13,10 +13,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:provider/provider.dart';
+
+import '../../../models/user/AppUser.dart';
+import '../../../shared/loading.dart';
 
 class EditQuizzUI extends StatefulWidget {
   const EditQuizzUI({Key? key}) : super(key: key);
-
   @override
   State<EditQuizzUI> createState() => _EditQuizzUIState();
 }
@@ -37,42 +40,57 @@ class _EditQuizzUIState extends State<EditQuizzUI> {
     'Trivia',
     'Other',
   ];
-  String dropDownVal = 'Other';
+  String currentQuizCategory = "Other";
 
-  bool? isQuizzPublic = false;
+  bool? isQuizzPublic;
 
-  late Quiz quiz;
+  Quiz? quiz;
+  AppUser? user;
+  /*UserData? userData;*/
 
-  UserData? userData;
+  // ~ This variables helps us to make sure that we allow new data to be passed in the fields
+  bool variablesInitiated = false;
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     Map data = ModalRoute.of(context)!.settings.arguments as Map;
-    quiz = data['quiz'] as Quiz;
-    quizTitle.text = quiz.quizTitle;
-    quizDescription!.text = quiz.quizDescription;
-    tags!.text = quiz.tags.join(", ");
+    user = Provider.of<AppUser?>(context);
 
-    return Scaffold(
-      //resizeToAvoidBottomInset: false, //~ this is here so we don't have an overflow problem
-      appBar: AppBar(
-        title: const Text(
-          'Editing Quiz',
-          style: TextStyle(
-            fontFamily: 'Lobster',
-            fontSize: 30,
+    // TODO Daniel: This should be moved about
+    if(!variablesInitiated){
+      quiz = data['quiz'] as Quiz;
+      quizTitle.text = quiz!.quizTitle;
+      quizDescription!.text = quiz!.quizDescription;
+      tags!.text = quiz!.tags.join(", ");
+      isQuizzPublic = quiz!.quizIsShared;
+      currentQuizCategory = quiz!.quizCategory;
+      variablesInitiated = true;
+    }
+
+
+    if(user == null ){
+      return Loading();
+    }else{
+      return Scaffold(
+        resizeToAvoidBottomInset:
+        false, //~ this is here so we don't have an overflow problem
+        appBar: AppBar(
+          title: const Text(
+            'Editing Quiz',
+            style: TextStyle(
+              fontFamily: 'Lobster',
+              fontSize: 30,
+            ),
           ),
+          backgroundColor: Colors.teal,
         ),
-        backgroundColor: Colors.teal,
-      ),
-      body: Container(
-        constraints: const BoxConstraints.expand(),
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage('assets/images/bgtop.png'), fit: BoxFit.cover),
-        ),
-        child: SingleChildScrollView(
+        body: Container(
+          constraints: const BoxConstraints.expand(),
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('assets/images/bgtop.png'), fit: BoxFit.cover),
+          ),
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -134,8 +152,7 @@ class _EditQuizzUIState extends State<EditQuizzUI> {
                         //aligns text inside button
                         alignment: Alignment.bottomCenter,
                         //hint text
-                        hint: const Text(
-                            'Category'), //make the menu a bit transparent
+                        hint: const Text('Category'), //make the menu a bit transparent
                         // font style of the items
                         style: const TextStyle(
                             fontFamily: 'Lobster',
@@ -156,11 +173,11 @@ class _EditQuizzUIState extends State<EditQuizzUI> {
                         }).toList(),
                         //value that is displayed on the menu, and to be changed later
                         value:
-                            dropDownVal, //~ we convert the whole thing to a list to iterate over items
+                        currentQuizCategory, //~ we convert the whole thing to a list to iterate over items
                         onChanged: (String? value) {
                           setState(() {
                             //~ now dropDownVal has the value that the user has selected
-                            dropDownVal = value!;
+                            currentQuizCategory = value!;
                           });
                         },
                       ),
@@ -200,8 +217,8 @@ class _EditQuizzUIState extends State<EditQuizzUI> {
                     function: startFunc),
               ]),
         ),
-      ),
-    );
+      );
+    }
   }
 
   Future startFunc() async {
@@ -214,14 +231,13 @@ class _EditQuizzUIState extends State<EditQuizzUI> {
           });
     }
     try {
-      //~ get the current user (logged in) here
-      final user = FirebaseAuth.instance.currentUser;
+     /* //~ get the current user (logged in) here
       if (user != null) {
         //~ instance of database services class
-        DatabaseService databaseservices = DatabaseService(uid: user.uid);
+        DatabaseService databaseservices = DatabaseService(uid: user!.uid);
         //~ get userdata from snapshot
-        var userDataFromSnapshot = await databaseservices.userDataCollection
-            .doc(user.uid)
+        await databaseservices.userDataCollection
+            .doc(user!.uid)
             .get()
             .then((QuerySnapshot) {
           //~ we get the users data here by converting a snapshot to our UserData object
@@ -235,9 +251,18 @@ class _EditQuizzUIState extends State<EditQuizzUI> {
           : 'just another quizz';
       String ChoosenCategory = dropDownVal;
       List<String> ListOfTags =
-          tags != null ? tags!.text.split(',') : ['generic'];
-      Navigator.popAndPushNamed(context, '/EditQuestionsUI', arguments: {
+          tags != null ? tags!.text.split(',') : ['generic'];*/
+
+      // TODO Daniel: change quiz before forwarding it further. Check if entries are not null
+      quiz!.quizTitle = quizTitle.text;
+      quiz!.quizDescription = quizDescription!.text;
+      quiz!.tags = tags!.text.split(", ");
+      quiz!.quizCategory = currentQuizCategory;
+      quiz!.quizIsShared = isQuizzPublic!;
+
+      Navigator.pushNamed(context, '/EditQuestionsUI', arguments: {
         'quiz': quiz,
+
       });
     } catch (e) {
       print(e.toString());

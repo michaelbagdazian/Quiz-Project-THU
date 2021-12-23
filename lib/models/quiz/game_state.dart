@@ -11,6 +11,7 @@ class GameState {
   List<List<bool>> answerCorrect;
   List<List<bool>> buttonsPressed;
   List<List<bool>> buttonsPressedCorrect;
+  List<List<bool>> buttonsPressedSaved;
   bool showScoreScreen = false;
   bool buttonsActive = true;
   bool showCountdown = true;
@@ -25,6 +26,7 @@ class GameState {
     required this.answerCorrect,
     required this.buttonsPressed,
     required this.buttonsPressedCorrect,
+    required this.buttonsPressedSaved,
     this.showScoreScreen = false,
     this.buttonsActive = true,
     this.showCountdown = true,
@@ -55,6 +57,7 @@ class GameState {
       'answerCorrect': jsonEncode(answerCorrect),
       'buttonsPressed': jsonEncode(buttonsPressed),
       'buttonsPressedCorrect': jsonEncode(buttonsPressedCorrect),
+      'buttonsPressedSaved': jsonEncode(buttonsPressedSaved),
       'showScoreScreen': showScoreScreen,
       'buttonsActive': buttonsActive,
       'showCountdown': showCountdown,

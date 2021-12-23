@@ -3,9 +3,9 @@
 import 'dart:io';
 
 import 'package:crew_brew/models/quiz/Quiz.dart';
-import 'package:crew_brew/models/quiz/answer.dart';
 import 'package:crew_brew/models/quiz/question.dart';
 import 'package:crew_brew/navigationBar/menu_button.dart';
+import 'package:crew_brew/screens/home/home.dart';
 import 'package:crew_brew/services/AddQuestion.dart';
 import 'package:crew_brew/services/database.dart';
 import 'package:crew_brew/shared/customWidgets/customAlertBox.dart';
@@ -17,6 +17,8 @@ import 'package:crew_brew/shared/PorgressbarIndicator/step_progress_indicator.da
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 
+import '../../../models/quiz/answer.dart';
+
 // ! Information about the class:
 // ~ This class is a Page to create a quizz and questions to quizz
 // ~ This class has both FrontEnd Code and Backend Code in it
@@ -27,15 +29,15 @@ import 'package:flutter/material.dart';
 // ~ This has 5 text fields, one for the question and 4 for the answers.
 // ~ it allows the user to add questions to their quizz
 
-class EditQuestionsUI extends StatefulWidget {
+class AddQuestionsUI extends StatefulWidget {
   //constructor
-  const EditQuestionsUI({Key? key}) : super(key: key);
+  AddQuestionsUI({Key? key}) : super(key: key);
 
   @override
-  State<EditQuestionsUI> createState() => _EditQuestionsUIState();
+  State<AddQuestionsUI> createState() => _AddQuestionsUIState();
 }
 
-class _EditQuestionsUIState extends State<EditQuestionsUI> {
+class _AddQuestionsUIState extends State<AddQuestionsUI> {
   //defining some TextEditingControllers to handle user's input
   //~ Question Text
   final TextEditingController _question = TextEditingController();
@@ -52,7 +54,7 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
   final CustomTextField _customTextField = CustomTextField();
 
   //~instance of AddQuestions
-  late AddQuestions _addQuestion = AddQuestions();
+  final AddQuestions _ListOfQuestions = AddQuestions();
 
   //~ Our Current Question; normally it should be the last question in our question list
   Question? _Currquestion = null;
@@ -71,41 +73,35 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
 
   int IsLastQuestion = 0;
 
-  late Quiz quiz;
   //* Build Widget Starts here
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    Map data = ModalRoute.of(context)!.settings.arguments as Map;
-    quiz = data['quiz'] as Quiz;
-    _addQuestion.setQuestions(quiz.listOfQuestions);
-    _Currquestion = _addQuestion.getLastQuestion();
-
     //~ Determining the number of total steps for the progress bar indicator
     StepProgressBarIndicatorSteps = _Currquestion == null
-        ? ValueNotifier<int>(_addQuestion.getQuestions().length)
+        ? ValueNotifier<int>(_ListOfQuestions.getQuestions().length + 1)
         : ValueNotifier<int>(
-            _addQuestion.getQuestions().indexOf(_Currquestion!) + 2);
+            _ListOfQuestions.getQuestions().indexOf(_Currquestion!) + 2);
     //~ getting the arguments from the previous screen
     args = ModalRoute.of(context)!.settings.arguments;
     //~ Get the size of the screen
-    //Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
-      // resizeToAvoidBottomInset: false, //~ this is here so we don't have an overflow problem
+      //resizeToAvoidBottomInset:false, //~ this is here so we don't have an overflow problem
       //* AppBar
       appBar: AppBar(
         title: const Text(
-          'Editing Quiz',
+          'New Quizz',
           style: TextStyle(
             fontFamily: 'Lobster',
             fontSize: 30,
           ),
         ),
         backgroundColor: Colors.teal,
-        //leading: const MenuButton(),
       ),
       //* Container of all widgets
       body: Container(
+        height: double.infinity,
+        width: double.infinity,
         constraints: const BoxConstraints.expand(),
         decoration: const BoxDecoration(
           //* Background
@@ -179,7 +175,8 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
                             onPressed: () async => {
                                   //? Incrementing dashes here
                                   if (StepProgressBarIndicatorSteps.value <
-                                      _addQuestion.getQuestions().length + 1)
+                                      _ListOfQuestions.getQuestions().length +
+                                          1)
                                     {
                                       StepProgressBarIndicatorSteps.value++,
                                     }
@@ -350,13 +347,16 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
     );
   }
 
+  //* ======================= Logic Starts Here ===========================
+
+//* =======================This Is the Function for the add question Button===========================
 //~ This Future adds Questions to our current list of questions, this gets called everytime the user adds a question
   Future addQuestionButtonFunc() async {
     //~ This checks if we are adding a new question or editing an existing one
-    if (_addQuestion.Questions.isNotEmpty) {
-      if (_Currquestion != _addQuestion.getLastQuestion()) {
+    if (_ListOfQuestions.Questions.isNotEmpty) {
+      if (_Currquestion != _ListOfQuestions.getLastQuestion()) {
         //~ If editing, then we remove the old Question
-        _addQuestion.removeQuestion(_Currquestion!);
+        _ListOfQuestions.removeQuestion(_Currquestion!);
       }
     }
     //~ The Following int is used to check if there is no correct answers
@@ -369,7 +369,6 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
 
     //~ Create a map to store our answers in
     final List<Answer> answers = [];
-
     //~ Check if there is an answer to add at all
     if (_firstAnswer.text.isNotEmpty) {
       print("_firstAnswer.text.isNotEmpty");
@@ -405,18 +404,22 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
       return;
     }
 
-    //~ edit question
-    _addQuestion.EditOldQuestion(
-        _question.text, answers, context, _Currquestion!);
+    for (Answer answer in answers) {
+      print(answer.answerText);
+    }
+
+    //~ Add a new Question to the list of questions
+    _ListOfQuestions.addNewQuestion(_question.text, answers, context);
     //~ Add a step in the progress indicator
     StepProgressBarIndicatorSteps.value++;
     //~ Move the pointer of the Current Question to get the new last question
-    _Currquestion = _addQuestion.getLastQuestion();
+    _Currquestion = _ListOfQuestions.getLastQuestion();
     //~ resets everything on screen
     clearFunc();
   }
 
-//~ This function clears and resets evferything (text fields and checkboxes) on the screen, this can be used when a new Question is to be Added or if user clicks on clear button
+//* =======================This Is the Function for the clear Button===========================
+//~ This function clears and resets everything (text fields and checkboxes) on the screen, this can be used when a new Question is to be Added or if user clicks on clear button
   VoidCallback? clearFunc() {
     _question.clear();
     _firstAnswer.clear();
@@ -430,52 +433,85 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
     _isFourthAnswerCorrect = false;
   }
 
+//* =======================This Is the Function for the submit Button===========================
   //~ This Future creates a new quizz object and adds the list of questions to it
   Future submitButtonFunc() async {
     //? this is so that if the user had one last question that they forgot to add, submit button will add it for them
-    if (_question.text != "") addQuestionButtonFunc();
-
+    if (_question.text != "") await addQuestionButtonFunc();
+    //? check if the question list is empty
+    if (_ListOfQuestions.Questions.isEmpty) {
+      await showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            //? if it is we get an alert box with an error message
+            return customAlertBox("An Error Has Happened !!!",
+                "Please Make Sure that you have added questions to your quizz");
+          });
+      //~ Exit this function
+      return;
+    }
+    // ignore: non_constant_identifier_names
+    String QuizId = args['OwnerUId'] +
+        "-" +
+        DateTime.now().toString(); // unique quizz identifier
+    // if (_question.text.isNotEmpty) addQuestionButtonFunc();
+    Quiz _newQuizz = Quiz(
+        quizCategory: args['QuizzCategory'],
+        quizTitle: args['QuizzTitle'],
+        quizOwner: args['UserName'],
+        quizOwnerUID: args['OwnerUId'],
+        quizDescription: args['QuizzDescription'],
+        quizIsShared: args['isQuizzPublic'],
+        listOfQuestions: _ListOfQuestions.getQuestions(),
+        tags: args['Tags'],
+        quizID: QuizId);
 //? Send the Quizz to firebase
-    await DatabaseService(uid: quiz.quizOwnerUID).updateQuizData(quiz);
+    await DatabaseService(uid: _newQuizz.quizOwnerUID)
+        .createQuizData(_newQuizz);
 
     await showDialog(
         context: context,
         builder: (BuildContext context) {
           //customAlertBox (label, error message
-          return customAlertBox("Quiz Updated", "Have Fun!");
+          return customAlertBox("Quiz Submitted", "Have Fun!");
         });
     Navigator.popAndPushNamed(context, '/myQuizes');
   }
 
+  //* =======================This Is the Function for top left arrow icon===========================
   //~This function is for navigating through questions (BackWards)
   void goToPreviousQuestin() {
     //~ Checks if we have at least one question in our list
-    if (_Currquestion == null || _addQuestion.getQuestions().length == 1) {
+    if (_Currquestion == null || _ListOfQuestions.getQuestions().length == 1) {
       return;
     }
 
     //~ Move CurrQuestion to the previous question, but we check if we have reached the first question, in which case, we don't go back anymore
-    if (_addQuestion.getQuestions().indexOf(_Currquestion!) > 0) {
-      _Currquestion = _addQuestion.getQuestions()[
-          _addQuestion.getQuestions().indexOf(_Currquestion!) - 1];
+    if (_ListOfQuestions.getQuestions().indexOf(_Currquestion!) > 0) {
+      _Currquestion = _ListOfQuestions.getQuestions()[
+          _ListOfQuestions.getQuestions().indexOf(_Currquestion!) - 1];
     }
   }
 
+  //* =======================This Is the Function for top right arrow icon===========================
   //~This function is for navigating through questions (Forward)
   void goToNextQuestion() {
-    if (_Currquestion == null || _addQuestion.getQuestions().length == 1) {
+    if (_Currquestion == null || _ListOfQuestions.getQuestions().length == 1) {
       return;
     }
-    if (_addQuestion.getQuestions().indexOf(_Currquestion!) <
-        _addQuestion.getQuestions().indexOf(_addQuestion.getLastQuestion()!)) {
-      _Currquestion = _addQuestion.getQuestions()[
-          _addQuestion.getQuestions().indexOf(_Currquestion!) + 1];
+    if (_ListOfQuestions.getQuestions().indexOf(_Currquestion!) <
+        _ListOfQuestions.getQuestions()
+            .indexOf(_ListOfQuestions.getLastQuestion()!)) {
+      _Currquestion = _ListOfQuestions.getQuestions()[
+          _ListOfQuestions.getQuestions().indexOf(_Currquestion!) + 1];
     } else {
-      _Currquestion != _addQuestion.getLastQuestion();
+      _Currquestion != _ListOfQuestions.getLastQuestion();
       IsLastQuestion++;
     }
   }
 
+  //* =======================This Is the Function for printing question data on the screen===========================
+//~ The Following Future prints the data of the current question on the screen
   Future PrintStuffOnScreen() async {
     //~ Edit the question controller to actually display the text from our current question
     _question.text = _Currquestion!.questionText;
@@ -502,7 +538,8 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
         : false;
 
     //?check if we pressed forward again after our CurrQuestion=last question
-    if (StepProgressBarIndicatorSteps.value > _addQuestion.Questions.length) {
+    if (StepProgressBarIndicatorSteps.value >
+        _ListOfQuestions.Questions.length) {
       clearFunc();
     }
   }

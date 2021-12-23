@@ -82,6 +82,7 @@ class DatabaseService {
       'quizIsShared': quiz.quizIsShared,
       'listOfQuestions': mapOfQuestions,
       'tags': quiz.tags,
+      'timeStamp': DateTime.now()
     });
   }
 
@@ -212,6 +213,14 @@ class DatabaseService {
 
       return batch.commit();
     });
+  }
+
+  // ! deleteOneQuizesPerUID()
+  // ~ deletes single quiz from DB
+  void deleteOneQuizesPerUID(Quiz quiz) {
+    if(quiz.quizOwnerUID == uid){
+      quizCollection.doc(quiz.quizID).delete();
+    }
   }
 
   // * ==================================================

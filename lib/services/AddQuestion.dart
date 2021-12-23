@@ -64,6 +64,24 @@ class AddQuestions {
     }
   }
 
+  // TODO Comments
+  void changeOldQuestion(
+      String questionText, List<Answer> answers, BuildContext _context) {
+    try {
+      //~ Create a new instance of Question
+      Question? _question =
+          Question(questionText: questionText, answers: answers);
+
+      //~ Add the new Question to the list of questions
+      Questions.add(_question);
+      //~ Delete Question, for memory managment
+      _question = null;
+    } catch (e) {
+      //~ Debugging Statement, it can/should be turned into an alertbox later
+      print(e.toString());
+    }
+  }
+
   //~ removes a question object from Questions by reference
   void removeQuestion(Question _question) {
     try {

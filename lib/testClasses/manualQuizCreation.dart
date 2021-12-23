@@ -51,7 +51,7 @@ class ManualQuizeCreation {
 
     // ~ Question #3 instance
     Question question_3 = _createQuestion(questionText_3, answers_3);
-
+/*
     // ! Question #4
     // ~ questionText
     String questionText_4 = "What is your favorite color";
@@ -78,15 +78,15 @@ class ManualQuizeCreation {
     answers_5.add(new Answer(answerText: "To seek the Holy Grail ( true )", isCorrect: true));
 
     // ~ Question #5 instance
-    Question question_5 = _createQuestion(questionText_5, answers_5);
+    Question question_5 = _createQuestion(questionText_5, answers_5);*/
 
     // ! Question list
     List<Question> questionList = [
       question_1,
       question_2,
       question_3,
-      question_4,
-      question_5
+      /*question_4,
+      question_5*/
     ];
 
     // ! Tags list
@@ -94,7 +94,7 @@ class ManualQuizeCreation {
 
     // ! Instance of test quiz
     Quiz testQuiz = _createQuiz(
-        "Test",
+        "Other",
         "This is test quiz",
         quizOwner,
         quizOwnerUID,
