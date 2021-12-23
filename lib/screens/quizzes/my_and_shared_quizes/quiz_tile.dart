@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 import '../../../models/user/AppUser.dart';
+import '../../../shared/loading.dart';
 import '../quiztile_resource/dialog.dart';
 import '../quiztile_resource/image_funktion.dart';
 
@@ -31,284 +32,314 @@ class _QuizTileState extends State<QuizTile> {
     double height = MediaQuery.of(context).size.height;
     final user = Provider.of<AppUser?>(context);
     String backPickture = widget.quiz.quizCategory;
-    bool userIsOwner = user!.uid == widget.quiz.quizOwnerUID;
 
-    return GestureDetector(
-        //when the card is pressed it oppends a new one
-        onTap: () =>
-            Navigator.of(context).push(HeroDialogRoute(builder: (context) {
-              return _PopupCard(quiz: widget.quiz);
-            })),
-        child: Hero(
-            tag: _heroAddTodo,
-            child: Card(
-                elevation: 8.0,
-                clipBehavior: Clip.antiAlias,
-                //set the distance between the card and the phone border
-                margin: const EdgeInsets.fromLTRB(20.0, 9.0, 20.0, 9.0),
-                //change the corners of the appso its circular
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25)),
-                //here the background for the card is set
-                // ~ This adds option to delete
-                child: Slidable(
-                  startActionPane: ActionPane(
-                    extentRatio: 0.35,
-                    // A motion is a widget used to control how the pane animates.
-                    motion: StretchMotion(),
-                    // All actions are defined in the children parameter.
-                    children: [
-                      // A SlidableAction can have an icon and/or a label.
-                      SlidableAction(
-                        onPressed: (context) {
-                          print("trying to delete");
-                          DatabaseService(uid: user!.uid)
-                              .deleteOneQuizesPerUID(widget.quiz);
-                        },
-                        backgroundColor: Color(0xFFFE4A49),
-                        foregroundColor: Colors.white,
-                        icon: Icons.delete,
-                        label: 'Delete',
-                      ),
-                    ],
-                  ),
-                  child: Container(
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              //this funtion set the background immage
-                              image: AssetImage(image(backPickture)))),
-                      child: Padding(
-                          // the distance between the contetent of the card and the corder of the card
-                          padding: const EdgeInsets.all(14.0),
-                          //Content of the card
-                          child: Column(children: [
-                            //Title and Shared Icon
-                            Stack(children: [
-                              Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(0, 0, 70, 0),
-                                  // is for the background of the text
-                                  child: Container(
-                                      decoration: BoxDecoration(
-                                          color: Colors.teal.shade500,
-                                          borderRadius: const BorderRadius.only(
-                                            topLeft: Radius.circular(20.0),
-                                            topRight: Radius.circular(20.0),
-                                            bottomLeft: Radius.circular(20.0),
-                                            bottomRight: Radius.circular(20.0),
-                                          )),
-                                      ///////////////////////////////////////////////Quiz Title
-                                      child: Text("  " + widget.quiz.quizTitle + "  ",
-                                          style: const TextStyle(
-                                              fontFamily: 'Lobster',
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 25,
-                                              color: Colors.white)))),
-                              //////////////////////////////////////////////7
-                              // //Quiz identifier
-                              // Align(
-                              //     alignment: Alignment.topRight,
-                              //     child: Padding(
-                              //         padding: const EdgeInsets.fromLTRB(0, 0, 0, 4),
-                              //         child: SizedBox(
-                              //           //how big the picture should and the card itself
-                              //             height: MediaQuery.of(context).size.height* 0.065,width: MediaQuery.of(context).size.height* 0.15,
-                              //             child: Image.asset("assets/images/eddu.png") //<- here should be logik to change the picture
-                              //         )
-                              //     )
-                              // ),
-
-                              //Shared Icon
-                              Align(
-                                  alignment: Alignment.topRight,
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(150),
-                                      border: Border.all(
-                                          width: 2, color: Colors.white),
-                                    ),
-                                    //how big the picture should and the card itself
-                                    height: MediaQuery.of(context).size.height *
-                                        0.04,
-                                    width: MediaQuery.of(context).size.height *
-                                        0.05,
-                                    child: Icon(
-                                      Icons.group,
-                                      color: widget.quiz.quizIsShared
-                                          ? Colors.green
-                                          : Colors.red,
-                                    ), //<- here should be logik to change the picture
-                                  )),
-                            ]),
-                            //discription
-                            Stack(children: [
-                              // discribtion
-                              Center(
-                                child: Padding(
-                                  //is for that the text and the picture dont overlape
-                                  //change the possition of the text
-                                  padding:
-                                      const EdgeInsets.fromLTRB(1, 5, 10, 5),
-                                  //where the text shoul be
-                                  child: Align(
-                                      alignment: Alignment.topLeft,
-                                      //text content
-                                      child: Container(
-                                        decoration: const BoxDecoration(
-                                            color: Colors.black45,
-                                            borderRadius: BorderRadius.only(
+    if (user == null) {
+      return Loading();
+    } else {
+      bool userIsOwner = user.uid == widget.quiz.quizOwnerUID;
+      return GestureDetector(
+          //when the card is pressed it oppends a new one
+          onTap: () =>
+              Navigator.of(context).push(HeroDialogRoute(builder: (context) {
+                return _PopupCard(quiz: widget.quiz);
+              })),
+          child: Hero(
+              tag: _heroAddTodo,
+              child: Card(
+                  elevation: 8.0,
+                  clipBehavior: Clip.antiAlias,
+                  //set the distance between the card and the phone border
+                  margin: const EdgeInsets.fromLTRB(20.0, 9.0, 20.0, 9.0),
+                  //change the corners of the appso its circular
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25)),
+                  //here the background for the card is set
+                  // ~ This adds option to delete
+                  child: Slidable(
+                    startActionPane: ActionPane(
+                      extentRatio: 0.35,
+                      // A motion is a widget used to control how the pane animates.
+                      motion: StretchMotion(),
+                      // All actions are defined in the children parameter.
+                      children: [
+                        // A SlidableAction can have an icon and/or a label.
+                        (userIsOwner)
+                            ? SlidableAction(
+                                onPressed: (context) {
+                                  print("trying to delete");
+                                  DatabaseService(uid: user.uid)
+                                      .deleteOneQuizesPerUID(widget.quiz);
+                                },
+                                backgroundColor: Color(0xFFFE4A49),
+                                foregroundColor: Colors.white,
+                                icon: Icons.delete,
+                                label: 'Delete',
+                              )
+                            : SlidableAction(
+                                onPressed: (context) {
+                                  print("trying to add");
+                                  DatabaseService(uid: user.uid)
+                                      .createQuizData(widget.quiz);
+                                },
+                                backgroundColor: Color(0xFF4976FE),
+                                foregroundColor: Colors.white,
+                                icon: Icons.download_outlined,
+                                label: 'Download',
+                              ),
+                      ],
+                    ),
+                    child: Container(
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                fit: BoxFit.cover,
+                                //this funtion set the background immage
+                                image: AssetImage(image(backPickture)))),
+                        child: Padding(
+                            // the distance between the contetent of the card and the corder of the card
+                            padding: const EdgeInsets.all(14.0),
+                            //Content of the card
+                            child: Column(children: [
+                              //Title and Shared Icon
+                              Stack(children: [
+                                Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(0, 0, 70, 0),
+                                    // is for the background of the text
+                                    child: Container(
+                                        decoration: BoxDecoration(
+                                            color: Colors.teal.shade500,
+                                            borderRadius:
+                                                const BorderRadius.only(
                                               topLeft: Radius.circular(20.0),
                                               topRight: Radius.circular(20.0),
                                               bottomLeft: Radius.circular(20.0),
                                               bottomRight:
                                                   Radius.circular(20.0),
                                             )),
+                                        ///////////////////////////////////////////////Quiz Title
+                                        child: Text(
+                                            "  " + widget.quiz.quizTitle + "  ",
+                                            style: const TextStyle(
+                                                fontFamily: 'Lobster',
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 25,
+                                                color: Colors.white)))),
+                                //////////////////////////////////////////////7
+                                // //Quiz identifier
+                                // Align(
+                                //     alignment: Alignment.topRight,
+                                //     child: Padding(
+                                //         padding: const EdgeInsets.fromLTRB(0, 0, 0, 4),
+                                //         child: SizedBox(
+                                //           //how big the picture should and the card itself
+                                //             height: MediaQuery.of(context).size.height* 0.065,width: MediaQuery.of(context).size.height* 0.15,
+                                //             child: Image.asset("assets/images/eddu.png") //<- here should be logik to change the picture
+                                //         )
+                                //     )
+                                // ),
 
-                                        /////////////////////////////////
-                                        child: Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              10.0, 10.0, 5.0, 10.0),
-                                          child: Text(
-                                              "Quiz description: " +
-                                                  widget.quiz.quizDescription +
-                                                  "  ",
-                                              style: const TextStyle(
-                                                  fontFamily: 'Lobster',
-                                                  fontSize: 21,
-                                                  color: Colors.white)),
-                                        ),
-                                      )),
+                                //Shared Icon
+                                Align(
+                                    alignment: Alignment.topRight,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius:
+                                            BorderRadius.circular(150),
+                                        border: Border.all(
+                                            width: 2, color: Colors.white),
+                                      ),
+                                      //how big the picture should and the card itself
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.04,
+                                      width:
+                                          MediaQuery.of(context).size.height *
+                                              0.05,
+                                      child: Icon(
+                                        Icons.group,
+                                        color: widget.quiz.quizIsShared
+                                            ? Colors.green
+                                            : Colors.red,
+                                      ), //<- here should be logik to change the picture
+                                    )),
+                              ]),
+                              //discription
+                              Stack(children: [
+                                // discribtion
+                                Center(
+                                  child: Padding(
+                                    //is for that the text and the picture dont overlape
+                                    //change the possition of the text
+                                    padding:
+                                        const EdgeInsets.fromLTRB(1, 5, 10, 5),
+                                    //where the text shoul be
+                                    child: Align(
+                                        alignment: Alignment.topLeft,
+                                        //text content
+                                        child: Container(
+                                          decoration: const BoxDecoration(
+                                              color: Colors.black45,
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(20.0),
+                                                topRight: Radius.circular(20.0),
+                                                bottomLeft:
+                                                    Radius.circular(20.0),
+                                                bottomRight:
+                                                    Radius.circular(20.0),
+                                              )),
+
+                                          /////////////////////////////////
+                                          child: Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                10.0, 10.0, 5.0, 10.0),
+                                            child: Text(
+                                                "Quiz description: " +
+                                                    widget
+                                                        .quiz.quizDescription +
+                                                    "  ",
+                                                style: const TextStyle(
+                                                    fontFamily: 'Lobster',
+                                                    fontSize: 21,
+                                                    color: Colors.white)),
+                                          ),
+                                        )),
+                                  ),
                                 ),
-                              ),
-                            ]),
-                            //Bottom Text and Botton
+                              ]),
+                              //Bottom Text and Botton
 
-                            Row(
-                                //here are the bottons i have to create my own one because the ones we have arent working with the hero fuktion.
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  //where the bottom text should be
-                                  (userIsOwner)
-                                      ? Align(
-                                          alignment: Alignment.topLeft,
-                                          child: Container(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.26,
-                                            child: ElevatedButton(
-                                              ////////////////////////////////////////////////////// Change Quiz
+                              Row(
+                                  //here are the bottons i have to create my own one because the ones we have arent working with the hero fuktion.
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    //where the bottom text should be
+                                    (userIsOwner)
+                                        ? Align(
+                                            alignment: Alignment.topLeft,
+                                            child: Container(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.26,
+                                              child: ElevatedButton(
+                                                ////////////////////////////////////////////////////// Change Quiz
 
-                                              onPressed: () =>
-                                                Navigator.pushNamed(
+                                                onPressed: () =>
+                                                    Navigator.pushNamed(
                                                   context,
                                                   '/EditOldQuizUI',
-                                                  arguments: {'quiz': widget.quiz},
+                                                  arguments: {
+                                                    'quiz': widget.quiz
+                                                  },
                                                 ),
-                                              //<----here for changing the quiz
+                                                //<----here for changing the quiz
 
-                                              style: ElevatedButton.styleFrom(
-                                                primary:
-                                                    const Color(0xFFFF9800),
-                                                shape:
-                                                    const RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(20),
-                                                    bottomRight:
-                                                        Radius.circular(20),
+                                                style: ElevatedButton.styleFrom(
+                                                  primary:
+                                                      const Color(0xFFFF9800),
+                                                  shape:
+                                                      const RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.only(
+                                                      topLeft:
+                                                          Radius.circular(20),
+                                                      bottomRight:
+                                                          Radius.circular(20),
+                                                    ),
+                                                  ),
+                                                ),
+                                                child: const Padding(
+                                                  padding: EdgeInsets.fromLTRB(
+                                                      5.0, 1.0, 5.0, 0.0),
+                                                  child: Text(
+                                                    'Edit Quiz',
+                                                    style: TextStyle(
+                                                        fontFamily: 'Lobster',
+                                                        fontSize: 13),
                                                   ),
                                                 ),
                                               ),
-                                              child: const Padding(
-                                                padding: EdgeInsets.fromLTRB(
-                                                    5.0, 1.0, 5.0, 0.0),
-                                                child: Text(
-                                                  'Edit Quiz',
-                                                  style: TextStyle(
-                                                      fontFamily: 'Lobster',
-                                                      fontSize: 13),
+                                            ))
+                                        : Container(),
+
+                                    Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.26,
+                                          child: ElevatedButton(
+                                            //////////////////////////////////////////////////////////join quiz
+                                            onPressed: () {},
+                                            style: ElevatedButton.styleFrom(
+                                              primary: const Color(0xFFFF9800),
+                                              shape:
+                                                  const RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(20),
+                                                  bottomRight:
+                                                      Radius.circular(20),
                                                 ),
                                               ),
                                             ),
-                                          ))
-                                      : Container(),
-
-                                  Align(
-                                      alignment: Alignment.topLeft,
-                                      child: Container(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.26,
-                                        child: ElevatedButton(
-                                          //////////////////////////////////////////////////////////join quiz
-                                          onPressed: () {},
-                                          style: ElevatedButton.styleFrom(
-                                            primary: const Color(0xFFFF9800),
-                                            shape: const RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(20),
-                                                bottomRight:
-                                                    Radius.circular(20),
+                                            child: const Padding(
+                                              padding: EdgeInsets.fromLTRB(
+                                                  5.0, 1.0, 5.0, 0.0),
+                                              child: Text(
+                                                'Join Quiz',
+                                                style: TextStyle(
+                                                    fontFamily: 'Lobster',
+                                                    fontSize: 13),
                                               ),
                                             ),
                                           ),
-                                          child: const Padding(
-                                            padding: EdgeInsets.fromLTRB(
-                                                5.0, 1.0, 5.0, 0.0),
-                                            child: Text(
-                                              'Join Quiz',
-                                              style: TextStyle(
-                                                  fontFamily: 'Lobster',
-                                                  fontSize: 13),
-                                            ),
-                                          ),
-                                        ),
-                                      )),
+                                        )),
 
-                                  Align(
-                                      alignment: Alignment.topLeft,
-                                      child: Container(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.26,
-                                        child: ElevatedButton(
-                                          /////////////////////////////////////////////////////////////Play quiz
-                                          onPressed: () =>
-                                              Navigator.pushReplacementNamed(
-                                            context,
-                                            '/quizWrapper',
-                                            arguments: {'quiz': widget.quiz},
-                                          ),
-                                          style: ElevatedButton.styleFrom(
-                                            primary: const Color(0xFFFF9800),
-                                            shape: const RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(20),
-                                                bottomRight:
-                                                    Radius.circular(20),
+                                    Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.26,
+                                          child: ElevatedButton(
+                                            /////////////////////////////////////////////////////////////Play quiz
+                                            onPressed: () =>
+                                                Navigator.pushReplacementNamed(
+                                              context,
+                                              '/quizWrapper',
+                                              arguments: {'quiz': widget.quiz},
+                                            ),
+                                            style: ElevatedButton.styleFrom(
+                                              primary: const Color(0xFFFF9800),
+                                              shape:
+                                                  const RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(20),
+                                                  bottomRight:
+                                                      Radius.circular(20),
+                                                ),
+                                              ),
+                                            ),
+                                            child: const Padding(
+                                              padding: EdgeInsets.fromLTRB(
+                                                  5.0, 1.0, 5.0, 0.0),
+                                              child: Text(
+                                                'Play Quiz',
+                                                style: TextStyle(
+                                                    fontFamily: 'Lobster',
+                                                    fontSize: 13),
                                               ),
                                             ),
                                           ),
-                                          child: const Padding(
-                                            padding: EdgeInsets.fromLTRB(
-                                                5.0, 1.0, 5.0, 0.0),
-                                            child: Text(
-                                              'Play Quiz',
-                                              style: TextStyle(
-                                                  fontFamily: 'Lobster',
-                                                  fontSize: 13),
-                                            ),
-                                          ),
-                                        ),
-                                      )),
-                                ]),
-                          ]))),
-                ))));
+                                        )),
+                                  ]),
+                            ]))),
+                  ))));
+    }
   }
 }
 
@@ -326,7 +357,6 @@ class _PopupCard extends StatefulWidget {
 }
 
 class _PopupCardState extends State<_PopupCard> {
-
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<AppUser?>(context);
@@ -521,38 +551,42 @@ class _PopupCardState extends State<_PopupCard> {
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            (userIsOwner) ? Align(
-                            alignment: Alignment.topLeft,
-                            child: Container(
-                              width: MediaQuery.of(context).size.width * 0.20,
-                              child: ElevatedButton(
-                                onPressed: () => () {
-                                  Navigator.pushNamed(
-                                    context,
-                                    '/EditOldQuizUI',
-                                    arguments: {'quiz': widget.quiz},
-                                  );
-                                }, //<----here for changing the quiz
-                                style: ElevatedButton.styleFrom(
-                                  primary: const Color(0xFFFF9800),
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(20),
-                                      bottomRight: Radius.circular(20),
+                        (userIsOwner)
+                            ? Align(
+                                alignment: Alignment.topLeft,
+                                child: Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.20,
+                                  child: ElevatedButton(
+                                    onPressed: () => () {
+                                      Navigator.pushNamed(
+                                        context,
+                                        '/EditOldQuizUI',
+                                        arguments: {'quiz': widget.quiz},
+                                      );
+                                    }, //<----here for changing the quiz
+                                    style: ElevatedButton.styleFrom(
+                                      primary: const Color(0xFFFF9800),
+                                      shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(20),
+                                          bottomRight: Radius.circular(20),
+                                        ),
+                                      ),
+                                    ),
+                                    child: const Padding(
+                                      padding: EdgeInsets.fromLTRB(
+                                          5.0, 1.0, 5.0, 1.0),
+                                      child: Text(
+                                        'Edit Quiz',
+                                        style: TextStyle(
+                                            fontFamily: 'Lobster',
+                                            fontSize: 16),
+                                      ),
                                     ),
                                   ),
-                                ),
-                                child: const Padding(
-                                  padding:
-                                      EdgeInsets.fromLTRB(5.0, 1.0, 5.0, 1.0),
-                                  child: Text(
-                                    'Edit Quiz',
-                                    style: TextStyle(
-                                        fontFamily: 'Lobster', fontSize: 16),
-                                  ),
-                                ),
-                              ),
-                            )) : Container(),
+                                ))
+                            : Container(),
                         Align(
                             alignment: Alignment.topLeft,
                             child: Container(
