@@ -1,10 +1,15 @@
+import 'dart:ui';
+import 'package:palette_generator/palette_generator.dart';
 import 'package:crew_brew/models/user/AppUser.dart';
 import 'package:crew_brew/models/user/UserData.dart';
 import 'package:crew_brew/navigationBar/menu_button.dart';
 import 'package:crew_brew/navigationBar/navbar.dart';
+import 'package:crew_brew/screens/quizzes/quiztile_resource/image_funktion.dart';
 import 'package:crew_brew/screens/userProfile/UpdateFormsWrapper.dart';
+import 'package:crew_brew/services/UploadImageToFireStorage.dart';
 import 'package:crew_brew/services/database.dart';
 import 'package:crew_brew/shared/colors.dart';
+import 'package:crew_brew/shared/customWidgets/customText.dart';
 import 'package:crew_brew/shared/loading.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:provider/provider.dart';
@@ -18,14 +23,14 @@ import 'package:flutter/material.dart';
 // ! TODOS:
 // TODO Improve loading as done in welcome and sign_in with boolean loading variable
 
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+class Home2 extends StatefulWidget {
+  const Home2({Key? key}) : super(key: key);
 
   @override
-  State<Home> createState() => _HomeState();
+  State<Home2> createState() => _HomeState2();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState2 extends State<Home2> {
   // ! States
   // ~ Here states of the profile page are defined
   int points = 0;
@@ -33,6 +38,10 @@ class _HomeState extends State<Home> {
   String username = '';
   String email = '';
   UserData? userData = null;
+  late PaletteColor c;
+
+  ValueNotifier<String> url = ValueNotifier<String>(
+      'https://firebasestorage.googleapis.com/v0/b/daniel-brew-crew-20887.appspot.com/o/Default_Avatars%2Fceratops%2Fceratops2.png?alt=media&token=393336fa-a445-4f80-a241-084b0ebb68bd');
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +53,7 @@ class _HomeState extends State<Home> {
           builder: (context) {
             return Container(
               child: UpdateFormsWrapper(command: command),
-              color: Colors.grey[900],
+              color: welcomeh,
             );
           });
     }
@@ -69,7 +78,114 @@ class _HomeState extends State<Home> {
               avatar = userData.avatar;
               username = userData.username;
               email = userData.email;
+              Size size = MediaQuery.of(context).size;
 
+              return Scaffold(
+                resizeToAvoidBottomInset: false,
+                appBar: AppBar(
+                  title: const Text('Home'),
+                  centerTitle: true,
+                  backgroundColor: welcomeh,
+                  leading: const MenuButton(),
+                  // ~ Elavation set to 0 removes the shadow ( which makes 3D effect )
+                  elevation: 0.0,
+                  actions: <Widget>[
+                    IconButton(
+                      icon: const Icon(
+                        Icons.vpn_key_outlined,
+                        color: Colors.white,
+                      ),
+                      onPressed: () => _showSettingsPanel("password"),
+                    ),
+                  ],
+                ),
+                body: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      //* Blurry Container with blurred avatar
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(1.0, 0.0, 1.0, 0),
+                        child: FutureBuilder<PaletteGenerator>(
+                            future: _updatePaletteGenerator(userData),
+                            builder: (context,
+                                AsyncSnapshot<PaletteGenerator> snapshot) {
+                              switch (snapshot.connectionState) {
+                                case ConnectionState.waiting:
+                                  return Center(
+                                      child: CircularProgressIndicator());
+                                default:
+                                  if (snapshot.hasError)
+                                    return new Text('Error: ${snapshot.error}');
+                                // else {
+                                //   // Color color=new Color(snapshot.data.dominantColor.color);
+                                //   c = snapshot.data!.dominantColor!.color;
+                                //   return new Text('color: ${c.toString()}');
+                                // }
+                              }
+                              c = snapshot.data!.paletteColors.first;
+                              return Container(
+                                width: size.width,
+                                height: size.height * 0.3,
+                                decoration: BoxDecoration(
+                                  // image: DecorationImage(
+                                  //     image: NetworkImage(userData.avatar),
+                                  //     fit: BoxFit.fill),
+                                  border:
+                                      Border.all(color: welcomeh.withAlpha(10)),
+                                  borderRadius: const BorderRadius.only(
+                                      bottomLeft: Radius.circular(10.0),
+                                      bottomRight: Radius.circular(10.0)),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: welcomeh.withAlpha(100),
+                                      blurRadius: 10.0,
+                                      spreadRadius: 0.0,
+                                    ),
+                                  ],
+                                  color: c.color,
+                                ), //welcomeh.withOpacity(0.2)),
+                                //* circular Avatar
+                                child: BackdropFilter(
+                                  filter: ImageFilter.blur(
+                                      sigmaX: 5.0, sigmaY: 5.0),
+                                  child: InkWell(
+                                    onTap: () => _uploadAvatar(userData),
+                                    child: Center(
+                                      child: InkWell(
+                                        onTap: () =>
+                                            _showSettingsPanel("avatars"),
+                                        child: CircleAvatar(
+                                          backgroundImage:
+                                              NetworkImage(userData.avatar),
+                                          backgroundColor:
+                                              welcomeh.withOpacity(0),
+                                          radius: 70.0,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }),
+                      ),
+                      // Container(
+                      //   width: size.width,
+                      //   color: welcomeh,
+                      //   //elevation: 3.0,
+                      //   child: Column(
+                      //     children: [
+                      //       ListView(
+                      //         children: [Text(userData.username)],
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                    ],
+                  ),
+                ),
+              );
+
+/*
               return Scaffold(
                 // ! NavBar():
                 // ~ Here we provide NavBar for property drawer. This is our navigation bar defined in navigationBar/navBar.dart
@@ -103,8 +219,7 @@ class _HomeState extends State<Home> {
                             child: InkWell(
                           onTap: () => _showSettingsPanel("avatars"),
                           child: CircleAvatar(
-                            backgroundImage: NetworkImage(
-                                userData.avatar), //AssetImage(avatar),
+                            backgroundImage: AssetImage(avatar),
                             backgroundColor: Colors.grey[900],
                             radius: 70.0,
                           ),
@@ -203,6 +318,7 @@ class _HomeState extends State<Home> {
                   ),
                 ),
               );
+              */
               // ! If the user data is still fetching from DB, return Loading screen
             } else {
               return Loading();
@@ -212,5 +328,27 @@ class _HomeState extends State<Home> {
     } else {
       return Loading();
     }
+  }
+
+  void _uploadAvatar(UserData? userData) async {
+    UploadFileToFireStorage UA = new UploadFileToFireStorage();
+    try {
+      await UA.uploadPicture(path: 'Avatar');
+      await UA.deleteFileFromFirebaseByUrl(userData!.avatar,
+          path: 'Avatar', userData: userData);
+    } catch (e) {
+      return;
+    }
+    url.value = UA.url;
+    String uid = userData.uid;
+    DatabaseService(uid: uid).updateUserData(username, email, UA.url, points);
+  }
+
+  Future<PaletteGenerator> _updatePaletteGenerator(UserData? userData) async {
+    PaletteGenerator paletteGenerator =
+        await PaletteGenerator.fromImageProvider(
+            NetworkImage(userData!.avatar));
+    print(paletteGenerator.dominantColor);
+    return paletteGenerator;
   }
 }

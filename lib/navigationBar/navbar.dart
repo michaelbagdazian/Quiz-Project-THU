@@ -81,8 +81,8 @@ class _NavBarState extends State<NavBar> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               ClipOval(
-                                child: Image.asset(
-                                  avatar,
+                                child: Image.network(
+                                  userData.avatar,
                                   width: 4.0 * em,
                                   height: 4.0 * em,
                                   fit: BoxFit.cover,
@@ -161,7 +161,8 @@ class _NavBarState extends State<NavBar> {
                           onTap: () {},
                         ),
                         ListTile(
-                          leading: const Icon(Icons.perm_data_setting_sharp, color: Colors.white),
+                          leading: const Icon(Icons.perm_data_setting_sharp,
+                              color: Colors.white),
                           title: Text('Test Screen',
                               style: theme.textTheme.bodyText2!.copyWith(
                                 color: Colors.white,

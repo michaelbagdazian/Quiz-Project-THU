@@ -268,9 +268,9 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
                       color: Colors.black,
                     ),
                   ),
-                  style: const TextStyle(
-                    fontSize: 20,
-                  ),
+                ),
+                style: const TextStyle(
+                  fontSize: 20,
                 ),
               ),
             ),
@@ -375,27 +375,26 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
                 SizedBox(
                   width: size.width * 0.3,
                 ),
+                // //* Button To Add a question
+                // FloatingActionButton(
+                //   child: const Icon(
+                //     Icons.save_outlined,
+                //   ),
                 //* Button To Add a question
                 FloatingActionButton(
                   child: const Icon(
-                    Icons.save_outlined,
+                    Icons.add_sharp,
                   ),
-                  //* Button To Add a question
-                  FloatingActionButton(
-                    child: const Icon(
-                      Icons.add_sharp,
-                    ),
-                    backgroundColor: Colors.orange,
-                    onPressed: () {
-                      addQuestionButtonFunc(); //~
-                    },
-                    enableFeedback: true,
-                    heroTag: null,
-                  ),
-                ],
-              ),
-            ],
-          ),
+                  backgroundColor: Colors.orange,
+                  onPressed: () {
+                    addQuestionButtonFunc(); //~
+                  },
+                  enableFeedback: true,
+                  heroTag: null,
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );
@@ -502,7 +501,7 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
       await addQuestionButtonFunc().then((value) => noError = value);
     }
 
-    if(noError){
+    if (noError) {
       await DatabaseService(uid: quiz!.quizOwnerUID).updateQuizData(quiz!);
 
       await showDialog(
