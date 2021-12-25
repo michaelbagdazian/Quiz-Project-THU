@@ -22,7 +22,7 @@ class AddQuestions {
     Questions = <Question>[];
   }
 
-  void setQuestions(List<Question> Questions){
+  void setQuestions(List<Question> Questions) {
     this.Questions = Questions;
   }
 

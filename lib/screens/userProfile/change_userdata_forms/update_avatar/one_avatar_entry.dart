@@ -39,7 +39,7 @@ class _OneAvatarEntryState extends State<OneAvatarEntry> {
         setState(() {
           lockOpacity = Colors.red.withOpacity(0.0);
         });
-      }else{
+      } else {
         setState(() {
           lockOpacity = Colors.redAccent.withOpacity(0.9);
         });
@@ -109,14 +109,14 @@ class _OneAvatarEntryState extends State<OneAvatarEntry> {
   }
 
   Future<void> blinkRed() async {
-      setState(() {
-        backgroundColor = Colors.red[800]!;
-      });
+    setState(() {
+      backgroundColor = Colors.red[800]!;
+    });
 
-      await Future.delayed(Duration(milliseconds: 500));
+    await Future.delayed(Duration(milliseconds: 500));
 
-      setState(() {
-        backgroundColor = Colors.grey[800]!;
-      });
-    }
+    setState(() {
+      backgroundColor = Colors.grey[800]!;
+    });
+  }
 }

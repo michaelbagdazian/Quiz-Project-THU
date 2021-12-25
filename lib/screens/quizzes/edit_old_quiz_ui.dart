@@ -54,7 +54,6 @@ class _EditQuizzUIState extends State<EditQuizzUI> {
     quizDescription!.text = quiz.quizDescription;
     tags!.text = quiz.tags.join(", ");
 
-
     return Scaffold(
       resizeToAvoidBottomInset:
           false, //~ this is here so we don't have an overflow problem
@@ -135,7 +134,8 @@ class _EditQuizzUIState extends State<EditQuizzUI> {
                       //aligns text inside button
                       alignment: Alignment.bottomCenter,
                       //hint text
-                      hint: const Text('Category'), //make the menu a bit transparent
+                      hint: const Text(
+                          'Category'), //make the menu a bit transparent
                       // font style of the items
                       style: const TextStyle(
                           fontFamily: 'Lobster',
@@ -237,7 +237,6 @@ class _EditQuizzUIState extends State<EditQuizzUI> {
           tags != null ? tags!.text.split(',') : ['generic'];
       Navigator.popAndPushNamed(context, '/EditQuestionsUI', arguments: {
         'quiz': quiz,
-
       });
     } catch (e) {
       print(e.toString());

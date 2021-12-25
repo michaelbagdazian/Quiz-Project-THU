@@ -88,10 +88,7 @@ class _EmailFormState extends State<EmailForm> {
         ),
       );
     } else {
-      return Container(
-          height: 270.0,
-          child: Loading()
-      );
+      return Container(height: 270.0, child: Loading());
     }
   }
 

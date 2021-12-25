@@ -98,7 +98,7 @@ class DatabaseService {
       String questionText = question.questionText;
       Map<String, bool> answers = Map<String, bool>();
 
-      for(Answer answer in question.answers){
+      for (Answer answer in question.answers) {
         answers[answer.answerText] = answer.isCorrect;
       }
 
@@ -186,10 +186,9 @@ class DatabaseService {
   // ~ this returns Question object from the map.
   Question _questionObjectFromMap(
       String questionText, Map<String, bool> answers) {
-
     List<Answer> answersList = [];
     answers.forEach((key, value) {
-      answersList.add(new Answer(answerText: key, isCorrect: value));
+      answersList.add(Answer(answerText: key, isCorrect: value));
     });
 
     return Question(questionText: questionText, answers: answersList);
@@ -279,8 +278,8 @@ class DatabaseService {
   // ! changePassword
   // ~ update and validate user password
   // TODO Work on code quality
-  Future<bool> changePassword(
-      String currentPassword, String newPassword, UserData userData, Function showError) async {
+  Future<bool> changePassword(String currentPassword, String newPassword,
+      UserData userData, Function showError) async {
     final user = await FirebaseAuth.instance.currentUser;
     bool isSuccess = true;
 
@@ -289,8 +288,7 @@ class DatabaseService {
           email: userData.email, password: currentPassword);
 
       await user.reauthenticateWithCredential(cred).then((value) async {
-        await user.updatePassword(newPassword).then((_) {
-        }).catchError((error) {
+        await user.updatePassword(newPassword).then((_) {}).catchError((error) {
           showError("Password update failed", error.message);
           isSuccess = false;
         });
@@ -298,7 +296,7 @@ class DatabaseService {
         showError("Authentication fail", err.message);
         isSuccess = false;
       });
-    }else{
+    } else {
       showError("Connection problem", "No internet or user is deleted");
       isSuccess = false;
     }
@@ -308,8 +306,8 @@ class DatabaseService {
   // ! changeEmail
   // ~ This method change e-mail in firebase in userData
   // TODO Work on code quality
-  Future<bool> changeEmail(
-      String currentPassword, String newEmail, UserData userData, Function showError) async {
+  Future<bool> changeEmail(String currentPassword, String newEmail,
+      UserData userData, Function showError) async {
     final user = await FirebaseAuth.instance.currentUser;
     bool isSuccess = true;
 

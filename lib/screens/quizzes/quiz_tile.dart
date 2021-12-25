@@ -120,30 +120,29 @@ class QuizTile extends StatelessWidget {
                                     alignment: Alignment.topLeft,
                                     //text content
                                     child: Container(
-                                        decoration: const BoxDecoration(
-                                            color: Colors.black45,
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(20.0),
-                                              topRight: Radius.circular(20.0),
-                                              bottomLeft: Radius.circular(20.0),
-                                              bottomRight:
-                                                  Radius.circular(20.0),
-                                            )),
+                                      decoration: const BoxDecoration(
+                                          color: Colors.black45,
+                                          borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(20.0),
+                                            topRight: Radius.circular(20.0),
+                                            bottomLeft: Radius.circular(20.0),
+                                            bottomRight: Radius.circular(20.0),
+                                          )),
 
-                                        /////////////////////////////////
+                                      /////////////////////////////////
                                       child: Padding(
                                         padding: const EdgeInsets.fromLTRB(
                                             10.0, 10.0, 5.0, 10.0),
                                         child: Text(
-                                            "Quiz description: " + quiz.quizDescription + "  ",
-
+                                            "Quiz description: " +
+                                                quiz.quizDescription +
+                                                "  ",
                                             style: const TextStyle(
                                                 fontFamily: 'Lobster',
                                                 fontSize: 21,
                                                 color: Colors.white)),
                                       ),
                                     )),
-
                               ),
                             ),
                           ]),
@@ -156,16 +155,13 @@ class QuizTile extends StatelessWidget {
                                 //where the bottom text should be
                                 Align(
                                     alignment: Alignment.topLeft,
-
                                     child: Container(
-
                                       width: MediaQuery.of(context).size.width *
                                           0.26,
                                       child: ElevatedButton(
                                         ////////////////////////////////////////////////////// Change Quiz
 
-                                        onPressed: () =>
-                                            Navigator.pushNamed(
+                                        onPressed: () => Navigator.pushNamed(
                                           context,
                                           '/EditOldQuizUI',
                                           arguments: {'quiz': quiz},
@@ -195,9 +191,7 @@ class QuizTile extends StatelessWidget {
 
                                 Align(
                                     alignment: Alignment.topLeft,
-
                                     child: Container(
-
                                       width: MediaQuery.of(context).size.width *
                                           0.26,
                                       child: ElevatedButton(
@@ -227,9 +221,7 @@ class QuizTile extends StatelessWidget {
 
                                 Align(
                                     alignment: Alignment.topLeft,
-
                                     child: Container(
-
                                       width: MediaQuery.of(context).size.width *
                                           0.26,
                                       child: ElevatedButton(
@@ -365,7 +357,6 @@ class _PopupCardState extends State<_PopupCard> {
                           //change the possition of the text
 
                           padding: const EdgeInsets.fromLTRB(1, 10, 90, 10),
-
                           child: Container(
                               decoration: const BoxDecoration(
                                   color: Colors.black45,
@@ -376,10 +367,8 @@ class _PopupCardState extends State<_PopupCard> {
                                     bottomRight: Radius.circular(20.0),
                                   )),
                               child: Padding(
-
                                 padding: const EdgeInsets.fromLTRB(
                                     10.0, 20.0, 10.0, 20.0),
-
                                 child: Text(
                                     "  " + widget.quiz.quizDescription + "  ",
                                     style: const TextStyle(
@@ -415,7 +404,6 @@ class _PopupCardState extends State<_PopupCard> {
                               padding: const EdgeInsets.fromLTRB(
                                   10.0, 5.0, 1.0, 5.0),
                               child: Container(
-
                                 decoration: const BoxDecoration(
                                     color: Colors.black45,
                                     borderRadius: BorderRadius.only(
@@ -429,7 +417,9 @@ class _PopupCardState extends State<_PopupCard> {
                                       15.0, 25.0, 15.0, 25.0),
                                   child: Text(
                                       'Number of Questions: ' +
-                                          widget.quiz.listOfQuestions.length.toString() + '  ',
+                                          widget.quiz.listOfQuestions.length
+                                              .toString() +
+                                          '  ',
                                       style: const TextStyle(
                                           fontFamily: 'Lobster',
                                           fontSize: 19,
@@ -445,7 +435,6 @@ class _PopupCardState extends State<_PopupCard> {
                               padding: const EdgeInsets.fromLTRB(
                                   10.0, 5.0, 1.0, 5.0),
                               child: Container(
-
                                 decoration: const BoxDecoration(
                                   color: Colors.black45,
                                   borderRadius: BorderRadius.only(
@@ -475,7 +464,6 @@ class _PopupCardState extends State<_PopupCard> {
                           children: [
                         Align(
                             alignment: Alignment.topLeft,
-
                             child: Container(
                               width: MediaQuery.of(context).size.width * 0.20,
                               child: ElevatedButton(
@@ -500,18 +488,14 @@ class _PopupCardState extends State<_PopupCard> {
                                   child: Text(
                                     'Edit Quiz',
                                     style: TextStyle(
-
                                         fontFamily: 'Lobster', fontSize: 16),
-
                                   ),
                                 ),
                               ),
                             )),
                         Align(
                             alignment: Alignment.topLeft,
-
                             child: Container(
-
                                 width: MediaQuery.of(context).size.width * 0.20,
                                 child: ElevatedButton(
                                     onPressed: () =>
@@ -536,16 +520,12 @@ class _PopupCardState extends State<_PopupCard> {
                                         'Join Quiz',
                                         style: TextStyle(
                                             fontFamily: 'Lobster',
-
                                             fontSize: 16),
-
                                       ),
                                     )))),
                         Align(
                             alignment: Alignment.bottomLeft,
-
                             child: Container(
-
                               width: MediaQuery.of(context).size.width * 0.20,
                               child: ElevatedButton(
                                 onPressed: () => Navigator.pushReplacementNamed(
@@ -568,9 +548,7 @@ class _PopupCardState extends State<_PopupCard> {
                                   child: Text(
                                     'Play Quiz',
                                     style: TextStyle(
-
                                         fontFamily: 'Lobster', fontSize: 16),
-
                                   ),
                                 ),
                               ),
@@ -583,9 +561,7 @@ class _PopupCardState extends State<_PopupCard> {
                           children: [
                         Align(
                             alignment: Alignment.topCenter,
-
                             child: Container(
-
                               width: MediaQuery.of(context).size.width * 0.20,
                               child: ElevatedButton(
                                 onPressed: () => Navigator.of(context).pop(),
@@ -604,9 +580,7 @@ class _PopupCardState extends State<_PopupCard> {
                                   child: Text(
                                     'Back',
                                     style: TextStyle(
-
                                         fontFamily: 'Lobster', fontSize: 16),
-
                                   ),
                                 ),
                               ),
@@ -626,7 +600,6 @@ class _PopupCardState extends State<_PopupCard> {
                                     bottomLeft: Radius.circular(20.0),
                                     bottomRight: Radius.circular(20.0),
                                   )),
-
                               child: Padding(
                                 padding: const EdgeInsets.fromLTRB(
                                     15.0, 10.0, 15.0, 10.0),
@@ -637,7 +610,6 @@ class _PopupCardState extends State<_PopupCard> {
                                         fontFamily: 'Lobster',
                                         fontSize: 19,
                                         color: Colors.white)),
-
                               ),
                             ))),
                   )

@@ -62,12 +62,9 @@ class MyApp extends StatelessWidget {
           '/quizWrapper': (context) => const QuizWrapper(),
           '/AddQuestionsUI': (context) => AddQuestionsUI(),
           '/AddNewQuizzUI': (context) => const AddNewQuizzUI(),
-
           '/EditOldQuizUI': (context) => const EditQuizzUI(),
           '/EditQuestionsUI': (context) => EditQuestionsUI(),
-
           '/loading': (context) => Loading()
-
         },
         // TODO: Decide on a unified theme and copy it here
         theme: ThemeData.light()

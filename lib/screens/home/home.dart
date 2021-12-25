@@ -100,11 +100,11 @@ class _HomeState extends State<Home> {
                       // ~ Make a circle image with CircleAvatar
                       Center(
                           child: InkWell(
-                            onTap: () => _showSettingsPanel("avatars"),
-                            child: CircleAvatar(
-                              backgroundImage: AssetImage(avatar),
-                              backgroundColor: Colors.grey[900],
-                              radius: 70.0,
+                        onTap: () => _showSettingsPanel("avatars"),
+                        child: CircleAvatar(
+                          backgroundImage: AssetImage(avatar),
+                          backgroundColor: Colors.grey[900],
+                          radius: 70.0,
                         ),
                       )),
                       // ~ This is a line which literally looks like divider

@@ -42,7 +42,9 @@ class _AvatarFormState extends State<AvatarForm> {
                   // ! itemBuilder:
                   // ~ itemBuilder is the function in itself which is going to return some kind of template or a widget tree for each item inside the list
                   itemBuilder: (context, index) {
-                    return AvatarTile(avatar: avatars.entries.elementAt(index), setAvatarPath: setAvatarPath);
+                    return AvatarTile(
+                        avatar: avatars.entries.elementAt(index),
+                        setAvatarPath: setAvatarPath);
                   },
                 ),
               ),
@@ -71,13 +73,13 @@ class _AvatarFormState extends State<AvatarForm> {
     }
   }
 
-  void setAvatarPath(String avatarPath){
+  void setAvatarPath(String avatarPath) {
     _avatarPath = avatarPath;
   }
 }
 
 LinkedHashMap<String, List<String>> getAvatarsList() {
-  LinkedHashMap<String, List<String>> avatars = new LinkedHashMap();
+  LinkedHashMap<String, List<String>> avatars = LinkedHashMap();
 
   avatars["aqualine"] = _createAvatars("aqualine");
   avatars["ceratops"] = _createAvatars("ceratops");
@@ -93,7 +95,12 @@ List<String> _createAvatars(String avatarName) {
   List<String> avatarsList = [];
 
   for (int i = 1; i <= 5; i++) {
-    avatarsList.add("assets/avatars/"+avatarName+"/"+avatarName+i.toString()+".png");
+    avatarsList.add("assets/avatars/" +
+        avatarName +
+        "/" +
+        avatarName +
+        i.toString() +
+        ".png");
   }
 
   return avatarsList;

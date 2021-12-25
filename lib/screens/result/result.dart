@@ -24,15 +24,15 @@ class Result extends StatelessWidget {
         backgroundColor: topbar,
         leading: const MenuButton(),
         elevation: 0.0,
-        ),
-      body:/* Text(
+      ),
+      body: /* Text(
         args.quiz.quizTitle +"\n"
             + args.quiz.listOfQuestions.toString() +"\n"
             + args.quiz.listOfQuestions[0].questionText +"\n"
             + args.stateVector.toString(),
       ),*/
-      //sorry had to comment that out to run things - holger
-      Column(
+          //sorry had to comment that out to run things - holger
+          Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -46,62 +46,64 @@ class Result extends StatelessWidget {
           ),
           Expanded(
             child: ListView(
-              children: <Widget> [
-              for (var i = 0; i < args.quiz.listOfQuestions.length; i++) //
-                Card(
-                        child: Padding(
-                          padding: EdgeInsets.all(1 * em),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    top: 1.5 * em, bottom: 2 * em),
-                                child: Text(
-                                  args.quiz.listOfQuestions[i].questionText,
-                                  style: theme.textTheme.headline6,
-                                ),
-                              ),
-
-                               Column(
-                                 children: <Widget> [
-                               for (var j = 0; j < args.quiz.listOfQuestions[i].answers.length ; j++)
-                                 Container(
-                                    margin: EdgeInsets.all(0.5 * em),
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                         borderRadius:
-                                            BorderRadius.circular(8),
-                                         border: args.stateVector.buttonsPressed[0][j] ? Border.all(color: Colors.black) : null,
-                                         color: args.quiz.listOfQuestions[i].answers[j].isCorrect
-                                             ? Colors.green
-                                             : Colors.red),
-                                    child: Padding(
-                                         padding: EdgeInsets.all(1.5 * em),
-                                         child: Text(args.quiz.listOfQuestions[i].answers[j].answerText),
-                                     ),
-                                   )
-                                ]
-                               )
-                            ],
+              children: <Widget>[
+                for (var i = 0; i < args.quiz.listOfQuestions.length; i++) //
+                  Card(
+                    child: Padding(
+                      padding: EdgeInsets.all(1 * em),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding:
+                                EdgeInsets.only(top: 1.5 * em, bottom: 2 * em),
+                            child: Text(
+                              args.quiz.listOfQuestions[i].questionText,
+                              style: theme.textTheme.headline6,
+                            ),
                           ),
-                       ),
-                      )
-               ],
-              ),
-          ),
-               Padding(
-                  padding: const EdgeInsets.all(5),
-                  child: ElevatedButton(
-                    onPressed: () => Navigator.pushReplacementNamed(context, '/sharedQuizes'),
-                    child: const Text("back"),
-                    style: TextButton.styleFrom(
-                        backgroundColor: Colors.blueAccent,
-                        primary: Colors.greenAccent,
-                        padding: const EdgeInsets.all(20)),
+                          Column(children: <Widget>[
+                            for (var j = 0;
+                                j < args.quiz.listOfQuestions[i].answers.length;
+                                j++)
+                              Container(
+                                margin: EdgeInsets.all(0.5 * em),
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    border: args.stateVector.buttonsPressed[0]
+                                            [j]
+                                        ? Border.all(color: Colors.black)
+                                        : null,
+                                    color: args.quiz.listOfQuestions[i]
+                                            .answers[j].isCorrect
+                                        ? Colors.green
+                                        : Colors.red),
+                                child: Padding(
+                                  padding: EdgeInsets.all(1.5 * em),
+                                  child: Text(args.quiz.listOfQuestions[i]
+                                      .answers[j].answerText),
+                                ),
+                              )
+                          ])
+                        ],
+                      ),
+                    ),
                   )
-              ),
-
+              ],
+            ),
+          ),
+          Padding(
+              padding: const EdgeInsets.all(5),
+              child: ElevatedButton(
+                onPressed: () =>
+                    Navigator.pushReplacementNamed(context, '/sharedQuizes'),
+                child: const Text("back"),
+                style: TextButton.styleFrom(
+                    backgroundColor: Colors.blueAccent,
+                    primary: Colors.greenAccent,
+                    padding: const EdgeInsets.all(20)),
+              )),
         ],
       ),
     );

@@ -161,7 +161,8 @@ class _NavBarState extends State<NavBar> {
                           onTap: () {},
                         ),
                         ListTile(
-                          leading: const Icon(Icons.perm_data_setting_sharp, color: Colors.white),
+                          leading: const Icon(Icons.perm_data_setting_sharp,
+                              color: Colors.white),
                           title: Text('Test Screen',
                               style: theme.textTheme.bodyText2!.copyWith(
                                 color: Colors.white,
