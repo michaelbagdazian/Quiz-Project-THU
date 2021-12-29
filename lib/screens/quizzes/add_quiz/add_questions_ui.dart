@@ -16,7 +16,7 @@ import 'package:crew_brew/shared/PorgressbarIndicator/step_progress_indicator.da
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 
-import '../../models/quiz/answer.dart';
+import '../../../models/quiz/answer.dart';
 
 // ! Information about the class:
 // ~ This class is a Page to create a quizz and questions to quizz

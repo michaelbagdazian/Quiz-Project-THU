@@ -1,5 +1,5 @@
 import 'package:crew_brew/models/quiz/Quiz.dart';
-import 'package:crew_brew/screens/quizzes/active_quiz.dart';
+import 'package:crew_brew/screens/quizzes/play_quiz/active_quiz.dart';
 import 'package:crew_brew/shared/loading.dart';
 import 'package:flutter/material.dart';
 

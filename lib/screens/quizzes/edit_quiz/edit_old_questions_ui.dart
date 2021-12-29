@@ -39,12 +39,16 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
   //defining some TextEditingControllers to handle user's input
   //~ Question Text
   final TextEditingController _question = TextEditingController();
+
   //~ First Answer
   final TextEditingController _firstAnswer = TextEditingController();
+
   //~ Second Answer
   final TextEditingController _secondAnswer = TextEditingController();
+
   //~ Third Answer
   final TextEditingController _thirdAnswer = TextEditingController();
+
   //~ Fourth Answer
   final TextEditingController _fourthAnswer = TextEditingController();
 
@@ -69,23 +73,44 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
   //~ Arguments from the Add Quizz Page (Quiz title, tags,Owner UId, etc...)
   late var args;
 
-  int IsLastQuestion = 0;
+  Quiz? quiz;
 
-  late Quiz quiz;
+  // ~ This variables helps us to make sure that we allow new data to be passed in the fields
+  // ! Not the best solution, but a quick one
+  bool variablesInitiated = false;
+  bool progressBarInitiated = false;
+  bool newQuestion = false;
+
   //* Build Widget Starts here
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     Map data = ModalRoute.of(context)!.settings.arguments as Map;
-    quiz = data['quiz'] as Quiz;
-    _addQuestion.setQuestions(quiz.listOfQuestions);
-    _Currquestion = _addQuestion.getLastQuestion();
 
-    //~ Determining the number of total steps for the progress bar indicator
-    StepProgressBarIndicatorSteps = _Currquestion == null
-        ? ValueNotifier<int>(_addQuestion.getQuestions().length)
-        : ValueNotifier<int>(
-            _addQuestion.getQuestions().indexOf(_Currquestion!) + 2);
+    if (!variablesInitiated) {
+      quiz = data['quiz'] as Quiz;
+      // TODO setQuestions and getLastQuestion has to be done once
+      _addQuestion.setQuestions(quiz!.listOfQuestions);
+
+      if (_addQuestion.getQuestions()[0] != null) {
+        _Currquestion = _addQuestion.getQuestions()[0];
+      }
+
+      PrintStuffOnScreen();
+
+      //~ Determining the number of total steps for the progress bar indicator
+      // ! When StepProgressBarIndicatorSteps changes, it notifies ValueListenableBuilder that it has changed
+      StepProgressBarIndicatorSteps = _Currquestion == null
+          ? ValueNotifier<int>(_addQuestion.getQuestions().length)
+          : ValueNotifier<int>(
+              // TODO Change this to 1 or smth else to see how bar is changing
+              _addQuestion.getQuestions().indexOf(_Currquestion!) + 1);
+
+      progressBarInitiated = true;
+
+      variablesInitiated = true;
+    }
+
     //~ getting the arguments from the previous screen
     args = ModalRoute.of(context)!.settings.arguments;
     //~ Get the size of the screen
@@ -103,7 +128,6 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
           ),
         ),
         backgroundColor: Colors.teal,
-        leading: const MenuButton(),
       ),
       //* Container of all widgets
       body: Container(
@@ -126,6 +150,7 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
             //* ProgressBar Starts here
             ValueListenableBuilder<int>(
                 valueListenable: StepProgressBarIndicatorSteps,
+                // ! Value is what is passed from valueListenable
                 builder: (context, value, _) {
                   //* Row that contains two arrows and dashes
                   return Row(
@@ -133,6 +158,7 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       //* Back Arrow
+                      // ! Icon to the left
                       IconButton(
                         enableFeedback: true,
                         icon: const Icon(
@@ -145,13 +171,18 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
                           if (StepProgressBarIndicatorSteps.value > 1)
                             {
                               StepProgressBarIndicatorSteps.value--,
+                              newQuestion = false,
                             }
                           else
                             null,
                           //? getting the values of the current question
-                          await PrintStuffOnScreen(),
                           //? set CurrQuestion as CurrQuestion.previous
+                          // TODO Examine this
                           goToPreviousQuestin(),
+                          PrintStuffOnScreen(),
+
+                          // ~ rebuild the widget
+                          setState(() {}),
                         },
                       ),
                       SizedBox(
@@ -176,7 +207,12 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
                             Icons.arrow_forward_ios_rounded,
                             color: Colors.black,
                           ),
-                          onPressed: () async => {
+                          // ! Arrow right
+                          onPressed: () => {
+                                if (StepProgressBarIndicatorSteps.value ==
+                                    _addQuestion.getQuestions().length)
+                                  {newQuestion = true},
+
                                 //? Incrementing dashes here
                                 if (StepProgressBarIndicatorSteps.value <
                                     _addQuestion.getQuestions().length + 1)
@@ -186,9 +222,15 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
                                 else
                                   null,
                                 //? Set CurrQuestion as CurrQuestion.next
+                                // TODO Examine this
                                 goToNextQuestion(),
                                 //? getting the values of the current question
-                                await PrintStuffOnScreen(),
+                                // TODO Examine this
+                                // ! UNCOMMENT
+                                PrintStuffOnScreen(),
+
+                                // ~ rebuild the widget
+                                setState(() {}),
                               }),
                     ],
                   );
@@ -249,6 +291,7 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
                 Checkbox(
                     value: _isFirstAnswerCorrect,
                     onChanged: (bool? value) {
+                      print("_answerCorrect1");
                       setState(() {
                         _isFirstAnswerCorrect = value;
                       });
@@ -268,6 +311,7 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
                 Checkbox(
                     value: _isSecondAnswerCorrect,
                     onChanged: (bool? value) {
+                      print("_answerCorrect2");
                       setState(() {
                         _isSecondAnswerCorrect = value;
                       });
@@ -287,6 +331,7 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
                 Checkbox(
                     value: _isThirdAnswerCorrect,
                     onChanged: (bool? value) {
+                      print("_answerCorrect3");
                       setState(() {
                         _isThirdAnswerCorrect = value;
                       });
@@ -306,6 +351,7 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
                 Checkbox(
                     value: _isFourthAnswerCorrect,
                     onChanged: (bool? value) {
+                      print("_answerCorrect4");
                       setState(() {
                         _isFourthAnswerCorrect = value;
                       });
@@ -332,7 +378,7 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
                 //* Button To Add a question
                 FloatingActionButton(
                   child: const Icon(
-                    Icons.add_sharp,
+                    Icons.save_outlined,
                   ),
                   backgroundColor: Colors.orange,
                   onPressed: () {
@@ -350,14 +396,15 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
   }
 
 //~ This Future adds Questions to our current list of questions, this gets called everytime the user adds a question
-  Future addQuestionButtonFunc() async {
+  Future<bool> addQuestionButtonFunc() async {
     //~ This checks if we are adding a new question or editing an existing one
-    if (_addQuestion.Questions.isNotEmpty) {
+    /*if (_addQuestion.Questions.isNotEmpty) {
       if (_Currquestion != _addQuestion.getLastQuestion()) {
         //~ If editing, then we remove the old Question
         _addQuestion.removeQuestion(_Currquestion!);
       }
-    }
+    }*/
+
     //~ The Following int is used to check if there is no correct answers
     int _numberOfCorrectAnswers = 0;
     //~ Check how many correct answers are there
@@ -381,11 +428,21 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
           answerText: _secondAnswer.text, isCorrect: _isSecondAnswerCorrect!));
     }
     if (_thirdAnswer.text.isNotEmpty) {
+<<<<<<< HEAD:lib/screens/quizzes/edit_old_questions_ui.dart
       answers.add(Answer(
           answerText: _thirdAnswer.text, isCorrect: _isThirdAnswerCorrect!));
     }
     if (_fourthAnswer.text.isNotEmpty) {
       answers.add(Answer(
+=======
+      print("_thirdAnswer.text.isNotEmpty");
+      answers.add(new Answer(
+          answerText: _thirdAnswer.text, isCorrect: _isThirdAnswerCorrect!));
+    }
+    if (_fourthAnswer.text.isNotEmpty) {
+      print("_fourthAnswer.text.isNotEmpty");
+      answers.add(new Answer(
+>>>>>>> origin/master:lib/screens/quizzes/edit_quiz/edit_old_questions_ui.dart
           answerText: _fourthAnswer.text, isCorrect: _isFourthAnswerCorrect!));
     }
 
@@ -401,17 +458,28 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
                 "Please Make Sure the question field is not empty and there is at least on correct answer");
           });
       //~ Exit this function
-      return;
+      return false;
     }
 
     //~ Add a new Question to the list of questions
-    _addQuestion.addNewQuestion(_question.text, answers, context);
+    if (!newQuestion) {
+      _addQuestion.EditOldQuestion(
+          _question.text, answers, context, _Currquestion!);
+    } else {
+      print("ADDING NEW QUESTION");
+      _addQuestion.addNewQuestion(_question.text, answers, context);
+      newQuestion = false;
+      _Currquestion = _addQuestion.getLastQuestion();
+    }
+
     //~ Add a step in the progress indicator
-    StepProgressBarIndicatorSteps.value++;
+    // StepProgressBarIndicatorSteps.value++;
     //~ Move the pointer of the Current Question to get the new last question
-    _Currquestion = _addQuestion.getLastQuestion();
+    // _Currquestion = _addQuestion.getLastQuestion();
     //~ resets everything on screen
-    clearFunc();
+    // clearFunc();
+
+    return true;
   }
 
 //~ This function clears and resets everything (text fields and checkboxes) on the screen, this can be used when a new Question is to be Added or if user clicks on clear button
@@ -430,19 +498,23 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
 
   //~ This Future creates a new quizz object and adds the list of questions to it
   Future submitButtonFunc() async {
+    bool noError = false;
     //? this is so that if the user had one last question that they forgot to add, submit button will add it for them
-    if (_question.text != "") addQuestionButtonFunc();
+    if (_question.text != "") {
+      await addQuestionButtonFunc().then((value) => noError = value);
+    }
 
-//? Send the Quizz to firebase
-    await DatabaseService(uid: quiz.quizOwnerUID).updateQuizData(quiz);
+    if(noError){
+      await DatabaseService(uid: quiz!.quizOwnerUID).updateQuizData(quiz!);
 
-    await showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          //customAlertBox (label, error message
-          return customAlertBox("Quiz Updated", "Have Fun!");
-        });
-    Navigator.popAndPushNamed(context, '/myQuizes');
+      await showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            //customAlertBox (label, error message
+            return customAlertBox("Quiz Updated", "Have Fun!");
+          });
+      Navigator.popAndPushNamed(context, '/myQuizes');
+    }
   }
 
   //~This function is for navigating through questions (BackWards)
@@ -466,18 +538,24 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
     }
     if (_addQuestion.getQuestions().indexOf(_Currquestion!) <
         _addQuestion.getQuestions().indexOf(_addQuestion.getLastQuestion()!)) {
+      print("inside goToNextQuetsion second if");
       _Currquestion = _addQuestion.getQuestions()[
           _addQuestion.getQuestions().indexOf(_Currquestion!) + 1];
+      print("inside goToNextQuetsion second if | currQuestion:" +
+          _Currquestion!.questionText);
     } else {
       _Currquestion != _addQuestion.getLastQuestion();
-      IsLastQuestion++;
     }
   }
 
-  Future PrintStuffOnScreen() async {
-    //~ Edit the question controller to actually display the text from our current question
+  //~ Edit the question controller to actually display the text from our current question
+  void PrintStuffOnScreen() {
+    print("inside printStuffOnScreen");
+
+    // ~ Question text
     _question.text = _Currquestion!.questionText;
-    //~ ...
+
+    // ~ Answers text
     _firstAnswer.text = _Currquestion!.answers[0].answerText;
     _secondAnswer.text = _Currquestion!.answers.length >= 2
         ? _Currquestion!.answers[1].answerText
@@ -488,6 +566,8 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
     _fourthAnswer.text = _Currquestion!.answers.length >= 4
         ? _Currquestion!.answers[3].answerText
         : "";
+
+    // ~ Correct answers
     _isFirstAnswerCorrect = _Currquestion!.answers[0].isCorrect;
     _isSecondAnswerCorrect = _Currquestion!.answers.length >= 2
         ? _Currquestion!.answers[1].isCorrect
@@ -500,8 +580,11 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
         : false;
 
     //?check if we pressed forward again after our CurrQuestion=last question
-    if (StepProgressBarIndicatorSteps.value > _addQuestion.Questions.length) {
-      clearFunc();
+    if (progressBarInitiated) {
+      if (StepProgressBarIndicatorSteps.value > _addQuestion.Questions.length) {
+        print("before clearFunc()");
+        clearFunc();
+      }
     }
   }
 }

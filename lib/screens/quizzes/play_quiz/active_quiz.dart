@@ -10,7 +10,7 @@ class ActiveQuiz extends StatefulWidget {
   final Quiz quiz;
   final int myPlayerNumber = 0;
   Stopwatch measureTime = Stopwatch();
-  final int countdownTime = 300;
+  final int countdownTime = 30;
   late Timer updateProgress;
   late GameState stateVector;
   ActiveQuiz({Key? key, required this.quiz}) : super(key: key);
@@ -30,6 +30,7 @@ class _ActiveQuizState extends State<ActiveQuiz> {
       answerCorrect: [List.filled(widget.quiz.listOfQuestions.length, false)],
       buttonsPressed: [List.filled(getMaxQuestions(widget.quiz), false)],
       buttonsPressedCorrect: [List.filled(getMaxQuestions(widget.quiz), false)],
+      buttonsPressedSaved: [List.empty(growable: true)],
     );
     widget.measureTime.start();
     startTimer();
@@ -60,7 +61,6 @@ class _ActiveQuizState extends State<ActiveQuiz> {
   double timerProgress = 1;
 
   void next() {
-    print(widget.stateVector.buttonsPressed);
     widget.updateProgress.cancel();
     widget.stateVector.setAnswerTimes(
         widget.myPlayerNumber,
@@ -72,27 +72,34 @@ class _ActiveQuizState extends State<ActiveQuiz> {
           widget.quiz.listOfQuestions[widget.stateVector.currentQuestion]
               .answers[j].isCorrect) {
         widget.stateVector.buttonsPressedCorrect[widget.myPlayerNumber][j] =
-            true;
+        true;
         widget.stateVector.playerPoints[widget.myPlayerNumber]
-            [widget.stateVector.currentQuestion]++;
+        [widget.stateVector.currentQuestion]++;
       }
       if (widget.stateVector.buttonsPressed[widget.myPlayerNumber][j] &&
           !widget.quiz.listOfQuestions[widget.stateVector.currentQuestion]
               .answers[j].isCorrect) {
         widget.stateVector.playerPoints[widget.myPlayerNumber]
-            [widget.stateVector.currentQuestion]--;
+        [widget.stateVector.currentQuestion]--;
         if (widget.stateVector.playerPoints[widget.myPlayerNumber]
-                [widget.stateVector.currentQuestion] <
+        [widget.stateVector.currentQuestion] <
             0) {
           widget.stateVector.playerPoints[widget.myPlayerNumber]
-              [widget.stateVector.currentQuestion] = 0;
+          [widget.stateVector.currentQuestion] = 0;
         }
       }
     }
+
+    for (int l = 0; l < widget.quiz.listOfQuestions[widget.stateVector.currentQuestion].answers.length; l++) {
+      widget.stateVector.buttonsPressedSaved[widget.myPlayerNumber].add(
+          widget.stateVector.buttonsPressed[widget.myPlayerNumber][l]);
+    }
+
     setState(() {
       widget.stateVector.buttonsActive = false;
       widget.stateVector.showTimeUntilAnswer = true;
       widget.stateVector.buttonsPressedCorrect;
+      widget.stateVector.buttonsPressedSaved;
     });
 
     //buttonsActive = false;
@@ -104,7 +111,7 @@ class _ActiveQuizState extends State<ActiveQuiz> {
           widget.quiz.listOfQuestions.length - 1) {
         //route to result.dart with stateVector
         QuizState results =
-            QuizState(quiz: widget.quiz, stateVector: widget.stateVector);
+        QuizState(quiz: widget.quiz, stateVector: widget.stateVector);
         Navigator.pushNamed(context, '/results', arguments: results);
       } else {
         startTimer();
@@ -122,7 +129,7 @@ class _ActiveQuizState extends State<ActiveQuiz> {
   startTimer() {
     widget.updateProgress = Timer.periodic(
       const Duration(seconds: 1),
-      (timer) {
+          (timer) {
         timerProgress = timerProgress - 1 / widget.countdownTime;
         setState(() {
           timerProgress;
@@ -142,7 +149,7 @@ class _ActiveQuizState extends State<ActiveQuiz> {
   void answer(int number) {
     setState(() {
       widget.stateVector.buttonsPressed[widget.myPlayerNumber][number] =
-          !(widget.stateVector.buttonsPressed[widget.myPlayerNumber][number]);
+      !(widget.stateVector.buttonsPressed[widget.myPlayerNumber][number]);
       widget.stateVector = widget.stateVector;
     });
   }
@@ -180,7 +187,7 @@ class _ActiveQuizState extends State<ActiveQuiz> {
                       bottom: (theme.textTheme.bodyText2!.fontSize)! *
                           6), // ~Equivalent to 4 em's
                   decoration:
-                      const BoxDecoration(color: Color.fromARGB(50, 0, 0, 0)),
+                  const BoxDecoration(color: Color.fromARGB(50, 0, 0, 0)),
                   alignment: Alignment.center,
                   child: Column(
                     children: [
@@ -209,14 +216,14 @@ class _ActiveQuizState extends State<ActiveQuiz> {
                   child: ListView(
                     children: <Widget>[
                       for (var i = 0;
-                          i <
-                              widget
-                                  .quiz
-                                  .listOfQuestions[
-                                      widget.stateVector.currentQuestion]
-                                  .answers
-                                  .length;
-                          i++)
+                      i <
+                          widget
+                              .quiz
+                              .listOfQuestions[
+                          widget.stateVector.currentQuestion]
+                              .answers
+                              .length;
+                      i++)
                         Padding(
                             padding: EdgeInsets.all(.5 * em),
                             child: ElevatedButton(
@@ -228,25 +235,25 @@ class _ActiveQuizState extends State<ActiveQuiz> {
                                   child: Text(widget
                                       .quiz
                                       .listOfQuestions[
-                                          widget.stateVector.currentQuestion]
+                                  widget.stateVector.currentQuestion]
                                       .answers[i]
                                       .answerText),
                                 ),
                                 style: TextButton.styleFrom(
                                   backgroundColor: widget
-                                          .stateVector.buttonsActive
+                                      .stateVector.buttonsActive
                                       ? widget.stateVector.buttonsPressed[
-                                              widget.myPlayerNumber][i]
-                                          ? Colors.yellowAccent
-                                          : theme.primaryColor
+                                  widget.myPlayerNumber][i]
+                                      ? Colors.yellowAccent
+                                      : theme.primaryColor
                                       : widget.stateVector.buttonsPressed[
-                                              widget.myPlayerNumber][i]
-                                          ? widget.stateVector
-                                                      .buttonsPressedCorrect[
-                                                  widget.myPlayerNumber][i]
-                                              ? Colors.greenAccent
-                                              : Colors.redAccent
-                                          : theme.primaryColor,
+                                  widget.myPlayerNumber][i]
+                                      ? widget.stateVector
+                                      .buttonsPressedCorrect[
+                                  widget.myPlayerNumber][i]
+                                      ? Colors.greenAccent
+                                      : Colors.redAccent
+                                      : theme.primaryColor,
                                 )))
                     ],
                     shrinkWrap: true,
@@ -268,17 +275,17 @@ class _ActiveQuizState extends State<ActiveQuiz> {
                           ))),
                   Expanded(
                       child: Padding(
-                    padding: const EdgeInsets.all(5),
-                    child: ElevatedButton(
-                      onPressed: widget.stateVector.buttonsActive
-                          ? () => next()
-                          : null,
-                      child: const Text("next"),
-                      style: TextButton.styleFrom(
-                          backgroundColor: theme.primaryColor,
-                          padding: const EdgeInsets.all(20)),
-                    ),
-                  ))
+                        padding: const EdgeInsets.all(5),
+                        child: ElevatedButton(
+                          onPressed: widget.stateVector.buttonsActive
+                              ? () => next()
+                              : null,
+                          child: const Text("next"),
+                          style: TextButton.styleFrom(
+                              backgroundColor: theme.primaryColor,
+                              padding: const EdgeInsets.all(20)),
+                        ),
+                      ))
                 ])
               ]),
         ),
