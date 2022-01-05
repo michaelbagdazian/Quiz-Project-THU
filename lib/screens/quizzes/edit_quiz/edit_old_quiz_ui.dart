@@ -99,7 +99,7 @@ class _EditQuizzUIState extends State<EditQuizzUI> {
                 SizedBox(
                   height: size.height * 0.07,
                 ),
-                CustomText().customText('Editing A Quiz'),
+                CustomText().customText('Editing A Quiz', 25),
                 //* Empty space
                 SizedBox(
                   height: size.height * 0.07,
@@ -133,8 +133,7 @@ class _EditQuizzUIState extends State<EditQuizzUI> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     //* Text 'Category'
-                    CustomText().customText('Category: ',
-                        fontsize: 25,
+                    CustomText().customText('Category: ', 25,
                         fontweight: FontWeight.w100,
                         forgroundColor: Colors.transparent,
                         backgroundColor: Colors.white),
@@ -193,8 +192,7 @@ class _EditQuizzUIState extends State<EditQuizzUI> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     CustomText().customText(
-                      'Public: ',
-                      fontsize: 25,
+                      'Public: ', 25,
                       fontweight: FontWeight.w100,
                       forgroundColor: Colors.transparent,
                       backgroundColor: Colors.white,

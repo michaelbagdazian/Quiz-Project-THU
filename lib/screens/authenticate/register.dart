@@ -99,7 +99,7 @@ class _SignUpState extends State<SignUp> {
                         height: size.height * 0.05,
                       ),
                       //*Add the welcoming text first; as you can see i am using a customText Widget so i don't have to re-style every text on the page
-                      _customText.customText('Creat New\n Account'),
+                      _customText.customText('Creat New\n Account', 50),
                       //*again empty space
                       SizedBox(
                         height: size.height * 0.07,

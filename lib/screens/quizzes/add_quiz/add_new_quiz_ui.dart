@@ -72,7 +72,7 @@ class _AddNewQuizzUIState extends State<AddNewQuizzUI> {
               SizedBox(
                 height: size.height * 0.07,
               ),
-              CustomText().customText('Creating A New Quizz'),
+              CustomText().customText('Creating A New Quizz', 50),
               //* Empty space
               SizedBox(
                 height: size.height * 0.07,
@@ -106,8 +106,7 @@ class _AddNewQuizzUIState extends State<AddNewQuizzUI> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   //* Text 'Category'
-                  CustomText().customText('Category: ',
-                      fontsize: 25,
+                  CustomText().customText('Category: ', 25,
                       fontweight: FontWeight.w100,
                       forgroundColor: Colors.transparent,
                       backgroundColor: Colors.white),
@@ -167,8 +166,7 @@ class _AddNewQuizzUIState extends State<AddNewQuizzUI> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   CustomText().customText(
-                    'Public: ',
-                    fontsize: 25,
+                    'Public: ', 25,
                     fontweight: FontWeight.w100,
                     forgroundColor: Colors.transparent,
                     backgroundColor: Colors.white,

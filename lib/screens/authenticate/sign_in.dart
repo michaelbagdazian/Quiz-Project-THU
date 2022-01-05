@@ -48,7 +48,9 @@ class _LogInState extends State<LogIn> {
 
   @override
   Widget build(BuildContext context) {
+    /// ~ size of the screen
     Size size = MediaQuery.of(context).size;
+
     // ! popScreen():
     // ~ Since we want to allow our user to go back to welcome screen ( perhaps he figures out that he is already registered ), we keep register screen on stack
     // ~ After the login was successful, we remove the screen from the stack before moving to Home screen, so that we do not allow user to get back to registration
@@ -90,7 +92,7 @@ class _LogInState extends State<LogIn> {
                         height: size.height * 0.05,
                       ),
                       //*Add the welcoming text first
-                      _customText.customText('Log In to Your\n Account'),
+                      _customText.customText('Log In to Your\n Account', 50),
                       SizedBox(
                         height: size.height * 0.05,
                       ),
