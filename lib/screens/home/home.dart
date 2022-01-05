@@ -38,6 +38,19 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    /// ~ size of the screen
+    Size size = MediaQuery.of(context).size;
+
+    /// ~ sizes per widget
+    double avatarSize = size.height * (12 / 100);
+    double verticalPadding = size.height * (1 / 100);
+    double horizontalPadding = size.width * (5 / 100);
+    double dividerSize = size.height * (12 / 100);
+    double fontSize = size.height *( 3 / 100);
+    double sizedBoxHeight = size.height * (1 / 100);
+    double inputBarWidth = size.width * (20 / 100);
+    double buttonWidth = size.width * (8 / 100);
+
     // ! _showSettingsPanel()
     // ~ panel for updating userData
     void _showSettingsPanel(String command) {
@@ -76,7 +89,6 @@ class _HomeState extends State<Home> {
               avatar = userData.avatar;
               username = userData.username;
               email = userData.email;
-              Size size = MediaQuery.of(context).size;
 
               return Scaffold(
                 // ! NavBar():
@@ -108,7 +120,8 @@ class _HomeState extends State<Home> {
                         fit: BoxFit.cover),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.fromLTRB(30.0, 50.0, 30.0, 0.0),
+                    padding:
+                        EdgeInsets.fromLTRB(horizontalPadding, verticalPadding, horizontalPadding, 0.0),
                     child: SingleChildScrollView(
                       child: Column(
                         // ~ This alligns everything to the left
@@ -124,13 +137,13 @@ class _HomeState extends State<Home> {
                                   //  userData.avatar),
                                   AssetImage(avatar),
                               backgroundColor: Colors.transparent,
-                              radius: 70.0,
+                              radius: avatarSize,
                             ),
                           )),
                           // ~ This is a line which literally looks like divider
                           Divider(
                             // ~ This is the height between top element and bottom, not the line itself
-                            height: 75.0,
+                            height: dividerSize,
                             color: Colors.white,
                           ),
                           Card(
@@ -140,12 +153,12 @@ class _HomeState extends State<Home> {
                                   color: Colors.transparent, width: .5),
                             ),
                             color: topbar.withOpacity(.7),
-                            shadowColor:
-                                Colors.transparent, //Colors.transparent,
+                            shadowColor: Colors.transparent,
+                            //Colors.transparent,
                             elevation: 2.0,
                             child: Padding(
                               padding:
-                                  EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 50.0),
+                                  EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 30.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -156,11 +169,12 @@ class _HomeState extends State<Home> {
                                       color: Colors.white,
                                       // ~ This gives the spacing between the letters
                                       letterSpacing: 2.0,
+                                      fontSize: fontSize
                                     ),
                                   ),
                                   // ~ Creates an empty invisible box for us of a height and width we specify
                                   // ~ we put it between the elements we want to have space in between
-                                  SizedBox(height: 10.0),
+                                  SizedBox(height: sizedBoxHeight),
                                   Row(
                                     children: <Widget>[
                                       Text(
@@ -168,7 +182,7 @@ class _HomeState extends State<Home> {
                                         style: TextStyle(
                                             color: Colors.amberAccent[200],
                                             letterSpacing: 2.0,
-                                            fontSize: 28.0,
+                                            fontSize: fontSize * 1.3,
                                             fontWeight: FontWeight.bold),
                                       ),
                                       SizedBox(width: 10.0),
@@ -183,7 +197,7 @@ class _HomeState extends State<Home> {
                                     ],
                                   ),
                                   // * End username field
-                                  SizedBox(height: 30.0),
+                                  SizedBox(height: sizedBoxHeight * 3),
                                   // * Start current level field
                                   Text(
                                     'POINTS',
@@ -191,21 +205,22 @@ class _HomeState extends State<Home> {
                                       color: Colors.white,
                                       // ~ This gives the spacing between the letters
                                       letterSpacing: 2.0,
+                                      fontSize: fontSize,
                                     ),
                                   ),
                                   // ~ Creates an empty invisible box for us of a height and width we specify
-                                  SizedBox(height: 10.0),
+                                  SizedBox(height: sizedBoxHeight),
                                   Text(
                                     // ~ With '$' we output the contat of the data to string
                                     '$points',
                                     style: TextStyle(
                                         color: Colors.amberAccent[200],
                                         letterSpacing: 2.0,
-                                        fontSize: 28.0,
+                                        fontSize: fontSize * 1.3,
                                         fontWeight: FontWeight.bold),
                                   ),
                                   // * End current level field
-                                  SizedBox(height: 20.0),
+                                  SizedBox(height: sizedBoxHeight * 3),
                                   // * Start e-mail field
                                   Row(
                                     // child: Row(
@@ -221,7 +236,7 @@ class _HomeState extends State<Home> {
                                           style: TextStyle(
                                             overflow: TextOverflow.ellipsis,
                                             color: Colors.white,
-                                            fontSize: 18.0,
+                                            fontSize: fontSize,
                                             letterSpacing: 1.0,
                                           ),
                                         ),
