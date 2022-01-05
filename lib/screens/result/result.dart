@@ -50,6 +50,7 @@ class Result extends StatelessWidget {
                         i < args.quiz.listOfQuestions.length;
                         i++) //
                       Card(
+                        color: const Color.fromARGB(25, 0, 0, 0),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)),
                         child: Padding(
@@ -62,7 +63,8 @@ class Result extends StatelessWidget {
                                     top: 1.5 * em, bottom: 2 * em),
                                 child: Text(
                                   args.quiz.listOfQuestions[i].questionText,
-                                  style: theme.textTheme.headline6,
+                                  style: theme.textTheme.headline6!
+                                      .copyWith(color: Colors.white),
                                 ),
                               ),
                               Column(children: <Widget>[
