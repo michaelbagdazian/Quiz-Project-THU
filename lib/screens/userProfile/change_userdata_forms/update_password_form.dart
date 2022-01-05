@@ -26,11 +26,14 @@ class _PasswordFormState extends State<PasswordForm> {
   Widget build(BuildContext context) {
     final userData = Provider.of<UserData?>(context);
     final user = Provider.of<AppUser?>(context);
+    /// ~ size of the screen
+    Size size = MediaQuery.of(context).size;
+    double formHeight = size.height * (45/100);
 
     if (userData != null && user != null && !isLoading) {
       return Container(
         padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
-        height: 270.0,
+        height: formHeight,
         child: Form(
           key: _formKey,
           child: SingleChildScrollView(
