@@ -3,14 +3,12 @@
 import 'package:crew_brew/models/user/AppUser.dart';
 import 'package:crew_brew/models/user/UserData.dart';
 import 'package:crew_brew/navigationBar/menu_button.dart';
-import 'package:crew_brew/navigationBar/navbar.dart';
 import 'package:crew_brew/screens/userProfile/UpdateFormsWrapper.dart';
 import 'package:crew_brew/services/database.dart';
 import 'package:crew_brew/shared/colors.dart';
 import 'package:crew_brew/shared/loading.dart';
-import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 // ! Information about the class:
 // ~ This class represents myProfile page
@@ -34,7 +32,7 @@ class _HomeState extends State<Home> {
   String avatar = 'assets/avatars/default.png';
   String username = '';
   String email = '';
-  UserData? userData = null;
+  UserData? userData;
 
   @override
   Widget build(BuildContext context) {

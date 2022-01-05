@@ -67,10 +67,10 @@ class ManualQuizeCreation {
 
     // ~ Answers to Question #4
     List<Answer> answers_4 = [];
-    answers_4.add(new Answer(answerText: "Magenta ( true )", isCorrect: true));
-    answers_4.add(new Answer(answerText: "Olive", isCorrect: false));
-    answers_4.add(new Answer(answerText: "Blue", isCorrect: false));
-    answers_4.add(new Answer(answerText: "Blue, no yellow", isCorrect: false));
+    answers_4.add(Answer(answerText: "Magenta ( true )", isCorrect: true));
+    answers_4.add(Answer(answerText: "Olive", isCorrect: false));
+    answers_4.add(Answer(answerText: "Blue", isCorrect: false));
+    answers_4.add(Answer(answerText: "Blue, no yellow", isCorrect: false));
 
     // ~ Question #4 instance
     Question question_4 = _createQuestion(questionText_4, answers_4);
@@ -81,10 +81,11 @@ class ManualQuizeCreation {
 
     // ~ Answers to Question #5
     List<Answer> answers_5 = [];
-    answers_5.add(new Answer(answerText: "To wash the dishes", isCorrect: false));
-    answers_5.add(new Answer(answerText: "To do my taxes", isCorrect: false));
-    answers_5.add(new Answer(answerText: "To study flutter", isCorrect: false));
-    answers_5.add(new Answer(answerText: "To seek the Holy Grail ( true )", isCorrect: true));
+    answers_5.add(Answer(answerText: "To wash the dishes", isCorrect: false));
+    answers_5.add(Answer(answerText: "To do my taxes", isCorrect: false));
+    answers_5.add(Answer(answerText: "To study flutter", isCorrect: false));
+    answers_5.add(
+        Answer(answerText: "To seek the Holy Grail ( true )", isCorrect: true));
 
     // ~ Question #5 instance
     Question question_5 = _createQuestion(questionText_5, answers_5);*/

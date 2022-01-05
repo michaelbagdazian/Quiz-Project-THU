@@ -33,7 +33,7 @@ class UpdateFormsWrapper extends StatelessWidget {
       selectedForm = EmailForm();
     } else if (this.command == "username") {
       selectedForm = UsernameForm();
-    } else if(this.command == "avatars"){
+    } else if (this.command == "avatars") {
       selectedForm = AvatarForm();
     }
 

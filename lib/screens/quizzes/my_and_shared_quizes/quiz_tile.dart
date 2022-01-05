@@ -3,6 +3,7 @@ import 'package:crew_brew/services/database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
+
 import '../../../models/user/AppUser.dart';
 import '../../../shared/loading.dart';
 import '../quiztile_resource/dialog.dart';
@@ -17,7 +18,7 @@ import '../quiztile_resource/image_funktion.dart';
 // all done
 
 class QuizTile extends StatefulWidget {
-  QuizTile({Key? key, required this.quiz}) : super(key: key);
+  const QuizTile({Key? key, required this.quiz}) : super(key: key);
   final Quiz quiz;
 
   @override
@@ -218,7 +219,7 @@ class _QuizTileState extends State<QuizTile> {
                                     (userIsOwner)
                                         ? Align(
                                             alignment: Alignment.topLeft,
-                                            child: Container(
+                                            child: SizedBox(
                                               width: MediaQuery.of(context)
                                                       .size
                                                       .width *
@@ -266,7 +267,7 @@ class _QuizTileState extends State<QuizTile> {
 
                                     Align(
                                         alignment: Alignment.topLeft,
-                                        child: Container(
+                                        child: SizedBox(
                                           width: MediaQuery.of(context)
                                                   .size
                                                   .width *
@@ -300,7 +301,7 @@ class _QuizTileState extends State<QuizTile> {
 
                                     Align(
                                         alignment: Alignment.topLeft,
-                                        child: Container(
+                                        child: SizedBox(
                                           width: MediaQuery.of(context)
                                                   .size
                                                   .width *
@@ -554,7 +555,7 @@ class _PopupCardState extends State<_PopupCard> {
                         (userIsOwner)
                             ? Align(
                                 alignment: Alignment.topLeft,
-                                child: Container(
+                                child: SizedBox(
                                   width:
                                       MediaQuery.of(context).size.width * 0.20,
                                   child: ElevatedButton(
@@ -589,7 +590,7 @@ class _PopupCardState extends State<_PopupCard> {
                             : Container(),
                         Align(
                             alignment: Alignment.topLeft,
-                            child: Container(
+                            child: SizedBox(
                                 width: MediaQuery.of(context).size.width * 0.20,
                                 child: ElevatedButton(
                                     onPressed: () =>
@@ -619,7 +620,7 @@ class _PopupCardState extends State<_PopupCard> {
                                     )))),
                         Align(
                             alignment: Alignment.bottomLeft,
-                            child: Container(
+                            child: SizedBox(
                               width: MediaQuery.of(context).size.width * 0.20,
                               child: ElevatedButton(
                                 onPressed: () => Navigator.pushReplacementNamed(
@@ -655,7 +656,7 @@ class _PopupCardState extends State<_PopupCard> {
                           children: [
                         Align(
                             alignment: Alignment.topCenter,
-                            child: Container(
+                            child: SizedBox(
                               width: MediaQuery.of(context).size.width * 0.20,
                               child: ElevatedButton(
                                 onPressed: () => Navigator.of(context).pop(),
