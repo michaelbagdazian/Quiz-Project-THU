@@ -27,23 +27,33 @@ class _EmailFormState extends State<EmailForm> {
     final userData = Provider.of<UserData?>(context);
     final user = Provider.of<AppUser?>(context);
 
+    /// ~ size of the screen
+    Size size = MediaQuery.of(context).size;
+    double formHeight = size.height * (45 / 100);
+    double fontSize = size.height * (3 / 100);
+    double buttonWidth = size.width * (10 / 100);
+    double inputFieldSize = size.width * (17 / 100);
+    double sizedBoxHeigth = size.height * (3 / 100);
+
     if (userData != null && user != null && !isLoading) {
-      return Container(
-        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
-        height: 270.0,
-        child: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
+      return SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: inputFieldSize),
+          height: formHeight,
+          child: Form(
+            key: _formKey,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Text(
                   'Update e-mail',
-                  style: TextStyle(fontSize: 18.0, color: Colors.white),
+                  style: TextStyle(fontSize: fontSize, color: Colors.white, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 20.0),
+                SizedBox(height: sizedBoxHeigth),
                 TextFormField(
                     decoration:
-                        textInputDecoration.copyWith(hintText: 'new e-mail'),
+                        textInputDecoration.copyWith(hintText: 'new e-mail', hintStyle: TextStyle(fontSize: fontSize * 0.9)),
                     // ~ we return null value is this formField is valid or a string
                     // ~ if it's not valid
                     validator: (val) => val!.isEmpty ? 'Enter an email' : null,
@@ -54,7 +64,7 @@ class _EmailFormState extends State<EmailForm> {
                 SizedBox(height: 10.0),
                 TextFormField(
                     decoration: textInputDecoration.copyWith(
-                        hintText: 'Current password'),
+                        hintText: 'Current password', hintStyle: TextStyle(fontSize: fontSize * 0.9)),
                     obscureText: true,
                     validator: (val) => val!.length < 6
                         ? 'Enter a password 6+ chars long'
@@ -62,13 +72,23 @@ class _EmailFormState extends State<EmailForm> {
                     onChanged: (val) {
                       setState(() => _currentPassword = val);
                     }),
-                SizedBox(height: 10.0),
-                RaisedButton(
-                    color: buttons,
-                    child: Text(
+                SizedBox(height: sizedBoxHeigth),
+                FloatingActionButton.extended(
+                    label: const Text(
                       'Update',
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontFamily: 'Lobster',
+                          color: Colors.white),
                     ),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(10),
+                      ),
+                    ),
+                    backgroundColor: buttons,
+                    extendedPadding: EdgeInsets.all(buttonWidth),
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         setState(() {
