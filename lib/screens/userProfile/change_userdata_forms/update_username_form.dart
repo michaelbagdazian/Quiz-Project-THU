@@ -24,20 +24,30 @@ class _UsernameFormState extends State<UsernameForm> {
     final userData = Provider.of<UserData?>(context);
     final user = Provider.of<AppUser?>(context);
 
+    /// ~ size of the screen
+    Size size = MediaQuery.of(context).size;
+    double formHeight = size.height * (35 / 100);
+    double fontSize = size.height * (3 / 100);
+    double buttonWidth = size.width * (10 / 100);
+    double inputFieldSize = size.width * (17 / 100);
+    double sizedBoxHeigth = size.height * (3 / 100);
+
     if (userData != null && user != null) {
-      return Container(
-        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
-        height: 200.0,
-        child: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
+      return SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: inputFieldSize),
+          height: formHeight,
+          child: Form(
+            key: _formKey,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Text(
                   'Update username',
-                  style: TextStyle(fontSize: 18.0, color: Colors.white),
+                  style: TextStyle(fontSize: fontSize, color: Colors.white),
                 ),
-                SizedBox(height: 20.0),
+                SizedBox(height: sizedBoxHeigth),
                 TextFormField(
                   initialValue: userData.username,
                   decoration: textInputDecoration,
@@ -45,7 +55,7 @@ class _UsernameFormState extends State<UsernameForm> {
                       val!.isEmpty ? 'Please enter a name' : null,
                   onChanged: (val) => setState(() => _username = val),
                 ),
-                SizedBox(height: 10.0),
+                SizedBox(height: sizedBoxHeigth / 2),
                 RaisedButton(
                     color: buttons,
                     child: Text(

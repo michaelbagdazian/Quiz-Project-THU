@@ -48,7 +48,7 @@ class _EmailFormState extends State<EmailForm> {
               children: <Widget>[
                 Text(
                   'Update e-mail',
-                  style: TextStyle(fontSize: fontSize, color: Colors.white, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: fontSize, color: Colors.white),
                 ),
                 SizedBox(height: sizedBoxHeigth),
                 TextFormField(

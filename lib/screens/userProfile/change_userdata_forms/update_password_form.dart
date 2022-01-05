@@ -49,7 +49,7 @@ class _PasswordFormState extends State<PasswordForm> {
               children: <Widget>[
                 Text(
                   'Update password',
-                  style: TextStyle(fontSize: fontSize, color: Colors.white, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: fontSize, color: Colors.white ),
                 ),
                 SizedBox(height: sizedBoxHeigth),
                 TextFormField(
