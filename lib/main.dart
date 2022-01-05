@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
         // ~ Here we define all routes of our apps. They are mainly used in navigationBar/navBar.dart -> selectedItem()
         routes: {
           '/testScreen': (context) => const NavContainer(page: TestScreen()),
-          '/home': (context) => /*const*/ NavContainer(page: Home()),
+          '/home': (context) => /*const*/ const NavContainer(page: Home()),
           '/sharedQuizes': (context) => NavContainer(page: SharedQuizes()),
           '/myQuizes': (context) => const NavContainer(page: MyQuizes()),
           '/welcome': (context) => NavContainer(page: WelcominScreen()),
@@ -65,7 +65,7 @@ class MyApp extends StatelessWidget {
           '/AddQuestionsUI': (context) => AddQuestionsUI(),
           '/AddNewQuizzUI': (context) => const AddNewQuizzUI(),
           '/EditOldQuizUI': (context) => const EditQuizzUI(),
-          '/EditQuestionsUI': (context) => EditQuestionsUI(),
+          '/EditQuestionsUI': (context) => const EditQuestionsUI(),
           '/loading': (context) => Loading()
         },
         // TODO: Decide on a unified theme and copy it here

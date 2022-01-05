@@ -81,7 +81,7 @@ class _NavBarState extends State<NavBar> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               ClipOval(
-                                child: Image.network(
+                                child: Image.asset(
                                   userData.avatar,
                                   width: 4.0 * em,
                                   height: 4.0 * em,

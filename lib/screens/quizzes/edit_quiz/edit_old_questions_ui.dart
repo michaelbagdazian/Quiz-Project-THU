@@ -116,7 +116,7 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
     //~ Get the size of the screen
     //Size size = MediaQuery.of(context).size;
     return Scaffold(
-      // resizeToAvoidBottomInset: false, //~ this is here so we don't have an overflow problem
+      //resizeToAvoidBottomInset: false, //~ this is here so we don't have an overflow problem
       //* AppBar
       appBar: AppBar(
         title: const Text(
@@ -203,8 +203,7 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
                       IconButton(
                           enableFeedback: true,
                           icon: const Icon(
-                            //* Icon of the icon button (arrow)
-                            Icons.arrow_back_ios_rounded,
+                            Icons.arrow_forward_ios_rounded,
                             color: Colors.black,
                           ),
                           // ! Arrow right
@@ -375,15 +374,10 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
                 SizedBox(
                   width: size.width * 0.3,
                 ),
-                // //* Button To Add a question
-                // FloatingActionButton(
-                //   child: const Icon(
-                //     Icons.save_outlined,
-                //   ),
                 //* Button To Add a question
                 FloatingActionButton(
                   child: const Icon(
-                    Icons.add_sharp,
+                    Icons.save_outlined,
                   ),
                   backgroundColor: Colors.orange,
                   onPressed: () {
@@ -479,7 +473,7 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
     return true;
   }
 
-//~ This function clears and resets evferything (text fields and checkboxes) on the screen, this can be used when a new Question is to be Added or if user clicks on clear button
+//~ This function clears and resets everything (text fields and checkboxes) on the screen, this can be used when a new Question is to be Added or if user clicks on clear button
   VoidCallback? clearFunc() {
     _question.clear();
     _firstAnswer.clear();

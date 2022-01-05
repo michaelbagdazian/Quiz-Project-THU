@@ -103,8 +103,10 @@ class _HomeState extends State<Home> {
                             child: InkWell(
                           onTap: () => _showSettingsPanel("avatars"),
                           child: CircleAvatar(
-                            backgroundImage: NetworkImage(
-                                userData.avatar), //AssetImage(avatar),
+                            backgroundImage:
+                                // NetworkImage(
+                                //  userData.avatar),
+                                AssetImage(avatar),
                             backgroundColor: Colors.grey[900],
                             radius: 70.0,
                           ),
