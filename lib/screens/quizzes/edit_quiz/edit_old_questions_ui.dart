@@ -1,20 +1,15 @@
 // ignore_for_file: file_names, void_checks
 
-import 'dart:io';
-
 import 'package:crew_brew/models/quiz/Quiz.dart';
 import 'package:crew_brew/models/quiz/answer.dart';
 import 'package:crew_brew/models/quiz/question.dart';
-import 'package:crew_brew/navigationBar/menu_button.dart';
 import 'package:crew_brew/services/AddQuestion.dart';
 import 'package:crew_brew/services/database.dart';
-import 'package:crew_brew/shared/customWidgets/customAlertBox.dart';
-import 'package:crew_brew/shared/customWidgets/customConfirmationBox.dart';
-import 'package:flutter/material.dart';
-import 'package:crew_brew/shared/customWidgets/customTextField.dart';
-import 'package:crew_brew/shared/customWidgets/customButton.dart';
 import 'package:crew_brew/shared/PorgressbarIndicator/step_progress_indicator.dart';
-import 'package:flutter/material.dart';
+import 'package:crew_brew/shared/customWidgets/customAlertBox.dart';
+import 'package:crew_brew/shared/customWidgets/customButton.dart';
+import 'package:crew_brew/shared/customWidgets/customConfirmationBox.dart';
+import 'package:crew_brew/shared/customWidgets/customTextField.dart';
 import 'package:flutter/material.dart';
 
 // ! Information about the class:
@@ -56,10 +51,10 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
   final CustomTextField _customTextField = CustomTextField();
 
   //~instance of AddQuestions
-  late AddQuestions _addQuestion = AddQuestions();
+  late final AddQuestions _addQuestion = AddQuestions();
 
   //~ Our Current Question; normally it should be the last question in our question list
-  Question? _Currquestion = null;
+  Question? _Currquestion;
 
   //~ These are bools that can be set/reset by the user with checkboxes
   bool? _isFirstAnswerCorrect = false;
@@ -427,21 +422,13 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
           answerText: _secondAnswer.text, isCorrect: _isSecondAnswerCorrect!));
     }
     if (_thirdAnswer.text.isNotEmpty) {
-<<<<<<< HEAD:lib/screens/quizzes/edit_old_questions_ui.dart
-      answers.add(Answer(
-          answerText: _thirdAnswer.text, isCorrect: _isThirdAnswerCorrect!));
-    }
-    if (_fourthAnswer.text.isNotEmpty) {
-      answers.add(Answer(
-=======
       print("_thirdAnswer.text.isNotEmpty");
-      answers.add(new Answer(
+      answers.add(Answer(
           answerText: _thirdAnswer.text, isCorrect: _isThirdAnswerCorrect!));
     }
     if (_fourthAnswer.text.isNotEmpty) {
       print("_fourthAnswer.text.isNotEmpty");
-      answers.add(new Answer(
->>>>>>> origin/master:lib/screens/quizzes/edit_quiz/edit_old_questions_ui.dart
+      answers.add(Answer(
           answerText: _fourthAnswer.text, isCorrect: _isFourthAnswerCorrect!));
     }
 
