@@ -33,64 +33,65 @@ class _PasswordFormState extends State<PasswordForm> {
         height: 270.0,
         child: Form(
           key: _formKey,
-          child: Column(
-            children: <Widget>[
-              Text(
-                'Update password',
-                style: TextStyle(fontSize: 18.0, color: Colors.white),
-              ),
-              SizedBox(height: 20.0),
-              TextFormField(
-                  decoration: textInputDecoration.copyWith(
-                      hintText: 'Current password'),
-                  obscureText: true,
-                  validator: (val) =>
-                      val!.length < 6 ? 'Enter a password 6+ chars long' : null,
-                  onChanged: (val) {
-                    setState(() => _currentPassword = val);
-                  }),
-              SizedBox(height: 10.0),
-              TextFormField(
-                  decoration:
-                      textInputDecoration.copyWith(hintText: 'New password'),
-                  obscureText: true,
-                  validator: (val) =>
-                      val!.length < 6 ? 'Enter a password 6+ chars long' : null,
-                  onChanged: (val) {
-                    setState(() => _newPassword = val);
-                  }),
-              SizedBox(height: 10.0),
-              RaisedButton(
-                  color: buttons,
-                  child: Text(
-                    'Update',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
-                      setState(() {
-                        isLoading = true;
-                      });
-                      await DatabaseService(uid: user.uid)
-                          .changePassword(_currentPassword, _newPassword,
-                              userData, showError)
-                          .then((value) => {
-                                setState(() {
-                                  isLoading = false;
-                                }),
-                                if (value == true) Navigator.pop(context)
-                              });
-                    }
-                  }),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Text(
+                  'Update password',
+                  style: TextStyle(fontSize: 18.0, color: Colors.white),
+                ),
+                SizedBox(height: 20.0),
+                TextFormField(
+                    decoration: textInputDecoration.copyWith(
+                        hintText: 'Current password'),
+                    obscureText: true,
+                    validator: (val) => val!.length < 6
+                        ? 'Enter a password 6+ chars long'
+                        : null,
+                    onChanged: (val) {
+                      setState(() => _currentPassword = val);
+                    }),
+                SizedBox(height: 10.0),
+                TextFormField(
+                    decoration:
+                        textInputDecoration.copyWith(hintText: 'New password'),
+                    obscureText: true,
+                    validator: (val) => val!.length < 6
+                        ? 'Enter a password 6+ chars long'
+                        : null,
+                    onChanged: (val) {
+                      setState(() => _newPassword = val);
+                    }),
+                SizedBox(height: 10.0),
+                RaisedButton(
+                    color: buttons,
+                    child: Text(
+                      'Update',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        setState(() {
+                          isLoading = true;
+                        });
+                        await DatabaseService(uid: user.uid)
+                            .changePassword(_currentPassword, _newPassword,
+                                userData, showError)
+                            .then((value) => {
+                                  setState(() {
+                                    isLoading = false;
+                                  }),
+                                  if (value == true) Navigator.pop(context)
+                                });
+                      }
+                    }),
+              ],
+            ),
           ),
         ),
       );
     } else {
-      return Container(
-          height: 270.0,
-          child: Loading()
-      );
+      return Container(height: 270.0, child: Loading());
     }
   }
 

@@ -9,6 +9,10 @@ A new team project using Flutter.
 ----
 <img src="./ScreenShots/WelcomePage.jpg" width=30% height=30%> <img src="./ScreenShots/Log_in.jpg" width=30% height=30%> <img src="./ScreenShots/Sign_up.jpg" width=30% height=30%>
 
+### **Profile page (home screen when logged in):**
+---
+<img src="./ScreenShots/Profile Page.jpeg" width=30% height=30% > <img src="./ScreenShots/profileImage.jpeg"  width=30% height=30%>
+
 ### **When a User registers/ is added to firebase:**
 --------------------
 <img src="./ScreenShots/firebase_users.png" width=50% height=50%>
@@ -41,19 +45,10 @@ A new team project using Flutter.
 - Add User class
 - Creating Quizzes
 - Add Quizz
-- Add Questions
+- Add Questions </br>
 ...\
 ..\
 .
-# TODOs
-### Ideas:
-- implement or integrate a home screen in the "HomeScreen.dart"(medium)\
-- implement a class "TemporarySession.dart" to make player able to join a live game (hard)\
-- implement a way to join live quizzes without logging in
-...\
-..\
-.
-
 # How to run
 1- In your terminal go to the project using:
 ```
