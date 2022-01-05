@@ -116,8 +116,7 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
     //~ Get the size of the screen
     //Size size = MediaQuery.of(context).size;
     return Scaffold(
-      resizeToAvoidBottomInset:
-          false, //~ this is here so we don't have an overflow problem
+      //resizeToAvoidBottomInset: false, //~ this is here so we don't have an overflow problem
       //* AppBar
       appBar: AppBar(
         title: const Text(
@@ -504,7 +503,7 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
       await addQuestionButtonFunc().then((value) => noError = value);
     }
 
-    if(noError){
+    if (noError) {
       await DatabaseService(uid: quiz!.quizOwnerUID).updateQuizData(quiz!);
 
       await showDialog(

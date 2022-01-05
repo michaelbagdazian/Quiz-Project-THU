@@ -82,7 +82,7 @@ class _NavBarState extends State<NavBar> {
                             children: [
                               ClipOval(
                                 child: Image.asset(
-                                  avatar,
+                                  userData.avatar,
                                   width: 4.0 * em,
                                   height: 4.0 * em,
                                   fit: BoxFit.cover,

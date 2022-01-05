@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_new
+
 import 'package:crew_brew/models/quiz/Quiz.dart';
 import 'package:crew_brew/models/quiz/question.dart';
 
@@ -15,11 +17,11 @@ class ManualQuizeCreation {
 
     // ~ Answers to Question #1
     List<Answer> answers_1 = [];
-    answers_1.add(Answer(answerText: "Nineveh", isCorrect: false));
-    answers_1.add(Answer(
+    answers_1.add(new Answer(answerText: "Nineveh", isCorrect: false));
+    answers_1.add(new Answer(
         answerText: "I don't know that! Auuuuuuuugh!", isCorrect: false));
-    answers_1.add(Answer(answerText: "Babylon ( true )", isCorrect: true));
-    answers_1.add(Answer(answerText: "Roshan ( true )", isCorrect: true));
+    answers_1.add(new Answer(answerText: "Babylon ( true )", isCorrect: true));
+    answers_1.add(new Answer(answerText: "Roshan ( true )", isCorrect: true));
 
     // ~ Question #1 instance
     Question question_1 = _createQuestion(questionText_1, answers_1);
@@ -31,12 +33,14 @@ class ManualQuizeCreation {
 
     // ~ Answers to Question #2
     List<Answer> answers_2 = [];
-    answers_2.add(Answer(
+    answers_2.add(new Answer(
         answerText: "An African or European swallow?", isCorrect: false));
     answers_2
-        .add(Answer(answerText: "about 15 km/h ( true )", isCorrect: true));
-    answers_2.add(Answer(answerText: "172 cms per minute", isCorrect: false));
-    answers_2.add(Answer(answerText: "I don't know that!", isCorrect: false));
+        .add(new Answer(answerText: "about 15 km/h ( true )", isCorrect: true));
+    answers_2
+        .add(new Answer(answerText: "172 cms per minute", isCorrect: false));
+    answers_2
+        .add(new Answer(answerText: "I don't know that!", isCorrect: false));
 
     // ~ Question #2 instance
     Question question_2 = _createQuestion(questionText_2, answers_2);
@@ -47,11 +51,12 @@ class ManualQuizeCreation {
 
     // ~ Answers to Question #3
     List<Answer> answers_3 = [];
-    answers_3.add(Answer(answerText: "Donald Trump", isCorrect: false));
-    answers_3.add(Answer(
+    answers_3.add(new Answer(answerText: "Donald Trump", isCorrect: false));
+    answers_3.add(new Answer(
         answerText: "Sir Lancelot of Camelot ( true )", isCorrect: true));
-    answers_3.add(Answer(answerText: "Mickey Mouse ( true )", isCorrect: true));
-    answers_3.add(Answer(answerText: "Marylin Monroe", isCorrect: false));
+    answers_3
+        .add(new Answer(answerText: "Mickey Mouse ( true )", isCorrect: true));
+    answers_3.add(new Answer(answerText: "Marylin Monroe", isCorrect: false));
 
     // ~ Question #3 instance
     Question question_3 = _createQuestion(questionText_3, answers_3);

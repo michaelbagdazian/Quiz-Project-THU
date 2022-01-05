@@ -1,14 +1,14 @@
+//import 'dart:ffi';
+
 import 'package:crew_brew/models/user/AppUser.dart';
 import 'package:crew_brew/models/user/UserData.dart';
 import 'package:crew_brew/navigationBar/menu_button.dart';
-import 'package:crew_brew/navigationBar/navbar.dart';
 import 'package:crew_brew/screens/userProfile/UpdateFormsWrapper.dart';
 import 'package:crew_brew/services/database.dart';
 import 'package:crew_brew/shared/colors.dart';
 import 'package:crew_brew/shared/loading.dart';
-import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 // ! Information about the class:
 // ~ This class represents myProfile page
@@ -32,7 +32,7 @@ class _HomeState extends State<Home> {
   String avatar = 'assets/avatars/default.png';
   String username = '';
   String email = '';
-  UserData? userData = null;
+  UserData? userData;
 
   @override
   Widget build(BuildContext context) {
@@ -41,10 +41,15 @@ class _HomeState extends State<Home> {
     void _showSettingsPanel(String command) {
       showModalBottomSheet(
           context: context,
+          isScrollControlled: true,
           builder: (context) {
-            return Container(
-              child: UpdateFormsWrapper(command: command),
-              color: Colors.grey[900],
+            return SingleChildScrollView(
+              child: Container(
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewInsets.bottom),
+                child: UpdateFormsWrapper(command: command),
+                color: topbar,
+              ),
             );
           });
     }
@@ -69,15 +74,16 @@ class _HomeState extends State<Home> {
               avatar = userData.avatar;
               username = userData.username;
               email = userData.email;
+              Size size = MediaQuery.of(context).size;
 
               return Scaffold(
                 // ! NavBar():
                 // ~ Here we provide NavBar for property drawer. This is our navigation bar defined in navigationBar/navBar.dart
-                backgroundColor: Colors.grey[900],
+                //backgroundColor: Colors.grey[900],
                 appBar: AppBar(
                   title: Text('Home'),
                   centerTitle: true,
-                  backgroundColor: Colors.grey[850],
+                  backgroundColor: topbar,
                   leading: const MenuButton(),
                   // ~ Elavation set to 0 removes the shadow ( which makes 3D effect )
                   elevation: 0.0,
@@ -85,118 +91,159 @@ class _HomeState extends State<Home> {
                     IconButton(
                       icon: Icon(
                         Icons.vpn_key_outlined,
-                        color: Colors.grey[400],
+                        color: Colors.white,
                       ),
                       onPressed: () => _showSettingsPanel("password"),
                     ),
                   ],
                 ),
-                body: Padding(
-                  padding: EdgeInsets.fromLTRB(30.0, 20.0, 30.0, 0.0),
-                  child: Column(
-                    // ~ This alligns everything to the left
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      // ~ Make a circle image with CircleAvatar
-                      Center(
-                          child: InkWell(
-                        onTap: () => _showSettingsPanel("avatars"),
-                        child: CircleAvatar(
-                          backgroundImage: AssetImage(avatar),
-                          backgroundColor: Colors.grey[900],
-                          radius: 70.0,
-                        ),
-                      )),
-                      // ~ This is a line which literally looks like divider
-                      Divider(
-                        // ~ This is the height between top element and bottom, not the line itself
-                        height: 50.0,
-                        color: Colors.grey[800],
-                      ),
-                      // * Start username field
-                      Text(
-                        'USERNAME',
-                        style: TextStyle(
-                          color: Colors.grey,
-                          // ~ This gives the spacing between the letters
-                          letterSpacing: 2.0,
-                        ),
-                      ),
-                      // ~ Creates an empty invisible box for us of a height and width we specify
-                      // ~ we put it between the elements we want to have space in between
-                      SizedBox(height: 10.0),
-                      Row(
+                body: Container(
+                  constraints: const BoxConstraints.expand(),
+                  decoration: const BoxDecoration(
+                    //* Background
+                    image: DecorationImage(
+                        image: AssetImage('assets/images/bgtop.png'),
+                        fit: BoxFit.cover),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(30.0, 50.0, 30.0, 0.0),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        // ~ This alligns everything to the left
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(
-                            username,
-                            style: TextStyle(
-                                color: Colors.amberAccent[200],
-                                letterSpacing: 2.0,
-                                fontSize: 28.0,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(width: 10.0),
-                          IconButton(
-                            icon: Icon(
-                              Icons.edit,
-                              color: Colors.grey[400],
+                          // ~ Make a circle image with CircleAvatar
+                          Center(
+                              child: InkWell(
+                            onTap: () => _showSettingsPanel("avatars"),
+                            child: CircleAvatar(
+                              backgroundImage:
+                                  // NetworkImage(
+                                  //  userData.avatar),
+                                  AssetImage(avatar),
+                              backgroundColor: Colors.transparent,
+                              radius: 70.0,
                             ),
-                            onPressed: () => _showSettingsPanel("username"),
+                          )),
+                          // ~ This is a line which literally looks like divider
+                          Divider(
+                            // ~ This is the height between top element and bottom, not the line itself
+                            height: 75.0,
+                            color: Colors.white,
+                          ),
+                          Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(7.0),
+                              side: const BorderSide(
+                                  color: Colors.transparent, width: .5),
+                            ),
+                            color: topbar.withOpacity(.7),
+                            shadowColor:
+                                Colors.transparent, //Colors.transparent,
+                            elevation: 2.0,
+                            child: Padding(
+                              padding:
+                                  EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 50.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  // * Start username field
+                                  Text(
+                                    'USERNAME',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      // ~ This gives the spacing between the letters
+                                      letterSpacing: 2.0,
+                                    ),
+                                  ),
+                                  // ~ Creates an empty invisible box for us of a height and width we specify
+                                  // ~ we put it between the elements we want to have space in between
+                                  SizedBox(height: 10.0),
+                                  Row(
+                                    children: <Widget>[
+                                      Text(
+                                        username,
+                                        style: TextStyle(
+                                            color: Colors.amberAccent[200],
+                                            letterSpacing: 2.0,
+                                            fontSize: 28.0,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      SizedBox(width: 10.0),
+                                      IconButton(
+                                        icon: Icon(
+                                          Icons.edit,
+                                          color: Colors.white,
+                                        ),
+                                        onPressed: () =>
+                                            _showSettingsPanel("username"),
+                                      ),
+                                    ],
+                                  ),
+                                  // * End username field
+                                  SizedBox(height: 30.0),
+                                  // * Start current level field
+                                  Text(
+                                    'POINTS',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      // ~ This gives the spacing between the letters
+                                      letterSpacing: 2.0,
+                                    ),
+                                  ),
+                                  // ~ Creates an empty invisible box for us of a height and width we specify
+                                  SizedBox(height: 10.0),
+                                  Text(
+                                    // ~ With '$' we output the contat of the data to string
+                                    '$points',
+                                    style: TextStyle(
+                                        color: Colors.amberAccent[200],
+                                        letterSpacing: 2.0,
+                                        fontSize: 28.0,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  // * End current level field
+                                  SizedBox(height: 20.0),
+                                  // * Start e-mail field
+                                  Row(
+                                    // child: Row(
+                                    children: <Widget>[
+                                      Icon(
+                                        Icons.email,
+                                        color: Colors.white,
+                                      ),
+                                      SizedBox(width: 10.0),
+                                      Flexible(
+                                        child: Text(
+                                          email,
+                                          style: TextStyle(
+                                            overflow: TextOverflow.ellipsis,
+                                            color: Colors.white,
+                                            fontSize: 18.0,
+                                            letterSpacing: 1.0,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(width: 10.0),
+                                      IconButton(
+                                        icon: Icon(
+                                          Icons.edit,
+                                          color: Colors.white,
+                                        ),
+                                        onPressed: () =>
+                                            _showSettingsPanel("email"),
+                                      ),
+                                    ],
+                                  ),
+                                  // ),
+                                  // * End e-mail field
+                                ],
+                              ),
+                            ),
                           ),
                         ],
                       ),
-                      // * End username field
-                      SizedBox(height: 30.0),
-                      // * Start current level field
-                      Text(
-                        'POINTS',
-                        style: TextStyle(
-                          color: Colors.grey,
-                          // ~ This gives the spacing between the letters
-                          letterSpacing: 2.0,
-                        ),
-                      ),
-                      // ~ Creates an empty invisible box for us of a height and width we specify
-                      SizedBox(height: 10.0),
-                      Text(
-                        // ~ With '$' we output the contat of the data to string
-                        '$points',
-                        style: TextStyle(
-                            color: Colors.amberAccent[200],
-                            letterSpacing: 2.0,
-                            fontSize: 28.0,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      // * End current level field
-                      SizedBox(height: 30.0),
-                      // * Start e-mail field
-                      Row(
-                        children: <Widget>[
-                          Icon(
-                            Icons.email,
-                            color: Colors.grey[400],
-                          ),
-                          SizedBox(width: 10.0),
-                          Text(
-                            email,
-                            style: TextStyle(
-                              color: Colors.grey[400],
-                              fontSize: 18.0,
-                              letterSpacing: 1.0,
-                            ),
-                          ),
-                          SizedBox(width: 10.0),
-                          IconButton(
-                            icon: Icon(
-                              Icons.edit,
-                              color: Colors.grey[400],
-                            ),
-                            onPressed: () => _showSettingsPanel("email"),
-                          ),
-                        ],
-                      ),
-                      // * End e-mail field
-                    ],
+                    ),
                   ),
                 ),
               );
