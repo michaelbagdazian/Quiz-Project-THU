@@ -134,11 +134,18 @@ class _HomeState extends State<Home> {
                             color: Colors.white,
                           ),
                           Card(
-                            color: topbar,
-                            elevation: 10.0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(7.0),
+                              side: const BorderSide(
+                                  color: Colors.transparent, width: .5),
+                            ),
+                            color: topbar.withOpacity(.7),
+                            shadowColor:
+                                Colors.transparent, //Colors.transparent,
+                            elevation: 2.0,
                             child: Padding(
                               padding:
-                                  EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 30.0),
+                                  EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 50.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
