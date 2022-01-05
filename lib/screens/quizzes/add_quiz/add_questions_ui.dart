@@ -372,20 +372,20 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
     //~ Check if there is an answer to add at all
     if (_firstAnswer.text.isNotEmpty) {
       print("_firstAnswer.text.isNotEmpty");
-      answers.add(new Answer(
+      answers.add(Answer(
           answerText: _firstAnswer.text, isCorrect: _isFirstAnswerCorrect!));
     }
     if (_secondAnswer.text.isNotEmpty) {
       print("_secondAnswer.text.isNotEmpty");
-      answers.add(new Answer(
+      answers.add(Answer(
           answerText: _secondAnswer.text, isCorrect: _isSecondAnswerCorrect!));
     }
     if (_thirdAnswer.text.isNotEmpty) {
-      answers.add(new Answer(
+      answers.add(Answer(
           answerText: _thirdAnswer.text, isCorrect: _isThirdAnswerCorrect!));
     }
     if (_fourthAnswer.text.isNotEmpty) {
-      answers.add(new Answer(
+      answers.add(Answer(
           answerText: _fourthAnswer.text, isCorrect: _isFourthAnswerCorrect!));
     }
 

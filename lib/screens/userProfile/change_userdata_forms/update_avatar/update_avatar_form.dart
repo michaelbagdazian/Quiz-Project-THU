@@ -124,7 +124,7 @@ class _AvatarFormState extends State<AvatarForm> {
 }
 
 LinkedHashMap<String, List<String>> getAvatarsList() {
-  LinkedHashMap<String, List<String>> avatars = new LinkedHashMap();
+  LinkedHashMap<String, List<String>> avatars = LinkedHashMap();
 
   avatars["aqualine"] = _createAvatars("aqualine");
   avatars["ceratops"] = _createAvatars("ceratops");
