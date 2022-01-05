@@ -73,7 +73,7 @@ class _WelcominScreenState extends State<WelcominScreen> {
             //*children inside screen
             SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(1.0),
+            padding: const EdgeInsets.fromLTRB(1.0, 30.0, 1.0, 8.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -188,7 +188,7 @@ class _WelcominScreenState extends State<WelcominScreen> {
           function: () {
             Navigator.pushNamed(cntxt, '/signin');
           },
-          //padding: 40,
+          padding: 40,
         ),
         SizedBox(
           height: 10,
@@ -199,7 +199,7 @@ class _WelcominScreenState extends State<WelcominScreen> {
           function: () {
             Navigator.pushNamed(cntxt, '/register');
           },
-          // padding: 30,
+          padding: 30,
         ),
         SizedBox(
           height: 10,
