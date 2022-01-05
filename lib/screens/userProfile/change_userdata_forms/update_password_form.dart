@@ -53,6 +53,7 @@ class _PasswordFormState extends State<PasswordForm> {
                 ),
                 SizedBox(height: sizedBoxHeigth),
                 TextFormField(
+                    style: TextStyle(fontSize: fontSize * 0.9),
                     decoration: textInputDecoration.copyWith(
                         hintText: 'Current password', hintStyle: TextStyle(fontSize: fontSize * 0.9)),
                     obscureText: true,
@@ -64,6 +65,7 @@ class _PasswordFormState extends State<PasswordForm> {
                     }),
                 SizedBox(height: sizedBoxHeigth / 2),
                 TextFormField(
+                    style: TextStyle(fontSize: fontSize * 0.9),
                     decoration:
                         textInputDecoration.copyWith(hintText: 'New password', hintStyle: TextStyle(fontSize: fontSize * 0.9)),
                     obscureText: true,

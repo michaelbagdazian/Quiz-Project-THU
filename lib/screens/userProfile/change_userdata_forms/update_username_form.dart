@@ -49,19 +49,30 @@ class _UsernameFormState extends State<UsernameForm> {
                 ),
                 SizedBox(height: sizedBoxHeigth),
                 TextFormField(
+                  style: TextStyle(fontSize: fontSize * 0.9),
                   initialValue: userData.username,
                   decoration: textInputDecoration,
                   validator: (val) =>
                       val!.isEmpty ? 'Please enter a name' : null,
                   onChanged: (val) => setState(() => _username = val),
                 ),
-                SizedBox(height: sizedBoxHeigth / 2),
-                RaisedButton(
-                    color: buttons,
-                    child: Text(
+                SizedBox(height: sizedBoxHeigth),
+                FloatingActionButton.extended(
+                    label: const Text(
                       'Update',
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontFamily: 'Lobster',
+                          color: Colors.white),
                     ),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(10),
+                      ),
+                    ),
+                    backgroundColor: buttons,
+                    extendedPadding: EdgeInsets.all(buttonWidth),
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         await DatabaseService(uid: user.uid).updateUserData(
@@ -78,7 +89,7 @@ class _UsernameFormState extends State<UsernameForm> {
         ),
       );
     } else {
-      return Loading();
+      return Container(height: formHeight, child: Loading());
     }
   }
 }

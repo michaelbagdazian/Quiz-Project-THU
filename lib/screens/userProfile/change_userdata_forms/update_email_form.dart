@@ -52,6 +52,7 @@ class _EmailFormState extends State<EmailForm> {
                 ),
                 SizedBox(height: sizedBoxHeigth),
                 TextFormField(
+                    style: TextStyle(fontSize: fontSize * 0.9),
                     decoration:
                         textInputDecoration.copyWith(hintText: 'new e-mail', hintStyle: TextStyle(fontSize: fontSize * 0.9)),
                     // ~ we return null value is this formField is valid or a string
@@ -61,8 +62,9 @@ class _EmailFormState extends State<EmailForm> {
                       // ~ We take email state and set it equal to value which is in e-mail textField
                       setState(() => _newEmail = val.trim());
                     }),
-                SizedBox(height: 10.0),
+                SizedBox(height: sizedBoxHeigth / 2),
                 TextFormField(
+                    style: TextStyle(fontSize: fontSize * 0.9),
                     decoration: textInputDecoration.copyWith(
                         hintText: 'Current password', hintStyle: TextStyle(fontSize: fontSize * 0.9)),
                     obscureText: true,
@@ -111,7 +113,7 @@ class _EmailFormState extends State<EmailForm> {
         ),
       );
     } else {
-      return Container(height: 270.0, child: Loading());
+      return Container(height: formHeight, child: Loading());
     }
   }
 
