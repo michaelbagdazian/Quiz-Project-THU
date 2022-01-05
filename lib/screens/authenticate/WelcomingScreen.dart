@@ -79,7 +79,7 @@ class _WelcominScreenState extends State<WelcominScreen> {
 
     return Scaffold(
       //see signup.dart
-      resizeToAvoidBottomInset: false,
+      //resizeToAvoidBottomInset: false,
       body: Container(
         constraints: const BoxConstraints.expand(),
         decoration: const BoxDecoration(

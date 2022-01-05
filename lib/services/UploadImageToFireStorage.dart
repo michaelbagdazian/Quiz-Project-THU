@@ -1,6 +1,7 @@
 // ignore_for_file: file_names, non_constant_identifier_names, unnecessary_this
 
 import 'dart:io';
+import 'package:crew_brew/models/user/UserData.dart';
 import 'package:crew_brew/shared/customWidgets/customAlertBox.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
@@ -69,6 +70,7 @@ class UploadFileToFireStorage {
       //update the url attribute and set it to the Download url of the uploaded file
       url = await ref.getDownloadURL();
       url = url.toString();
+      return url;
       //if we have an error we catch it here
     } on firebase_storage.FirebaseException catch (e) {
       //display an alert dialog with an error message
@@ -76,5 +78,31 @@ class UploadFileToFireStorage {
           customAlertBox("Error Uploading Image", '${e.message}');
       _customAlerBox;
     }
+  }
+
+  Future<bool> deleteFileFromFirebaseByUrl(String? urlFile,
+      {UserData? userData, String path = 'Images'}) async {
+    String filePath = urlFile!
+        .replaceAll(
+            RegExp(
+                r'https://firebasestorage.googleapis.com/v0/b/daniel-brew-crew-20887.appspot.com/o/nUwOL8z8l2WuyH9pJfh97NWpfhs1%2FAvatar%2F'),
+            '')
+        .split('?')[0];
+    print(filePath);
+    print(path);
+    String userUID = userData!.uid;
+    final ref = firebase_storage.FirebaseStorage.instance
+        .ref()
+        //we go into the folder that is unique to the user and then to a directory called images
+        .child('$userUID/$path')
+        //we upload the image under the name offset_uniqueImageId
+        .child(filePath);
+    try {
+      await ref.delete();
+      return true;
+    } catch (e) {
+      print(e.toString());
+    }
+    return false;
   }
 }
