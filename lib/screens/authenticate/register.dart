@@ -59,7 +59,13 @@ class _SignUpState extends State<SignUp> {
       Navigator.pop(context);
     }
 
+    /// ~ size of the screen
     Size size = MediaQuery.of(context).size;
+    /// ~ sizes per widget
+    double welcomeTextSize = size.height * (8 / 100);
+    double sizedBoxHeight = size.height * (3 / 100);
+    double inputBarWidth = size.width * (20 / 100);
+    double buttonWidth = size.width * (8 / 100);
 
     // ! If true, we return loading widget, otherwise Scaffold
     return loading
@@ -100,7 +106,7 @@ class _SignUpState extends State<SignUp> {
                           height: size.height * 0.05,
                         ),
                         //*Add the welcoming text first; as you can see i am using a customText Widget so i don't have to re-style every text on the page
-                        _customText.customText('Creat New\n Account', 50),
+                        _customText.customText('Creat New\n Account', welcomeTextSize),
                         //*again empty space
                         SizedBox(
                           height: size.height * 0.07,
@@ -108,8 +114,8 @@ class _SignUpState extends State<SignUp> {
                         // * Start of TextFormField for the username
                         Padding(
                           padding: EdgeInsets.only(
-                            left: (0.1 * size.width),
-                            right: (0.1 * size.width),
+                            left: inputBarWidth,
+                            right: inputBarWidth,
                           ),
                           child: TextFormField(
                               // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
@@ -146,13 +152,13 @@ class _SignUpState extends State<SignUp> {
                         ),
                         // * End of TextFormField for the username
                         SizedBox(
-                          height: size.height * 0.012,
+                          height: sizedBoxHeight * 0.5,
                         ),
                         // * Start of TextFormField for the e-mail
                         Padding(
                           padding: EdgeInsets.only(
-                            left: (0.1 * size.width),
-                            right: (0.1 * size.width),
+                            left: inputBarWidth,
+                            right: inputBarWidth,
                           ),
                           child: TextFormField(
                               // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
@@ -189,13 +195,13 @@ class _SignUpState extends State<SignUp> {
                         ),
                         // * End of TextFormField for the e-mail
                         SizedBox(
-                          height: size.height * 0.012,
+                          height: sizedBoxHeight * 0.5,
                         ),
                         // * Start of TextFormField for the password
                         Padding(
                           padding: EdgeInsets.only(
-                            left: (0.1 * size.width),
-                            right: (0.1 * size.width),
+                            left: inputBarWidth,
+                            right: inputBarWidth,
                           ),
                           child: TextFormField(
                               // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
@@ -234,13 +240,13 @@ class _SignUpState extends State<SignUp> {
                               }),
                         ),
                         SizedBox(
-                          height: size.height * 0.012,
+                          height: sizedBoxHeight * 0.5,
                         ),
                         // * Start of TextFormField for the password confirmation
                         Padding(
                           padding: EdgeInsets.only(
-                            left: (0.1 * size.width),
-                            right: (0.1 * size.width),
+                            left: inputBarWidth,
+                            right: inputBarWidth,
                           ),
                           child: TextFormField(
                               // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
@@ -278,7 +284,7 @@ class _SignUpState extends State<SignUp> {
                         ),
                         //* empty space
                         SizedBox(
-                          height: size.height * 0.1,
+                          height: sizedBoxHeight,
                         ),
                         //* Register Button
                         FloatingActionButton.extended(

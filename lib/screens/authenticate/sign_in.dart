@@ -52,13 +52,9 @@ class _LogInState extends State<LogIn> {
     Size size = MediaQuery.of(context).size;
     /// ~ sizes per widget
     double welcomeTextSize = size.height * (8 / 100);
-    double verticalPadding = size.height * (1 / 100);
-    double horizontalPadding = size.width * (20 / 100);
     double sizedBoxHeight = size.height * (3 / 100);
-    double inputTextHintSize = size.height * (10 / 100);
     double inputBarWidth = size.width * (20 / 100);
     double buttonWidth = size.width * (8 / 100);
-    double buttonHeight = size.height * (20 / 100);
 
     // ! popScreen():
     // ~ Since we want to allow our user to go back to welcome screen ( perhaps he figures out that he is already registered ), we keep register screen on stack
