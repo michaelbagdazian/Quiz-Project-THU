@@ -66,18 +66,9 @@ class _WelcominScreenState extends State<WelcominScreen> {
     double welcomeTextSize = size.height * (8 / 100);
     double eduLogoHeight = size.height * (13 / 100.0);
     double verticalPadding = size.height * (1 / 100);
-    double horizontalPadding = size.width * (20 / 100);
     double sizedBoxHeight = size.height * (3 / 100);
-    double inputTextHintSize = size.height * (10 / 100);
     double inputBarWidth = size.width * (60 / 100);
     double buttonWidth = size.width * (8 / 100);
-    double buttonHeight = size.height * (20 / 100);
-
-    /*if(size.height > 1000 || size.width > 1000){
-      inputBarWidth = size.width * (30/100);
-      buttonWidth = size.width * (7/100);
-      buttonHeight = size.height * ( 10 / 100);
-    }*/
 
     return Scaffold(
       //see signup.dart
@@ -116,7 +107,7 @@ class _WelcominScreenState extends State<WelcominScreen> {
                 ),
                 SizedBox(height: sizedBoxHeight),
                 //* Button
-                joinButton(context, buttonWidth, buttonHeight),
+                joinButton(context, buttonWidth),
                 SizedBox(height: sizedBoxHeight),
                 //*just a widget with the buttons for login or sign up
                 //* frontend can improve the quality of this widget by using the custom Widgets; only if they want to
@@ -129,7 +120,7 @@ class _WelcominScreenState extends State<WelcominScreen> {
     );
   }
 
-  Widget joinButton(BuildContext context, double width, double height) {
+  Widget joinButton(BuildContext context, double width) {
     return FloatingActionButton.extended(
       heroTag: "joinButton",
       extendedPadding: EdgeInsets.all(width * 0.95),

@@ -50,6 +50,15 @@ class _LogInState extends State<LogIn> {
   Widget build(BuildContext context) {
     /// ~ size of the screen
     Size size = MediaQuery.of(context).size;
+    /// ~ sizes per widget
+    double welcomeTextSize = size.height * (8 / 100);
+    double verticalPadding = size.height * (1 / 100);
+    double horizontalPadding = size.width * (20 / 100);
+    double sizedBoxHeight = size.height * (3 / 100);
+    double inputTextHintSize = size.height * (10 / 100);
+    double inputBarWidth = size.width * (20 / 100);
+    double buttonWidth = size.width * (8 / 100);
+    double buttonHeight = size.height * (20 / 100);
 
     // ! popScreen():
     // ~ Since we want to allow our user to go back to welcome screen ( perhaps he figures out that he is already registered ), we keep register screen on stack
@@ -65,6 +74,7 @@ class _LogInState extends State<LogIn> {
         : Scaffold(
             //resizeToAvoidBottomInset: false,
             appBar: AppBar(
+              centerTitle: true,
               title: const Text(
                 'Sign In',
                 style: TextStyle(
@@ -93,7 +103,7 @@ class _LogInState extends State<LogIn> {
                           height: size.height * 0.1,
                         ),
                         //*Add the welcoming text first
-                        _customText.customText('Log In to Your\n Account', 50),
+                        _customText.customText('Sign in to your\n Account', welcomeTextSize),
                         SizedBox(
                           height: size.height * 0.1,
                         ),
@@ -101,8 +111,8 @@ class _LogInState extends State<LogIn> {
                         //! email
                         Padding(
                           padding: EdgeInsets.only(
-                            left: (0.1 * size.width),
-                            right: (0.1 * size.width),
+                            left: inputBarWidth,
+                            right: inputBarWidth,
                           ),
                           child: TextFormField(
                               keyboardType: TextInputType.emailAddress,
@@ -140,13 +150,13 @@ class _LogInState extends State<LogIn> {
                               }),
                         ),
                         SizedBox(
-                          height: size.height * 0.012,
+                          height: sizedBoxHeight,
                         ),
                         //! password
                         Padding(
                           padding: EdgeInsets.only(
-                            left: (0.1 * size.width),
-                            right: (0.1 * size.width),
+                            left: (inputBarWidth),
+                            right: (inputBarWidth),
                           ),
                           child: TextFormField(
                               keyboardType: TextInputType.visiblePassword,
@@ -186,7 +196,7 @@ class _LogInState extends State<LogIn> {
                               }),
                         ),
                         SizedBox(
-                          height: size.height * 0.05,
+                          height: sizedBoxHeight*2,
                         ),
                         FloatingActionButton.extended(
                           // ! onPressed():
@@ -224,7 +234,7 @@ class _LogInState extends State<LogIn> {
                             ),
                           ),
                           backgroundColor: buttons,
-                          extendedPadding: const EdgeInsets.all(40),
+                          extendedPadding: EdgeInsets.all(buttonWidth),
                           shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(20),
