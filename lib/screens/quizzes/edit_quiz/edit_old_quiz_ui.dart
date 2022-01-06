@@ -61,7 +61,7 @@ class _EditQuizzUIState extends State<EditQuizzUI> {
     user = Provider.of<AppUser?>(context);
 
     // TODO Daniel: This should be moved about
-    if(!variablesInitiated){
+    if (!variablesInitiated) {
       quiz = data['quiz'] as Quiz;
       quizTitle.text = quiz!.quizTitle;
       quizDescription!.text = quiz!.quizDescription;
@@ -71,13 +71,12 @@ class _EditQuizzUIState extends State<EditQuizzUI> {
       variablesInitiated = true;
     }
 
-
-    if(user == null ){
+    if (user == null) {
       return Loading();
-    }else{
+    } else {
       return Scaffold(
         resizeToAvoidBottomInset:
-        false, //~ this is here so we don't have an overflow problem
+            false, //~ this is here so we don't have an overflow problem
         appBar: AppBar(
           centerTitle: true,
           title: const Text(
@@ -93,7 +92,8 @@ class _EditQuizzUIState extends State<EditQuizzUI> {
           constraints: const BoxConstraints.expand(),
           decoration: const BoxDecoration(
             image: DecorationImage(
-                image: AssetImage('assets/images/bgtop.png'), fit: BoxFit.cover),
+                image: AssetImage('assets/images/bgtop.png'),
+                fit: BoxFit.cover),
           ),
           child: SingleChildScrollView(
             child: Column(
@@ -235,7 +235,7 @@ class _EditQuizzUIState extends State<EditQuizzUI> {
           });
     }
     try {
-     /* //~ get the current user (logged in) here
+      /* //~ get the current user (logged in) here
       if (user != null) {
         //~ instance of database services class
         DatabaseService databaseservices = DatabaseService(uid: user!.uid);
