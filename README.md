@@ -29,26 +29,8 @@ A new team project using Flutter.
 <img src ="./ScreenShots/alertBoxes.jpeg" width=30% height=30%>
 
 ### **Creating New Quizz:**
-<img src ="./ScreenShots/AddQuestionUI2.jpeg" width=40% height=40%> <img src ="./ScreenShots/Confirmation Box.jpeg" width=40% height=40%>
-<img src ="./ScreenShots/AddQuizzUI.jpeg" width=40% height=40%> <img src ="./ScreenShots/firebaseQuizzAddition.png" width=60% height=60%>
+<img src ="./ScreenShots/AddQuizzUI.jpeg" width=40% height=40%> <img src ="./ScreenShots/AddQuestionUI2.jpeg" width=40% height=40%> <img src ="./ScreenShots/firebaseQuizzAddition.png" width=60% height=60%>
 
-# Implementd
-- welcoming screen, login screen, register screen (functional)\ 
-- "register" and "login" buttons and their functionality are implemented\
-- firebase authentication and registeration are implementd (problem: only with email and password)\
-- custom reusable Widgets\
-- user profile to welcome registered users
-- side menu with multiple functions
-- the user and the user info get added to a collection in firebase
-- upload Image to firebase
-- User class
-- Add User class
-- Creating Quizzes
-- Add Quizz
-- Add Questions </br>
-...\
-..\
-.
 # How to run
 1- In your terminal go to the project using:
 ```
