@@ -79,7 +79,7 @@ class Result extends StatelessWidget {
                                     decoration: BoxDecoration(
                                         borderRadius:
                                         BorderRadius.circular(8),
-                                        border: args.stateVector.buttonsPressedSaved[0][k] ? Border.all(color: Colors.yellow, width: 4) : null,
+                                        border: args.stateVector.buttonsPressedSaved[0][k] ? Border.all(color: Colors.tealAccent.shade400, width: 4) : null,
                                         color: args.quiz.listOfQuestions[i].answers[j].isCorrect
                                             ? Colors.green
                                             : Colors.red),
