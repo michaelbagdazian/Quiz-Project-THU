@@ -125,20 +125,6 @@ class _QuizTileState extends State<QuizTile> {
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 25,
                                                 color: Colors.white)))),
-                                //////////////////////////////////////////////7
-                                // //Quiz identifier
-                                // Align(
-                                //     alignment: Alignment.topRight,
-                                //     child: Padding(
-                                //         padding: const EdgeInsets.fromLTRB(0, 0, 0, 4),
-                                //         child: SizedBox(
-                                //           //how big the picture should and the card itself
-                                //             height: MediaQuery.of(context).size.height* 0.065,width: MediaQuery.of(context).size.height* 0.15,
-                                //             child: Image.asset("assets/images/eddu.png") //<- here should be logik to change the picture
-                                //         )
-                                //     )
-                                // ),
-
                                 //Shared Icon
                                 Align(
                                     alignment: Alignment.topRight,
@@ -363,6 +349,10 @@ class _PopupCardState extends State<_PopupCard> {
     final user = Provider.of<AppUser?>(context);
     bool userIsOwner = user!.uid == widget.quiz.quizOwnerUID;
 
+    Size size = MediaQuery.of(context).size;
+    double gapBetweenFields = size.height * (1.5/100);
+    double paddingFromLeft = size.width * (3/100);
+
     @override
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
@@ -394,7 +384,7 @@ class _PopupCardState extends State<_PopupCard> {
                   //Title and Shared Icon
                   Stack(children: [
                     Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 0, 40, 0),
+                        padding: EdgeInsets.fromLTRB(paddingFromLeft, 0, 40, 0),
                         child: Container(
                             decoration: BoxDecoration(
                                 color: Colors.teal.shade500,
@@ -446,7 +436,7 @@ class _PopupCardState extends State<_PopupCard> {
                           //is for that the text and the picture dont overlape
                           //change the possition of the text
 
-                          padding: const EdgeInsets.fromLTRB(1, 10, 90, 10),
+                          padding: EdgeInsets.fromLTRB(paddingFromLeft, gapBetweenFields, 80, gapBetweenFields),
                           child: Container(
                               decoration: const BoxDecoration(
                                   color: Colors.black45,
@@ -457,10 +447,10 @@ class _PopupCardState extends State<_PopupCard> {
                                     bottomRight: Radius.circular(20.0),
                                   )),
                               child: Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                    10.0, 20.0, 10.0, 20.0),
+                                padding: EdgeInsets.fromLTRB(
+                                    paddingFromLeft, gapBetweenFields, 10.0, gapBetweenFields),
                                 child: Text(
-                                    "  " + widget.quiz.quizDescription + "  ",
+                                    widget.quiz.quizDescription,
                                     style: const TextStyle(
                                       fontFamily: 'Lobster',
                                       color: Colors.white,
@@ -469,30 +459,13 @@ class _PopupCardState extends State<_PopupCard> {
                               ))),
                     ),
                   ]),
-                  ////////////////////////////////////////////////////////// Information
-                  Align(
-                      alignment: Alignment.topLeft,
-                      child: SizedBox(
-                          child: Padding(
-                              padding: const EdgeInsets.fromLTRB(
-                                  10.0, 5.0, 1.0, 5.0),
-                              child: Container(
-                                decoration: const BoxDecoration(
-                                    color: Colors.black45,
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(20.0),
-                                      topRight: Radius.circular(20.0),
-                                      bottomLeft: Radius.circular(20.0),
-                                      bottomRight: Radius.circular(20.0),
-                                    )),
-                              )))),
                   ////////////////////////////////////////////////////////////Number of questions
                   Align(
                       alignment: Alignment.topLeft,
                       child: SizedBox(
                           child: Padding(
-                              padding: const EdgeInsets.fromLTRB(
-                                  10.0, 5.0, 1.0, 5.0),
+                              padding: EdgeInsets.fromLTRB(
+                                  paddingFromLeft, gapBetweenFields, 1.0, gapBetweenFields),
                               child: Container(
                                 decoration: const BoxDecoration(
                                     color: Colors.black45,
@@ -503,8 +476,8 @@ class _PopupCardState extends State<_PopupCard> {
                                       bottomRight: Radius.circular(20.0),
                                     )),
                                 child: Padding(
-                                  padding: const EdgeInsets.fromLTRB(
-                                      15.0, 25.0, 15.0, 25.0),
+                                  padding: EdgeInsets.fromLTRB(
+                                      paddingFromLeft, gapBetweenFields, 15.0, gapBetweenFields),
                                   child: Text(
                                       'Number of Questions: ' +
                                           widget.quiz.listOfQuestions.length
@@ -522,8 +495,8 @@ class _PopupCardState extends State<_PopupCard> {
                       alignment: Alignment.topLeft,
                       child: SizedBox(
                           child: Padding(
-                              padding: const EdgeInsets.fromLTRB(
-                                  10.0, 5.0, 1.0, 5.0),
+                              padding: EdgeInsets.fromLTRB(
+                                  paddingFromLeft, gapBetweenFields, 1.0, gapBetweenFields),
                               child: Container(
                                 decoration: const BoxDecoration(
                                   color: Colors.black45,
@@ -535,10 +508,10 @@ class _PopupCardState extends State<_PopupCard> {
                                   ),
                                 ),
                                 child: Padding(
-                                  padding: const EdgeInsets.fromLTRB(
-                                      15.0, 10.0, 15.0, 10.0),
+                                  padding: EdgeInsets.fromLTRB(
+                                      paddingFromLeft, gapBetweenFields, 15.0, gapBetweenFields),
                                   child: Text(
-                                      'More Information: ' +
+                                      'Tags: ' +
                                           widget.quiz.tags.join(", "),
                                       style: const TextStyle(
                                           fontFamily: 'Lobster',
@@ -547,6 +520,7 @@ class _PopupCardState extends State<_PopupCard> {
                                 ),
                               )))),
 
+                  SizedBox(height: gapBetweenFields * 3),
                   //Bottom Text and Botton
                   SizedBox(
                       child: Row(
@@ -575,9 +549,9 @@ class _PopupCardState extends State<_PopupCard> {
                                         ),
                                       ),
                                     ),
-                                    child: const Padding(
+                                    child: Padding(
                                       padding: EdgeInsets.fromLTRB(
-                                          5.0, 1.0, 5.0, 1.0),
+                                          5.0, gapBetweenFields / 6, 5.0, gapBetweenFields / 6),
                                       child: Text(
                                         'Edit Quiz',
                                         style: TextStyle(
@@ -608,9 +582,9 @@ class _PopupCardState extends State<_PopupCard> {
                                         ),
                                       ),
                                     ),
-                                    child: const Padding(
+                                    child: Padding(
                                       padding: EdgeInsets.fromLTRB(
-                                          5.0, 1.0, 5.0, 1.0),
+                                          5.0, gapBetweenFields / 6, 5.0, gapBetweenFields / 6),
                                       child: Text(
                                         'Join Quiz',
                                         style: TextStyle(
@@ -637,9 +611,9 @@ class _PopupCardState extends State<_PopupCard> {
                                     ),
                                   ),
                                 ),
-                                child: const Padding(
+                                child: Padding(
                                   padding:
-                                      EdgeInsets.fromLTRB(5.0, 1.0, 5.0, 1.0),
+                                      EdgeInsets.fromLTRB(5.0, gapBetweenFields / 6, 5.0, gapBetweenFields / 6),
                                   child: Text(
                                     'Play Quiz',
                                     style: TextStyle(
@@ -650,6 +624,7 @@ class _PopupCardState extends State<_PopupCard> {
                             )),
                       ])),
                   //Back botton
+                  SizedBox(height: size.height / 50),
                   SizedBox(
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -657,7 +632,7 @@ class _PopupCardState extends State<_PopupCard> {
                         Align(
                             alignment: Alignment.topCenter,
                             child: SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.20,
+                              width: MediaQuery.of(context).size.width * 0.21,
                               child: ElevatedButton(
                                 onPressed: () => Navigator.of(context).pop(),
                                 style: ElevatedButton.styleFrom(
@@ -669,9 +644,9 @@ class _PopupCardState extends State<_PopupCard> {
                                     ),
                                   ),
                                 ),
-                                child: const Padding(
+                                child: Padding(
                                   padding:
-                                      EdgeInsets.fromLTRB(5.0, 1.0, 5.0, 1.0),
+                                      EdgeInsets.fromLTRB(5.0, gapBetweenFields / 6, 5.0, gapBetweenFields / 6),
                                   child: Text(
                                     'Back',
                                     style: TextStyle(
@@ -681,30 +656,34 @@ class _PopupCardState extends State<_PopupCard> {
                               ),
                             )),
                       ])),
+                  SizedBox(height: gapBetweenFields * 3),
                   //Quiz owner
                   Align(
                     child: SizedBox(
                         child: Align(
                             alignment: Alignment.bottomLeft,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: Colors.teal.shade500,
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(20.0),
-                                    topRight: Radius.circular(20.0),
-                                    bottomLeft: Radius.circular(20.0),
-                                    bottomRight: Radius.circular(20.0),
-                                  )),
-                              child: Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                    15.0, 10.0, 15.0, 10.0),
-                                child: Text(
-                                    "The Owner of the quiz is: " +
-                                        widget.quiz.quizOwner,
-                                    style: const TextStyle(
-                                        fontFamily: 'Lobster',
-                                        fontSize: 19,
-                                        color: Colors.white)),
+                            child: Padding(
+                              padding: EdgeInsets.only(left: paddingFromLeft),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: Colors.teal.shade500,
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(20.0),
+                                      topRight: Radius.circular(20.0),
+                                      bottomLeft: Radius.circular(20.0),
+                                      bottomRight: Radius.circular(20.0),
+                                    )),
+                                child: Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      15.0, 10.0, 15.0, 10.0),
+                                  child: Text(
+                                      "Quiz Owner: " +
+                                          widget.quiz.quizOwner,
+                                      style: const TextStyle(
+                                          fontFamily: 'Lobster',
+                                          fontSize: 19,
+                                          color: Colors.white)),
+                                ),
                               ),
                             ))),
                   )
