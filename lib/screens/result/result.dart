@@ -46,7 +46,7 @@ class Result extends StatelessWidget {
               Expanded(
                 child: ListView(
                   children: <Widget>[
-                    for (var i = 0;
+                    for (var i = 0, k = 0;
                         i < args.quiz.listOfQuestions.length;
                         i++) //
                       Card(
@@ -72,26 +72,34 @@ class Result extends StatelessWidget {
                                     j <
                                         args.quiz.listOfQuestions[i].answers
                                             .length;
-                                    j++)
+                                    j++, k++)
                                   Container(
                                     margin: EdgeInsets.all(0.5 * em),
                                     width: double.infinity,
                                     decoration: BoxDecoration(
+                                        borderRadius:
+                                        BorderRadius.circular(8),
+                                        border: args.stateVector.buttonsPressedSaved[0][k] ? Border.all(color: Colors.yellow, width: 4) : null,
+                                        color: args.quiz.listOfQuestions[i].answers[j].isCorrect
+                                            ? Colors.green
+                                            : Colors.red),
+                                    /*BoxDecoration(
                                         borderRadius: BorderRadius.circular(8),
                                         color: args.quiz.listOfQuestions[i]
                                                 .answers[j].isCorrect
                                             ? Colors.green
-                                            : Colors.red),
+                                            : Colors.red),*/
                                     child: Padding(
                                       padding: EdgeInsets.all(1.5 * em),
                                       child: Text(
                                           args.quiz.listOfQuestions[i]
-                                                  .answers[j].answerText +
+                                                  .answers[j].answerText,
+                                              /*+
                                               // Holger fix this shit!!
                                               ((args.stateVector
-                                                      .buttonsPressed[0][j])
+                                                      .buttonsPressedSaved[0][k])
                                                   ? ' [Selected]'
-                                                  : ''),
+                                                  : ''),*/
                                           style: theme.textTheme.bodyText1!
                                               .copyWith(color: Colors.white)),
                                     ),
