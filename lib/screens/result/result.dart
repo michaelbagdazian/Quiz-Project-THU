@@ -9,8 +9,15 @@ import '../../models/user/AppUser.dart';
 import '../../models/user/UserData.dart';
 import '../../shared/loading.dart';
 
-class Result extends StatelessWidget {
+class Result extends StatefulWidget {
   const Result({Key? key}) : super(key: key);
+
+  @override
+  State<Result> createState() => _ResultState();
+}
+
+class _ResultState extends State<Result> {
+  bool pointsAdded = false;
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +33,17 @@ class Result extends StatelessWidget {
           stream: DatabaseService(uid: user.uid).userData,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              UserData? userData = snapshot.data;
-              String username = userData!.username;
-              String email = userData.email;
-              String avatar = userData.avatar;
-              int points = args.stateVector.playerPoints[0].sum;
-              DatabaseService(uid: user.uid)
-                  .updateUserData(username, email, avatar, points);
+              if(!pointsAdded){
+                UserData? userData = snapshot.data;
+                String username = userData!.username;
+                String email = userData.email;
+                String avatar = userData.avatar;
+                int points = userData.points + args.stateVector.playerPoints[0].sum;
+                DatabaseService(uid: user.uid)
+                    .updateUserData(username, email, avatar, points);
+
+                pointsAdded = true;
+              }
 
               /// ! Finish updating user points in DB
 
@@ -72,8 +83,8 @@ class Result extends StatelessWidget {
                           child: ListView(
                             children: <Widget>[
                               for (var i = 0, k = 0;
-                                  i < args.quiz.listOfQuestions.length;
-                                  i++) //
+                              i < args.quiz.listOfQuestions.length;
+                              i++) //
                                 Card(
                                   color: const Color.fromARGB(25, 0, 0, 0),
                                   shape: RoundedRectangleBorder(
@@ -82,7 +93,7 @@ class Result extends StatelessWidget {
                                     padding: EdgeInsets.all(1 * em),
                                     child: Column(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                      MainAxisAlignment.center,
                                       children: [
                                         Padding(
                                           padding: EdgeInsets.only(
@@ -96,30 +107,30 @@ class Result extends StatelessWidget {
                                         ),
                                         Column(children: <Widget>[
                                           for (var j = 0;
-                                              j <
-                                                  args.quiz.listOfQuestions[i]
-                                                      .answers.length;
-                                              j++, k++)
+                                          j <
+                                              args.quiz.listOfQuestions[i]
+                                                  .answers.length;
+                                          j++, k++)
                                             Container(
                                               margin: EdgeInsets.all(0.5 * em),
                                               width: double.infinity,
                                               decoration: BoxDecoration(
                                                   borderRadius:
-                                                      BorderRadius.circular(8),
+                                                  BorderRadius.circular(8),
                                                   border: args.stateVector
-                                                              .buttonsPressedSaved[
-                                                          0][k]
+                                                      .buttonsPressedSaved[
+                                                  0][k]
                                                       ? Border.all(
-                                                          color: Colors
-                                                              .tealAccent
-                                                              .shade400,
-                                                          width: 4)
+                                                      color: Colors
+                                                          .tealAccent
+                                                          .shade400,
+                                                      width: 4)
                                                       : null,
                                                   color: args
-                                                          .quiz
-                                                          .listOfQuestions[i]
-                                                          .answers[j]
-                                                          .isCorrect
+                                                      .quiz
+                                                      .listOfQuestions[i]
+                                                      .answers[j]
+                                                      .isCorrect
                                                       ? Colors.green
                                                       : Colors.red),
                                               /*BoxDecoration(
@@ -130,7 +141,7 @@ class Result extends StatelessWidget {
                                                 : Colors.red),*/
                                               child: Padding(
                                                 padding:
-                                                    EdgeInsets.all(1.5 * em),
+                                                EdgeInsets.all(1.5 * em),
                                                 child: Text(
                                                     args.quiz.listOfQuestions[i]
                                                         .answers[j].answerText,
@@ -143,8 +154,8 @@ class Result extends StatelessWidget {
                                                     style: theme
                                                         .textTheme.bodyText1!
                                                         .copyWith(
-                                                            color:
-                                                                Colors.white)),
+                                                        color:
+                                                        Colors.white)),
                                               ),
                                             )
                                         ])
