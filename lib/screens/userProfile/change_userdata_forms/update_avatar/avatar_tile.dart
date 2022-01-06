@@ -13,6 +13,11 @@ class AvatarTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    /// ~ size of the screen
+    Size size = MediaQuery.of(context).size;
+    double fontSize = size.height * (3.3/100);
+    double sizedBoxHeight = size.height * (3/100);
+
     int points = 0;
 
     return Column(
@@ -20,9 +25,9 @@ class AvatarTile extends StatelessWidget {
       children: <Widget>[
         Text(
           avatar.key[0].toUpperCase() + avatar.key.substring(1),
-          style: TextStyle(fontSize: 18.0, color: Colors.grey[400]),
+          style: TextStyle(fontSize: fontSize, color: Colors.grey[700]),
         ),
-        SizedBox(height: 15),
+        SizedBox(height: sizedBoxHeight),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[

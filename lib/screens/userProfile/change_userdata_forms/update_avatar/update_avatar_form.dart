@@ -24,15 +24,18 @@ class _AvatarFormState extends State<AvatarForm> {
 
   @override
   Widget build(BuildContext context) {
+    /// ~ size of the screen
+    Size size = MediaQuery.of(context).size;
+    double formHeight = size.height * (60/100);
+    double buttonWidth = size.width * (10/100);
+
     final userData = Provider.of<UserData?>(context);
     final user = Provider.of<AppUser?>(context);
-    ValueNotifier<String> url = ValueNotifier<String>(
-        'https://firebasestorage.googleapis.com/v0/b/daniel-brew-crew-20887.appspot.com/o/Default_Avatars%2Fceratops%2Fceratops2.png?alt=media&token=393336fa-a445-4f80-a241-084b0ebb68bd');
 
     if (userData != null && user != null) {
       return Container(
         padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-        height: 400.0,
+        height: formHeight,
         child: Form(
           key: _formKey,
           child: Column(
@@ -57,12 +60,22 @@ class _AvatarFormState extends State<AvatarForm> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(right: 4.0),
-                    child: RaisedButton(
-                        color: buttons,
-                        child: Text(
+                    child: FloatingActionButton.extended(
+                        label: const Text(
                           'Update',
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(
+                              fontSize: 17,
+                              fontFamily: 'Lobster',
+                              color: Colors.white),
                         ),
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            bottomRight: Radius.circular(10),
+                          ),
+                        ),
+                        backgroundColor: buttons,
+                        extendedPadding: EdgeInsets.all(buttonWidth),
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
                             await DatabaseService(uid: user.uid).updateUserData(
@@ -76,37 +89,6 @@ class _AvatarFormState extends State<AvatarForm> {
                           }
                         }),
                   ),
-                  //* The following button is in case we want to let the user upload their own avatar-
-                  // Padding(
-                  //   padding: const EdgeInsets.only(left: 4.0),
-                  //   child: RaisedButton(
-                  //       color: buttons,
-                  //       child: Text(
-                  //         'Browse',
-                  //         style: TextStyle(color: Colors.white),
-                  //       ),
-                  //       onPressed: () async {
-                  //         UploadFileToFireStorage UA =
-                  //             new UploadFileToFireStorage();
-                  //         try {
-                  //           await UA.uploadPicture(path: 'Avatar');
-                  //           await UA.deleteFileFromFirebaseByUrl(
-                  //               userData.avatar,
-                  //               path: 'Avatar',
-                  //               userData: userData);
-                  //         } catch (e) {
-                  //           return;
-                  //         }
-                  //         url.value = UA.url;
-                  //         String uid = userData.uid;
-                  //         DatabaseService(uid: uid).updateUserData(
-                  //             userData.username,
-                  //             userData.email,
-                  //             UA.url,
-                  //             userData.points);
-                  //         Navigator.pop(context);
-                  //       }),
-                  //),
                 ],
               ),
             ],
