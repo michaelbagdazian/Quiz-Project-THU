@@ -119,6 +119,7 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
       //resizeToAvoidBottomInset: false, //~ this is here so we don't have an overflow problem
       //* AppBar
       appBar: AppBar(
+        centerTitle: true,
         title: const Text(
           'Editing Quiz',
           style: TextStyle(
@@ -359,7 +360,7 @@ class _EditQuestionsUIState extends State<EditQuestionsUI> {
             ),
             //* empty space
             SizedBox(
-              height: size.height - size.height * 0.87,
+              height: size.height - size.height * 0.94,
             ),
             //* 'Add Question' Button + 'Submit Quizz' Button
             Row(

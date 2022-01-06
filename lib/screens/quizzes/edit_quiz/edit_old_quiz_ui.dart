@@ -54,6 +54,9 @@ class _EditQuizzUIState extends State<EditQuizzUI> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    double welcomeTextSize = size.height * (8 / 100);
+    double sizedBoxHeight = size.height * (3 / 100);
+
     Map data = ModalRoute.of(context)!.settings.arguments as Map;
     user = Provider.of<AppUser?>(context);
 
@@ -76,6 +79,7 @@ class _EditQuizzUIState extends State<EditQuizzUI> {
         resizeToAvoidBottomInset:
         false, //~ this is here so we don't have an overflow problem
         appBar: AppBar(
+          centerTitle: true,
           title: const Text(
             'Editing Quiz',
             style: TextStyle(
@@ -97,26 +101,26 @@ class _EditQuizzUIState extends State<EditQuizzUI> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 SizedBox(
-                  height: size.height * 0.07,
+                  height: sizedBoxHeight,
                 ),
-                CustomText().customText('Editing A Quiz', 25),
+                CustomText().customText('Editing A Quiz', welcomeTextSize),
                 //* Empty space
                 SizedBox(
-                  height: size.height * 0.07,
+                  height: sizedBoxHeight,
                 ),
                 //* Text Field for Quizz name
                 CustomTextField().customTextField(quizTitle, 'Quiz Title',
                     size.width * 0.7, TextInputType.text),
                 //* Empty space
                 SizedBox(
-                  height: size.height * 0.013,
+                  height: sizedBoxHeight / 2,
                 ),
                 //* Text Field for Quizz name
                 CustomTextField().customTextField(quizDescription!,
                     'Short Description', size.width * 0.7, TextInputType.text),
                 //* Empty space
                 SizedBox(
-                  height: size.height * 0.013,
+                  height: sizedBoxHeight / 2,
                 ),
                 //* Text Field for Quizz name
                 CustomTextField().customTextField(
@@ -124,7 +128,7 @@ class _EditQuizzUIState extends State<EditQuizzUI> {
                     hint: 'e.g: funny, nice, hard'),
                 //* Empty space
                 SizedBox(
-                  height: size.height * 0.02,
+                  height: sizedBoxHeight / 2,
                 ),
                 //* Drop Down menu + Text
                 Row(
@@ -184,7 +188,7 @@ class _EditQuizzUIState extends State<EditQuizzUI> {
                   ],
                 ),
                 //* Empty space
-                SizedBox(height: size.height * 0.04),
+                SizedBox(height: sizedBoxHeight / 2),
                 //* Checkbox
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -208,7 +212,7 @@ class _EditQuizzUIState extends State<EditQuizzUI> {
                   ],
                 ),
                 //* Empty space
-                SizedBox(height: size.height * 0.04),
+                SizedBox(height: sizedBoxHeight / 2),
                 CustomButton(
                     label: 'Start',
                     backgroundcolor: Colors.orange,

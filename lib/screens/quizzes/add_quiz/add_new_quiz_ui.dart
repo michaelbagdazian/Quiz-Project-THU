@@ -45,11 +45,15 @@ class _AddNewQuizzUIState extends State<AddNewQuizzUI> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    double welcomeTextSize = size.height * (8 / 100);
+    double sizedBoxHeight = size.height * (3 / 100);
+
     return Scaffold(
       resizeToAvoidBottomInset:
           false, //~ this is here so we don't have an overflow problem
       appBar: AppBar(
-        title: const Text(
+        centerTitle: true,
+        title: Text(
           'New Quizz',
           style: TextStyle(
             fontFamily: 'Lobster',
@@ -71,26 +75,26 @@ class _AddNewQuizzUIState extends State<AddNewQuizzUI> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 SizedBox(
-                  height: size.height * 0.07,
+                  height: sizedBoxHeight,
                 ),
-                CustomText().customText('Creating A New Quizz', 50),
+                CustomText().customText('Creating A New Quizz', welcomeTextSize),
                 //* Empty space
                 SizedBox(
-                  height: size.height * 0.07,
+                  height: sizedBoxHeight,
                 ),
                 //* Text Field for Quizz name
                 CustomTextField().customTextField(quizTitle, 'Quizz Title',
                     size.width * 0.7, TextInputType.text),
                 //* Empty space
                 SizedBox(
-                  height: size.height * 0.013,
+                  height: sizedBoxHeight / 2,
                 ),
                 //* Text Field for Quizz name
                 CustomTextField().customTextField(quizDescription!,
                     'Short Description', size.width * 0.7, TextInputType.text),
                 //* Empty space
                 SizedBox(
-                  height: size.height * 0.013,
+                  height: sizedBoxHeight / 2,
                 ),
                 //* Text Field for Quizz name
                 CustomTextField().customTextField(
@@ -98,7 +102,7 @@ class _AddNewQuizzUIState extends State<AddNewQuizzUI> {
                     hint: 'e.g: funny, nice, hard'),
                 //* Empty space
                 SizedBox(
-                  height: size.height * 0.02,
+                  height: sizedBoxHeight / 2,
                 ),
                 //* Drop Down menu + Text
                 Row(
@@ -159,7 +163,7 @@ class _AddNewQuizzUIState extends State<AddNewQuizzUI> {
                   ],
                 ),
                 //* Empty space
-                SizedBox(height: size.height * 0.04),
+                SizedBox(height: sizedBoxHeight / 2),
                 //* Checkbox
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -183,7 +187,7 @@ class _AddNewQuizzUIState extends State<AddNewQuizzUI> {
                   ],
                 ),
                 //* Empty space
-                SizedBox(height: size.height * 0.04),
+                SizedBox(height: sizedBoxHeight / 2),
                 CustomButton(
                     label: 'Start',
                     backgroundcolor: Colors.orange,

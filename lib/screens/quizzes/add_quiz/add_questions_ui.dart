@@ -76,6 +76,9 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
   //* Build Widget Starts here
   @override
   Widget build(BuildContext context) {
+    //~ Get the size of the screen
+    Size size = MediaQuery.of(context).size;
+
     //~ Determining the number of total steps for the progress bar indicator
     StepProgressBarIndicatorSteps = _Currquestion == null
         ? ValueNotifier<int>(_ListOfQuestions.getQuestions().length + 1)
@@ -83,12 +86,11 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
             _ListOfQuestions.getQuestions().indexOf(_Currquestion!) + 2);
     //~ getting the arguments from the previous screen
     args = ModalRoute.of(context)!.settings.arguments;
-    //~ Get the size of the screen
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
       //resizeToAvoidBottomInset:false, //~ this is here so we don't have an overflow problem
       //* AppBar
       appBar: AppBar(
+        centerTitle: true,
         title: const Text(
           'New Quizz',
           style: TextStyle(
@@ -311,7 +313,7 @@ class _AddQuestionsUIState extends State<AddQuestionsUI> {
               ),
               //* empty space
               SizedBox(
-                height: size.height - size.height * 0.87,
+                height: size.height - size.height * 0.94,
               ),
               //* 'Add Question' Button + 'Submit Quizz' Button
               Row(
