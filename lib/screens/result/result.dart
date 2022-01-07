@@ -19,11 +19,26 @@ class Result extends StatefulWidget {
 class _ResultState extends State<Result> {
   bool pointsAdded = false;
 
+
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as QuizState;
     ThemeData theme = Theme.of(context);
     final em = theme.textTheme.bodyText2?.fontSize ?? 16;
+
+    ///method to get to total points possible in a quiz (since none or multiple answers per question can be correct)
+    ///just sums over all questions and there all answers if it is correct
+    int getTotalPoints(){
+      int ret = 0;
+      for (int i = 0; i < args.quiz.listOfQuestions.length; i++){
+        for (int j = 0; j < args.quiz.listOfQuestions[i].answers.length; j++) {
+          if (args.quiz.listOfQuestions[i].answers[j].isCorrect == true) {
+            ret++;
+          }
+        }
+      }
+    return ret;
+    }
 
     /// ! update user points in DB
     final user = Provider.of<AppUser?>(context);
@@ -73,12 +88,16 @@ class _ResultState extends State<Result> {
                         Padding(
                           padding: EdgeInsets.only(top: 2 * em, bottom: 2 * em),
                           child: Text(
-                            "You got ${args.stateVector.playerPoints[0].sum.toString()}/${args.quiz.listOfQuestions.length}",
+                            "You got ${args.stateVector.playerPoints[0].sum.toString()}/${getTotalPoints()}",
                             textAlign: TextAlign.center,
                             style: theme.textTheme.headline5!
                                 .copyWith(color: Colors.white),
                           ),
                         ),
+                        ///create a box for each question i and in there another rectangle for each answer j, color it green if it is correct, or red if it is not.
+                        ///also have a k index for every question that appears, since questions can have different numbers of answers
+                        ///k index corresponds to position in buttonsPressedSaved array. so if there is a true at positions k in the array
+                        ///there is and additional border drawn to show the user what they have pressed
                         Expanded(
                           child: ListView(
                             children: <Widget>[
@@ -133,24 +152,12 @@ class _ResultState extends State<Result> {
                                                       .isCorrect
                                                       ? Colors.green
                                                       : Colors.red),
-                                              /*BoxDecoration(
-                                            borderRadius: BorderRadius.circular(8),
-                                            color: args.quiz.listOfQuestions[i]
-                                                    .answers[j].isCorrect
-                                                ? Colors.green
-                                                : Colors.red),*/
                                               child: Padding(
                                                 padding:
                                                 EdgeInsets.all(1.5 * em),
                                                 child: Text(
                                                     args.quiz.listOfQuestions[i]
                                                         .answers[j].answerText,
-                                                    /*+
-                                                  // Holger fix this shit!!
-                                                  ((args.stateVector
-                                                          .buttonsPressedSaved[0][k])
-                                                      ? ' [Selected]'
-                                                      : ''),*/
                                                     style: theme
                                                         .textTheme.bodyText1!
                                                         .copyWith(
@@ -166,6 +173,7 @@ class _ResultState extends State<Result> {
                             ],
                           ),
                         ),
+                        ///the button for the route to the shared quiz list
                         Padding(
                           padding: EdgeInsets.only(top: 1 * em),
                           child: Row(

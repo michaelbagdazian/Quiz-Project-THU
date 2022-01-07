@@ -5,7 +5,9 @@ import 'package:crew_brew/models/quiz/quiz_state.dart';
 import 'package:flutter/material.dart';
 import 'package:crew_brew/shared/colors.dart';
 /// ~ Done by Luke & Holger
-
+/// Declaring class variables, a number for which player it is playing (multiplayer prepared), a game state that handles all the variables that change and some timers. We get the quiz object from the parent class.
+/// Class should be immutable, but we did not call it with parameters from a parent widget. Ideally the game state would be initialized there, in some kind of join screen e.g. with multi player. That is why we have to make this a bit messy.
+///ignore: must_be_immutable
 class ActiveQuiz extends StatefulWidget {
   final Quiz quiz;
   final int myPlayerNumber = 0;
@@ -19,6 +21,11 @@ class ActiveQuiz extends StatefulWidget {
   _ActiveQuizState createState() => _ActiveQuizState();
 }
 
+///here we initialize the game state vector in the init state when the widget gets built. ideally this should have been done in parent widget already, so not to have to rely on non final fields and late initialization
+///we use a 2D array for the player points, for the times until the answer was given, one for which answers are correct, one for which buttons are currently pressed and one for
+///which buttons have been pressed correctly for comparison. Content of pressed buttons get saved into array for result screen. Length of array is determined by maximum player count
+///(here 4) and the maximum number of answers for a question in a quiz.
+///also timers are started here for the countdown progressbar and the time until answered (for multiplayer who answered first)
 class _ActiveQuizState extends State<ActiveQuiz> {
   @override
   void initState() {
@@ -37,6 +44,7 @@ class _ActiveQuizState extends State<ActiveQuiz> {
     super.initState();
   }
 
+  ///simple method for getting the maximum number of answers for a question in a quiz
   int getMaxQuestions(Quiz quiz) {
     int ret = 0;
     for (int i = 0; i < quiz.listOfQuestions.length; i++) {
@@ -56,17 +64,21 @@ class _ActiveQuizState extends State<ActiveQuiz> {
     }
     return -1;
     ///TODO: must have a way to handle spectators i.e. players not in list an catch potential errors
+    ///spoiler alter: we did not implement that
   }
 
+  ///have variable for the timer progress
   double timerProgress = 1;
 
+  ///next method that handles what happens after a question is answered. Timer is stopped and answer times saved. T
   void next() {
     widget.updateProgress.cancel();
     widget.stateVector.setAnswerTimes(
         widget.myPlayerNumber,
         widget.stateVector.currentQuestion,
         widget.measureTime.elapsed.inMilliseconds);
-
+    ///then arrays for buttons pressed and correct answers are compared
+    ///and points added/subtracted accordingly
     for (int j = 0; j < 4; j++) {
       if (widget.stateVector.buttonsPressed[widget.myPlayerNumber][j] &&
           widget.quiz.listOfQuestions[widget.stateVector.currentQuestion]
@@ -81,20 +93,20 @@ class _ActiveQuizState extends State<ActiveQuiz> {
               .answers[j].isCorrect) {
         widget.stateVector.playerPoints[widget.myPlayerNumber]
         [widget.stateVector.currentQuestion]--;
-        if (widget.stateVector.playerPoints[widget.myPlayerNumber]
-        [widget.stateVector.currentQuestion] <
-            0) {
-          widget.stateVector.playerPoints[widget.myPlayerNumber]
-          [widget.stateVector.currentQuestion] = 0;
-        }
       }
     }
-
+    if (widget.stateVector.playerPoints[widget.myPlayerNumber]
+    [widget.stateVector.currentQuestion] <
+        0) {
+      widget.stateVector.playerPoints[widget.myPlayerNumber]
+      [widget.stateVector.currentQuestion] = 0;
+    }
+    ///saving the pressed buttons into saved pressed button array for result screen
     for (int l = 0; l < widget.quiz.listOfQuestions[widget.stateVector.currentQuestion].answers.length; l++) {
       widget.stateVector.buttonsPressedSaved[widget.myPlayerNumber].add(
           widget.stateVector.buttonsPressed[widget.myPlayerNumber][l]);
     }
-
+    ///updating state to display next question
     setState(() {
       widget.stateVector.buttonsActive = false;
       widget.stateVector.showTimeUntilAnswer = true;
@@ -102,17 +114,18 @@ class _ActiveQuizState extends State<ActiveQuiz> {
       widget.stateVector.buttonsPressedSaved;
     });
 
-    ///buttonsActive = false;
-    ///showTimeToAnswer = true;
+    ///reset timers then wait for 3 seconds
     Timer(const Duration(seconds: 3), () {
       widget.measureTime.reset();
       timerProgress = 1;
+      ///check if end of quiz has been reached
       if (widget.stateVector.currentQuestion ==
           widget.quiz.listOfQuestions.length - 1) {
-        ///route to result.dart with stateVector
+        ///if so, route to result.dart with stateVector as argument
         QuizState results =
         QuizState(quiz: widget.quiz, stateVector: widget.stateVector);
         Navigator.pushNamed(context, '/results', arguments: results);
+      ///or else next round, increment active question, reset corresponding arrays, make buttons active again
       } else {
         startTimer();
         setState(() {
@@ -125,18 +138,19 @@ class _ActiveQuizState extends State<ActiveQuiz> {
       }
     });
   }
-
+  ///method to start timer, basically every 1 second the timer gets decremented by 1/countdowntime. This is how time for a question can be adjusted.
   startTimer() {
     widget.updateProgress = Timer.periodic(
       const Duration(seconds: 1),
           (timer) {
         timerProgress = timerProgress - 1 / widget.countdownTime;
+        ///set the state to display it with LinearProgressIndicator
         setState(() {
           timerProgress;
         });
+        ///if time runs out, stop and reset timer and treat it as nothing answered and proceed to next()
         if (timerProgress <= 0) {
           widget.updateProgress.cancel();
-          ///answerCorrect.add(0);
           widget.stateVector.setAnswerCorrect(
               widget.myPlayerNumber, widget.stateVector.currentQuestion, false);
           timerProgress = 1;
@@ -145,7 +159,14 @@ class _ActiveQuizState extends State<ActiveQuiz> {
       },
     );
   }
+  ///override method to dispose of periodic timer (for LinearProgressIndicator) after widget is closed. Otherwise it runs indefinitely.
+  @override
+  void dispose() {
+    super.dispose();
+    widget.updateProgress.cancel();
+  }
 
+  ///method for clicking a button as answer, basically just switches isPressed on and off with a click
   void answer(int number) {
     setState(() {
       widget.stateVector.buttonsPressed[widget.myPlayerNumber][number] =
@@ -154,6 +175,7 @@ class _ActiveQuizState extends State<ActiveQuiz> {
     });
   }
 
+  ///the widget that is returned
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
@@ -212,6 +234,9 @@ class _ActiveQuizState extends State<ActiveQuiz> {
                     ],
                   ),
                 ),
+                ///make a button for each answer of question with text of answer on it.
+                ///display them in different colors depending on if they have been pressed (yellow), correct (green) or incorrect (red).
+                ///this is handled via booleans.
                 Expanded(
                   child: ListView(
                     children: <Widget>[
@@ -260,7 +285,7 @@ class _ActiveQuizState extends State<ActiveQuiz> {
                   ),
                 ),
 
-                ///for debug
+                ///the two buttons for back and next
                 Row(children: <Widget>[
                   Expanded(
                       child: Padding(
