@@ -1,25 +1,25 @@
-import 'package:crew_brew/screens/quizzes/quiz_wrapper.dart';
-import 'package:crew_brew/shared/loading.dart';
-import 'package:crew_brew/testClasses/TestScreen.dart';
+import 'package:crew_brew/models/user/AppUser.dart';
+import 'package:crew_brew/screens/authenticate/WelcomingScreen.dart';
+import 'package:crew_brew/screens/authenticate/register.dart';
+import 'package:crew_brew/screens/authenticate/sign_in.dart';
+import 'package:crew_brew/screens/home/home.dart';
 import 'package:crew_brew/screens/quizzes/add_quiz/add_new_quiz_ui.dart';
+import 'package:crew_brew/screens/quizzes/add_quiz/add_questions_ui.dart';
 import 'package:crew_brew/screens/quizzes/edit_quiz/edit_old_questions_ui.dart';
 import 'package:crew_brew/screens/quizzes/edit_quiz/edit_old_quiz_ui.dart';
 import 'package:crew_brew/screens/quizzes/my_and_shared_quizes/my_quizzes.dart';
-import 'package:crew_brew/screens/quizzes/quiz_wrapper.dart';
 import 'package:crew_brew/screens/quizzes/my_and_shared_quizes/shared_quizzes.dart';
-import 'package:crew_brew/screens/quizzes/add_quiz/add_questions_ui.dart';
+import 'package:crew_brew/screens/quizzes/quiz_wrapper.dart';
 import 'package:crew_brew/screens/result/result.dart';
-import 'package:crew_brew/screens/home/home.dart';
 import 'package:crew_brew/screens/wrapper.dart';
 import 'package:crew_brew/services/auth.dart';
-import 'package:provider/provider.dart';
-import 'package:crew_brew/models/user/AppUser.dart';
-import 'package:crew_brew/screens/authenticate/register.dart';
-import 'package:crew_brew/screens/authenticate/sign_in.dart';
-import 'package:crew_brew/screens/authenticate/WelcomingScreen.dart';
 import 'package:crew_brew/shared/colors.dart';
+import 'package:crew_brew/shared/loading.dart';
+import 'package:crew_brew/testClasses/TestScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'navigationBar/nav_container.dart';
 // ! Information about the class:
 // ~ Main class
@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
         // ~ Here we define all routes of our apps. They are mainly used in navigationBar/navBar.dart -> selectedItem()
         routes: {
           '/testScreen': (context) => const NavContainer(page: TestScreen()),
-          '/home': (context) => const NavContainer(page: Home()),
+          '/home': (context) => /*const*/ const NavContainer(page: Home()),
           '/sharedQuizes': (context) => NavContainer(page: SharedQuizes()),
           '/myQuizes': (context) => const NavContainer(page: MyQuizes()),
           '/welcome': (context) => NavContainer(page: WelcominScreen()),
@@ -63,12 +63,9 @@ class MyApp extends StatelessWidget {
           '/quizWrapper': (context) => const QuizWrapper(),
           '/AddQuestionsUI': (context) => AddQuestionsUI(),
           '/AddNewQuizzUI': (context) => const AddNewQuizzUI(),
-
           '/EditOldQuizUI': (context) => const EditQuizzUI(),
-          '/EditQuestionsUI': (context) => EditQuestionsUI(),
-
+          '/EditQuestionsUI': (context) => const EditQuestionsUI(),
           '/loading': (context) => Loading()
-
         },
         // TODO: Decide on a unified theme and copy it here
         theme: ThemeData.light()

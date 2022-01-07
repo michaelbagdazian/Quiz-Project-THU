@@ -2,7 +2,8 @@ import 'package:crew_brew/screens/userProfile/change_userdata_forms/update_avata
 import 'package:flutter/material.dart';
 
 class AvatarTile extends StatelessWidget {
-  AvatarTile({Key? key, required this.avatar, required this.setAvatarPath}) : super(key: key);
+  AvatarTile({Key? key, required this.avatar, required this.setAvatarPath})
+      : super(key: key);
 
   final Function setAvatarPath;
   final MapEntry<String, List<String>> avatar;
@@ -12,6 +13,11 @@ class AvatarTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    /// ~ size of the screen
+    Size size = MediaQuery.of(context).size;
+    double fontSize = size.height * (3.3/100);
+    double sizedBoxHeight = size.height * (3/100);
+
     int points = 0;
 
     return Column(
@@ -19,15 +25,17 @@ class AvatarTile extends StatelessWidget {
       children: <Widget>[
         Text(
           avatar.key[0].toUpperCase() + avatar.key.substring(1),
-          style: TextStyle(fontSize: 18.0, color: Colors.grey[400]),
+          style: TextStyle(fontSize: fontSize, color: Colors.grey[700]),
         ),
-        SizedBox(height: 15),
+        SizedBox(height: sizedBoxHeight),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             for (int i = 0; i < 3; i++)
               OneAvatarEntry(
-                  avatarPath: avatar.value[i], points: (points += 5) * i, setLastTapped: setLastTapped),
+                  avatarPath: avatar.value[i],
+                  points: (points += 5) * i,
+                  setLastTapped: setLastTapped),
           ],
         ),
         SizedBox(height: 15),
@@ -36,7 +44,9 @@ class AvatarTile extends StatelessWidget {
           children: <Widget>[
             for (int i = 3; i < 5; i++)
               OneAvatarEntry(
-                  avatarPath: avatar.value[i], points: (points += 5) * i, setLastTapped: setLastTapped)
+                  avatarPath: avatar.value[i],
+                  points: (points += 5) * i,
+                  setLastTapped: setLastTapped)
           ],
         )
       ],
@@ -44,17 +54,17 @@ class AvatarTile extends StatelessWidget {
   }
 
   void setLastTapped(OneAvatarEntry? lastTapped, Function? toggleCollor) {
-    if(toggleLastTappedColor != null){
+    if (toggleLastTappedColor != null) {
       toggleLastTappedColor!();
     }
 
     this.toggleLastTappedColor = toggleCollor;
     this.lastTapped = lastTapped;
 
-    if(lastTapped != null){
+    if (lastTapped != null) {
       setAvatarPath(this.lastTapped!.avatarPath);
       print(lastTapped.avatarPath);
-    }else{
+    } else {
       setAvatarPath("");
     }
   }

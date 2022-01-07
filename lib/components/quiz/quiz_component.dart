@@ -45,38 +45,40 @@ class QuizComponent extends StatelessWidget {
         ),
         if (showScoreScreen == false && showCountdown == false)
           Container(
-          margin: const EdgeInsets.only(top: 10),
-          child: Flex(
-            direction: Axis.vertical,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: answers
-                .asMap()
-                .keys
-                .map((i) => Container(
-                      padding: const EdgeInsets.all(5),
-                      child: TextButton(
-                        child: Text(
-                          answers[i],
-                          style: const TextStyle(
-                              color: Colors.white, fontSize: 20),
+            margin: const EdgeInsets.only(top: 10),
+            child: Flex(
+              direction: Axis.vertical,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: answers
+                  .asMap()
+                  .keys
+                  .map((i) => Container(
+                        padding: const EdgeInsets.all(5),
+                        child: TextButton(
+                          child: Text(
+                            answers[i],
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 20),
+                          ),
+                          style: TextButton.styleFrom(
+                              backgroundColor: Colors.blueAccent,
+                              primary: Colors.greenAccent,
+                              padding: const EdgeInsets.all(20)),
+                          onPressed: buttonsActive
+                              ? () {
+                                  if (answer == i) {
+                                    onCorrectAnswer();
+                                  } else {
+                                    onWrongAnswer();
+                                  }
+                                  onFinishAnswer();
+                                }
+                              : null,
                         ),
-                        style: TextButton.styleFrom(
-                            backgroundColor: Colors.blueAccent,
-                            primary: Colors.greenAccent,
-                            padding: const EdgeInsets.all(20)),
-                        onPressed: buttonsActive ? () {
-                          if (answer == i) {
-                            onCorrectAnswer();
-                          } else {
-                            onWrongAnswer();
-                          }
-                          onFinishAnswer();
-                        } : null,
-                      ),
-                    ))
-                .toList(),
-          ),
-        )
+                      ))
+                  .toList(),
+            ),
+          )
       ],
     );
   }

@@ -1,4 +1,4 @@
-/// ignore_for_file: unused_local_variable, file_names, prefer_const_constructors, duplicate_ignore, unnecessary_new
+// ignore_for_file: unused_local_variable, file_names, prefer_const_constructors, duplicate_ignore, unnecessary_new
 
 import 'dart:ui';
 import 'package:crew_brew/services/auth.dart';
@@ -22,135 +22,113 @@ class WelcominScreen extends StatefulWidget {
 }
 
 class _WelcominScreenState extends State<WelcominScreen> {
-  ///couple of objects
+  //couple of objects
   final CustomText _customText = CustomText();
 
-  ///couple of controllers
+  //couple of controllers
   final TextEditingController _pinController = TextEditingController();
 
   final TextEditingController _displayNameController = TextEditingController();
 
-/// listen to changes on _displaycontroller
+// listen to changes on _displaycontroller
   @override
   void initState() {
     super.initState();
 
-    /// Start listening to changes.
+    // Start listening to changes.
     _displayNameController.addListener(_getDisplayName);
   }
 
-/// delete listener when we leave the screen
+// delete listener when we leave the screen
   @override
   void dispose() {
-    /// Clean up the controller when the widget is removed from the widget tree.
-    /// This also removes the _printLatestValue listener.
+    // Clean up the controller when the widget is removed from the widget tree.
+    // This also removes the _printLatestValue listener.
     _displayNameController.dispose();
     super.dispose();
   }
 
-///get the changes from the _displaycontroller
+//get the changes from the _displaycontroller
   Future _getDisplayName() async {
     return _displayNameController.text;
   }
 
-  ///size of the screen
   final AuthService _auth = AuthService();
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    /// ~ size of the screen
+    Size size = MediaQuery
+        .of(context)
+        .size;
+
+    /// ~ sizes per widget
+    double welcomeTextSize = size.height * (8 / 100);
+    double eduLogoHeight = size.height * (13 / 100.0);
+    double verticalPadding = size.height * (1 / 100);
+    double sizedBoxHeight = size.height * (3 / 100);
+    double inputBarWidth = size.width * (60 / 100);
+    double buttonWidth = size.width * (8 / 100);
+
     return Scaffold(
-      ///see signup.dart
-      resizeToAvoidBottomInset: false,
+      //see signup.dart
+      //resizeToAvoidBottomInset: false,
       body: Container(
         constraints: const BoxConstraints.expand(),
         decoration: const BoxDecoration(
-          ///* Background
+          //* Background
           image: DecorationImage(
-              image: AssetImage('assets/images/bgtop.png'), fit: BoxFit.cover),
+              image: AssetImage('assets/images/bgtop.png'),
+              fit: BoxFit.cover),
         ),
         child:
-            ///*children inside screen
-            Padding(
-          padding: const EdgeInsets.all(1.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ///*Text
-              _customText.customText("Welcome to\n The Quizzler !!!",
-                  backgroundColor: welcomeh),
-              ///*Logo/pic on welcoming screen
-              eduLogo(),
-              SizedBox(
-                height: size.height * 0.01,
-              ),
-              ///*create space between the widget and the sides of the screen
-              Container(
-                padding: EdgeInsets.only(
-                  left: (0.2 * size.width),
-                  right: (0.2 * size.width),
+        //*children inside screen
+        SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(verticalPadding),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                //*Text
+                _customText.customText(
+                    "Welcome to\n The Quizzler", welcomeTextSize,
+                    backgroundColor: welcomeh),
+                //*Logo/pic on welcoming screen
+                eduLogo(eduLogoHeight),
+                SizedBox(
+                  height: sizedBoxHeight,
                 ),
-                ///*text field to add type in the display name; you can probably use the custom ones, but i will leave that to the frontend team
-                child: CustomTextField().customTextField(
+                //*create space between the widget and the sides of the screen
+                CustomTextField().customTextField(
                   _displayNameController,
                   'Display Name',
-                  size.width,
+                  inputBarWidth,
                   TextInputType.text,
                 ),
-              ),
-              SizedBox(height: size.height * 0.01),
-              Container(
-                padding: EdgeInsets.only(
-                  left: (0.2 * size.width),
-                  right: (0.2 * size.width),
-                ),
-                ///*text field to add type in the pin of the live quizz; you can probably use the custom ones, but i will leave that to the frontend team
-                child: CustomTextField().customTextField(
-                    _pinController, 'Pin', size.width, TextInputType.text),
-                ///  TextField(
-                ///   keyboardType: TextInputType.text,
-                ///   controller: _pinController,
-                ///   decoration: InputDecoration(
-                ///     enabledBorder: OutlineInputBorder(
-                ///       borderRadius: BorderRadius.all(Radius.circular(12.0)),
-                ///       borderSide: BorderSide(color: texts),
-                ///     ),
-                ///     focusedBorder: OutlineInputBorder(
-                ///         borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                ///         borderSide: BorderSide(color: borders)),
-                ///     contentPadding: EdgeInsets.all(15),
-                ///     labelText: 'Pin',
-                ///     labelStyle: TextStyle(
-                ///       fontFamily: 'Lobster',
-                ///       color: texts,
-                ///       fontSize: 15.0,
-                ///     ),
-                ///   ),
-                /// ),
-              ),
-              SizedBox(height: size.height * 0.02),
-              ///* Button
-              joinButton(context),
-              SizedBox(height: size.height * 0.05),
-              ///*just a widget with the buttons for login or sign up
-              ///* frontend can improve the quality of this widget by using the custom Widgets; only if they want to
-              signInOrUp(context),
-            ],
+                SizedBox(height: sizedBoxHeight),
+                //* Button
+                joinButton(context, buttonWidth),
+                SizedBox(height: sizedBoxHeight),
+                //*just a widget with the buttons for login or sign up
+                //* frontend can improve the quality of this widget by using the custom Widgets; only if they want to
+                signInOrUp(context, buttonWidth, sizedBoxHeight),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  Widget joinButton(BuildContext context) {
+  Widget joinButton(BuildContext context, double width) {
     return FloatingActionButton.extended(
       heroTag: "joinButton",
-      extendedPadding: EdgeInsets.fromLTRB(15, 40, 40, 40),
-      extendedIconLabelSpacing: 20,
+      extendedPadding: EdgeInsets.all(width * 0.95),
+      extendedIconLabelSpacing: 10,
       onPressed: () async {
-        ///get the entered display name
+        //get the entered display name
         String _username = await _getDisplayName();
-        /// ~ Signin anonymously
+        // ~ Signin anonymously
         dynamic result = await _auth.signInAnon(() async {
           await showDialog(
               context: context,
@@ -158,7 +136,7 @@ class _WelcominScreenState extends State<WelcominScreen> {
                 return customAlertBox("An Error Has Happened !!!", "");
               });
         }, displayName: _username);
-        /// ~ If login is not succesful, we provide an error message
+        // ~ If login is not succesful, we provide an error message
         if (result == null) {
           await showDialog(
               context: context,
@@ -187,34 +165,34 @@ class _WelcominScreenState extends State<WelcominScreen> {
     );
   }
 
-///? The following widget is a column with two buttons and a text between them (login button ---Or--- Register)
-  Widget signInOrUp(BuildContext cntxt) {
+//? The following widget is a column with two buttons and a text between them (login button ---Or--- Register)
+  Widget signInOrUp(BuildContext cntxt, double width, double sizedBoxHeight) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       mainAxisSize: MainAxisSize.min,
       children: [
-        CustomText().customText('--- or ---', fontsize: 30),
+        CustomText().customText('--- or ---', 30),
         SizedBox(
-          height: 15,
+          height: sizedBoxHeight,
         ),
         CustomButton(
-          label: "Log In",
+          label: "Sign in",
           backgroundcolor: buttons,
           function: () {
             Navigator.pushNamed(cntxt, '/signin');
           },
-          padding: 40,
+          padding: width,
         ),
         SizedBox(
           height: 10,
         ),
         CustomButton(
-          label: "Register",
+          label: "Sign up",
           backgroundcolor: buttons,
           function: () {
             Navigator.pushNamed(cntxt, '/register');
           },
-          padding: 30,
+          padding: width,
         ),
         SizedBox(
           height: 10,
@@ -237,12 +215,12 @@ class _WelcominScreenState extends State<WelcominScreen> {
     );
   }
 
-///small little log at the top of the wecloming page, use whatever pic you want or even comment it out if you want to
-  Widget eduLogo() {
+//small little log at the top of the wecloming page, use whatever pic you want or even comment it out if you want to
+  Widget eduLogo(double height) {
     return Container(
       margin: EdgeInsets.only(top: 10),
-      width: 100,
-      height: 100,
+      width: height,
+      height: height,
       child: Image.asset(
         'assets/images/eddu.png',
         fit: BoxFit.cover,
@@ -250,11 +228,10 @@ class _WelcominScreenState extends State<WelcominScreen> {
     );
   }
 
-  ///?these are to redirect user to a link
+  //?these are to redirect user to a link
   _launchURLApp() async {
     const url = 'https://flutterdevs.com/';
-    if (await launch(url, forceSafariVC: true, forceWebView: true)) {
-    } else {
+    if (await launch(url, forceSafariVC: true, forceWebView: true)) {} else {
       throw 'Could not launch $url';
     }
   }

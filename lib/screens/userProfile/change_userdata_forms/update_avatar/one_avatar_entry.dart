@@ -24,12 +24,18 @@ class OneAvatarEntry extends StatefulWidget {
 }
 
 class _OneAvatarEntryState extends State<OneAvatarEntry> {
-  Color backgroundColor = Colors.grey[800]!;
+  Color backgroundColor = Colors.teal[800]!;
   Color lockOpacity = Colors.redAccent.withOpacity(0.9);
   bool canSelect = false;
 
   @override
   Widget build(BuildContext context) {
+    /// ~ size of the screen
+    Size size = MediaQuery.of(context).size;
+    double avatarSize = size.height * (20/100);
+    double spaceBetweenAvatars = size.width / 36;
+    print(size.width);
+
     final userData = Provider.of<UserData?>(context);
 
     if (userData != null) {
@@ -39,7 +45,7 @@ class _OneAvatarEntryState extends State<OneAvatarEntry> {
         setState(() {
           lockOpacity = Colors.red.withOpacity(0.0);
         });
-      }else{
+      } else {
         setState(() {
           lockOpacity = Colors.redAccent.withOpacity(0.9);
         });
@@ -49,7 +55,7 @@ class _OneAvatarEntryState extends State<OneAvatarEntry> {
         children: [
           Row(
             children: [
-              SizedBox(width: 10),
+              SizedBox(width: spaceBetweenAvatars),
               InkWell(
                 onTap: () {
                   if (canSelect) {
@@ -66,30 +72,30 @@ class _OneAvatarEntryState extends State<OneAvatarEntry> {
                 },
                 child: Stack(alignment: Alignment.center, children: [
                   CircleAvatar(
-                      radius: 45.0,
+                      radius: avatarSize / 2.6,
                       // ! The intensity of the color depends on the strength of the brew ( coffee )
                       backgroundColor: backgroundColor,
                       child: Image.asset(
                         widget.avatarPath,
-                        height: 80,
-                        width: 80,
+                        height: avatarSize,
+                        width: avatarSize,
                       )
                       //avatar.value[0],
                       ),
                   Icon(
                     Icons.lock,
                     color: lockOpacity,
-                    size: 40.0,
+                    size: avatarSize / 3,
                   )
                 ]),
               ),
-              SizedBox(width: 10),
+              SizedBox(width: spaceBetweenAvatars),
             ],
           ),
           SizedBox(height: 5),
           Text(
             "Points required: " + widget.points.toString(),
-            style: TextStyle(fontSize: 10.0, color: Colors.grey[700]),
+            style: TextStyle(fontSize: 11, color: Colors.grey[700]),
           ),
         ],
       );
@@ -100,23 +106,23 @@ class _OneAvatarEntryState extends State<OneAvatarEntry> {
 
   void toggleColor() {
     setState(() {
-      if (backgroundColor == Colors.grey[800]) {
+      if (backgroundColor == Colors.teal[800]) {
         backgroundColor = Colors.green[800]!;
       } else {
-        backgroundColor = Colors.grey[800]!;
+        backgroundColor = Colors.teal[800]!;
       }
     });
   }
 
   Future<void> blinkRed() async {
-      setState(() {
-        backgroundColor = Colors.red[800]!;
-      });
+    setState(() {
+      backgroundColor = Colors.red[800]!;
+    });
 
-      await Future.delayed(Duration(milliseconds: 500));
+    await Future.delayed(Duration(milliseconds: 500));
 
-      setState(() {
-        backgroundColor = Colors.grey[800]!;
-      });
-    }
+    setState(() {
+      backgroundColor = Colors.teal[800]!;
+    });
+  }
 }

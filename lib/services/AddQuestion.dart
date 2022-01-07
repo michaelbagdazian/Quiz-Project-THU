@@ -22,7 +22,7 @@ class AddQuestions {
     Questions = <Question>[];
   }
 
-  void setQuestions(List<Question> Questions){
+  void setQuestions(List<Question> Questions) {
     this.Questions = Questions;
   }
 
@@ -43,6 +43,7 @@ class AddQuestions {
 
       //~ Add the new Question to the list of questions
       Questions.add(_question);
+
       //~ Delete Question, for memory managment
       _question = null;
     } catch (e) {
@@ -69,7 +70,7 @@ class AddQuestions {
     try {
       //~ Create a new instance of Question
       Question? _question =
-      Question(questionText: questionText, answers: answers);
+          Question(questionText: questionText, answers: answers);
 
       //~ Add the new Question to the list of questions
       Questions.add(_question);

@@ -24,48 +24,72 @@ class _UsernameFormState extends State<UsernameForm> {
     final userData = Provider.of<UserData?>(context);
     final user = Provider.of<AppUser?>(context);
 
+    /// ~ size of the screen
+    Size size = MediaQuery.of(context).size;
+    double formHeight = size.height * (35 / 100);
+    double fontSize = size.height * (3 / 100);
+    double buttonWidth = size.width * (10 / 100);
+    double inputFieldSize = size.width * (17 / 100);
+    double sizedBoxHeigth = size.height * (3 / 100);
+
     if (userData != null && user != null) {
-      return Container(
-        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
-        height: 200.0,
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: <Widget>[
-              Text(
-                'Update username',
-                style: TextStyle(fontSize: 18.0, color: Colors.white),
-              ),
-              SizedBox(height: 20.0),
-              TextFormField(
-                initialValue: userData.username,
-                decoration: textInputDecoration,
-                validator: (val) => val!.isEmpty ? 'Please enter a name' : null,
-                onChanged: (val) => setState(() => _username = val),
-              ),
-              SizedBox(height: 10.0),
-              RaisedButton(
-                  color: buttons,
-                  child: Text(
-                    'Update',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
-                      await DatabaseService(uid: user.uid).updateUserData(
-                          _username.isEmpty ? userData.username : _username,
-                          userData.email,
-                          userData.avatar,
-                          userData.points);
-                      Navigator.pop(context);
-                    }
-                  }),
-            ],
+      return SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: inputFieldSize),
+          height: formHeight,
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  'Update username',
+                  style: TextStyle(fontSize: fontSize, color: Colors.white),
+                ),
+                SizedBox(height: sizedBoxHeigth),
+                TextFormField(
+                  style: TextStyle(fontSize: fontSize * 0.9),
+                  initialValue: userData.username,
+                  decoration: textInputDecoration,
+                  validator: (val) =>
+                      val!.isEmpty ? 'Please enter a name' : null,
+                  onChanged: (val) => setState(() => _username = val),
+                ),
+                SizedBox(height: sizedBoxHeigth),
+                FloatingActionButton.extended(
+                    label: const Text(
+                      'Update',
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontFamily: 'Lobster',
+                          color: Colors.white),
+                    ),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(10),
+                      ),
+                    ),
+                    backgroundColor: buttons,
+                    extendedPadding: EdgeInsets.all(buttonWidth),
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        await DatabaseService(uid: user.uid).updateUserData(
+                            _username.isEmpty ? userData.username : _username,
+                            userData.email,
+                            userData.avatar,
+                            userData.points);
+                        Navigator.pop(context);
+                      }
+                    }),
+              ],
+            ),
           ),
         ),
       );
     } else {
-      return Loading();
+      return Container(height: formHeight, child: Loading());
     }
   }
 }

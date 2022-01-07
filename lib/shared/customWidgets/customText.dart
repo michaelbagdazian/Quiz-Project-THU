@@ -4,9 +4,8 @@ import 'package:flutter/material.dart';
 
 class CustomText {
 //*this Widet is to print Text on the Page
-  Widget customText(String text,
+  Widget customText(String text, double welcomeTextSize,
       {String fontFam = 'Lobster',
-      double fontsize = 50,
       Color forgroundColor = Colors.white,
       Color? backgroundColor = Colors.teal,
       FontWeight fontweight = FontWeight.bold,
@@ -22,7 +21,7 @@ class CustomText {
             ..color = forgroundColor,
           fontWeight: fontweight,
           fontFamily: fontFam,
-          fontSize: fontsize,
+          fontSize: welcomeTextSize,
         ),
       ),
       Text(
@@ -31,7 +30,7 @@ class CustomText {
         style: TextStyle(
           fontWeight: fontweight,
           fontFamily: fontFam,
-          fontSize: fontsize,
+          fontSize: welcomeTextSize,
           color: backgroundColor,
         ),
       )

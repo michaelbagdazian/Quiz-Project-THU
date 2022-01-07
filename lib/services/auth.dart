@@ -77,8 +77,8 @@ class AuthService {
       // ~ create a document in Firestore Database for that user with the UID
       // ~ Together with the Firebase User instance we create the entry of User Data in the Firebase
       // ~ Username and email is provided, level is 0 and avatars is default
-      await DatabaseService(uid: user!.uid)
-          .updateUserData(displayName, 'anonymous@gmail.com', 'assets/avatars/default.png', 0);
+      await DatabaseService(uid: user!.uid).updateUserData(
+          displayName, 'anonymous@gmail.com', 'assets/avatars/default.png', 0);
 
       // ~ When we call signInAnon method from signIn page, then it will return user object to that sign in widget where we called this method
       return _userFromFirebaseUser(user);
