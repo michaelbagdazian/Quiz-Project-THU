@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+/// ignore_for_file: file_names
 
 import 'dart:ui';
 
@@ -28,7 +28,7 @@ class _EditQuizzUIState extends State<EditQuizzUI> {
   final TextEditingController quizTitle = TextEditingController();
   final TextEditingController? quizDescription = TextEditingController();
   final TextEditingController? tags = TextEditingController();
-  //? List of Categories
+  ///? List of Categories
   var categories = <String>[
     'Music',
     'Sport',
@@ -48,7 +48,7 @@ class _EditQuizzUIState extends State<EditQuizzUI> {
   AppUser? user;
   /*UserData? userData;*/
 
-  // ~ This variables helps us to make sure that we allow new data to be passed in the fields
+  /// ~ This variables helps us to make sure that we allow new data to be passed in the fields
   bool variablesInitiated = false;
 
   @override
@@ -60,7 +60,7 @@ class _EditQuizzUIState extends State<EditQuizzUI> {
     Map data = ModalRoute.of(context)!.settings.arguments as Map;
     user = Provider.of<AppUser?>(context);
 
-    // TODO Daniel: This should be moved about
+    /// TODO Daniel: This should be moved about
     if (!variablesInitiated) {
       quiz = data['quiz'] as Quiz;
       quizTitle.text = quiz!.quizTitle;
@@ -76,7 +76,7 @@ class _EditQuizzUIState extends State<EditQuizzUI> {
     } else {
       return Scaffold(
         resizeToAvoidBottomInset:
-            false, //~ this is here so we don't have an overflow problem
+            false, ///~ this is here so we don't have an overflow problem
         appBar: AppBar(
           centerTitle: true,
           title: const Text(
@@ -98,89 +98,89 @@ class _EditQuizzUIState extends State<EditQuizzUI> {
           child: SingleChildScrollView(
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                ///mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   SizedBox(
                     height: sizedBoxHeight,
                   ),
                   CustomText().customText('Editing A Quiz', welcomeTextSize),
-                  //* Empty space
+                  ///* Empty space
                   SizedBox(
                     height: sizedBoxHeight,
                   ),
-                  //* Text Field for Quizz name
+                  ///* Text Field for Quizz name
                   CustomTextField().customTextField(quizTitle, 'Quiz Title',
                       size.width * 0.7, TextInputType.text),
-                  //* Empty space
+                  ///* Empty space
                   SizedBox(
                     height: sizedBoxHeight / 2,
                   ),
-                  //* Text Field for Quizz name
+                  ///* Text Field for Quizz name
                   CustomTextField().customTextField(quizDescription!,
                       'Short Description', size.width * 0.7, TextInputType.text),
-                  //* Empty space
+                  ///* Empty space
                   SizedBox(
                     height: sizedBoxHeight / 2,
                   ),
-                  //* Text Field for Quizz name
+                  ///* Text Field for Quizz name
                   CustomTextField().customTextField(
                       tags!, 'Tags', size.width * 0.7, TextInputType.text,
                       hint: 'e.g: funny, nice, hard'),
-                  //* Empty space
+                  ///* Empty space
                   SizedBox(
                     height: sizedBoxHeight / 2,
                   ),
-                  //* Drop Down menu + Text
+                  ///* Drop Down menu + Text
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    ///mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      //* Text 'Category'
+                      ///* Text 'Category'
                       CustomText().customText('Category: ', 25,
                           fontweight: FontWeight.w100,
                           forgroundColor: Colors.transparent,
                           backgroundColor: Colors.white),
-                      //* Empty space
+                      ///* Empty space
                       SizedBox(width: size.width * 0.04),
-                      //* Drop Down menu
+                      ///* Drop Down menu
                       DropdownButtonHideUnderline(
                         child: DropdownButton2(
                           dropdownMaxHeight: size.height *
-                              0.3, //drop down menu is smaller but scrollable
-                          buttonHeight: 40, //eyecandy
-                          buttonWidth: (size.width * 0.7) * 0.5, //eyecandy
-                          itemHeight: 40, //eyecandy
-                          itemWidth: (size.width * 0.7) * 0.5, //eyecandy
-                          //aligns text inside button
+                              0.3, ///drop down menu is smaller but scrollable
+                          buttonHeight: 40, ///eyecandy
+                          buttonWidth: (size.width * 0.7) * 0.5, ///eyecandy
+                          itemHeight: 40, ///eyecandy
+                          itemWidth: (size.width * 0.7) * 0.5, ///eyecandy
+                          ///aligns text inside button
                           alignment: Alignment.bottomCenter,
-                          //hint text
-                          hint: const Text('Category'), //make the menu a bit transparent
-                          // font style of the items
+                          ///hint text
+                          hint: const Text('Category'), ///make the menu a bit transparent
+                          /// font style of the items
                           style: const TextStyle(
                               fontFamily: 'Lobster',
                               fontSize: 25,
                               color: Colors.black),
-                          //arrow icon
+                          ///arrow icon
                           icon: const Icon(
                             Icons.keyboard_arrow_down,
                             color: Colors.white54,
                           ),
-                          //drop menu items
-                          //~ We take the items that we want to display and we convert to a map
+                          ///drop menu items
+                          ///~ We take the items that we want to display and we convert to a map
                           items: categories.map((String category) {
                             return DropdownMenuItem(
                               child: Text(category),
                               value: category,
                             );
                           }).toList(),
-                          //value that is displayed on the menu, and to be changed later
+                          ///value that is displayed on the menu, and to be changed later
                           value:
-                          currentQuizCategory, //~ we convert the whole thing to a list to iterate over items
+                          currentQuizCategory, ///~ we convert the whole thing to a list to iterate over items
                           onChanged: (String? value) {
                             setState(() {
-                              //~ now dropDownVal has the value that the user has selected
+                              ///~ now dropDownVal has the value that the user has selected
                               currentQuizCategory = value!;
                             });
                           },
@@ -188,9 +188,9 @@ class _EditQuizzUIState extends State<EditQuizzUI> {
                       ),
                     ],
                   ),
-                  //* Empty space
+                  ///* Empty space
                   SizedBox(height: sizedBoxHeight / 2),
-                  //* Checkbox
+                  ///* Checkbox
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     mainAxisSize: MainAxisSize.min,
@@ -212,7 +212,7 @@ class _EditQuizzUIState extends State<EditQuizzUI> {
                           }),
                     ],
                   ),
-                  //* Empty space
+                  ///* Empty space
                   SizedBox(height: sizedBoxHeight / 2),
                   CustomButton(
                       label: 'Start',
@@ -235,16 +235,16 @@ class _EditQuizzUIState extends State<EditQuizzUI> {
           });
     }
     try {
-      /* //~ get the current user (logged in) here
+      /* ///~ get the current user (logged in) here
       if (user != null) {
-        //~ instance of database services class
+        ///~ instance of database services class
         DatabaseService databaseservices = DatabaseService(uid: user!.uid);
-        //~ get userdata from snapshot
+        ///~ get userdata from snapshot
         await databaseservices.userDataCollection
             .doc(user!.uid)
             .get()
             .then((QuerySnapshot) {
-          //~ we get the users data here by converting a snapshot to our UserData object
+          ///~ we get the users data here by converting a snapshot to our UserData object
           userData = databaseservices.userDataFromSnapshot(QuerySnapshot);
         });
       }
@@ -257,7 +257,7 @@ class _EditQuizzUIState extends State<EditQuizzUI> {
       List<String> ListOfTags =
           tags != null ? tags!.text.split(',') : ['generic'];*/
 
-      // TODO Daniel: change quiz before forwarding it further. Check if entries are not null
+      /// TODO Daniel: change quiz before forwarding it further. Check if entries are not null
       quiz!.quizTitle = quizTitle.text;
       quiz!.quizDescription = quizDescription!.text;
       quiz!.tags = tags!.text.split(", ");

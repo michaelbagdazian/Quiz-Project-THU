@@ -6,43 +6,43 @@ import 'package:crew_brew/shared/colors.dart';
 
 import '../../shared/customWidgets/customAlertBox.dart';
 
-// ! Information about the class:
-// ~ This class is the screen for login
-// ! Use of the class:
-// ~ This class extracts the information from the user necessary for login
+/// ! Information about the class:
+/// ~ This class is the screen for login
+/// ! Use of the class:
+/// ~ This class extracts the information from the user necessary for login
 
-// ! TODOS:
-// TODO Integrate the pretty design of login page
+/// ! TODOS:
+/// TODO Integrate the pretty design of login page
 
 class LogIn extends StatefulWidget {
   const LogIn({Key? key}) : super(key: key);
 
-  // final Function toggleView;
+  /// final Function toggleView;
 
   @override
   _LogInState createState() => _LogInState();
 }
 
 class _LogInState extends State<LogIn> {
-  // ! AuthService instance:
-  // ~ We need this instance to have access to the method defined in services/auth.dart called signInWithEmailAndPassword()
+  /// ! AuthService instance:
+  /// ~ We need this instance to have access to the method defined in services/auth.dart called signInWithEmailAndPassword()
   final AuthService _auth = AuthService();
   final _customText = CustomText();
-  // final _customTextFormFieldinstance = customTextFormField();
+  /// final _customTextFormFieldinstance = customTextFormField();
 
-  // ! formKey:
-  // ~ This key we are going to use to identify our form and we are
-  // ~ going to associate our forms with this global FormState key
-  // ~ when we want to validate our form, then we do it via this formKey
+  /// ! formKey:
+  /// ~ This key we are going to use to identify our form and we are
+  /// ~ going to associate our forms with this global FormState key
+  /// ~ when we want to validate our form, then we do it via this formKey
   final _formKey = GlobalKey<FormState>();
 
-  // ! Loading state:
-  // ~ when loading is true, then instead of Scaffold we will be showing Loading widget
-  // ~ it is set to true befure we provide data to the DB, waiting for it to respond
+  /// ! Loading state:
+  /// ~ when loading is true, then instead of Scaffold we will be showing Loading widget
+  /// ~ it is set to true befure we provide data to the DB, waiting for it to respond
   bool loading = false;
 
-  // ! Text field states:
-  // ~ This are the states which are used to request the data from the user for registration
+  /// ! Text field states:
+  /// ~ This are the states which are used to request the data from the user for registration
   String email = '';
   String password = '';
 
@@ -56,19 +56,19 @@ class _LogInState extends State<LogIn> {
     double inputBarWidth = size.width * (20 / 100);
     double buttonWidth = size.width * (8 / 100);
 
-    // ! popScreen():
-    // ~ Since we want to allow our user to go back to welcome screen ( perhaps he figures out that he is already registered ), we keep register screen on stack
-    // ~ After the login was successful, we remove the screen from the stack before moving to Home screen, so that we do not allow user to get back to registration
-    // ~ If he has just already registered
+    /// ! popScreen():
+    /// ~ Since we want to allow our user to go back to welcome screen ( perhaps he figures out that he is already registered ), we keep register screen on stack
+    /// ~ After the login was successful, we remove the screen from the stack before moving to Home screen, so that we do not allow user to get back to registration
+    /// ~ If he has just already registered
     void popScreen() {
       Navigator.pop(context);
     }
 
-    // ! If true, we return loading widget, otherwise Scaffold
+    /// ! If true, we return loading widget, otherwise Scaffold
     return loading
         ? Loading()
         : Scaffold(
-            //resizeToAvoidBottomInset: false,
+            ///resizeToAvoidBottomInset: false,
             appBar: AppBar(
               centerTitle: true,
               title: const Text(
@@ -85,7 +85,7 @@ class _LogInState extends State<LogIn> {
               child: Container(
                 constraints: const BoxConstraints.expand(),
                 decoration: const BoxDecoration(
-                  //* Background
+                  ///* Background
                   image: DecorationImage(
                       image: AssetImage('assets/images/bgtop.png'),
                       fit: BoxFit.cover),
@@ -98,13 +98,13 @@ class _LogInState extends State<LogIn> {
                         SizedBox(
                           height: size.height * 0.1,
                         ),
-                        //*Add the welcoming text first
+                        ///*Add the welcoming text first
                         _customText.customText('Sign in to your\n Account', welcomeTextSize),
                         SizedBox(
                           height: size.height * 0.1,
                         ),
 
-                        //! email
+                        ///! email
                         Padding(
                           padding: EdgeInsets.only(
                             left: inputBarWidth,
@@ -113,7 +113,7 @@ class _LogInState extends State<LogIn> {
                           child: TextFormField(
                               keyboardType: TextInputType.emailAddress,
 
-                              // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
+                              /// ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
                               decoration: const InputDecoration(
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius:
@@ -132,23 +132,23 @@ class _LogInState extends State<LogIn> {
                                   fontSize: 20.0,
                                 ),
                               ),
-                              // ! validator property:
-                              // ~ we return null value if this formField is VALID or a string it's NOT VALID
-                              // ~ validator will be used in RaisedButton when calling _formKey.currentState!.validate()
+                              /// ! validator property:
+                              /// ~ we return null value if this formField is VALID or a string it's NOT VALID
+                              /// ~ validator will be used in RaisedButton when calling _formKey.currentState!.validate()
                               validator: (val) =>
                                   val!.isEmpty ? 'Enter an email' : null,
-                              // ! onChanged property:
-                              // ~ When information is entered into the TextForField, this property is triggered
+                              /// ! onChanged property:
+                              /// ~ When information is entered into the TextForField, this property is triggered
                               onChanged: (val) {
-                                // ~ We take email state and set it equal to value which is in e-mail textField
-                                // ~ We also make use of trim() function to remove any spaces
+                                /// ~ We take email state and set it equal to value which is in e-mail textField
+                                /// ~ We also make use of trim() function to remove any spaces
                                 setState(() => email = val.trim());
                               }),
                         ),
                         SizedBox(
                           height: sizedBoxHeight,
                         ),
-                        //! password
+                        ///! password
                         Padding(
                           padding: EdgeInsets.only(
                             left: (inputBarWidth),
@@ -156,7 +156,7 @@ class _LogInState extends State<LogIn> {
                           ),
                           child: TextFormField(
                               keyboardType: TextInputType.visiblePassword,
-                              // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
+                              /// ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
                               decoration: const InputDecoration(
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius:
@@ -175,19 +175,19 @@ class _LogInState extends State<LogIn> {
                                   fontSize: 20.0,
                                 ),
                               ),
-                              // ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
+                              /// ! TextInputDecoration is defined in shared/constants.dart. We extend the predefined widget with method 'copyWith'
                               obscureText: true,
-                              // ! validator property:
-                              // ~ we return null value if this formField is VALID or a string it's NOT VALID
-                              // ~ validator will be used in RaisedButton when calling _formKey.currentState!.validate()
+                              /// ! validator property:
+                              /// ~ we return null value if this formField is VALID or a string it's NOT VALID
+                              /// ~ validator will be used in RaisedButton when calling _formKey.currentState!.validate()
                               validator: (val) => val!.length < 6
                                   ? 'Enter a password 6+ chars long'
                                   : null,
-                              // ! onChanged property:
-                              // ~ When information is entered into the TextForField, this property is triggered
+                              /// ! onChanged property:
+                              /// ~ When information is entered into the TextForField, this property is triggered
                               onChanged: (val) {
-                                // ~ We take password state and set it equal to value which is in password textField
-                                // ~ We also make use of trim() function to remove any spaces
+                                /// ~ We take password state and set it equal to value which is in password textField
+                                /// ~ We also make use of trim() function to remove any spaces
                                 setState(() => password = val);
                               }),
                         ),
@@ -195,28 +195,28 @@ class _LogInState extends State<LogIn> {
                           height: sizedBoxHeight*2,
                         ),
                         FloatingActionButton.extended(
-                          // ! onPressed():
-                          // ~ onPressed is async, because we interract with Firebase and it takes some time
+                          /// ! onPressed():
+                          /// ~ onPressed is async, because we interract with Firebase and it takes some time
                           onPressed: () async {
-                            // ~ Here we check if our form is valid
-                            // ~ currentState tells us what values are inside the form fields
-                            // ~ validate() method uses validator properties in the TextFormFields
+                            /// ~ Here we check if our form is valid
+                            /// ~ currentState tells us what values are inside the form fields
+                            /// ~ validate() method uses validator properties in the TextFormFields
                             if (_formKey.currentState!.validate()) {
-                              // * Here we decide to show the loading screen
+                              /// * Here we decide to show the loading screen
                               setState(() => loading = true);
-                              // ~ We will get null or AppUser, so we don't know the type of return. Therefore we use dynamic
-                              // ~ We await for the result from the Firebase
+                              /// ~ We will get null or AppUser, so we don't know the type of return. Therefore we use dynamic
+                              /// ~ We await for the result from the Firebase
                               dynamic result =
                                   await _auth.signInWithEmailAndPassword(
                                       email, password, showError);
-                              // ~ If login is not succesful, we provide an error message
+                              /// ~ If login is not succesful, we provide an error message
                               if (result == null) {
                                 setState(() {
-                                  // * Here we decide to remove the loading screen
+                                  /// * Here we decide to remove the loading screen
                                   loading = false;
                                 });
-                                // ! If login is successful:
-                                // ~ pop current screen from the stack then it's automatically redirected to Home page
+                                /// ! If login is successful:
+                                /// ~ pop current screen from the stack then it's automatically redirected to Home page
                               } else {
                                 popScreen();
                               }

@@ -6,7 +6,7 @@ import 'package:crew_brew/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:crew_brew/shared/colors.dart';
 
-/// ignore_for_file: file_names, non_constant_identifier_names
+// ignore_for_file: file_names, non_constant_identifier_names
 /// ! Information about the class:
 /// ~ This class represents sharedQuizes Page
 /// ! Use of the class:

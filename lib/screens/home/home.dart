@@ -1,4 +1,4 @@
-//import 'dart:ffi';
+///import 'dart:ffi';
 
 import 'package:crew_brew/models/user/AppUser.dart';
 import 'package:crew_brew/models/user/UserData.dart';
@@ -10,13 +10,13 @@ import 'package:crew_brew/shared/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-// ! Information about the class:
-// ~ This class represents myProfile page
-// ! Use of the class:
-// ~ It shows the user specific information
+/// ! Information about the class:
+/// ~ This class represents myProfile page
+/// ! Use of the class:
+/// ~ It shows the user specific information
 
-// ! TODOS:
-// TODO Improve loading as done in welcome and sign_in with boolean loading variable
+/// ! TODOS:
+/// TODO Improve loading as done in welcome and sign_in with boolean loading variable
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -26,8 +26,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  // ! States
-  // ~ Here states of the profile page are defined
+  /// ! States
+  /// ~ Here states of the profile page are defined
   int points = 0;
   String avatar = 'assets/avatars/default.png';
   String username = '';
@@ -49,8 +49,8 @@ class _HomeState extends State<Home> {
     double inputBarWidth = size.width * (20 / 100);
     double buttonWidth = size.width * (8 / 100);
 
-    // ! _showSettingsPanel()
-    // ~ panel for updating userData
+    /// ! _showSettingsPanel()
+    /// ~ panel for updating userData
     void _showSettingsPanel(String command) {
       showModalBottomSheet(
           context: context,
@@ -67,20 +67,20 @@ class _HomeState extends State<Home> {
           });
     }
 
-    // ! Provider.of<AppUser?>(context):
-    // ~ Here we listen to the stream, defined in services/auth.dart and provided by main.dart, which informs us about login state of the user
+    /// ! Provider.of<AppUser?>(context):
+    /// ~ Here we listen to the stream, defined in services/auth.dart and provided by main.dart, which informs us about login state of the user
     final user = Provider.of<AppUser?>(context);
 
-    // ! If user is logged in, proceed further
+    /// ! If user is logged in, proceed further
     if (user != null) {
-      // ! StreamBuilder<UserData>
-      // ~ StreamBuilder is a widget that builds itself based on the latest snapshot of interaction with a stream
-      // ~ Information about the UserData is forwarded down the stream ONLY for this class. The stream does not go below to children elements
-      // ~ If the data is changed in the DB, it is immideately reflected in the UserProfile
+      /// ! StreamBuilder<UserData>
+      /// ~ StreamBuilder is a widget that builds itself based on the latest snapshot of interaction with a stream
+      /// ~ Information about the UserData is forwarded down the stream ONLY for this class. The stream does not go below to children elements
+      /// ~ If the data is changed in the DB, it is immideately reflected in the UserProfile
       return StreamBuilder<UserData>(
           stream: DatabaseService(uid: user.uid).userData,
           builder: (context, snapshot) {
-            // ! If there is a data for current user in the DB, then assign it to the variables, otherwise display Loading screen
+            /// ! If there is a data for current user in the DB, then assign it to the variables, otherwise display Loading screen
             if (snapshot.hasData) {
               UserData? userData = snapshot.data;
               points = userData!.points;
@@ -89,15 +89,15 @@ class _HomeState extends State<Home> {
               email = userData.email;
 
               return Scaffold(
-                // ! NavBar():
-                // ~ Here we provide NavBar for property drawer. This is our navigation bar defined in navigationBar/navBar.dart
-                //backgroundColor: Colors.grey[900],
+                /// ! NavBar():
+                /// ~ Here we provide NavBar for property drawer. This is our navigation bar defined in navigationBar/navBar.dart
+                ///backgroundColor: Colors.grey[900],
                 appBar: AppBar(
                   title: Text('Home'),
                   centerTitle: true,
                   backgroundColor: topbar,
                   leading: const MenuButton(),
-                  // ~ Elavation set to 0 removes the shadow ( which makes 3D effect )
+                  /// ~ Elavation set to 0 removes the shadow ( which makes 3D effect )
                   elevation: 0.0,
                   actions: <Widget>[
                     IconButton(
@@ -112,7 +112,7 @@ class _HomeState extends State<Home> {
                 body: Container(
                   constraints: const BoxConstraints.expand(),
                   decoration: const BoxDecoration(
-                    //* Background
+                    ///* Background
                     image: DecorationImage(
                         image: AssetImage('assets/images/bgtop.png'),
                         fit: BoxFit.cover),
@@ -122,25 +122,25 @@ class _HomeState extends State<Home> {
                         EdgeInsets.fromLTRB(horizontalPadding, verticalPadding, horizontalPadding, 0.0),
                     child: SingleChildScrollView(
                       child: Column(
-                        // ~ This alligns everything to the left
+                        /// ~ This alligns everything to the left
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          // ~ Make a circle image with CircleAvatar
+                          /// ~ Make a circle image with CircleAvatar
                           Center(
                               child: InkWell(
                             onTap: () => _showSettingsPanel("avatars"),
                             child: CircleAvatar(
                               backgroundImage:
-                                  // NetworkImage(
-                                  //  userData.avatar),
+                                  /// NetworkImage(
+                                  ///  userData.avatar),
                                   AssetImage(avatar),
                               backgroundColor: Colors.transparent,
                               radius: avatarSize,
                             ),
                           )),
-                          // ~ This is a line which literally looks like divider
+                          /// ~ This is a line which literally looks like divider
                           Divider(
-                            // ~ This is the height between top element and bottom, not the line itself
+                            /// ~ This is the height between top element and bottom, not the line itself
                             height: dividerSize,
                             color: Colors.white,
                           ),
@@ -152,7 +152,7 @@ class _HomeState extends State<Home> {
                             ),
                             color: topbar.withOpacity(.7),
                             shadowColor: Colors.transparent,
-                            //Colors.transparent,
+                            ///Colors.transparent,
                             elevation: 2.0,
                             child: Padding(
                               padding:
@@ -160,18 +160,18 @@ class _HomeState extends State<Home> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  // * Start username field
+                                  /// * Start username field
                                   Text(
                                     'USERNAME',
                                     style: TextStyle(
                                       color: Colors.white,
-                                      // ~ This gives the spacing between the letters
+                                      /// ~ This gives the spacing between the letters
                                       letterSpacing: 2.0,
                                       fontSize: fontSize
                                     ),
                                   ),
-                                  // ~ Creates an empty invisible box for us of a height and width we specify
-                                  // ~ we put it between the elements we want to have space in between
+                                  /// ~ Creates an empty invisible box for us of a height and width we specify
+                                  /// ~ we put it between the elements we want to have space in between
                                   SizedBox(height: sizedBoxHeight),
                                   Row(
                                     children: <Widget>[
@@ -194,22 +194,22 @@ class _HomeState extends State<Home> {
                                       ),
                                     ],
                                   ),
-                                  // * End username field
+                                  /// * End username field
                                   SizedBox(height: sizedBoxHeight * 3),
-                                  // * Start current level field
+                                  /// * Start current level field
                                   Text(
                                     'POINTS',
                                     style: TextStyle(
                                       color: Colors.white,
-                                      // ~ This gives the spacing between the letters
+                                      /// ~ This gives the spacing between the letters
                                       letterSpacing: 2.0,
                                       fontSize: fontSize,
                                     ),
                                   ),
-                                  // ~ Creates an empty invisible box for us of a height and width we specify
+                                  /// ~ Creates an empty invisible box for us of a height and width we specify
                                   SizedBox(height: sizedBoxHeight),
                                   Text(
-                                    // ~ With '$' we output the contat of the data to string
+                                    /// ~ With '$' we output the contat of the data to string
                                     '$points',
                                     style: TextStyle(
                                         color: Colors.amberAccent[200],
@@ -217,11 +217,11 @@ class _HomeState extends State<Home> {
                                         fontSize: fontSize * 1.3,
                                         fontWeight: FontWeight.bold),
                                   ),
-                                  // * End current level field
+                                  /// * End current level field
                                   SizedBox(height: sizedBoxHeight * 3),
-                                  // * Start e-mail field
+                                  /// * Start e-mail field
                                   Row(
-                                    // child: Row(
+                                    /// child: Row(
                                     children: <Widget>[
                                       Icon(
                                         Icons.email,
@@ -250,8 +250,8 @@ class _HomeState extends State<Home> {
                                       ),
                                     ],
                                   ),
-                                  // ),
-                                  // * End e-mail field
+                                  /// ),
+                                  /// * End e-mail field
                                 ],
                               ),
                             ),
@@ -262,12 +262,12 @@ class _HomeState extends State<Home> {
                   ),
                 ),
               );
-              // ! If the user data is still fetching from DB, return Loading screen
+              /// ! If the user data is still fetching from DB, return Loading screen
             } else {
               return Loading();
             }
           });
-      // ! If user is not logged in or data is still fetching from DB, return Loading screen
+      /// ! If user is not logged in or data is still fetching from DB, return Loading screen
     } else {
       return Loading();
     }

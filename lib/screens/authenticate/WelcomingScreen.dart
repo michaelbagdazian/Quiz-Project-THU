@@ -22,33 +22,33 @@ class WelcominScreen extends StatefulWidget {
 }
 
 class _WelcominScreenState extends State<WelcominScreen> {
-  //couple of objects
+  ///couple of objects
   final CustomText _customText = CustomText();
 
-  //couple of controllers
+  ///couple of controllers
   final TextEditingController _pinController = TextEditingController();
 
   final TextEditingController _displayNameController = TextEditingController();
 
-// listen to changes on _displaycontroller
+/// listen to changes on _displaycontroller
   @override
   void initState() {
     super.initState();
 
-    // Start listening to changes.
+    /// Start listening to changes.
     _displayNameController.addListener(_getDisplayName);
   }
 
-// delete listener when we leave the screen
+/// delete listener when we leave the screen
   @override
   void dispose() {
-    // Clean up the controller when the widget is removed from the widget tree.
-    // This also removes the _printLatestValue listener.
+    /// Clean up the controller when the widget is removed from the widget tree.
+    /// This also removes the _printLatestValue listener.
     _displayNameController.dispose();
     super.dispose();
   }
 
-//get the changes from the _displaycontroller
+///get the changes from the _displaycontroller
   Future _getDisplayName() async {
     return _displayNameController.text;
   }
@@ -57,12 +57,12 @@ class _WelcominScreenState extends State<WelcominScreen> {
 
   @override
   Widget build(BuildContext context) {
-    /// ~ size of the screen
+    //// ~ size of the screen
     Size size = MediaQuery
         .of(context)
         .size;
 
-    /// ~ sizes per widget
+    //// ~ sizes per widget
     double welcomeTextSize = size.height * (8 / 100);
     double eduLogoHeight = size.height * (13 / 100.0);
     double verticalPadding = size.height * (1 / 100);
@@ -71,34 +71,34 @@ class _WelcominScreenState extends State<WelcominScreen> {
     double buttonWidth = size.width * (8 / 100);
 
     return Scaffold(
-      //see signup.dart
-      //resizeToAvoidBottomInset: false,
+      ///see signup.dart
+      ///resizeToAvoidBottomInset: false,
       body: Container(
         constraints: const BoxConstraints.expand(),
         decoration: const BoxDecoration(
-          //* Background
+          ///* Background
           image: DecorationImage(
               image: AssetImage('assets/images/bgtop.png'),
               fit: BoxFit.cover),
         ),
         child:
-        //*children inside screen
+        ///*children inside screen
         SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.all(verticalPadding),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                //*Text
+                ///*Text
                 _customText.customText(
                     "Welcome to\n The Quizzler", welcomeTextSize,
                     backgroundColor: welcomeh),
-                //*Logo/pic on welcoming screen
+                ///*Logo/pic on welcoming screen
                 eduLogo(eduLogoHeight),
                 SizedBox(
                   height: sizedBoxHeight,
                 ),
-                //*create space between the widget and the sides of the screen
+                ///*create space between the widget and the sides of the screen
                 CustomTextField().customTextField(
                   _displayNameController,
                   'Display Name',
@@ -106,11 +106,11 @@ class _WelcominScreenState extends State<WelcominScreen> {
                   TextInputType.text,
                 ),
                 SizedBox(height: sizedBoxHeight),
-                //* Button
+                ///* Button
                 joinButton(context, buttonWidth),
                 SizedBox(height: sizedBoxHeight),
-                //*just a widget with the buttons for login or sign up
-                //* frontend can improve the quality of this widget by using the custom Widgets; only if they want to
+                ///*just a widget with the buttons for login or sign up
+                ///* frontend can improve the quality of this widget by using the custom Widgets; only if they want to
                 signInOrUp(context, buttonWidth, sizedBoxHeight),
               ],
             ),
@@ -126,9 +126,9 @@ class _WelcominScreenState extends State<WelcominScreen> {
       extendedPadding: EdgeInsets.all(width * 0.95),
       extendedIconLabelSpacing: 10,
       onPressed: () async {
-        //get the entered display name
+        ///get the entered display name
         String _username = await _getDisplayName();
-        // ~ Signin anonymously
+        /// ~ Signin anonymously
         dynamic result = await _auth.signInAnon(() async {
           await showDialog(
               context: context,
@@ -136,7 +136,7 @@ class _WelcominScreenState extends State<WelcominScreen> {
                 return customAlertBox("An Error Has Happened !!!", "");
               });
         }, displayName: _username);
-        // ~ If login is not succesful, we provide an error message
+        /// ~ If login is not succesful, we provide an error message
         if (result == null) {
           await showDialog(
               context: context,
@@ -165,7 +165,7 @@ class _WelcominScreenState extends State<WelcominScreen> {
     );
   }
 
-//? The following widget is a column with two buttons and a text between them (login button ---Or--- Register)
+///? The following widget is a column with two buttons and a text between them (login button ---Or--- Register)
   Widget signInOrUp(BuildContext cntxt, double width, double sizedBoxHeight) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
@@ -215,7 +215,7 @@ class _WelcominScreenState extends State<WelcominScreen> {
     );
   }
 
-//small little log at the top of the wecloming page, use whatever pic you want or even comment it out if you want to
+///small little log at the top of the wecloming page, use whatever pic you want or even comment it out if you want to
   Widget eduLogo(double height) {
     return Container(
       margin: EdgeInsets.only(top: 10),
@@ -228,7 +228,7 @@ class _WelcominScreenState extends State<WelcominScreen> {
     );
   }
 
-  //?these are to redirect user to a link
+  ///?these are to redirect user to a link
   _launchURLApp() async {
     const url = 'https://flutterdevs.com/';
     if (await launch(url, forceSafariVC: true, forceWebView: true)) {} else {
