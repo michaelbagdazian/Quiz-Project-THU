@@ -25,9 +25,9 @@ class _QuizSearch extends State<QuizSearch> {
               if (cusIcon.icon == Icons.search) {
                 cusIcon = const Icon(Icons.cancel);
                 widget.title = TextField(
-                    // ~ This replaces the button on the keyboard of the device
+                    /// ~ This replaces the button on the keyboard of the device
                     textInputAction: TextInputAction.go,
-                    // ~ When 'go' button is pressed, current widget is informed about state change
+                    /// ~ When 'go' button is pressed, current widget is informed about state change
                     onSubmitted: (text) => setState(() => searchInput = text),
                     decoration: const InputDecoration(
                       border: InputBorder.none,

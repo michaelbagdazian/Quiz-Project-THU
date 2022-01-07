@@ -4,7 +4,7 @@ import 'package:crew_brew/models/quiz/Quiz.dart';
 import 'package:crew_brew/models/quiz/quiz_state.dart';
 import 'package:flutter/material.dart';
 import 'package:crew_brew/shared/colors.dart';
-// ~ Done by Luke & Holger
+/// ~ Done by Luke & Holger
 
 class ActiveQuiz extends StatefulWidget {
   final Quiz quiz;
@@ -55,7 +55,7 @@ class _ActiveQuizState extends State<ActiveQuiz> {
       }
     }
     return -1;
-    //TODO: must have a way to handle spectators i.e. players not in list an catch potential errors
+    ///TODO: must have a way to handle spectators i.e. players not in list an catch potential errors
   }
 
   double timerProgress = 1;
@@ -102,14 +102,14 @@ class _ActiveQuizState extends State<ActiveQuiz> {
       widget.stateVector.buttonsPressedSaved;
     });
 
-    //buttonsActive = false;
-    //showTimeToAnswer = true;
+    ///buttonsActive = false;
+    ///showTimeToAnswer = true;
     Timer(const Duration(seconds: 3), () {
       widget.measureTime.reset();
       timerProgress = 1;
       if (widget.stateVector.currentQuestion ==
           widget.quiz.listOfQuestions.length - 1) {
-        //route to result.dart with stateVector
+        ///route to result.dart with stateVector
         QuizState results =
         QuizState(quiz: widget.quiz, stateVector: widget.stateVector);
         Navigator.pushNamed(context, '/results', arguments: results);
@@ -136,7 +136,7 @@ class _ActiveQuizState extends State<ActiveQuiz> {
         });
         if (timerProgress <= 0) {
           widget.updateProgress.cancel();
-          //answerCorrect.add(0);
+          ///answerCorrect.add(0);
           widget.stateVector.setAnswerCorrect(
               widget.myPlayerNumber, widget.stateVector.currentQuestion, false);
           timerProgress = 1;
@@ -185,7 +185,7 @@ class _ActiveQuizState extends State<ActiveQuiz> {
                       left: (theme.textTheme.bodyText2!.fontSize)! * 6,
                       right: (theme.textTheme.bodyText2!.fontSize)! * 6,
                       bottom: (theme.textTheme.bodyText2!.fontSize)! *
-                          6), // ~Equivalent to 4 em's
+                          6), /// ~Equivalent to 4 em's
                   decoration:
                   const BoxDecoration(color: Color.fromARGB(50, 0, 0, 0)),
                   alignment: Alignment.center,
@@ -260,7 +260,7 @@ class _ActiveQuizState extends State<ActiveQuiz> {
                   ),
                 ),
 
-                //for debug
+                ///for debug
                 Row(children: <Widget>[
                   Expanded(
                       child: Padding(

@@ -47,7 +47,7 @@ class GameState {
    //     text = json['text'] as String;
 
   Map toJson() {
-    // room for any damned null safety checks
+    /// room for any damned null safety checks
     return {
       'id': id,
       'currentQuestion': currentQuestion,
@@ -69,7 +69,7 @@ class GameState {
     String ret = "Current Question: $currentQuestion, Player Points: ${playerPoints.toString()},"
         "Buttons Pressed: ${buttonsPressed.toString()},"
         "Answer Times: ${answerTimes.toString()},"
-        //"Buttons Correct: ${buttonsPressedCorrect.toString()}"
+        ///"Buttons Correct: ${buttonsPressedCorrect.toString()}"
 
     ;
     return ret;

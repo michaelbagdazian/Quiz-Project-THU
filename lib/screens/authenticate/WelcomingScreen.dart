@@ -1,4 +1,4 @@
-// ignore_for_file: unused_local_variable, file_names, prefer_const_constructors, duplicate_ignore, unnecessary_new
+/// ignore_for_file: unused_local_variable, file_names, prefer_const_constructors, duplicate_ignore, unnecessary_new
 
 import 'dart:ui';
 import 'package:crew_brew/services/auth.dart';
@@ -22,75 +22,75 @@ class WelcominScreen extends StatefulWidget {
 }
 
 class _WelcominScreenState extends State<WelcominScreen> {
-  //couple of objects
+  ///couple of objects
   final CustomText _customText = CustomText();
 
-  //couple of controllers
+  ///couple of controllers
   final TextEditingController _pinController = TextEditingController();
 
   final TextEditingController _displayNameController = TextEditingController();
 
-// listen to changes on _displaycontroller
+/// listen to changes on _displaycontroller
   @override
   void initState() {
     super.initState();
 
-    // Start listening to changes.
+    /// Start listening to changes.
     _displayNameController.addListener(_getDisplayName);
   }
 
-// delete listener when we leave the screen
+/// delete listener when we leave the screen
   @override
   void dispose() {
-    // Clean up the controller when the widget is removed from the widget tree.
-    // This also removes the _printLatestValue listener.
+    /// Clean up the controller when the widget is removed from the widget tree.
+    /// This also removes the _printLatestValue listener.
     _displayNameController.dispose();
     super.dispose();
   }
 
-//get the changes from the _displaycontroller
+///get the changes from the _displaycontroller
   Future _getDisplayName() async {
     return _displayNameController.text;
   }
 
-  //size of the screen
+  ///size of the screen
   final AuthService _auth = AuthService();
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      //see signup.dart
+      ///see signup.dart
       resizeToAvoidBottomInset: false,
       body: Container(
         constraints: const BoxConstraints.expand(),
         decoration: const BoxDecoration(
-          //* Background
+          ///* Background
           image: DecorationImage(
               image: AssetImage('assets/images/bgtop.png'), fit: BoxFit.cover),
         ),
         child:
-            //*children inside screen
+            ///*children inside screen
             Padding(
           padding: const EdgeInsets.all(1.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              //*Text
+              ///*Text
               _customText.customText("Welcome to\n The Quizzler !!!",
                   backgroundColor: welcomeh),
-              //*Logo/pic on welcoming screen
+              ///*Logo/pic on welcoming screen
               eduLogo(),
               SizedBox(
                 height: size.height * 0.01,
               ),
-              //*create space between the widget and the sides of the screen
+              ///*create space between the widget and the sides of the screen
               Container(
                 padding: EdgeInsets.only(
                   left: (0.2 * size.width),
                   right: (0.2 * size.width),
                 ),
-                //*text field to add type in the display name; you can probably use the custom ones, but i will leave that to the frontend team
+                ///*text field to add type in the display name; you can probably use the custom ones, but i will leave that to the frontend team
                 child: CustomTextField().customTextField(
                   _displayNameController,
                   'Display Name',
@@ -104,36 +104,36 @@ class _WelcominScreenState extends State<WelcominScreen> {
                   left: (0.2 * size.width),
                   right: (0.2 * size.width),
                 ),
-                //*text field to add type in the pin of the live quizz; you can probably use the custom ones, but i will leave that to the frontend team
+                ///*text field to add type in the pin of the live quizz; you can probably use the custom ones, but i will leave that to the frontend team
                 child: CustomTextField().customTextField(
                     _pinController, 'Pin', size.width, TextInputType.text),
-                //  TextField(
-                //   keyboardType: TextInputType.text,
-                //   controller: _pinController,
-                //   decoration: InputDecoration(
-                //     enabledBorder: OutlineInputBorder(
-                //       borderRadius: BorderRadius.all(Radius.circular(12.0)),
-                //       borderSide: BorderSide(color: texts),
-                //     ),
-                //     focusedBorder: OutlineInputBorder(
-                //         borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                //         borderSide: BorderSide(color: borders)),
-                //     contentPadding: EdgeInsets.all(15),
-                //     labelText: 'Pin',
-                //     labelStyle: TextStyle(
-                //       fontFamily: 'Lobster',
-                //       color: texts,
-                //       fontSize: 15.0,
-                //     ),
-                //   ),
-                // ),
+                ///  TextField(
+                ///   keyboardType: TextInputType.text,
+                ///   controller: _pinController,
+                ///   decoration: InputDecoration(
+                ///     enabledBorder: OutlineInputBorder(
+                ///       borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                ///       borderSide: BorderSide(color: texts),
+                ///     ),
+                ///     focusedBorder: OutlineInputBorder(
+                ///         borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                ///         borderSide: BorderSide(color: borders)),
+                ///     contentPadding: EdgeInsets.all(15),
+                ///     labelText: 'Pin',
+                ///     labelStyle: TextStyle(
+                ///       fontFamily: 'Lobster',
+                ///       color: texts,
+                ///       fontSize: 15.0,
+                ///     ),
+                ///   ),
+                /// ),
               ),
               SizedBox(height: size.height * 0.02),
-              //* Button
+              ///* Button
               joinButton(context),
               SizedBox(height: size.height * 0.05),
-              //*just a widget with the buttons for login or sign up
-              //* frontend can improve the quality of this widget by using the custom Widgets; only if they want to
+              ///*just a widget with the buttons for login or sign up
+              ///* frontend can improve the quality of this widget by using the custom Widgets; only if they want to
               signInOrUp(context),
             ],
           ),
@@ -148,9 +148,9 @@ class _WelcominScreenState extends State<WelcominScreen> {
       extendedPadding: EdgeInsets.fromLTRB(15, 40, 40, 40),
       extendedIconLabelSpacing: 20,
       onPressed: () async {
-        //get the entered display name
+        ///get the entered display name
         String _username = await _getDisplayName();
-        // ~ Signin anonymously
+        /// ~ Signin anonymously
         dynamic result = await _auth.signInAnon(() async {
           await showDialog(
               context: context,
@@ -158,7 +158,7 @@ class _WelcominScreenState extends State<WelcominScreen> {
                 return customAlertBox("An Error Has Happened !!!", "");
               });
         }, displayName: _username);
-        // ~ If login is not succesful, we provide an error message
+        /// ~ If login is not succesful, we provide an error message
         if (result == null) {
           await showDialog(
               context: context,
@@ -187,7 +187,7 @@ class _WelcominScreenState extends State<WelcominScreen> {
     );
   }
 
-//? The following widget is a column with two buttons and a text between them (login button ---Or--- Register)
+///? The following widget is a column with two buttons and a text between them (login button ---Or--- Register)
   Widget signInOrUp(BuildContext cntxt) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
@@ -237,7 +237,7 @@ class _WelcominScreenState extends State<WelcominScreen> {
     );
   }
 
-//small little log at the top of the wecloming page, use whatever pic you want or even comment it out if you want to
+///small little log at the top of the wecloming page, use whatever pic you want or even comment it out if you want to
   Widget eduLogo() {
     return Container(
       margin: EdgeInsets.only(top: 10),
@@ -250,7 +250,7 @@ class _WelcominScreenState extends State<WelcominScreen> {
     );
   }
 
-  //?these are to redirect user to a link
+  ///?these are to redirect user to a link
   _launchURLApp() async {
     const url = 'https://flutterdevs.com/';
     if (await launch(url, forceSafariVC: true, forceWebView: true)) {

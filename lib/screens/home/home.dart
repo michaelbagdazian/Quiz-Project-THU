@@ -10,13 +10,13 @@ import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
-// ! Information about the class:
-// ~ This class represents myProfile page
-// ! Use of the class:
-// ~ It shows the user specific information
+/// ! Information about the class:
+/// ~ This class represents myProfile page
+/// ! Use of the class:
+/// ~ It shows the user specific information
 
-// ! TODOS:
-// TODO Improve loading as done in welcome and sign_in with boolean loading variable
+/// ! TODOS:
+/// TODO Improve loading as done in welcome and sign_in with boolean loading variable
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -26,8 +26,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  // ! States
-  // ~ Here states of the profile page are defined
+  /// ! States
+  /// ~ Here states of the profile page are defined
   int points = 0;
   String avatar = 'assets/avatars/default.png';
   String username = '';
@@ -36,8 +36,8 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    // ! _showSettingsPanel()
-    // ~ panel for updating userData
+    /// ! _showSettingsPanel()
+    /// ~ panel for updating userData
     void _showSettingsPanel(String command) {
       showModalBottomSheet(
           context: context,
@@ -49,20 +49,20 @@ class _HomeState extends State<Home> {
           });
     }
 
-    // ! Provider.of<AppUser?>(context):
-    // ~ Here we listen to the stream, defined in services/auth.dart and provided by main.dart, which informs us about login state of the user
+    /// ! Provider.of<AppUser?>(context):
+    /// ~ Here we listen to the stream, defined in services/auth.dart and provided by main.dart, which informs us about login state of the user
     final user = Provider.of<AppUser?>(context);
 
-    // ! If user is logged in, proceed further
+    /// ! If user is logged in, proceed further
     if (user != null) {
-      // ! StreamBuilder<UserData>
-      // ~ StreamBuilder is a widget that builds itself based on the latest snapshot of interaction with a stream
-      // ~ Information about the UserData is forwarded down the stream ONLY for this class. The stream does not go below to children elements
-      // ~ If the data is changed in the DB, it is immideately reflected in the UserProfile
+      /// ! StreamBuilder<UserData>
+      /// ~ StreamBuilder is a widget that builds itself based on the latest snapshot of interaction with a stream
+      /// ~ Information about the UserData is forwarded down the stream ONLY for this class. The stream does not go below to children elements
+      /// ~ If the data is changed in the DB, it is immideately reflected in the UserProfile
       return StreamBuilder<UserData>(
           stream: DatabaseService(uid: user.uid).userData,
           builder: (context, snapshot) {
-            // ! If there is a data for current user in the DB, then assign it to the variables, otherwise display Loading screen
+            /// ! If there is a data for current user in the DB, then assign it to the variables, otherwise display Loading screen
             if (snapshot.hasData) {
               UserData? userData = snapshot.data;
               points = userData!.points;
@@ -71,15 +71,15 @@ class _HomeState extends State<Home> {
               email = userData.email;
 
               return Scaffold(
-                // ! NavBar():
-                // ~ Here we provide NavBar for property drawer. This is our navigation bar defined in navigationBar/navBar.dart
+                /// ! NavBar():
+                /// ~ Here we provide NavBar for property drawer. This is our navigation bar defined in navigationBar/navBar.dart
                 backgroundColor: Colors.grey[900],
                 appBar: AppBar(
                   title: Text('Home'),
                   centerTitle: true,
                   backgroundColor: Colors.grey[850],
                   leading: const MenuButton(),
-                  // ~ Elavation set to 0 removes the shadow ( which makes 3D effect )
+                  /// ~ Elavation set to 0 removes the shadow ( which makes 3D effect )
                   elevation: 0.0,
                   actions: <Widget>[
                     IconButton(
@@ -94,10 +94,10 @@ class _HomeState extends State<Home> {
                 body: Padding(
                   padding: EdgeInsets.fromLTRB(30.0, 20.0, 30.0, 0.0),
                   child: Column(
-                    // ~ This alligns everything to the left
+                    /// ~ This alligns everything to the left
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      // ~ Make a circle image with CircleAvatar
+                      /// ~ Make a circle image with CircleAvatar
                       Center(
                           child: InkWell(
                             onTap: () => _showSettingsPanel("avatars"),
@@ -107,23 +107,23 @@ class _HomeState extends State<Home> {
                               radius: 70.0,
                         ),
                       )),
-                      // ~ This is a line which literally looks like divider
+                      /// ~ This is a line which literally looks like divider
                       Divider(
-                        // ~ This is the height between top element and bottom, not the line itself
+                        /// ~ This is the height between top element and bottom, not the line itself
                         height: 50.0,
                         color: Colors.grey[800],
                       ),
-                      // * Start username field
+                      /// * Start username field
                       Text(
                         'USERNAME',
                         style: TextStyle(
                           color: Colors.grey,
-                          // ~ This gives the spacing between the letters
+                          /// ~ This gives the spacing between the letters
                           letterSpacing: 2.0,
                         ),
                       ),
-                      // ~ Creates an empty invisible box for us of a height and width we specify
-                      // ~ we put it between the elements we want to have space in between
+                      /// ~ Creates an empty invisible box for us of a height and width we specify
+                      /// ~ we put it between the elements we want to have space in between
                       SizedBox(height: 10.0),
                       Row(
                         children: <Widget>[
@@ -145,21 +145,21 @@ class _HomeState extends State<Home> {
                           ),
                         ],
                       ),
-                      // * End username field
+                      /// * End username field
                       SizedBox(height: 30.0),
-                      // * Start current level field
+                      /// * Start current level field
                       Text(
                         'POINTS',
                         style: TextStyle(
                           color: Colors.grey,
-                          // ~ This gives the spacing between the letters
+                          /// ~ This gives the spacing between the letters
                           letterSpacing: 2.0,
                         ),
                       ),
-                      // ~ Creates an empty invisible box for us of a height and width we specify
+                      /// ~ Creates an empty invisible box for us of a height and width we specify
                       SizedBox(height: 10.0),
                       Text(
-                        // ~ With '$' we output the contat of the data to string
+                        /// ~ With '$' we output the contat of the data to string
                         '$points',
                         style: TextStyle(
                             color: Colors.amberAccent[200],
@@ -167,9 +167,9 @@ class _HomeState extends State<Home> {
                             fontSize: 28.0,
                             fontWeight: FontWeight.bold),
                       ),
-                      // * End current level field
+                      /// * End current level field
                       SizedBox(height: 30.0),
-                      // * Start e-mail field
+                      /// * Start e-mail field
                       Row(
                         children: <Widget>[
                           Icon(
@@ -195,17 +195,17 @@ class _HomeState extends State<Home> {
                           ),
                         ],
                       ),
-                      // * End e-mail field
+                      /// * End e-mail field
                     ],
                   ),
                 ),
               );
-              // ! If the user data is still fetching from DB, return Loading screen
+              /// ! If the user data is still fetching from DB, return Loading screen
             } else {
               return Loading();
             }
           });
-      // ! If user is not logged in or data is still fetching from DB, return Loading screen
+      /// ! If user is not logged in or data is still fetching from DB, return Loading screen
     } else {
       return Loading();
     }
