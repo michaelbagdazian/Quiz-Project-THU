@@ -1,3 +1,4 @@
+///@nodoc
 library step_progress_indicator;
 
 import 'dart:math';

@@ -13,7 +13,7 @@ import 'package:crew_brew/shared/customWidgets/customConfirmationBox.dart';
 import 'package:flutter/material.dart';
 import 'package:crew_brew/shared/customWidgets/customTextField.dart';
 import 'package:crew_brew/shared/customWidgets/customButton.dart';
-import 'package:crew_brew/shared/PorgressbarIndicator/step_progress_indicator.dart';
+import 'package:crew_brew/src/PorgressbarIndicator/step_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 
