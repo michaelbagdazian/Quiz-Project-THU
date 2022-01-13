@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the ConfirmPopUp method from the customConfirmationBox class, for the Dart programming language.">
+  <title>ConfirmPopUp method - customConfirmationBox class - customConfirmationBox library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="../../"
+      data-using-base-href="false">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">crew_brew</a></li>
+    <li><a href="../../shared_customWidgets_customConfirmationBox/shared_customWidgets_customConfirmationBox-library.html">customConfirmationBox</a></li>
+    <li><a href="../../shared_customWidgets_customConfirmationBox/customConfirmationBox-class.html">customConfirmationBox</a></li>
+    <li class="self-crumb">ConfirmPopUp method</li>
+  </ol>
+  <div class="self-name">ConfirmPopUp</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+
+  <div id="dartdoc-main-content" class="main-content">
+      <div>
+  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/dart-lang/sdk/blob/3d2629cd0310df74bdf260d828ed3c75f25db889/sdk/lib/shared/customWidgets/customConfirmationBox.dart#L23"><i class="material-icons">description</i></a></div>
+<h1><span class="kind-method">ConfirmPopUp</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
+</h1></div>
+
+    <section class="multi-line-signature">
+      
+
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a></span>
+<span class="name ">ConfirmPopUp</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="ConfirmPopUp-param-context"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a></span> <span class="parameter-name">context</span></span></li>
+</ol>)
+
+      
+
+    </section>
+    
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">Future ConfirmPopUp(BuildContext context) async {
+  &#47;&#47; Create a bool to actually change based on user&#39;s input, and return it later
+  bool confirm = false;
+  &#47;&#47; Show Dialog =&gt; show the alert box
+  await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(label,
+              style: const TextStyle(
+                fontFamily: &#39;Lobster&#39;,
+                fontSize: 40,
+              )),
+          content: Text(content),
+          &#47;&#47;Alert Box has two Actions
+          actions: &lt;Widget&gt;[
+            &#47;&#47;custom Button &#39;YES&#39;
+            CustomButton(
+                label: &#39;yes&#39;,
+                backgroundcolor: Colors.orange,
+                function: () {
+                  &#47;&#47;* if user chooses yes, then we set confirm to true
+                  confirm = true;
+                  Navigator.of(context).pop();
+                }),
+            &#47;&#47;custom Button &#39;NO&#39;
+            CustomButton(
+                label: &#39;no&#39;,
+                backgroundcolor: Colors.orange,
+                function: () {
+                  &#47;&#47;* if user chooses no, then we set confirm to false
+                  confirm = false;
+                  Navigator.of(context).pop();
+                }),
+          ],
+        );
+      });
+  &#47;&#47;return the bool
+  return confirm;
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li><a href="../../index.html">crew_brew</a></li>
+  <li><a href="../../shared_customWidgets_customConfirmationBox/shared_customWidgets_customConfirmationBox-library.html">customConfirmationBox</a></li>
+  <li><a href="../../shared_customWidgets_customConfirmationBox/customConfirmationBox-class.html">customConfirmationBox</a></li>
+  <li class="self-crumb">ConfirmPopUp method</li>
+</ol>
+
+
+    <h5>customConfirmationBox class</h5>
+    <ol>
+
+    <li class="section-title"><a href="../../shared_customWidgets_customConfirmationBox/customConfirmationBox-class.html#constructors">Constructors</a></li>
+    <li><a href="../../shared_customWidgets_customConfirmationBox/customConfirmationBox/customConfirmationBox.html">customConfirmationBox</a></li>
+
+
+    <li class="section-title">
+      <a href="../../shared_customWidgets_customConfirmationBox/customConfirmationBox-class.html#instance-properties">Properties</a>
+    </li>
+    <li><a href="../../shared_customWidgets_customConfirmationBox/customConfirmationBox/content.html">content</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
+    <li><a href="../../shared_customWidgets_customConfirmationBox/customConfirmationBox/label.html">label</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
+
+    <li class="section-title"><a href="../../shared_customWidgets_customConfirmationBox/customConfirmationBox-class.html#instance-methods">Methods</a></li>
+    <li><a href="../../shared_customWidgets_customConfirmationBox/customConfirmationBox/ConfirmPopUp.html">ConfirmPopUp</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
+
+    <li class="section-title inherited"><a href="../../shared_customWidgets_customConfirmationBox/customConfirmationBox-class.html#operators">Operators</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></li>
+
+
+
+
+</ol>
+
+  </div><!--/.sidebar-offcanvas-->
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    crew_brew
+      1.0.0+1
+  </span>
+
+  
+</footer>
+
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/script.js?v1"></script>
+
+
+
+</body>
+
+</html>
+
