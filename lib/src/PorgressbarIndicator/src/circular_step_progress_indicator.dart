@@ -1,3 +1,4 @@
+///@nodoc
 library circular_step_progress_indicator;
 
 import 'package:flutter/material.dart';
