@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the createTestQuiz method from the ManualQuizeCreation class, for the Dart programming language.">
+  <title>createTestQuiz method - ManualQuizeCreation class - manualQuizCreation library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="../../"
+      data-using-base-href="false">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">crew_brew</a></li>
+    <li><a href="../../testClasses_manualQuizCreation/testClasses_manualQuizCreation-library.html">manualQuizCreation</a></li>
+    <li><a href="../../testClasses_manualQuizCreation/ManualQuizeCreation-class.html">ManualQuizeCreation</a></li>
+    <li class="self-crumb">createTestQuiz method</li>
+  </ol>
+  <div class="self-name">createTestQuiz</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+
+  <div id="dartdoc-main-content" class="main-content">
+      <div>
+  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/dart-lang/sdk/blob/3d2629cd0310df74bdf260d828ed3c75f25db889/sdk/lib/testClasses/manualQuizCreation.dart#L12"><i class="material-icons">description</i></a></div>
+<h1><span class="kind-method">createTestQuiz</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
+</h1></div>
+
+    <section class="multi-line-signature">
+      
+
+<span class="returntype"><a href="../../models_quiz_Quiz/Quiz-class.html">Quiz</a></span>
+<span class="name ">createTestQuiz</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="createTestQuiz-param-quizOwnerUID"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">quizOwnerUID</span>, </span></li>
+<li><span class="parameter" id="createTestQuiz-param-quizOwner"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">quizOwner</span>, </span></li>
+<li><span class="parameter" id="createTestQuiz-param-quizIsShared"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">quizIsShared</span></span></li>
+</ol>)
+
+      
+
+    </section>
+    
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">Quiz createTestQuiz(
+    String quizOwnerUID, String quizOwner, bool quizIsShared) {
+  &#47;&#47; ! Question #1
+  &#47;&#47; ~ questionText
+  String questionText_1 = &quot;What is the capital of Assyria?&quot;;
+
+  &#47;&#47; ~ Answers to Question #1
+  List&lt;Answer&gt; answers_1 = [];
+  answers_1.add(new Answer(answerText: &quot;Nineveh&quot;, isCorrect: false));
+  answers_1.add(new Answer(
+      answerText: &quot;I don&#39;t know that! Auuuuuuuugh!&quot;, isCorrect: false));
+  answers_1.add(new Answer(answerText: &quot;Babylon ( true )&quot;, isCorrect: true));
+  answers_1.add(new Answer(answerText: &quot;Roshan ( true )&quot;, isCorrect: true));
+
+  &#47;&#47; ~ Question #1 instance
+  Question question_1 = _createQuestion(questionText_1, answers_1);
+
+  &#47;&#47; ! Question #2
+  &#47;&#47; ~ questionText
+  String questionText_2 =
+      &quot;What is the air-speed velocity of an unladen swallow?&quot;;
+
+  &#47;&#47; ~ Answers to Question #2
+  List&lt;Answer&gt; answers_2 = [];
+  answers_2.add(new Answer(
+      answerText: &quot;An African or European swallow?&quot;, isCorrect: false));
+  answers_2
+      .add(new Answer(answerText: &quot;about 15 km&#47;h ( true )&quot;, isCorrect: true));
+  answers_2
+      .add(new Answer(answerText: &quot;172 cms per minute&quot;, isCorrect: false));
+  answers_2
+      .add(new Answer(answerText: &quot;I don&#39;t know that!&quot;, isCorrect: false));
+
+  &#47;&#47; ~ Question #2 instance
+  Question question_2 = _createQuestion(questionText_2, answers_2);
+
+  &#47;&#47; ! Question #3
+  &#47;&#47; ~ questionText
+  String questionText_3 = &quot;What is your name?&quot;;
+
+  &#47;&#47; ~ Answers to Question #3
+  List&lt;Answer&gt; answers_3 = [];
+  answers_3.add(new Answer(answerText: &quot;Donald Trump&quot;, isCorrect: false));
+  answers_3.add(new Answer(
+      answerText: &quot;Sir Lancelot of Camelot ( true )&quot;, isCorrect: true));
+  answers_3
+      .add(new Answer(answerText: &quot;Mickey Mouse ( true )&quot;, isCorrect: true));
+  answers_3.add(new Answer(answerText: &quot;Marylin Monroe&quot;, isCorrect: false));
+
+  &#47;&#47; ~ Question #3 instance
+  Question question_3 = _createQuestion(questionText_3, answers_3);
+&#47;*
+  &#47;&#47; ! Question #4
+  &#47;&#47; ~ questionText
+  String questionText_4 = &quot;What is your favorite color&quot;;
+
+  &#47;&#47; ~ Answers to Question #4
+  List&lt;Answer&gt; answers_4 = [];
+  answers_4.add(Answer(answerText: &quot;Magenta ( true )&quot;, isCorrect: true));
+  answers_4.add(Answer(answerText: &quot;Olive&quot;, isCorrect: false));
+  answers_4.add(Answer(answerText: &quot;Blue&quot;, isCorrect: false));
+  answers_4.add(Answer(answerText: &quot;Blue, no yellow&quot;, isCorrect: false));
+
+  &#47;&#47; ~ Question #4 instance
+  Question question_4 = _createQuestion(questionText_4, answers_4);
+
+  &#47;&#47; ! Question #5
+  &#47;&#47; ~ questionText
+  String questionText_5 = &quot;What is your Quest?&quot;;
+
+  &#47;&#47; ~ Answers to Question #5
+  List&lt;Answer&gt; answers_5 = [];
+  answers_5.add(Answer(answerText: &quot;To wash the dishes&quot;, isCorrect: false));
+  answers_5.add(Answer(answerText: &quot;To do my taxes&quot;, isCorrect: false));
+  answers_5.add(Answer(answerText: &quot;To study flutter&quot;, isCorrect: false));
+  answers_5.add(
+      Answer(answerText: &quot;To seek the Holy Grail ( true )&quot;, isCorrect: true));
+
+  &#47;&#47; ~ Question #5 instance
+  Question question_5 = _createQuestion(questionText_5, answers_5);*&#47;
+
+  &#47;&#47; ! Question list
+  List&lt;Question&gt; questionList = [
+    question_1,
+    question_2,
+    question_3,
+    &#47;*question_4,
+    question_5*&#47;
+  ];
+
+  &#47;&#47; ! Tags list
+  List&lt;String&gt; tags = [&quot;funny&quot;, &quot;quick&quot;];
+
+  &#47;&#47; ! Instance of test quiz
+  Quiz testQuiz = _createQuiz(
+      &quot;Other&quot;,
+      &quot;This is test quiz&quot;,
+      quizOwner,
+      quizOwnerUID,
+      &quot;This quiz is created for test purposes&quot;,
+      quizIsShared,
+      questionList,
+      tags);
+
+  return testQuiz;
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li><a href="../../index.html">crew_brew</a></li>
+  <li><a href="../../testClasses_manualQuizCreation/testClasses_manualQuizCreation-library.html">manualQuizCreation</a></li>
+  <li><a href="../../testClasses_manualQuizCreation/ManualQuizeCreation-class.html">ManualQuizeCreation</a></li>
+  <li class="self-crumb">createTestQuiz method</li>
+</ol>
+
+
+    <h5>ManualQuizeCreation class</h5>
+    <ol>
+
+    <li class="section-title"><a href="../../testClasses_manualQuizCreation/ManualQuizeCreation-class.html#constructors">Constructors</a></li>
+    <li><a href="../../testClasses_manualQuizCreation/ManualQuizeCreation/ManualQuizeCreation.html">ManualQuizeCreation</a></li>
+
+
+    <li class="section-title inherited">
+      <a href="../../testClasses_manualQuizCreation/ManualQuizeCreation-class.html#instance-properties">Properties</a>
+    </li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
+
+    <li class="section-title"><a href="../../testClasses_manualQuizCreation/ManualQuizeCreation-class.html#instance-methods">Methods</a></li>
+    <li><a href="../../testClasses_manualQuizCreation/ManualQuizeCreation/createTestQuiz.html">createTestQuiz</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
+
+    <li class="section-title inherited"><a href="../../testClasses_manualQuizCreation/ManualQuizeCreation-class.html#operators">Operators</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></li>
+
+
+
+
+</ol>
+
+  </div><!--/.sidebar-offcanvas-->
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    crew_brew
+      1.0.0+1
+  </span>
+
+  
+</footer>
+
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/script.js?v1"></script>
+
+
+
+</body>
+
+</html>
+
