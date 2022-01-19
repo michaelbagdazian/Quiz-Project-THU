@@ -151,16 +151,6 @@ class _NavBarState extends State<NavBar> {
                           color: Colors.white,
                         ),
                         ListTile(
-                          leading: const Icon(Icons.info_outline,
-                              color: Colors.white),
-                          title: Text('Information',
-                              style: theme.textTheme.bodyText2!.copyWith(
-                                color: Colors.white,
-                              )),
-                          // TODO Redirect to information page
-                          onTap: () {},
-                        ),
-                        ListTile(
                           leading: const Icon(Icons.perm_data_setting_sharp,
                               color: Colors.white),
                           title: Text('Test Screen',
