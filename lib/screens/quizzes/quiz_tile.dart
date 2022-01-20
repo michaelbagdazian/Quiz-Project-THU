@@ -300,7 +300,7 @@ class _PopupCardState extends State<_PopupCard> {
                                       borderRadius: BorderRadius.circular(150),
                                       border: Border.all(width: 2, color: Colors.white)),
                                   height: MediaQuery.of(context).size.height* 0.04,width: MediaQuery.of(context).size.height* 0.05,
-                                  child: Icon(Icons.group, color: widget.quiz.quizIsShared ? (Colors.red) :  Colors.green,), //<- here should be logik to change the picture
+                                  child: Icon(Icons.group, color: widget.quiz.quizIsShared ? (Colors.green) :  Colors.red,), //<- here should be logik to change the picture
                                 )
                             ),
                           ]),
