@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 
 class QuizComponent extends StatelessWidget {
   final String questionText;
-  final List<String> answers;
-  final int answer;
+  final Map<String, bool> answers;
   final bool buttonsActive;
   final bool showScoreScreen;
   final bool showCountdown;
@@ -16,7 +15,6 @@ class QuizComponent extends StatelessWidget {
       {Key? key,
       required this.questionText,
       required this.answers,
-      required this.answer,
       required this.buttonsActive,
       required this.showScoreScreen,
       required this.showCountdown,
@@ -49,14 +47,12 @@ class QuizComponent extends StatelessWidget {
             child: Flex(
               direction: Axis.vertical,
               crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: answers
-                  .asMap()
-                  .keys
-                  .map((i) => Container(
+              children: answers.entries
+                  .map((entry) => Container(
                         padding: const EdgeInsets.all(5),
                         child: TextButton(
                           child: Text(
-                            answers[i],
+                            entry.key,
                             style: const TextStyle(
                                 color: Colors.white, fontSize: 20),
                           ),
@@ -66,7 +62,7 @@ class QuizComponent extends StatelessWidget {
                               padding: const EdgeInsets.all(20)),
                           onPressed: buttonsActive
                               ? () {
-                                  if (answer == i) {
+                                  if (entry.value) {
                                     onCorrectAnswer();
                                   } else {
                                     onWrongAnswer();
@@ -76,6 +72,7 @@ class QuizComponent extends StatelessWidget {
                               : null,
                         ),
                       ))
+                  .cast<Widget>()
                   .toList(),
             ),
           )

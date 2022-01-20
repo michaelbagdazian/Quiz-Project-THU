@@ -5,7 +5,7 @@ image(String category){
     case "Test":
       return 'assets/images/education.jpg';
     case "History":
-      return 'assets/images/history2.jpg';
+      return 'assets/images/history.jpg';
     case "Phyiscs":
       return 'assets/images/science.jpg';
     case "CS":
@@ -19,7 +19,6 @@ image(String category){
     case "Music":
       return 'assets/images/music.jpg';
     default:
-      return 'assets/images/hexagonal_background.jpg';
-
+      return 'assets/images/default.jpg';
   }
 }
