@@ -413,8 +413,8 @@ class _PopupCardState extends State<_PopupCard> {
                           child: Icon(
                             Icons.group,
                             color: widget.quiz.quizIsShared
-                                ? (Colors.red)
-                                : Colors.green,
+                                ? (Colors.green)
+                                : Colors.red,
                           ), ///<- here should be logik to change the picture
                         )),
                   ]),
